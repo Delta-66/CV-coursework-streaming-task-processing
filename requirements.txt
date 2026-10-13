@@ -1,0 +1,11 @@
+numpy
+opencv-python
+Pillow
+pandas
+matplotlib
+scikit-learn
+PyYAML
+tqdm
+h5py
+pyarrow
+av

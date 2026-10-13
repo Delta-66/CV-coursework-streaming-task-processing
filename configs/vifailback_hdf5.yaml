@@ -1,0 +1,25 @@
+source:
+  format: vifailback_hdf5
+  path: ../data/vifailback_raw/raw_data/cut_sausage/episode_0.hdf5
+  episode_index: 0
+  annotation_path: ../data/vifailback_lerobot/meta/vifailback_annotations.jsonl
+  task_instruction: null  # Read only the task text from the episode mapping.
+  fps: 25  # Explicit conversion timebase; raw file has no sensor timestamps.
+  timestamp_path: null
+  cameras: null
+  include_depth: true
+  rgb_storage_order: RGB  # Official storage note; imdecode output already has RGB semantics.
+output_dir: ../output/input_runs/hdf5
+sample_every: 1
+save_arrays_every: 25
+realtime: false
+playback_speed: 1.0
+required_fields:
+  - observations/qpos
+  - observations/qvel
+  - observations/effort
+  - observations/images/cam_high
+  - observations/images_depth/cam_high
+  - action
+  - action_eef
+  - base_action

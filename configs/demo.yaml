@@ -1,0 +1,9 @@
+# Paths are relative to this configuration file.
+video_path: ../data/demo/sample.avi
+output_dir: ../output/runs
+task_instruction: "仅验证视频回放与日志记录；这段合成视频不含机器人任务。"
+sample_every: 5
+# Number of previous sampled frames; current frame is separate. Use 0 for current-only.
+history_size: 4
+max_image_width: 640
+save_frames: true

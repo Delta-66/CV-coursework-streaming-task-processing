@@ -1,0 +1,21 @@
+{
+  "repo_id": "sii-rhos-ai/ViFailback-Dataset",
+  "revision": "21df46c2585c52e5a62df5f4b946bae6cbc6fed7",
+  "selected_episodes": [
+    0
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "size": 12677,
+      "sha256": "beba26fd037dc94193fe6f75e25000fd94c019e2862a9ba20d48090305767a6e",
+      "remote_sha256": null
+    },
+    {
+      "path": "raw_data/cut_sausage/episode_0.hdf5",
+      "size": 128459880,
+      "sha256": "cbcf7a16a85ef3442042cfc87c697a2886022e1a40108a7c42c1e27709700b26",
+      "remote_sha256": "cbcf7a16a85ef3442042cfc87c697a2886022e1a40108a7c42c1e27709700b26"
+    }
+  ]
+}

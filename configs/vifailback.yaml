@@ -1,0 +1,20 @@
+source:
+  format: lerobot_v2.1
+  root: ../data/vifailback_lerobot
+  episodes: [0, 18]
+  cameras: null  # All three declared RGB cameras; original names are retained.
+output_dir: ../output/input_runs/lerobot
+sample_every: 1
+save_arrays_every: 25  # Save preview arrays once per second; log all 25 Hz records.
+realtime: false
+playback_speed: 1.0
+required_fields:
+  - observation.state
+  - observation.velocity
+  - observation.effort
+  - observation.images.cam_high
+  - observation.images.cam_left_wrist
+  - observation.images.cam_right_wrist
+  - action
+  - complementary_info.action_eef
+  - complementary_info.base_action

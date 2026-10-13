@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "lerobot_frames_verified": {
+    "0": 300,
+    "18": 519
+  },
+  "hdf5_frames_verified": 300,
+  "numeric_fields_compared_exactly": {
+    "observations/qpos": "observation.state",
+    "observations/qvel": "observation.velocity",
+    "observations/effort": "observation.effort",
+    "action": "action",
+    "action_eef": "complementary_info.action_eef",
+    "base_action": "complementary_info.base_action"
+  },
+  "minimum_raw_to_av1_rgb_psnr_db": 33.891554193687845,
+  "video_pts_state_timestamps_and_frame_indices": "passed",
+  "rgb_and_uint16_depth_artifact_roundtrip": "passed",
+  "offline_labels_and_recorded_targets_excluded_from_online_input": true,
+  "runs": [
+    {
+      "run_dir": "output/input_runs/lerobot/20261014_012647_962367",
+      "frames": {
+        "0": 300,
+        "18": 519
+      },
+      "saved_arrays_read_back": 99
+    },
+    {
+      "run_dir": "output/input_runs/hdf5/20261014_012655_786519",
+      "frames": {
+        "0": 300
+      },
+      "saved_arrays_read_back": 72
+    }
+  ],
+  "model_calls": 0,
+  "baseline_constructed": false,
+  "artifacts_note": "Historical local validation; generated output arrays are not included in Git. Use download and replay commands to reproduce."
+}
