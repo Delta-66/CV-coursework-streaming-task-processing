@@ -1,0 +1,465 @@
+{
+  "status": "passed",
+  "run_dir": "output/baseline_runs/20261014_131410_836364",
+  "validation_purpose": "cpu_functional_check",
+  "compute_devices": [
+    "cpu"
+  ],
+  "model_calls": 9,
+  "valid_outputs": 9,
+  "current_source_images_verified": 9,
+  "mean_inference_s": 27.212301522221725,
+  "gpu_wait_time_s": 0,
+  "summary": {
+    "status": "baseline_run_complete",
+    "started_at": "2026-10-14T13:14:10.836364+08:00",
+    "model_calls": 9,
+    "valid_outputs": 9,
+    "invalid_outputs": 0,
+    "failure_alerts": 0,
+    "episodes": [
+      {
+        "episode_index": 0,
+        "frames_seen": 300,
+        "model_calls": 3,
+        "source_frames": 300,
+        "full_episode_read": true
+      },
+      {
+        "episode_index": 18,
+        "frames_seen": 519,
+        "model_calls": 6,
+        "source_frames": 519,
+        "full_episode_read": true
+      }
+    ],
+    "history_frames_per_call": 0,
+    "wall_time_s": 268.1207460000296,
+    "evaluation_status": "prediction pipeline only; accuracy and detection delay not evaluated"
+  },
+  "provenance": {
+    "mode": "current_observation_image_only",
+    "model": {
+      "repo_id": "Qwen/Qwen3-VL-2B-Instruct",
+      "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+      "files": [
+        {
+          "path": "README.md",
+          "size": 7136,
+          "sha256": "5fc5be1ca9a3910399bd6239ee5086ab5d82a2a59c5d2b00e887a8835cc110e4",
+          "remote_sha256": null
+        },
+        {
+          "path": "chat_template.json",
+          "size": 5502,
+          "sha256": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4",
+          "remote_sha256": null
+        },
+        {
+          "path": "config.json",
+          "size": 1505,
+          "sha256": "bec4b3d446efa05807365c9e1cec03ac590836879d02f3a6da879971154bdd3b",
+          "remote_sha256": null
+        },
+        {
+          "path": "generation_config.json",
+          "size": 269,
+          "sha256": "1e241830b48b397cb0900101421df5450baddc7adf01e5fc86b5615865f3bae4",
+          "remote_sha256": null
+        },
+        {
+          "path": "merges.txt",
+          "size": 1671839,
+          "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+          "remote_sha256": null
+        },
+        {
+          "path": "model.safetensors",
+          "size": 4255140312,
+          "sha256": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+          "remote_sha256": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "size": 390,
+          "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+          "remote_sha256": null
+        },
+        {
+          "path": "tokenizer.json",
+          "size": 7032403,
+          "sha256": "a5d85b6dcc535e6b93115a9ef287e6132fdbf30270da6218194ba742261173c7",
+          "remote_sha256": null
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size": 10868,
+          "sha256": "c2da771801886ad9ae98181793ffd3dfb7f1af30f6f7c6a4e15d7dbba52e2399",
+          "remote_sha256": null
+        },
+        {
+          "path": "video_preprocessor_config.json",
+          "size": 385,
+          "sha256": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+          "remote_sha256": null
+        },
+        {
+          "path": "vocab.json",
+          "size": 2776833,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "remote_sha256": null
+        }
+      ]
+    },
+    "model_load_time_s": 7.07748099998571,
+    "versions": {
+      "torch": "2.11.0+cu128",
+      "transformers": "4.57.6",
+      "accelerate": "1.12.0",
+      "tokenizers": "0.22.2",
+      "lm-format-enforcer": "0.11.3",
+      "numpy": "2.4.6",
+      "av": "18.1.0",
+      "pyarrow": "26.0.0"
+    },
+    "datasets": [
+      {
+        "episode_index": 0,
+        "repo_id": "sii-rhos-ai/vifailback-dataset-lerobot",
+        "revision": "619791b94f61667333fe179d471051e0bca0e06f"
+      },
+      {
+        "episode_index": 18,
+        "repo_id": "sii-rhos-ai/vifailback-dataset-lerobot",
+        "revision": "619791b94f61667333fe179d471051e0bca0e06f"
+      }
+    ],
+    "prompt_sha256": "d2022c523032af7ae3a86ccba555cf7d9aaa68f6bedb951e857f083fa59d8db7",
+    "history_frames_per_call": 0,
+    "offline_annotations_used": false,
+    "recorded_targets_used": false,
+    "state_vectors_used": false
+  },
+  "predictions": [
+    {
+      "episode_index": 0,
+      "frame_index": 0,
+      "timestamp": 0.0,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "A knife is in a black knife holder on the right side of the image",
+          "A sausage is on a wooden cutting board on the left side of the image",
+          "The knife is not yet picked up"
+        ],
+        "high_level_advice": null,
+        "low_level_advice": null
+      },
+      "metrics": {
+        "inference_ms": 25615.805500012357,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cpu",
+        "input_tokens": 626,
+        "generated_tokens": 97,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "peak_cuda_allocated_mib": null,
+        "peak_cuda_reserved_mib": null
+      }
+    },
+    {
+      "episode_index": 0,
+      "frame_index": 100,
+      "timestamp": 4.0,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "A knife is held by a robotic arm, positioned near a wooden cutting board with a sausage on it",
+          "The robotic arm is positioned to grasp the knife, which is in a knife holder"
+        ],
+        "high_level_advice": null,
+        "low_level_advice": null
+      },
+      "metrics": {
+        "inference_ms": 24817.282299976796,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cpu",
+        "input_tokens": 626,
+        "generated_tokens": 93,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "peak_cuda_allocated_mib": null,
+        "peak_cuda_reserved_mib": null
+      }
+    },
+    {
+      "episode_index": 0,
+      "frame_index": 200,
+      "timestamp": 8.0,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "A knife is held by a robotic arm in a knife holder on the right side of the image",
+          "A sausage is on a wooden cutting board on the left side of the image",
+          "The robotic arm is positioned to grasp the knife"
+        ],
+        "high_level_advice": null,
+        "low_level_advice": null
+      },
+      "metrics": {
+        "inference_ms": 27546.207200037315,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cpu",
+        "input_tokens": 626,
+        "generated_tokens": 103,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "peak_cuda_allocated_mib": null,
+        "peak_cuda_reserved_mib": null
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 0,
+      "timestamp": 0.0,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "A knife is in a black knife holder on the right side of the image",
+          "A wooden cutting board is on the table with a sausage on it",
+          "The knife is in the knife holder and not yet picked up"
+        ],
+        "high_level_advice": null,
+        "low_level_advice": null
+      },
+      "metrics": {
+        "inference_ms": 27126.961299974937,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cpu",
+        "input_tokens": 626,
+        "generated_tokens": 100,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "peak_cuda_allocated_mib": null,
+        "peak_cuda_reserved_mib": null
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 100,
+      "timestamp": 4.0,
+      "result": {
+        "stage": "unknown",
+        "status": "insufficient_evidence",
+        "failure": null,
+        "evidence": [
+          "A knife is in a black holder on the right side of the image",
+          "A wooden cutting board with a sausage on it is in the center of the image",
+          "A robotic arm is on the right side of the image, near the knife holder"
+        ],
+        "high_level_advice": null,
+        "low_level_advice": null
+      },
+      "metrics": {
+        "inference_ms": 28439.37039998127,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cpu",
+        "input_tokens": 626,
+        "generated_tokens": 107,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "peak_cuda_allocated_mib": null,
+        "peak_cuda_reserved_mib": null
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 200,
+      "timestamp": 8.0,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "A robotic arm is positioned over a wooden board with a knife and a sausage on it",
+          "The robotic arm is holding a knife in its claw-like gripper",
+          "The knife is placed on the wooden board, and a sausage is visible on the board"
+        ],
+        "high_level_advice": null,
+        "low_level_advice": null
+      },
+      "metrics": {
+        "inference_ms": 28724.014000035822,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cpu",
+        "input_tokens": 626,
+        "generated_tokens": 107,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "peak_cuda_allocated_mib": null,
+        "peak_cuda_reserved_mib": null
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 300,
+      "timestamp": 12.0,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "A robotic arm is positioned over a wooden knife holder containing a knife and a sausage-like object",
+          "The robotic arm's gripper is near the knife, indicating it is preparing to grasp it",
+          "The knife is resting on the wooden holder, and the sausage is on the holder"
+        ],
+        "high_level_advice": null,
+        "low_level_advice": null
+      },
+      "metrics": {
+        "inference_ms": 29712.84769999329,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cpu",
+        "input_tokens": 626,
+        "generated_tokens": 112,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "peak_cuda_allocated_mib": null,
+        "peak_cuda_reserved_mib": null
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 400,
+      "timestamp": 16.0,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "A knife is in a black knife holder on the right side of the image",
+          "A wooden cutting board with a sausage on it is in the center of the image",
+          "The knife is not yet picked up"
+        ],
+        "high_level_advice": null,
+        "low_level_advice": null
+      },
+      "metrics": {
+        "inference_ms": 27141.188799985684,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cpu",
+        "input_tokens": 626,
+        "generated_tokens": 98,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "peak_cuda_allocated_mib": null,
+        "peak_cuda_reserved_mib": null
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 500,
+      "timestamp": 20.0,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "A knife is in a black knife holder on the right side of the wooden cutting board",
+          "A small piece of sausage is on the cutting board",
+          "The knife is not yet picked up"
+        ],
+        "high_level_advice": null,
+        "low_level_advice": null
+      },
+      "metrics": {
+        "inference_ms": 25787.036499998067,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cpu",
+        "input_tokens": 626,
+        "generated_tokens": 94,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "peak_cuda_allocated_mib": null,
+        "peak_cuda_reserved_mib": null
+      }
+    }
+  ],
+  "quality_evaluation": "not performed; no human first-detectable-time labels",
+  "observed_limitations": [
+    "Model evidence and stages have not been human verified.",
+    "Recorded inference time is not online alert latency.",
+    "Approaching predictions require human review against visible task stages."
+  ]
+}
