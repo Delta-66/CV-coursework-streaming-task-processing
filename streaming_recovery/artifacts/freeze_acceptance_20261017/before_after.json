@@ -1,0 +1,96 @@
+{
+  "scope": "compare core state fields enumerated in final_run_inspection.json, status, event, notify and correction; timing/measurement/capacity additions and updated evidence wording excluded; all changed state keys retained in final_run_inspection.json",
+  "per_episode": [
+    {
+      "episode": 18,
+      "decisions": 21,
+      "core_semantic_equal": true,
+      "core_semantic_differences": [],
+      "new_attempt_timestamps": [
+        4.0
+      ],
+      "completion_timestamps": [
+        20.0
+      ],
+      "confirmation_timestamps": [],
+      "old_decisions_sha256": "f9a7b338fbc2d2df93462a57c33feb14ee0cc1f00457642e34e61d2ade57c5b7",
+      "new_decisions_sha256": "f6cfa7977540e558cd2f20ca3d59424b1b2a58bd18c8c7ecfaa6ecb62e12d2bc"
+    },
+    {
+      "episode": 19,
+      "decisions": 17,
+      "core_semantic_equal": true,
+      "core_semantic_differences": [],
+      "new_attempt_timestamps": [
+        3.0
+      ],
+      "completion_timestamps": [
+        16.0
+      ],
+      "confirmation_timestamps": [],
+      "old_decisions_sha256": "aa8b5da6d6201d8cd6da4482aa1db121f45128192cea1b7426c7be75f5e4a07c",
+      "new_decisions_sha256": "612cdc5e0b7c5e3e338911dc9db6130e011ce13a761b8845bd53ac7e5ab054ee"
+    },
+    {
+      "episode": 0,
+      "decisions": 12,
+      "core_semantic_equal": true,
+      "core_semantic_differences": [],
+      "new_attempt_timestamps": [
+        7.0
+      ],
+      "completion_timestamps": [],
+      "confirmation_timestamps": [
+        10.0
+      ],
+      "old_decisions_sha256": "442b1288b9d164f132ca27feb7b49d3f1a6deb4841c362efa17af7f79bc56c8b",
+      "new_decisions_sha256": "ae1b2e5782e2b72852359dc038933658ab56741d79d7bf1395dd515bead6b02b"
+    },
+    {
+      "episode": 2,
+      "decisions": 12,
+      "core_semantic_equal": true,
+      "core_semantic_differences": [],
+      "new_attempt_timestamps": [
+        7.0
+      ],
+      "completion_timestamps": [],
+      "confirmation_timestamps": [
+        11.0
+      ],
+      "old_decisions_sha256": "5fe81978a5beb629bee0d40411d9593e476159d380e8deb37f6d22df9be92736",
+      "new_decisions_sha256": "937dd0e52bd500911711c8c5e287099a0387a47a3eae276ae405bf40115e7745"
+    },
+    {
+      "episode": 8,
+      "decisions": 10,
+      "core_semantic_equal": true,
+      "core_semantic_differences": [],
+      "new_attempt_timestamps": [
+        5.0
+      ],
+      "completion_timestamps": [],
+      "confirmation_timestamps": [
+        8.0
+      ],
+      "old_decisions_sha256": "19062892de99ae6ab9269fb387844edad1759ec8df978af5fc47826b8b2ebfee",
+      "new_decisions_sha256": "773e9b365c420f6a287d1f99078934764b19a8d248ba0d6764f712fefb784987"
+    },
+    {
+      "episode": 29,
+      "decisions": 10,
+      "core_semantic_equal": true,
+      "core_semantic_differences": [],
+      "new_attempt_timestamps": [
+        6.0
+      ],
+      "completion_timestamps": [],
+      "confirmation_timestamps": [
+        9.0
+      ],
+      "old_decisions_sha256": "41f095f4a2b615ffaa744eaa01c768e8fa82ff45fc2a5837ed4d97054b3af0a6",
+      "new_decisions_sha256": "5d77d269c005a5a2855cbc675630ebafcbd5def446a3b18d9a957d204f024f23"
+    }
+  ],
+  "old_run_preserved": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\accepted_run"
+}

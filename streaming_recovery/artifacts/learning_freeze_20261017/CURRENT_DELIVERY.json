@@ -1,0 +1,7 @@
+{
+  "bundle": "frozen_runtime_v2",
+  "results": "frozen_run_v2",
+  "manifest": "delivery_manifest_v2.json",
+  "evaluation": "evaluation_v2.json",
+  "report": "../../../docs/监督反馈学习与独立冻结验收_20261017.md"
+}

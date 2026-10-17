@@ -1,0 +1,1403 @@
+[
+  {
+    "ep": 0,
+    "t": 0.0,
+    "grip": 0.00019999999494757503,
+    "food": [
+      [
+        [
+          123,
+          249,
+          100,
+          16
+        ],
+        740.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.0,
+      "source_dark_fraction": 0.0,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.0,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 1.0,
+    "grip": 0.0038999998942017555,
+    "food": [
+      [
+        [
+          122,
+          249,
+          101,
+          16
+        ],
+        725.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.0,
+      "source_dark_fraction": 0.0,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.0,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 2.0,
+    "grip": 0.06620000302791595,
+    "food": [
+      [
+        [
+          122,
+          249,
+          101,
+          16
+        ],
+        731.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.05508,
+      "source_dark_fraction": 0.0,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.0,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 3.0,
+    "grip": 0.06469999998807907,
+    "food": [
+      [
+        [
+          123,
+          249,
+          100,
+          16
+        ],
+        722.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.78753,
+      "source_dark_fraction": 0.76634,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00083,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 4.0,
+    "grip": 0.06260000169277191,
+    "food": [
+      [
+        [
+          123,
+          249,
+          100,
+          16
+        ],
+        714.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.60169,
+      "source_dark_fraction": 0.56659,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00788,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 5.0,
+    "grip": 0.06260000169277191,
+    "food": [
+      [
+        [
+          123,
+          249,
+          100,
+          16
+        ],
+        732.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.88257,
+      "source_dark_fraction": 0.81598,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00755,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 6.0,
+    "grip": 0.0494999997317791,
+    "food": [
+      [
+        [
+          122,
+          249,
+          101,
+          16
+        ],
+        750.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.87409,
+      "source_dark_fraction": 0.78935,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00698,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 7.0,
+    "grip": 0.00019999999494757503,
+    "food": [
+      [
+        [
+          122,
+          249,
+          101,
+          17
+        ],
+        732.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.79358,
+      "source_dark_fraction": 0.73063,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00572,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 8.0,
+    "grip": 0.0,
+    "food": [
+      [
+        [
+          122,
+          249,
+          101,
+          16
+        ],
+        743.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.07688,
+      "source_dark_fraction": 0.04843,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00298,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 9.0,
+    "grip": 0.0,
+    "food": [
+      [
+        [
+          123,
+          249,
+          100,
+          16
+        ],
+        742.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.05387,
+      "source_dark_fraction": 0.00182,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.06376,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": true,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 10.0,
+    "grip": 0.0,
+    "food": [
+      [
+        [
+          122,
+          249,
+          101,
+          16
+        ],
+        733.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.03027,
+      "source_dark_fraction": 0.01271,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.14157,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": true,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 0,
+    "t": 11.0,
+    "grip": 0.0,
+    "food": [
+      [
+        [
+          204,
+          258,
+          19,
+          8
+        ],
+        84.0
+      ],
+      [
+        [
+          123,
+          249,
+          80,
+          15
+        ],
+        556.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.10896,
+      "source_dark_fraction": 0.07143,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.15179,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": true,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 0.0,
+    "grip": 0.0003000000142492354,
+    "food": [
+      [
+        [
+          237,
+          213,
+          13,
+          64
+        ],
+        450.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.0,
+      "source_dark_fraction": 0.0,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.0,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 1.0,
+    "grip": 0.03530000150203705,
+    "food": [
+      [
+        [
+          237,
+          230,
+          13,
+          46
+        ],
+        372.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.00174,
+      "source_dark_fraction": 0.0,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 4e-05,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 2.0,
+    "grip": 0.057999998331069946,
+    "food": [
+      [
+        [
+          237,
+          222,
+          13,
+          54
+        ],
+        425.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.53949,
+      "source_dark_fraction": 0.51394,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.0036,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 3.0,
+    "grip": 0.04019999876618385,
+    "food": [
+      [
+        [
+          236,
+          209,
+          15,
+          69
+        ],
+        513.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.76539,
+      "source_dark_fraction": 0.65505,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00292,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 4.0,
+    "grip": 0.007699999958276749,
+    "food": [
+      [
+        [
+          236,
+          218,
+          14,
+          59
+        ],
+        462.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.82288,
+      "source_dark_fraction": 0.76423,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00121,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 5.0,
+    "grip": 0.007600000128149986,
+    "food": [
+      [
+        [
+          236,
+          218,
+          14,
+          60
+        ],
+        471.0
+      ]
+    ],
+    "blade": [
+      [
+        248,
+        0,
+        40,
+        277,
+        6976.5
+      ]
+    ],
+    "metrics": {
+      "source_changed_fraction": 0.51858,
+      "source_dark_fraction": 0.18177,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00392,
+      "source_unchanged": false,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 6.0,
+    "grip": 0.007600000128149986,
+    "food": [
+      [
+        [
+          237,
+          251,
+          12,
+          26
+        ],
+        232.0
+      ]
+    ],
+    "blade": [
+      [
+        248,
+        0,
+        40,
+        280,
+        7556.5
+      ]
+    ],
+    "metrics": {
+      "source_changed_fraction": 0.17247,
+      "source_dark_fraction": 0.10918,
+      "tool_board_fraction": 0.10374,
+      "robot_board_fraction": 0.21806,
+      "source_unchanged": false,
+      "source_occluded": false,
+      "tool_on_board": true,
+      "robot_at_board": true,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 7.0,
+    "grip": 0.007600000128149986,
+    "food": [
+      [
+        [
+          237,
+          264,
+          11,
+          13
+        ],
+        102.0
+      ]
+    ],
+    "blade": [
+      [
+        247,
+        0,
+        41,
+        280,
+        7699.0
+      ]
+    ],
+    "metrics": {
+      "source_changed_fraction": 0.17596,
+      "source_dark_fraction": 0.11266,
+      "tool_board_fraction": 0.10029,
+      "robot_board_fraction": 0.27797,
+      "source_unchanged": false,
+      "source_occluded": false,
+      "tool_on_board": true,
+      "robot_at_board": true,
+      "common_motion": false,
+      "motion": {
+        "tool_motion_norm": 33.17851465515848,
+        "robot_motion_norm": 20.82362420488048,
+        "relative_motion_norm": 45.20254561993903,
+        "dot": -254.41648538700963
+      },
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 8.0,
+    "grip": 0.007600000128149986,
+    "food": [
+      [
+        [
+          241,
+          234,
+          7,
+          11
+        ],
+        41.5
+      ]
+    ],
+    "blade": [
+      [
+        247,
+        0,
+        46,
+        280,
+        7736.0
+      ]
+    ],
+    "metrics": {
+      "source_changed_fraction": 0.30256,
+      "source_dark_fraction": 0.22532,
+      "tool_board_fraction": 0.09733,
+      "robot_board_fraction": 0.29524,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": true,
+      "robot_at_board": true,
+      "common_motion": false,
+      "motion": {
+        "tool_motion_norm": 23.578948589159644,
+        "robot_motion_norm": 20.582919928143212,
+        "relative_motion_norm": 43.37319914929437,
+        "dot": -450.8054975528809
+      },
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 9.0,
+    "grip": 0.007400000002235174,
+    "food": [
+      [
+        [
+          239,
+          245,
+          5,
+          5
+        ],
+        16.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.55691,
+      "source_dark_fraction": 0.4878,
+      "tool_board_fraction": 0.10481,
+      "robot_board_fraction": 0.27502,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": true,
+      "robot_at_board": true,
+      "common_motion": false,
+      "motion": {
+        "tool_motion_norm": 10.382397583196061,
+        "robot_motion_norm": 20.8786701771766,
+        "relative_motion_norm": 30.79351684591429,
+        "dot": -202.2638158983641
+      },
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 10.0,
+    "grip": 0.007199999876320362,
+    "food": [],
+    "blade": [
+      [
+        245,
+        0,
+        43,
+        281,
+        8214.5
+      ]
+    ],
+    "metrics": {
+      "source_changed_fraction": 0.73229,
+      "source_dark_fraction": 0.61208,
+      "tool_board_fraction": 0.12788,
+      "robot_board_fraction": 0.36431,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": true,
+      "robot_at_board": true,
+      "common_motion": true,
+      "motion": {
+        "tool_motion_norm": 23.94362064419851,
+        "robot_motion_norm": 53.03762085890169,
+        "relative_motion_norm": 30.97728863587819,
+        "dot": 1213.3468923476923
+      },
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 11.0,
+    "grip": 0.007199999876320362,
+    "food": [],
+    "blade": [
+      [
+        245,
+        0,
+        43,
+        280,
+        8083.0
+      ]
+    ],
+    "metrics": {
+      "source_changed_fraction": 0.27526,
+      "source_dark_fraction": 0.20325,
+      "tool_board_fraction": 0.1319,
+      "robot_board_fraction": 0.2821,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": true,
+      "robot_at_board": true,
+      "common_motion": true,
+      "motion": {
+        "tool_motion_norm": 22.959386943834975,
+        "robot_motion_norm": 17.77544981974651,
+        "relative_motion_norm": 7.634681939541029,
+        "dot": 392.405848406556
+      },
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 12.0,
+    "grip": 0.007199999876320362,
+    "food": [],
+    "blade": [
+      [
+        245,
+        0,
+        43,
+        280,
+        8132.0
+      ]
+    ],
+    "metrics": {
+      "source_changed_fraction": 0.18641,
+      "source_dark_fraction": 0.10976,
+      "tool_board_fraction": 0.12396,
+      "robot_board_fraction": 0.23607,
+      "source_unchanged": false,
+      "source_occluded": false,
+      "tool_on_board": true,
+      "robot_at_board": true,
+      "common_motion": true,
+      "motion": {
+        "tool_motion_norm": 25.46233613494307,
+        "robot_motion_norm": 15.397756955235268,
+        "relative_motion_norm": 19.122100700952892,
+        "dot": 259.8833727419702
+      },
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 13.0,
+    "grip": 0.007199999876320362,
+    "food": [],
+    "blade": [
+      [
+        243,
+        0,
+        45,
+        282,
+        8478.0
+      ]
+    ],
+    "metrics": {
+      "source_changed_fraction": 0.17538,
+      "source_dark_fraction": 0.10453,
+      "tool_board_fraction": 0.11528,
+      "robot_board_fraction": 0.25786,
+      "source_unchanged": false,
+      "source_occluded": false,
+      "tool_on_board": true,
+      "robot_at_board": true,
+      "common_motion": false,
+      "motion": {
+        "tool_motion_norm": 13.680964598967195,
+        "robot_motion_norm": 17.830390366518827,
+        "relative_motion_norm": 27.93156055602417,
+        "dot": -137.54023105710206
+      },
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 14.0,
+    "grip": 0.0071000000461936,
+    "food": [
+      [
+        [
+          205,
+          309,
+          11,
+          8
+        ],
+        61.5
+      ],
+      [
+        [
+          236,
+          218,
+          14,
+          58
+        ],
+        450.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.40883,
+      "source_dark_fraction": 0.23345,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00463,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 15.0,
+    "grip": 0.0071000000461936,
+    "food": [
+      [
+        [
+          205,
+          309,
+          11,
+          11
+        ],
+        83.0
+      ],
+      [
+        [
+          236,
+          217,
+          14,
+          58
+        ],
+        441.5
+      ]
+    ],
+    "blade": [
+      [
+        247,
+        0,
+        38,
+        249,
+        3582.0
+      ]
+    ],
+    "metrics": {
+      "source_changed_fraction": 0.74274,
+      "source_dark_fraction": 0.65679,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00171,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 16.0,
+    "grip": 0.0071000000461936,
+    "food": [
+      [
+        [
+          205,
+          308,
+          11,
+          12
+        ],
+        88.5
+      ],
+      [
+        [
+          237,
+          209,
+          14,
+          66
+        ],
+        487.5
+      ]
+    ],
+    "blade": [
+      [
+        269,
+        128,
+        10,
+        122,
+        613.0
+      ]
+    ],
+    "metrics": {
+      "source_changed_fraction": 0.8043,
+      "source_dark_fraction": 0.69396,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00157,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 17.0,
+    "grip": 0.0071000000461936,
+    "food": [
+      [
+        [
+          205,
+          309,
+          11,
+          10
+        ],
+        67.5
+      ],
+      [
+        [
+          237,
+          209,
+          14,
+          67
+        ],
+        502.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.81591,
+      "source_dark_fraction": 0.69454,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00146,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 18.0,
+    "grip": 0.02979999966919422,
+    "food": [
+      [
+        [
+          205,
+          308,
+          11,
+          12
+        ],
+        79.0
+      ],
+      [
+        [
+          236,
+          206,
+          16,
+          69
+        ],
+        501.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.81823,
+      "source_dark_fraction": 0.7137,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00174,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 19.0,
+    "grip": 9.999999747378752e-05,
+    "food": [
+      [
+        [
+          205,
+          308,
+          11,
+          12
+        ],
+        92.5
+      ],
+      [
+        [
+          236,
+          209,
+          15,
+          68
+        ],
+        525.5
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.21022,
+      "source_dark_fraction": 0.09117,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00139,
+      "source_unchanged": false,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  },
+  {
+    "ep": 18,
+    "t": 20.0,
+    "grip": 0.00019999999494757503,
+    "food": [
+      [
+        [
+          205,
+          308,
+          12,
+          11
+        ],
+        89.0
+      ],
+      [
+        [
+          236,
+          205,
+          17,
+          71
+        ],
+        563.0
+      ]
+    ],
+    "blade": [],
+    "metrics": {
+      "source_changed_fraction": 0.20035,
+      "source_dark_fraction": 0.09175,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.00153,
+      "source_unchanged": false,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": false,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    }
+  }
+]

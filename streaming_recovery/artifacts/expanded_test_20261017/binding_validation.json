@@ -1,0 +1,140 @@
+{
+  "source_errors": [],
+  "checkpoints": [
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 0.0,
+      "episode_for_audit_only": 18,
+      "observation_ref": "obs-000000"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 9.0,
+      "episode_for_audit_only": 18,
+      "observation_ref": "obs-000225"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 20.0,
+      "episode_for_audit_only": 18,
+      "observation_ref": "obs-000500"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 8.0,
+      "episode_for_audit_only": 19,
+      "observation_ref": "obs-000200"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 10.0,
+      "episode_for_audit_only": 19,
+      "observation_ref": "obs-000250"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 16.0,
+      "episode_for_audit_only": 19,
+      "observation_ref": "obs-000400"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 18.0,
+      "episode_for_audit_only": 18,
+      "observation_ref": "obs-000450"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 14.0,
+      "episode_for_audit_only": 19,
+      "observation_ref": "obs-000350"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 0,
+      "episode_for_audit_only": 1,
+      "observation_ref": "obs-000000"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 0,
+      "episode_for_audit_only": 6,
+      "observation_ref": "obs-000000"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 0,
+      "episode_for_audit_only": 11,
+      "observation_ref": "obs-000000"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 0,
+      "episode_for_audit_only": 14,
+      "observation_ref": "obs-000000"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 14,
+      "episode_for_audit_only": 1,
+      "observation_ref": "obs-000350"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 10,
+      "episode_for_audit_only": 6,
+      "observation_ref": "obs-000250"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 7,
+      "episode_for_audit_only": 11,
+      "observation_ref": "obs-000175"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 14,
+      "episode_for_audit_only": 11,
+      "observation_ref": "obs-000350"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 8,
+      "episode_for_audit_only": 14,
+      "observation_ref": "obs-000200"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 16,
+      "episode_for_audit_only": 14,
+      "observation_ref": "obs-000400"
+    },
+    {
+      "status": "valid",
+      "errors": [],
+      "timestamp": 24,
+      "episode_for_audit_only": 14,
+      "observation_ref": "obs-000600"
+    }
+  ],
+  "conditional_directions": [],
+  "valid": true
+}

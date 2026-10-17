@@ -1,0 +1,73 @@
+{
+  "kind": "offline_replay_of_existing_real_raw_and_visual_facts_not_new_visual_inference",
+  "source_run": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\accepted_run",
+  "per_episode": [
+    {
+      "episode_for_audit_only": 18,
+      "source_decisions_sha256": "f9a7b338fbc2d2df93462a57c33feb14ee0cc1f00457642e34e61d2ade57c5b7",
+      "old_attempt_timestamps": [
+        4.0
+      ],
+      "new_latch_attempt_timestamps": [
+        4.0
+      ],
+      "matches": true
+    },
+    {
+      "episode_for_audit_only": 19,
+      "source_decisions_sha256": "aa8b5da6d6201d8cd6da4482aa1db121f45128192cea1b7426c7be75f5e4a07c",
+      "old_attempt_timestamps": [
+        3.0
+      ],
+      "new_latch_attempt_timestamps": [
+        3.0
+      ],
+      "matches": true
+    },
+    {
+      "episode_for_audit_only": 0,
+      "source_decisions_sha256": "442b1288b9d164f132ca27feb7b49d3f1a6deb4841c362efa17af7f79bc56c8b",
+      "old_attempt_timestamps": [
+        7.0
+      ],
+      "new_latch_attempt_timestamps": [
+        7.0
+      ],
+      "matches": true
+    },
+    {
+      "episode_for_audit_only": 2,
+      "source_decisions_sha256": "5fe81978a5beb629bee0d40411d9593e476159d380e8deb37f6d22df9be92736",
+      "old_attempt_timestamps": [
+        7.0
+      ],
+      "new_latch_attempt_timestamps": [
+        7.0
+      ],
+      "matches": true
+    },
+    {
+      "episode_for_audit_only": 8,
+      "source_decisions_sha256": "19062892de99ae6ab9269fb387844edad1759ec8df978af5fc47826b8b2ebfee",
+      "old_attempt_timestamps": [
+        5.0
+      ],
+      "new_latch_attempt_timestamps": [
+        5.0
+      ],
+      "matches": true
+    },
+    {
+      "episode_for_audit_only": 29,
+      "source_decisions_sha256": "41f095f4a2b615ffaa744eaa01c768e8fa82ff45fc2a5837ed4d97054b3af0a6",
+      "old_attempt_timestamps": [
+        6.0
+      ],
+      "new_latch_attempt_timestamps": [
+        6.0
+      ],
+      "matches": true
+    }
+  ],
+  "all_match": true
+}

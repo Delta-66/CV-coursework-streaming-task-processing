@@ -1,0 +1,23 @@
+test_returned_contract_does_not_alias_module_contract (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_returned_contract_does_not_alias_module_contract) ... FAIL
+
+======================================================================
+FAIL: test_returned_contract_does_not_alias_module_contract (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_returned_contract_does_not_alias_module_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_review_binding.py", line 130, in test_returned_contract_does_not_alias_module_contract
+    self.assertEqual(FINGERPRINT_DEFINITION, original)
+AssertionError: {'alg[134 chars]': 'external mutation'} != {'alg[134 chars]': 'entire_decision_row_including_processing; [30 chars]ing'}
+  {'algorithm': 'sha256',
+   'allow_nan': False,
+   'encoding': 'utf-8',
+   'ensure_ascii': False,
+-  'scope': 'external mutation',
++  'scope': 'entire_decision_row_including_processing; reruns require explicit '
++           'rebinding',
+   'separators': [',', ':'],
+   'sort_keys': True}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.021s
+
+FAILED (failures=1)

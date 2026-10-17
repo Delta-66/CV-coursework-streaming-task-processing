@@ -1,0 +1,421 @@
+{
+  "actual_real_run": true,
+  "synthetic": false,
+  "manual_review_kind": "assistant visually inspected 27 sampled timepoints (52 images); not independent human phase annotation",
+  "run": "final_run",
+  "first_frozen_run": "run",
+  "sampling_hz": 1,
+  "per_episode": [
+    {
+      "episode_for_audit_only": 18,
+      "official_outcome": "success",
+      "times": [
+        0,
+        4,
+        5,
+        9,
+        14,
+        19,
+        20
+      ],
+      "sheets": [
+        "18a.jpg",
+        "18b.jpg"
+      ],
+      "observed": "初始无分离小块；5s 刀已离架、腕部可见刀与两指连接；9s 刀在香肠端部作用；14s 已见新圆片但算法当前夹持未知；19/20s 小片与刀具回架、夹爪分离清楚。",
+      "assessment": "完整成功得到证据，无失败误报。4/5s 保守等待连续夹持；14/18s 仍漏掉部分当前关系，不能称所有阶段均正确。",
+      "phase_gaps": [
+        "4/5s 抓取确认等待",
+        "14/18s 当前阶段未知"
+      ],
+      "completion_missed": false,
+      "independent_outcome_label_read_after_run": true,
+      "unseen_at_first_run": false,
+      "first_and_final_semantics_identical": true,
+      "full_replay": true,
+      "confirmed_failure": false,
+      "failure_missed_at_episode_level": null,
+      "false_failure_alarm_on_normal": false,
+      "false_alert_found_in_reviewed_moments": false,
+      "final_task_success": true,
+      "alerts": [],
+      "unknown_decision_timestamps": [
+        4.0,
+        5.0,
+        14.0,
+        18.0
+      ],
+      "counts": {
+        "decisions": 21,
+        "notifications": 0,
+        "confirmed_failure_decisions": 0,
+        "uncertain_decisions": 4,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 6.531999999999243,
+      "decision_wall_total_s": 0.39100000000325963,
+      "decision_wall_mean_s": 0.018619047619202838,
+      "decision_wall_max_s": 0.0319999999992433,
+      "wrist_consulted_decisions": 17
+    },
+    {
+      "episode_for_audit_only": 19,
+      "official_outcome": "success",
+      "times": [
+        0,
+        5,
+        8,
+        10,
+        12,
+        15,
+        16
+      ],
+      "sheets": [
+        "19a.jpg",
+        "19b.jpg"
+      ],
+      "observed": "初始无小片；5/8s 腕图可见持刀邻接香肠；10s 已出现分离圆片并持刀离开砧板；12s 刀返回刀架；15/16s 圆片与归位清楚。",
+      "assessment": "无失败误报，但整任务成功漏确认。1Hz 下 5s 有刀—食物框、6至8s 腕部刀刃轮廓未识别，未建立连续相对作用证据；不得借最终标签补齐。首次运行的回架/释放阶段映射错误已通过独立逻辑回归修复，切割识别缺口保留。",
+      "phase_gaps": [
+        "3至7s 可靠夹持仍待确认",
+        "切割作用未确认，故新效果/完整成功不确认",
+        "11s 切割效果待确认",
+        "14s 当前阶段未知"
+      ],
+      "completion_missed": true,
+      "independent_outcome_label_read_after_run": true,
+      "unseen_at_first_run": false,
+      "first_and_final_semantics_identical": false,
+      "full_replay": true,
+      "confirmed_failure": false,
+      "failure_missed_at_episode_level": null,
+      "false_failure_alarm_on_normal": false,
+      "false_alert_found_in_reviewed_moments": false,
+      "final_task_success": null,
+      "alerts": [],
+      "unknown_decision_timestamps": [
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        11.0,
+        14.0
+      ],
+      "counts": {
+        "decisions": 17,
+        "notifications": 0,
+        "confirmed_failure_decisions": 0,
+        "uncertain_decisions": 7,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 5.014999999999418,
+      "decision_wall_total_s": 0.24600000000646105,
+      "decision_wall_mean_s": 0.01447058823567418,
+      "decision_wall_max_s": 0.01600000000325963,
+      "wrist_consulted_decisions": 13
+    },
+    {
+      "episode_for_audit_only": 0,
+      "official_outcome": "success",
+      "times": [
+        7,
+        9,
+        10
+      ],
+      "sheets": [
+        "0.jpg"
+      ],
+      "observed": "7s 夹爪已闭但刀仍在架边；9/10s 空夹爪在香肠上方、刀留架，支持当前尝试未建立持刀。",
+      "assessment": "抓取未建立提醒与目视证据一致；未误把闭爪当成功。原因仍未知。",
+      "phase_gaps": [
+        "7s 抓取效果未知",
+        "刀柄/指尖精确对齐未识别"
+      ],
+      "completion_missed": false,
+      "independent_outcome_label_read_after_run": true,
+      "unseen_at_first_run": false,
+      "first_and_final_semantics_identical": true,
+      "full_replay": true,
+      "confirmed_failure": true,
+      "failure_missed_at_episode_level": null,
+      "false_failure_alarm_on_normal": true,
+      "false_alert_found_in_reviewed_moments": false,
+      "final_task_success": null,
+      "alerts": [
+        {
+          "timestamp": 9.0,
+          "event_id": "event-0001",
+          "kind": "grasp_not_established",
+          "state": "suspected"
+        },
+        {
+          "timestamp": 10.0,
+          "event_id": "event-0001",
+          "kind": "grasp_not_established",
+          "state": "confirmed"
+        }
+      ],
+      "unknown_decision_timestamps": [
+        7.0
+      ],
+      "counts": {
+        "decisions": 12,
+        "notifications": 2,
+        "confirmed_failure_decisions": 2,
+        "uncertain_decisions": 1,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 3.5780000000013388,
+      "decision_wall_total_s": 0.158000000003085,
+      "decision_wall_mean_s": 0.013166666666923751,
+      "decision_wall_max_s": 0.01600000000325963,
+      "wrist_consulted_decisions": 5
+    },
+    {
+      "episode_for_audit_only": 2,
+      "official_outcome": "success",
+      "times": [
+        2,
+        10,
+        11
+      ],
+      "sheets": [
+        "2.jpg"
+      ],
+      "observed": "2s 顶视刀在架、腕图两指张开接近；10/11s 顶视刀仍在架、腕图空夹爪进入工作区。",
+      "assessment": "前置条件未满足诊断正确；没有可靠记录目标附近闭合，attempt=0，因此未编造具体失败尝试次数。对齐/闭合阶段识别不足。",
+      "phase_gaps": [
+        "0/1s 初始校准失败",
+        "接近/对齐/闭合仍多次输出 locate_tool",
+        "9s 场景证据不可用"
+      ],
+      "completion_missed": false,
+      "independent_outcome_label_read_after_run": true,
+      "unseen_at_first_run": false,
+      "first_and_final_semantics_identical": true,
+      "full_replay": true,
+      "confirmed_failure": true,
+      "failure_missed_at_episode_level": null,
+      "false_failure_alarm_on_normal": true,
+      "false_alert_found_in_reviewed_moments": false,
+      "final_task_success": null,
+      "alerts": [
+        {
+          "timestamp": 10.0,
+          "event_id": "event-0001",
+          "kind": "prerequisite_unmet",
+          "state": "suspected"
+        },
+        {
+          "timestamp": 11.0,
+          "event_id": "event-0001",
+          "kind": "prerequisite_unmet",
+          "state": "confirmed"
+        }
+      ],
+      "unknown_decision_timestamps": [
+        0.0,
+        1.0,
+        9.0
+      ],
+      "counts": {
+        "decisions": 12,
+        "notifications": 2,
+        "confirmed_failure_decisions": 1,
+        "uncertain_decisions": 3,
+        "model_invalid": 3
+      },
+      "elapsed_wall_s": 3.75,
+      "decision_wall_total_s": 0.14100000000325963,
+      "decision_wall_mean_s": 0.011750000000271635,
+      "decision_wall_max_s": 0.031000000002677552,
+      "wrist_consulted_decisions": 0
+    },
+    {
+      "episode_for_audit_only": 8,
+      "official_outcome": "success",
+      "times": [
+        4,
+        7,
+        8
+      ],
+      "sheets": [
+        "8.jpg"
+      ],
+      "observed": "4s 两指在刀旁、刀仍支撑于架；7/8s 空夹爪进入砧板上方，刀未被带走。",
+      "assessment": "未见样例首次冻结测试正确提醒缺少持刀前置条件；未确认目标附近的完整开闭尝试（attempt=0）。4/5s 仍是 locate_tool，阶段粒度不足，即使 execution_status 没有 information_insufficient 也不能称全阶段正确。",
+      "phase_gaps": [
+        "4/5s 对齐/尝试没有可靠定位",
+        "未确认实际抓取尝试次数"
+      ],
+      "completion_missed": false,
+      "independent_outcome_label_read_after_run": true,
+      "unseen_at_first_run": true,
+      "first_and_final_semantics_identical": true,
+      "full_replay": true,
+      "confirmed_failure": true,
+      "failure_missed_at_episode_level": null,
+      "false_failure_alarm_on_normal": true,
+      "false_alert_found_in_reviewed_moments": false,
+      "final_task_success": null,
+      "alerts": [
+        {
+          "timestamp": 7.0,
+          "event_id": "event-0001",
+          "kind": "prerequisite_unmet",
+          "state": "suspected"
+        },
+        {
+          "timestamp": 8.0,
+          "event_id": "event-0001",
+          "kind": "prerequisite_unmet",
+          "state": "confirmed"
+        }
+      ],
+      "unknown_decision_timestamps": [],
+      "counts": {
+        "decisions": 10,
+        "notifications": 2,
+        "confirmed_failure_decisions": 2,
+        "uncertain_decisions": 0,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 2.7810000000026776,
+      "decision_wall_total_s": 0.1560000000099535,
+      "decision_wall_mean_s": 0.01560000000099535,
+      "decision_wall_max_s": 0.01600000000325963,
+      "wrist_consulted_decisions": 1
+    },
+    {
+      "episode_for_audit_only": 29,
+      "official_outcome": "success",
+      "times": [
+        5,
+        6,
+        8,
+        9
+      ],
+      "sheets": [
+        "29.jpg"
+      ],
+      "observed": "5/6s 两指向刀收拢但刀仍在架；8/9s 夹爪空手到砧板，刀留架。腕图仍能看见指间间隙；原始开度约0.0188被既有阈值归为closed，不能解释为完全闭合或成功夹持。",
+      "assessment": "未见样例首次冻结测试正确提醒抓取未建立。算法未断言夹持力/摩擦原因，也没有精确诊断官方 gripper state 原因标签。",
+      "phase_gaps": [
+        "0s 刀架初始化不确定",
+        "6s 抓取效果未知",
+        "closed 为粗阈值区间，完全闭合和接触仍未知"
+      ],
+      "completion_missed": false,
+      "independent_outcome_label_read_after_run": true,
+      "unseen_at_first_run": true,
+      "first_and_final_semantics_identical": true,
+      "full_replay": true,
+      "confirmed_failure": true,
+      "failure_missed_at_episode_level": null,
+      "false_failure_alarm_on_normal": true,
+      "false_alert_found_in_reviewed_moments": false,
+      "final_task_success": null,
+      "alerts": [
+        {
+          "timestamp": 8.0,
+          "event_id": "event-0001",
+          "kind": "grasp_not_established",
+          "state": "suspected"
+        },
+        {
+          "timestamp": 9.0,
+          "event_id": "event-0001",
+          "kind": "grasp_not_established",
+          "state": "confirmed"
+        }
+      ],
+      "unknown_decision_timestamps": [
+        0.0,
+        6.0
+      ],
+      "counts": {
+        "decisions": 10,
+        "notifications": 2,
+        "confirmed_failure_decisions": 1,
+        "uncertain_decisions": 2,
+        "model_invalid": 1
+      },
+      "elapsed_wall_s": 2.8280000000013388,
+      "decision_wall_total_s": 0.13999999999214197,
+      "decision_wall_mean_s": 0.013999999999214197,
+      "decision_wall_max_s": 0.01600000000325963,
+      "wrist_consulted_decisions": 4
+    }
+  ],
+  "elapsed_wall_s": 24.5,
+  "detection_latency": null,
+  "latency_reason": "no first-detectable-failure manual timestamps; notification video times are not detection delays",
+  "generalization_claim": false,
+  "no_physical_execution": true,
+  "totals": {
+    "native_rows": 1998,
+    "decoded_images": 3996,
+    "decisions": 82,
+    "wrist_consulted_decisions": 40,
+    "max_images_per_decision": 3
+  },
+  "checks": {
+    "split_unchanged": true,
+    "current_code_matches_final_snapshot": true,
+    "current_tests_match_final_snapshot": true,
+    "final_validation_passed": true,
+    "no_frozen_test_episode": true,
+    "input_files_verified_18": true,
+    "timestamps_valid_18": true,
+    "all_selected_measured_fields_present_18": true,
+    "all_advisory_only_18": true,
+    "no_future_references_18": true,
+    "sample_count_18": true,
+    "complete_both_videos_18": true,
+    "all_sensor_categories_consumed_18": true,
+    "input_files_verified_19": true,
+    "timestamps_valid_19": true,
+    "all_selected_measured_fields_present_19": true,
+    "all_advisory_only_19": true,
+    "no_future_references_19": true,
+    "sample_count_19": true,
+    "complete_both_videos_19": true,
+    "all_sensor_categories_consumed_19": true,
+    "input_files_verified_0": true,
+    "timestamps_valid_0": true,
+    "all_selected_measured_fields_present_0": true,
+    "all_advisory_only_0": true,
+    "no_future_references_0": true,
+    "sample_count_0": true,
+    "complete_both_videos_0": true,
+    "all_sensor_categories_consumed_0": true,
+    "input_files_verified_2": true,
+    "timestamps_valid_2": true,
+    "all_selected_measured_fields_present_2": true,
+    "all_advisory_only_2": true,
+    "no_future_references_2": true,
+    "sample_count_2": true,
+    "complete_both_videos_2": true,
+    "all_sensor_categories_consumed_2": true,
+    "unseen_first_and_final_semantics_identical_8": true,
+    "input_files_verified_8": true,
+    "timestamps_valid_8": true,
+    "all_selected_measured_fields_present_8": true,
+    "all_advisory_only_8": true,
+    "no_future_references_8": true,
+    "sample_count_8": true,
+    "complete_both_videos_8": true,
+    "all_sensor_categories_consumed_8": true,
+    "unseen_first_and_final_semantics_identical_29": true,
+    "input_files_verified_29": true,
+    "timestamps_valid_29": true,
+    "all_selected_measured_fields_present_29": true,
+    "all_advisory_only_29": true,
+    "no_future_references_29": true,
+    "sample_count_29": true,
+    "complete_both_videos_29": true,
+    "all_sensor_categories_consumed_29": true,
+    "at_most_3_images": true
+  }
+}

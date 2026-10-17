@@ -1,0 +1,2347 @@
+{
+  "report_version": 3,
+  "run": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\accepted_run",
+  "offline_only": true,
+  "independent_labels_read_after_inference": true,
+  "inference_repeated_for_this_report": false,
+  "engineering_status": "passed",
+  "evidence_status": "valid",
+  "semantic_status": "passed",
+  "overall_status": "passed",
+  "checks": {
+    "config_episode_selection_matches_run": true,
+    "config_matches_snapshot": true,
+    "real_data_declaration": true,
+    "advisory_replay_mode": true,
+    "selected_camera_pair": true,
+    "no_frozen_test_episode": true,
+    "manual_review_evidence_bindings_valid": true,
+    "episode_18:full_replay": true,
+    "episode_18:sample_coverage": true,
+    "episode_18:source_files_match_snapshot": true,
+    "episode_18:advisory_semantics": true,
+    "episode_18:logged_capacities_respected": true,
+    "episode_18:no_future_references": true,
+    "episode_18:correction_contracts_valid": true,
+    "episode_18:notification_types_known": true,
+    "episode_19:full_replay": true,
+    "episode_19:sample_coverage": true,
+    "episode_19:source_files_match_snapshot": true,
+    "episode_19:advisory_semantics": true,
+    "episode_19:logged_capacities_respected": true,
+    "episode_19:no_future_references": true,
+    "episode_19:correction_contracts_valid": true,
+    "episode_19:notification_types_known": true,
+    "episode_0:full_replay": true,
+    "episode_0:sample_coverage": true,
+    "episode_0:source_files_match_snapshot": true,
+    "episode_0:advisory_semantics": true,
+    "episode_0:logged_capacities_respected": true,
+    "episode_0:no_future_references": true,
+    "episode_0:correction_contracts_valid": true,
+    "episode_0:notification_types_known": true,
+    "episode_2:full_replay": true,
+    "episode_2:sample_coverage": true,
+    "episode_2:source_files_match_snapshot": true,
+    "episode_2:advisory_semantics": true,
+    "episode_2:logged_capacities_respected": true,
+    "episode_2:no_future_references": true,
+    "episode_2:correction_contracts_valid": true,
+    "episode_2:notification_types_known": true,
+    "episode_8:full_replay": true,
+    "episode_8:sample_coverage": true,
+    "episode_8:source_files_match_snapshot": true,
+    "episode_8:advisory_semantics": true,
+    "episode_8:logged_capacities_respected": true,
+    "episode_8:no_future_references": true,
+    "episode_8:correction_contracts_valid": true,
+    "episode_8:notification_types_known": true,
+    "episode_29:full_replay": true,
+    "episode_29:sample_coverage": true,
+    "episode_29:source_files_match_snapshot": true,
+    "episode_29:advisory_semantics": true,
+    "episode_29:logged_capacities_respected": true,
+    "episode_29:no_future_references": true,
+    "episode_29:correction_contracts_valid": true,
+    "episode_29:notification_types_known": true,
+    "conditional_direction_real_evidence_bindings_valid": true
+  },
+  "per_episode": [
+    {
+      "episode_for_audit_only": 18,
+      "official_outcome": "success",
+      "confirmed_failure": false,
+      "confirmed_event_ids": [],
+      "failure_missed_at_episode_level": null,
+      "false_failure_alarm_on_normal": false,
+      "false_confirmed_failure_on_normal": false,
+      "completion_missed": false,
+      "false_task_success_on_failure": null,
+      "final_task_success": true,
+      "notification_counts": {
+        "suspicion": 0,
+        "failure_confirmation": 0,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "metadata_expected_rows": 519,
+      "parquet_actual_rows": 519,
+      "consumed_parquet_rows": 519,
+      "consumed_video_frames": {
+        "cam_high": 519,
+        "cam_right_wrist": 519
+      },
+      "full_replay": true,
+      "full_replay_checks": {
+        "metadata_matches_parquet": true,
+        "parquet_consumed_completely": true,
+        "both_videos_consumed_completely": true,
+        "video_timestamps_valid": true
+      },
+      "decision_sample_coverage": true,
+      "expected_decision_count": 21,
+      "actual_decision_count": 21,
+      "sample_every_native_frames": 25,
+      "last_expected_decision_timestamp": 20.0,
+      "last_actual_decision_timestamp": 20.0,
+      "manual_moments": [
+        {
+          "episode_for_audit_only": 18,
+          "timestamp": 0.0,
+          "observed": "顶视初始只有长条香肠，刀在架；未出现新分离小段。",
+          "expected_fields": {
+            "state.task_completed": false
+          },
+          "image_refs": [
+            "trajectory_000018/frames/obs-000000_cam_high.jpg",
+            "trajectory_000018/frames/obs-000000_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000018/frames/obs-000000_cam_high.jpg": "306f84866c4661b01ef86c47481dfa79cfaa74d0cd8264913e8d3803ccb91ab5",
+            "trajectory_000018/frames/obs-000000_cam_right_wrist.jpg": "972f0886beb35d46426f757ea70e348e0d08a369454c9def9598ca1a7d76b21c"
+          },
+          "observation_ref": "obs-000000",
+          "row_sha256": "f740780f3e9a2885b104feb8549a3f19d5379a68222d1569e16f5259c09a076f",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 0.0,
+          "actual_stage": "locate_tool",
+          "differences": [],
+          "matched_timestamps": [
+            0.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 0.0,
+              "stage": "locate_tool",
+              "observation_ref": "obs-000000",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 18,
+          "timestamp": 9.0,
+          "observed": "腕图刀与两指连接，刀刃位于香肠端部；顶视机械手在砧板。",
+          "expected_fields": {
+            "state.preconditions.reliable_grasp": true,
+            "visual_facts.measurements.cut_operation": "yes"
+          },
+          "image_refs": [
+            "trajectory_000018/frames/obs-000225_cam_high.jpg",
+            "trajectory_000018/frames/obs-000225_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000018/frames/obs-000225_cam_high.jpg": "257b629275e1a40c0e05113f605d941eb89c2b38ecb3ba1df747ac68e22383a7",
+            "trajectory_000018/frames/obs-000225_cam_right_wrist.jpg": "15004707b7f44cd82fd168fe10786c6b8528220a2f59ba364f5369e596b211a8"
+          },
+          "expected_stages": [
+            "cut_operation"
+          ],
+          "observation_ref": "obs-000225",
+          "row_sha256": "58bbcba27e47ce8bd8cfba7ac83d6e01c13d30415ca8c19bdf03753480af21bb",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 9.0,
+          "actual_stage": "cut_operation",
+          "differences": [],
+          "matched_timestamps": [
+            9.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 9.0,
+              "stage": "cut_operation",
+              "observation_ref": "obs-000225",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 18,
+          "timestamp": 20.0,
+          "observed": "与初始相比新增独立圆片；刀已回架且机械手退出。",
+          "expected_fields": {
+            "state.task_completed": true
+          },
+          "image_refs": [
+            "trajectory_000018/frames/obs-000500_cam_high.jpg",
+            "trajectory_000018/frames/obs-000500_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000018/frames/obs-000500_cam_high.jpg": "47cade25c5d10da5f902d355d0e37ae9e18ba4074c6fcb342b5675012ec32b96",
+            "trajectory_000018/frames/obs-000500_cam_right_wrist.jpg": "3b0cc2d93b843bb50e5167ee55c1b4c1f3c30910d93dfd4fb638fd084cf2fd25"
+          },
+          "expected_stages": [
+            "completed"
+          ],
+          "observation_ref": "obs-000500",
+          "row_sha256": "74641de77349f41fc2dbfebce234455e6e0346015ef3d4f866ab53849878a07e",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 20.0,
+          "actual_stage": "completed",
+          "differences": [],
+          "matched_timestamps": [
+            20.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 20.0,
+              "stage": "completed",
+              "observation_ref": "obs-000500",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 18,
+          "timestamp": 18.0,
+          "observed": "归位接触交接被右臂与刀架遮挡，允许当前关系未知；后续清楚释放才能确认完成。",
+          "expected_fields": {
+            "execution_status": "information_insufficient",
+            "failure_event": null
+          },
+          "image_refs": [
+            "trajectory_000018/frames/obs-000450_cam_high.jpg",
+            "trajectory_000018/frames/obs-000450_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000018/frames/obs-000450_cam_high.jpg": "a1d3247a6b964d79f55500967b65159d92f46623c9a441617c091cf91c50b1d7",
+            "trajectory_000018/frames/obs-000450_cam_right_wrist.jpg": "ac33ce8cb67265d8885a7396ea3c910b16763c13d22869fb0c1e0b3e96885e89"
+          },
+          "expected_stages": [
+            "unknown"
+          ],
+          "observation_ref": "obs-000450",
+          "row_sha256": "2385def595e2ffddb6e294a6a03b198c3fd4596bb0c1ca131f118b19885be8a9",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 18.0,
+          "actual_stage": "unknown",
+          "differences": [],
+          "matched_timestamps": [
+            18.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 18.0,
+              "stage": "unknown",
+              "observation_ref": "obs-000450",
+              "differences": []
+            }
+          ]
+        }
+      ],
+      "completion_evidence_chain": {
+        "reference": {
+          "timestamp": 0.0,
+          "ref": "obs-000000",
+          "cut_piece": "no"
+        },
+        "operation_times": [
+          9.0,
+          10.0,
+          11.0,
+          12.0,
+          13.0
+        ],
+        "confirmed_effect_times": [
+          15.0,
+          16.0,
+          17.0,
+          18.0,
+          19.0,
+          20.0
+        ],
+        "current_return_confirmed_times": [
+          20.0
+        ],
+        "completion_times": [
+          20.0
+        ],
+        "reference_operation_effect_completion_ordered": true
+      },
+      "semantic_status": "passed",
+      "capability_gaps": [],
+      "engineering_checks": {
+        "full_replay": true,
+        "sample_coverage": true,
+        "source_files_match_snapshot": true,
+        "advisory_semantics": true,
+        "logged_capacities_respected": true,
+        "no_future_references": true,
+        "correction_contracts_valid": true,
+        "notification_types_known": true
+      },
+      "correction_contract_violations": [],
+      "capacity_violations": [],
+      "action_counts": {},
+      "joint_localization_decisions": 0,
+      "independent_readiness_decisions": 0,
+      "unknown_decision_timestamps": [
+        4.0,
+        5.0,
+        18.0
+      ],
+      "unknown_stage_timestamps": [
+        18.0
+      ],
+      "elapsed_wall_s": 12.452999999994063,
+      "decisions_sha256": "f9a7b338fbc2d2df93462a57c33feb14ee0cc1f00457642e34e61d2ade57c5b7",
+      "alerts": []
+    },
+    {
+      "episode_for_audit_only": 19,
+      "official_outcome": "success",
+      "confirmed_failure": false,
+      "confirmed_event_ids": [],
+      "failure_missed_at_episode_level": null,
+      "false_failure_alarm_on_normal": false,
+      "false_confirmed_failure_on_normal": false,
+      "completion_missed": false,
+      "false_task_success_on_failure": null,
+      "final_task_success": true,
+      "notification_counts": {
+        "suspicion": 0,
+        "failure_confirmation": 0,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "metadata_expected_rows": 420,
+      "parquet_actual_rows": 420,
+      "consumed_parquet_rows": 420,
+      "consumed_video_frames": {
+        "cam_high": 420,
+        "cam_right_wrist": 420
+      },
+      "full_replay": true,
+      "full_replay_checks": {
+        "metadata_matches_parquet": true,
+        "parquet_consumed_completely": true,
+        "both_videos_consumed_completely": true,
+        "video_timestamps_valid": true
+      },
+      "decision_sample_coverage": true,
+      "expected_decision_count": 17,
+      "actual_decision_count": 17,
+      "sample_every_native_frames": 25,
+      "last_expected_decision_timestamp": 16.0,
+      "last_actual_decision_timestamp": 16.0,
+      "manual_moments": [
+        {
+          "episode_for_audit_only": 19,
+          "timestamp": 8.0,
+          "observed": "连续5至8秒腕图显示刀刃在两指之间、与香肠端部相对位置变化。",
+          "expected_fields": {
+            "state.preconditions.reliable_grasp": true,
+            "visual_facts.measurements.cut_operation": "yes"
+          },
+          "image_refs": [
+            "trajectory_000019/frames/obs-000200_cam_high.jpg",
+            "trajectory_000019/frames/obs-000200_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000019/frames/obs-000200_cam_high.jpg": "7674c320156a6cfd288853f60740d9a7c7351f030b8197cfafd06b2e7a1ddae3",
+            "trajectory_000019/frames/obs-000200_cam_right_wrist.jpg": "529e1f5c503a8ddfeeff7b60a092848a2f10a46ffc7ceb916e65f3e640d2d0bc"
+          },
+          "expected_stages": [
+            "cut_operation"
+          ],
+          "observation_ref": "obs-000200",
+          "row_sha256": "6e53c43a31b2175bf3ea3bd424cb4d5ffedd2eacee35cbf46ba561344aa51d7e",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 8.0,
+          "actual_stage": "cut_operation",
+          "differences": [],
+          "matched_timestamps": [
+            8.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 8.0,
+              "stage": "cut_operation",
+              "observation_ref": "obs-000200",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 19,
+          "timestamp": 10.0,
+          "observed": "与0秒相比新增明显圆片；仍持刀开始回架。单帧新增物需后续稳定确认。",
+          "expected_fields": {
+            "visual_facts.measurements.new_cut_effect": "yes"
+          },
+          "image_refs": [
+            "trajectory_000019/frames/obs-000250_cam_high.jpg",
+            "trajectory_000019/frames/obs-000250_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000019/frames/obs-000250_cam_high.jpg": "10aebf672009d3ba3bd3afa097c4c4ffbf195a71322a516e1de93d5f0306a82f",
+            "trajectory_000019/frames/obs-000250_cam_right_wrist.jpg": "3c7da02f077e0bff807dc0a0b1d08d80079a1e9e68f72672908f0e81423ffb1e"
+          },
+          "expected_stages": [
+            "return_tool"
+          ],
+          "observation_ref": "obs-000250",
+          "row_sha256": "ddf772f5dc3adee594d59985fd4f99a7987924e380db198732e0b29429d65b77",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 10.0,
+          "actual_stage": "return_tool",
+          "differences": [],
+          "matched_timestamps": [
+            10.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 10.0,
+              "stage": "return_tool",
+              "observation_ref": "obs-000250",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 19,
+          "timestamp": 16.0,
+          "observed": "新圆片仍在砧板，刀回架且右手退出；切割参考、作用和效果链可核查。",
+          "expected_fields": {
+            "state.task_completed": true
+          },
+          "image_refs": [
+            "trajectory_000019/frames/obs-000400_cam_high.jpg",
+            "trajectory_000019/frames/obs-000400_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000019/frames/obs-000400_cam_high.jpg": "335f4f3c3a450e0cf1082b893a85991bd2854d5ac3212835dade9ecf8f47e593",
+            "trajectory_000019/frames/obs-000400_cam_right_wrist.jpg": "c33ee781df892f7476c68f0c892b9580008b332a190ba45123bcbbaffa511423"
+          },
+          "expected_stages": [
+            "completed"
+          ],
+          "observation_ref": "obs-000400",
+          "row_sha256": "b2139100f1cb6697913705d3af50b3293aef529c6772ff3f89010e9fd13b4820",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 16.0,
+          "actual_stage": "completed",
+          "differences": [],
+          "matched_timestamps": [
+            16.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 16.0,
+              "stage": "completed",
+              "observation_ref": "obs-000400",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 19,
+          "timestamp": 14.0,
+          "observed": "回架时手指/刀架投影混叠，当前连接或释放尚不可靠；保留未知并继续观察。",
+          "expected_fields": {
+            "execution_status": "information_insufficient",
+            "failure_event": null
+          },
+          "image_refs": [
+            "trajectory_000019/frames/obs-000350_cam_high.jpg",
+            "trajectory_000019/frames/obs-000350_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000019/frames/obs-000350_cam_high.jpg": "4cc6148b97aa887fc4d248f06db7b7b217c4888c06eeda85f7077ce0e01847b1",
+            "trajectory_000019/frames/obs-000350_cam_right_wrist.jpg": "ca93d9ee2f75e8031a3a805e86373a9abd5fdde7b8a20ae64861245c0f9b4acc"
+          },
+          "expected_stages": [
+            "unknown"
+          ],
+          "observation_ref": "obs-000350",
+          "row_sha256": "f8449a658876d6d5a1ea043df6b1a0e278da3fb21048af22d980caf31a24d4c9",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 14.0,
+          "actual_stage": "unknown",
+          "differences": [],
+          "matched_timestamps": [
+            14.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 14.0,
+              "stage": "unknown",
+              "observation_ref": "obs-000350",
+              "differences": []
+            }
+          ]
+        }
+      ],
+      "completion_evidence_chain": {
+        "reference": {
+          "timestamp": 0.0,
+          "ref": "obs-000000",
+          "cut_piece": "no"
+        },
+        "operation_times": [
+          8.0
+        ],
+        "confirmed_effect_times": [
+          11.0,
+          12.0,
+          13.0,
+          14.0,
+          15.0,
+          16.0
+        ],
+        "current_return_confirmed_times": [
+          16.0
+        ],
+        "completion_times": [
+          16.0
+        ],
+        "reference_operation_effect_completion_ordered": true
+      },
+      "semantic_status": "passed",
+      "capability_gaps": [],
+      "engineering_checks": {
+        "full_replay": true,
+        "sample_coverage": true,
+        "source_files_match_snapshot": true,
+        "advisory_semantics": true,
+        "logged_capacities_respected": true,
+        "no_future_references": true,
+        "correction_contracts_valid": true,
+        "notification_types_known": true
+      },
+      "correction_contract_violations": [],
+      "capacity_violations": [],
+      "action_counts": {},
+      "joint_localization_decisions": 0,
+      "independent_readiness_decisions": 0,
+      "unknown_decision_timestamps": [
+        3.0,
+        4.0,
+        5.0,
+        14.0
+      ],
+      "unknown_stage_timestamps": [
+        14.0
+      ],
+      "elapsed_wall_s": 10.514999999999418,
+      "decisions_sha256": "aa8b5da6d6201d8cd6da4482aa1db121f45128192cea1b7426c7be75f5e4a07c",
+      "alerts": []
+    },
+    {
+      "episode_for_audit_only": 0,
+      "official_outcome": "failure",
+      "confirmed_failure": true,
+      "confirmed_event_ids": [
+        "event-0001"
+      ],
+      "failure_missed_at_episode_level": false,
+      "false_failure_alarm_on_normal": null,
+      "false_confirmed_failure_on_normal": null,
+      "completion_missed": null,
+      "false_task_success_on_failure": false,
+      "final_task_success": null,
+      "notification_counts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "metadata_expected_rows": 300,
+      "parquet_actual_rows": 300,
+      "consumed_parquet_rows": 300,
+      "consumed_video_frames": {
+        "cam_high": 300,
+        "cam_right_wrist": 300
+      },
+      "full_replay": true,
+      "full_replay_checks": {
+        "metadata_matches_parquet": true,
+        "parquet_consumed_completely": true,
+        "both_videos_consumed_completely": true,
+        "video_timestamps_valid": true
+      },
+      "decision_sample_coverage": true,
+      "expected_decision_count": 12,
+      "actual_decision_count": 12,
+      "sample_every_native_frames": 25,
+      "last_expected_decision_timestamp": 11.0,
+      "last_actual_decision_timestamp": 11.0,
+      "manual_moments": [
+        {
+          "episode_for_audit_only": 0,
+          "timestamp": 7.0,
+          "observed": "腕图两指已收拢但刀柄在侧旁/原架，接触关系仍不清；不应由闭爪报告成功。",
+          "expected_fields": {
+            "failure_event": null
+          },
+          "image_refs": [
+            "trajectory_000000/frames/obs-000175_cam_high.jpg",
+            "trajectory_000000/frames/obs-000175_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000000/frames/obs-000175_cam_high.jpg": "f7ed625cf9f6616ad867988e1d18bd2110acce902aee6368bae4a19ebc31cbbe",
+            "trajectory_000000/frames/obs-000175_cam_right_wrist.jpg": "f071574e58d802dc2ab3bcfe00ee03bfe0e0e9bf8961a6193e1c8de661f3ddd8"
+          },
+          "expected_stages": [
+            "verify_grasp"
+          ],
+          "observation_ref": "obs-000175",
+          "row_sha256": "3ba1be5fe44f19eb64ac9a567889b10d5e949862df498c90461ecfdf6d9d2c8c",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 7.0,
+          "actual_stage": "verify_grasp",
+          "differences": [],
+          "matched_timestamps": [
+            7.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 7.0,
+              "stage": "verify_grasp",
+              "observation_ref": "obs-000175",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 0,
+          "timestamp": 10.0,
+          "observed": "顶视刀留架，腕图空夹爪在香肠上方，支持抓取未建立。",
+          "expected_fields": {
+            "state.preconditions.reliable_grasp": false,
+            "state.candidate": "grasp_not_established",
+            "execution_status": "confirmed_failure"
+          },
+          "image_refs": [
+            "trajectory_000000/frames/obs-000250_cam_high.jpg",
+            "trajectory_000000/frames/obs-000250_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000000/frames/obs-000250_cam_high.jpg": "1156fe917637afdb17714c9dbc36862be6cc7c6abc5c2459aecb79c5387f6ad2",
+            "trajectory_000000/frames/obs-000250_cam_right_wrist.jpg": "d738d472e887851951b2b762b7869f01f58820384757db94e9ab38c3a19235f3"
+          },
+          "expected_stages": [
+            "verify_grasp"
+          ],
+          "observation_ref": "obs-000250",
+          "row_sha256": "a4fd7c7aa76e73af2245d3ed1fd55669428e58a6dcf7ffc3ceee20b09ab3e42d",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 10.0,
+          "actual_stage": "verify_grasp",
+          "differences": [],
+          "matched_timestamps": [
+            10.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 10.0,
+              "stage": "verify_grasp",
+              "observation_ref": "obs-000250",
+              "differences": []
+            }
+          ]
+        }
+      ],
+      "completion_evidence_chain": {
+        "reference": {
+          "timestamp": 0.0,
+          "ref": "obs-000000",
+          "cut_piece": "no"
+        },
+        "operation_times": [],
+        "confirmed_effect_times": [],
+        "current_return_confirmed_times": [],
+        "completion_times": [],
+        "reference_operation_effect_completion_ordered": false
+      },
+      "semantic_status": "passed",
+      "capability_gaps": [],
+      "engineering_checks": {
+        "full_replay": true,
+        "sample_coverage": true,
+        "source_files_match_snapshot": true,
+        "advisory_semantics": true,
+        "logged_capacities_respected": true,
+        "no_future_references": true,
+        "correction_contracts_valid": true,
+        "notification_types_known": true
+      },
+      "correction_contract_violations": [],
+      "capacity_violations": [],
+      "action_counts": {
+        "hold_and_observe": 1,
+        "open_gripper": 2
+      },
+      "joint_localization_decisions": 0,
+      "independent_readiness_decisions": 0,
+      "unknown_decision_timestamps": [
+        7.0
+      ],
+      "unknown_stage_timestamps": [],
+      "elapsed_wall_s": 7.3439999999973224,
+      "decisions_sha256": "442b1288b9d164f132ca27feb7b49d3f1a6deb4841c362efa17af7f79bc56c8b",
+      "alerts": [
+        {
+          "timestamp": 9.0,
+          "type": "suspicion",
+          "event": {
+            "event_id": "event-0001",
+            "kind": "grasp_not_established",
+            "attempt": 1,
+            "opened_at": 9.0,
+            "updated_at": 9.0,
+            "state": "suspected",
+            "support_count": 1,
+            "evidence": [
+              {
+                "timestamp": 9.0,
+                "ref": "obs-000225",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000225",
+                    "camera": "cam_high",
+                    "timestamp": 9.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "camera": "cam_high",
+                    "timestamp": 0.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "timestamp": 0.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "moving",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000225",
+                    "timestamp": 9.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000225",
+                    "timestamp": 9.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000225",
+                    "timestamp": 9.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000200",
+                    "start_timestamp": 8.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              }
+            ],
+            "last_support_at": 9.0,
+            "support_started_at": 9.0,
+            "observation_status": "supported",
+            "closure_reason": null
+          },
+          "reason": "new_suspicion"
+        },
+        {
+          "timestamp": 10.0,
+          "type": "failure_confirmation",
+          "event": {
+            "event_id": "event-0001",
+            "kind": "grasp_not_established",
+            "attempt": 1,
+            "opened_at": 9.0,
+            "updated_at": 10.0,
+            "state": "confirmed",
+            "support_count": 2,
+            "evidence": [
+              {
+                "timestamp": 9.0,
+                "ref": "obs-000225",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000225",
+                    "camera": "cam_high",
+                    "timestamp": 9.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "camera": "cam_high",
+                    "timestamp": 0.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "timestamp": 0.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "moving",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000225",
+                    "timestamp": 9.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000225",
+                    "timestamp": 9.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000225",
+                    "timestamp": 9.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000200",
+                    "start_timestamp": 8.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              },
+              {
+                "timestamp": 10.0,
+                "ref": "obs-000250",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000250",
+                    "camera": "cam_high",
+                    "timestamp": 10.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "camera": "cam_high",
+                    "timestamp": 0.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "timestamp": 0.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "moving",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000250",
+                    "timestamp": 10.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000250",
+                    "timestamp": 10.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000250",
+                    "timestamp": 10.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000225",
+                    "start_timestamp": 9.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              }
+            ],
+            "last_support_at": 10.0,
+            "support_started_at": 9.0,
+            "observation_status": "supported",
+            "closure_reason": null
+          },
+          "reason": "evidence_confirmed"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 2,
+      "official_outcome": "failure",
+      "confirmed_failure": true,
+      "confirmed_event_ids": [
+        "event-0001"
+      ],
+      "failure_missed_at_episode_level": false,
+      "false_failure_alarm_on_normal": null,
+      "false_confirmed_failure_on_normal": null,
+      "completion_missed": null,
+      "false_task_success_on_failure": false,
+      "final_task_success": null,
+      "notification_counts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "metadata_expected_rows": 289,
+      "parquet_actual_rows": 289,
+      "consumed_parquet_rows": 289,
+      "consumed_video_frames": {
+        "cam_high": 289,
+        "cam_right_wrist": 289
+      },
+      "full_replay": true,
+      "full_replay_checks": {
+        "metadata_matches_parquet": true,
+        "parquet_consumed_completely": true,
+        "both_videos_consumed_completely": true,
+        "video_timestamps_valid": true
+      },
+      "decision_sample_coverage": true,
+      "expected_decision_count": 12,
+      "actual_decision_count": 12,
+      "sample_every_native_frames": 25,
+      "last_expected_decision_timestamp": 11.0,
+      "last_actual_decision_timestamp": 11.0,
+      "manual_moments": [
+        {
+          "episode_for_audit_only": 2,
+          "timestamp": 2.0,
+          "observed": "腕图可见独立刀柄颈部和两指内缘；两指张开，正在准备对齐。",
+          "expected_fields": {
+            "visual_facts.gripper": "open",
+            "visual_facts.measurements.localization.status": "localized",
+            "visual_facts.grasp_readiness": {}
+          },
+          "image_refs": [
+            "trajectory_000002/frames/obs-000050_cam_high.jpg",
+            "trajectory_000002/frames/obs-000050_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000002/frames/obs-000050_cam_high.jpg": "be357fcb4cce68975f74971410e089edf71e69189ec34edcdefd7b5a9ff3c003",
+            "trajectory_000002/frames/obs-000050_cam_right_wrist.jpg": "c449b81cc33d51ceb1009e2d1a1411d425cda647ac3711a931dbc5bee6515cb3"
+          },
+          "expected_stages": [
+            "align_grasp"
+          ],
+          "observation_ref": "obs-000050",
+          "row_sha256": "5377bf4755dccc31dd6b015c283c5864dcaeddeb831e1731f8db39e115ca370e",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 2.0,
+          "actual_stage": "align_grasp",
+          "differences": [],
+          "matched_timestamps": [
+            2.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 2.0,
+              "stage": "align_grasp",
+              "observation_ref": "obs-000050",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 2,
+          "timestamp": 3.0,
+          "observed": "刀柄颈部移至两指中点下方，仍为准备对齐，不表示已经接触。",
+          "expected_fields": {
+            "visual_facts.measurements.localization.status": "localized"
+          },
+          "image_refs": [
+            "trajectory_000002/frames/obs-000075_cam_high.jpg",
+            "trajectory_000002/frames/obs-000075_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000002/frames/obs-000075_cam_high.jpg": "8cf5eb0a9aa8ea5cc16091275a6111beb5ad7bf45471d26d143554952b7f6e36",
+            "trajectory_000002/frames/obs-000075_cam_right_wrist.jpg": "9e9cb067028d7496b2daf4e729d813517d26b0d9372a4af9751a8c189efeb2a8"
+          },
+          "expected_stages": [
+            "align_grasp"
+          ],
+          "observation_ref": "obs-000075",
+          "row_sha256": "adf6c06b142ff3193d59e2d5f99e9d0c7a70b1ce2b63ad4f4d4238e11bfbc1b3",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 3.0,
+          "actual_stage": "align_grasp",
+          "differences": [],
+          "matched_timestamps": [
+            3.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 3.0,
+              "stage": "align_grasp",
+              "observation_ref": "obs-000075",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 2,
+          "timestamp": 7.0,
+          "observed": "相对6秒可见两指明显收拢，刀仍未带离架；实际闭合应建立一次尝试而非成功。",
+          "expected_fields": {
+            "state.attempt": 1
+          },
+          "image_refs": [
+            "trajectory_000002/frames/obs-000175_cam_high.jpg",
+            "trajectory_000002/frames/obs-000175_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000002/frames/obs-000175_cam_high.jpg": "81ec7aa99cacef0326040abb943837e1ccf3e68d22d2bfba4c47a5d1f02b37ac",
+            "trajectory_000002/frames/obs-000175_cam_right_wrist.jpg": "ba65e25472fe523f82f17f3e231a40d97d35a854ea780d552c2c796bcf0d466c"
+          },
+          "expected_stages": [
+            "verify_grasp"
+          ],
+          "observation_ref": "obs-000175",
+          "row_sha256": "994033df5a63b68c71b5393fa1f1cb0b1dd504db2ef7bcd4d0a68695912c077b",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 7.0,
+          "actual_stage": "verify_grasp",
+          "differences": [],
+          "matched_timestamps": [
+            7.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 7.0,
+              "stage": "verify_grasp",
+              "observation_ref": "obs-000175",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 2,
+          "timestamp": 11.0,
+          "observed": "刀留架而空夹爪已进入工作区；有前面的实际闭合，诊断该次抓取未建立。",
+          "expected_fields": {
+            "state.preconditions.reliable_grasp": false,
+            "execution_status": "confirmed_failure",
+            "state.candidate": "grasp_not_established"
+          },
+          "image_refs": [
+            "trajectory_000002/frames/obs-000275_cam_high.jpg",
+            "trajectory_000002/frames/obs-000275_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000002/frames/obs-000275_cam_high.jpg": "97334506a2333d414d4ae327bab249034687a3bfe03f066b88d82d61225c535e",
+            "trajectory_000002/frames/obs-000275_cam_right_wrist.jpg": "582192b1058aa9b26ae3aabb64359f0d0b9ee615a0355634856b4c7e7f41bb79"
+          },
+          "expected_stages": [
+            "verify_grasp"
+          ],
+          "observation_ref": "obs-000275",
+          "row_sha256": "a82b5be17b2225d1dbea96f0533c28edafdc6dd331cefccaa27ce14abb8deb74",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 11.0,
+          "actual_stage": "verify_grasp",
+          "differences": [],
+          "matched_timestamps": [
+            11.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 11.0,
+              "stage": "verify_grasp",
+              "observation_ref": "obs-000275",
+              "differences": []
+            }
+          ]
+        }
+      ],
+      "completion_evidence_chain": {
+        "reference": {
+          "timestamp": 2.0,
+          "ref": "obs-000050",
+          "cut_piece": "no"
+        },
+        "operation_times": [],
+        "confirmed_effect_times": [],
+        "current_return_confirmed_times": [],
+        "completion_times": [],
+        "reference_operation_effect_completion_ordered": false
+      },
+      "semantic_status": "passed",
+      "capability_gaps": [],
+      "engineering_checks": {
+        "full_replay": true,
+        "sample_coverage": true,
+        "source_files_match_snapshot": true,
+        "advisory_semantics": true,
+        "logged_capacities_respected": true,
+        "no_future_references": true,
+        "correction_contracts_valid": true,
+        "notification_types_known": true
+      },
+      "correction_contract_violations": [],
+      "capacity_violations": [],
+      "action_counts": {
+        "hold_and_observe": 1,
+        "open_gripper": 1
+      },
+      "joint_localization_decisions": 2,
+      "independent_readiness_decisions": 0,
+      "unknown_decision_timestamps": [
+        0.0,
+        1.0,
+        9.0
+      ],
+      "unknown_stage_timestamps": [
+        0.0,
+        1.0,
+        9.0
+      ],
+      "elapsed_wall_s": 7.39100000000326,
+      "decisions_sha256": "5fe81978a5beb629bee0d40411d9593e476159d380e8deb37f6d22df9be92736",
+      "alerts": [
+        {
+          "timestamp": 10.0,
+          "type": "suspicion",
+          "event": {
+            "event_id": "event-0001",
+            "kind": "grasp_not_established",
+            "attempt": 1,
+            "opened_at": 10.0,
+            "updated_at": 10.0,
+            "state": "suspected",
+            "support_count": 1,
+            "evidence": [
+              {
+                "timestamp": 10.0,
+                "ref": "obs-000250",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000250",
+                    "camera": "cam_high",
+                    "timestamp": 10.0
+                  },
+                  {
+                    "ref": "obs-000050",
+                    "camera": "cam_high",
+                    "timestamp": 2.0
+                  },
+                  {
+                    "ref": "obs-000050",
+                    "timestamp": 2.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "recent_motion",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000250",
+                    "timestamp": 10.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000250",
+                    "timestamp": 10.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000250",
+                    "timestamp": 10.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000225",
+                    "start_timestamp": 9.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              }
+            ],
+            "last_support_at": 10.0,
+            "support_started_at": 10.0,
+            "observation_status": "supported",
+            "closure_reason": null
+          },
+          "reason": "new_suspicion"
+        },
+        {
+          "timestamp": 11.0,
+          "type": "failure_confirmation",
+          "event": {
+            "event_id": "event-0001",
+            "kind": "grasp_not_established",
+            "attempt": 1,
+            "opened_at": 10.0,
+            "updated_at": 11.0,
+            "state": "confirmed",
+            "support_count": 2,
+            "evidence": [
+              {
+                "timestamp": 10.0,
+                "ref": "obs-000250",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000250",
+                    "camera": "cam_high",
+                    "timestamp": 10.0
+                  },
+                  {
+                    "ref": "obs-000050",
+                    "camera": "cam_high",
+                    "timestamp": 2.0
+                  },
+                  {
+                    "ref": "obs-000050",
+                    "timestamp": 2.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "recent_motion",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000250",
+                    "timestamp": 10.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000250",
+                    "timestamp": 10.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000250",
+                    "timestamp": 10.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000225",
+                    "start_timestamp": 9.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              },
+              {
+                "timestamp": 11.0,
+                "ref": "obs-000275",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000275",
+                    "camera": "cam_high",
+                    "timestamp": 11.0
+                  },
+                  {
+                    "ref": "obs-000050",
+                    "camera": "cam_high",
+                    "timestamp": 2.0
+                  },
+                  {
+                    "ref": "obs-000050",
+                    "timestamp": 2.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "recent_motion",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000275",
+                    "timestamp": 11.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000275",
+                    "timestamp": 11.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000275",
+                    "timestamp": 11.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000250",
+                    "start_timestamp": 10.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              }
+            ],
+            "last_support_at": 11.0,
+            "support_started_at": 10.0,
+            "observation_status": "supported",
+            "closure_reason": null
+          },
+          "reason": "evidence_confirmed"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "official_outcome": "failure",
+      "confirmed_failure": true,
+      "confirmed_event_ids": [
+        "event-0001"
+      ],
+      "failure_missed_at_episode_level": false,
+      "false_failure_alarm_on_normal": null,
+      "false_confirmed_failure_on_normal": null,
+      "completion_missed": null,
+      "false_task_success_on_failure": false,
+      "final_task_success": null,
+      "notification_counts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "metadata_expected_rows": 233,
+      "parquet_actual_rows": 233,
+      "consumed_parquet_rows": 233,
+      "consumed_video_frames": {
+        "cam_high": 233,
+        "cam_right_wrist": 233
+      },
+      "full_replay": true,
+      "full_replay_checks": {
+        "metadata_matches_parquet": true,
+        "parquet_consumed_completely": true,
+        "both_videos_consumed_completely": true,
+        "video_timestamps_valid": true
+      },
+      "decision_sample_coverage": true,
+      "expected_decision_count": 10,
+      "actual_decision_count": 10,
+      "sample_every_native_frames": 25,
+      "last_expected_decision_timestamp": 9.0,
+      "last_actual_decision_timestamp": 9.0,
+      "manual_moments": [
+        {
+          "episode_for_audit_only": 8,
+          "timestamp": 4.0,
+          "observed": "两指在刀架旁，刀架和手指混连；应识别接近但不能伪造精确对齐坐标。",
+          "expected_fields": {
+            "visual_facts.knife_handle_xy": null,
+            "visual_facts.gripper_xy": null
+          },
+          "image_refs": [
+            "trajectory_000008/frames/obs-000100_cam_high.jpg",
+            "trajectory_000008/frames/obs-000100_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000008/frames/obs-000100_cam_high.jpg": "6b854009cbe86c1d71dafe39d6652739c405a8a6db35fa1223ba9ae2d177bf2d",
+            "trajectory_000008/frames/obs-000100_cam_right_wrist.jpg": "6730e913691dd3eea1fa3b6d116301c9a7c7f4f30d33738ca2fa876c96007a06"
+          },
+          "expected_stages": [
+            "approach_tool"
+          ],
+          "observation_ref": "obs-000100",
+          "row_sha256": "04ff6e089cbfa63d09e487570c575ff1db37386a3a32948a7bcdc57f4ddc784a",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 4.0,
+          "actual_stage": "approach_tool",
+          "differences": [],
+          "matched_timestamps": [
+            4.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 4.0,
+              "stage": "approach_tool",
+              "observation_ref": "obs-000100",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 8,
+          "timestamp": 5.0,
+          "observed": "相对4秒两指收拢，刀仍在原架；进入抓取效果检查。",
+          "expected_fields": {
+            "state.attempt": 1
+          },
+          "image_refs": [
+            "trajectory_000008/frames/obs-000125_cam_high.jpg",
+            "trajectory_000008/frames/obs-000125_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000008/frames/obs-000125_cam_high.jpg": "b7d1e0bc5ac6f3f3671488b3c44a5d20d13be57d4ec5c97c16fd2c76db536537",
+            "trajectory_000008/frames/obs-000125_cam_right_wrist.jpg": "e9b222cb5fc90920320fae416bab49b5dd825552b04df3d705f25a5d4975faab"
+          },
+          "expected_stages": [
+            "verify_grasp"
+          ],
+          "observation_ref": "obs-000125",
+          "row_sha256": "dc9e3fa74fe8238e805fb547dba10e3059ed2dbc03adc43e8454e4f265441557",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 5.0,
+          "actual_stage": "verify_grasp",
+          "differences": [],
+          "matched_timestamps": [
+            5.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 5.0,
+              "stage": "verify_grasp",
+              "observation_ref": "obs-000125",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 8,
+          "timestamp": 8.0,
+          "observed": "空夹爪处于砧板上，刀仍留在架；支持当前抓取失败。",
+          "expected_fields": {
+            "state.preconditions.reliable_grasp": false,
+            "execution_status": "confirmed_failure",
+            "state.candidate": "grasp_not_established"
+          },
+          "image_refs": [
+            "trajectory_000008/frames/obs-000200_cam_high.jpg",
+            "trajectory_000008/frames/obs-000200_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000008/frames/obs-000200_cam_high.jpg": "d17e95260f3a71a000aa2b736c1a56957c9783ff5adcd700cce4552083148004",
+            "trajectory_000008/frames/obs-000200_cam_right_wrist.jpg": "8f8055bff05047dcc88356aaf5160102c166af8d96a1bebac850f83460458dd0"
+          },
+          "expected_stages": [
+            "verify_grasp"
+          ],
+          "observation_ref": "obs-000200",
+          "row_sha256": "e63486491646cd9634e14d149c3062b8ce8d41c3052160a198c6def1c1da9025",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 8.0,
+          "actual_stage": "verify_grasp",
+          "differences": [],
+          "matched_timestamps": [
+            8.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 8.0,
+              "stage": "verify_grasp",
+              "observation_ref": "obs-000200",
+              "differences": []
+            }
+          ]
+        }
+      ],
+      "completion_evidence_chain": {
+        "reference": {
+          "timestamp": 0.0,
+          "ref": "obs-000000",
+          "cut_piece": "no"
+        },
+        "operation_times": [],
+        "confirmed_effect_times": [],
+        "current_return_confirmed_times": [],
+        "completion_times": [],
+        "reference_operation_effect_completion_ordered": false
+      },
+      "semantic_status": "passed",
+      "capability_gaps": [],
+      "engineering_checks": {
+        "full_replay": true,
+        "sample_coverage": true,
+        "source_files_match_snapshot": true,
+        "advisory_semantics": true,
+        "logged_capacities_respected": true,
+        "no_future_references": true,
+        "correction_contracts_valid": true,
+        "notification_types_known": true
+      },
+      "correction_contract_violations": [],
+      "capacity_violations": [],
+      "action_counts": {
+        "hold_and_observe": 1,
+        "open_gripper": 2
+      },
+      "joint_localization_decisions": 0,
+      "independent_readiness_decisions": 0,
+      "unknown_decision_timestamps": [
+        6.0
+      ],
+      "unknown_stage_timestamps": [],
+      "elapsed_wall_s": 5.764999999999418,
+      "decisions_sha256": "19062892de99ae6ab9269fb387844edad1759ec8df978af5fc47826b8b2ebfee",
+      "alerts": [
+        {
+          "timestamp": 7.0,
+          "type": "suspicion",
+          "event": {
+            "event_id": "event-0001",
+            "kind": "grasp_not_established",
+            "attempt": 1,
+            "opened_at": 7.0,
+            "updated_at": 7.0,
+            "state": "suspected",
+            "support_count": 1,
+            "evidence": [
+              {
+                "timestamp": 7.0,
+                "ref": "obs-000175",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000175",
+                    "camera": "cam_high",
+                    "timestamp": 7.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "camera": "cam_high",
+                    "timestamp": 0.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "timestamp": 0.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "moving",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000175",
+                    "timestamp": 7.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000175",
+                    "timestamp": 7.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000175",
+                    "timestamp": 7.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000150",
+                    "start_timestamp": 6.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              }
+            ],
+            "last_support_at": 7.0,
+            "support_started_at": 7.0,
+            "observation_status": "supported",
+            "closure_reason": null
+          },
+          "reason": "new_suspicion"
+        },
+        {
+          "timestamp": 8.0,
+          "type": "failure_confirmation",
+          "event": {
+            "event_id": "event-0001",
+            "kind": "grasp_not_established",
+            "attempt": 1,
+            "opened_at": 7.0,
+            "updated_at": 8.0,
+            "state": "confirmed",
+            "support_count": 2,
+            "evidence": [
+              {
+                "timestamp": 7.0,
+                "ref": "obs-000175",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000175",
+                    "camera": "cam_high",
+                    "timestamp": 7.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "camera": "cam_high",
+                    "timestamp": 0.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "timestamp": 0.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "moving",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000175",
+                    "timestamp": 7.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000175",
+                    "timestamp": 7.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000175",
+                    "timestamp": 7.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000150",
+                    "start_timestamp": 6.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              },
+              {
+                "timestamp": 8.0,
+                "ref": "obs-000200",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000200",
+                    "camera": "cam_high",
+                    "timestamp": 8.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "camera": "cam_high",
+                    "timestamp": 0.0
+                  },
+                  {
+                    "ref": "obs-000000",
+                    "timestamp": 0.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "recent_motion",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000200",
+                    "timestamp": 8.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000200",
+                    "timestamp": 8.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000200",
+                    "timestamp": 8.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000175",
+                    "start_timestamp": 7.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              }
+            ],
+            "last_support_at": 8.0,
+            "support_started_at": 7.0,
+            "observation_status": "supported",
+            "closure_reason": null
+          },
+          "reason": "evidence_confirmed"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 29,
+      "official_outcome": "failure",
+      "confirmed_failure": true,
+      "confirmed_event_ids": [
+        "event-0001"
+      ],
+      "failure_missed_at_episode_level": false,
+      "false_failure_alarm_on_normal": null,
+      "false_confirmed_failure_on_normal": null,
+      "completion_missed": null,
+      "false_task_success_on_failure": false,
+      "final_task_success": null,
+      "notification_counts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "metadata_expected_rows": 237,
+      "parquet_actual_rows": 237,
+      "consumed_parquet_rows": 237,
+      "consumed_video_frames": {
+        "cam_high": 237,
+        "cam_right_wrist": 237
+      },
+      "full_replay": true,
+      "full_replay_checks": {
+        "metadata_matches_parquet": true,
+        "parquet_consumed_completely": true,
+        "both_videos_consumed_completely": true,
+        "video_timestamps_valid": true
+      },
+      "decision_sample_coverage": true,
+      "expected_decision_count": 10,
+      "actual_decision_count": 10,
+      "sample_every_native_frames": 25,
+      "last_expected_decision_timestamp": 9.0,
+      "last_actual_decision_timestamp": 9.0,
+      "manual_moments": [
+        {
+          "episode_for_audit_only": 29,
+          "timestamp": 6.0,
+          "observed": "两指已收拢但仍有可见间隙，刀在架旁；closed只表示原始开度阈值，效果仍需检查。",
+          "expected_fields": {
+            "state.attempt": 1
+          },
+          "image_refs": [
+            "trajectory_000029/frames/obs-000150_cam_high.jpg",
+            "trajectory_000029/frames/obs-000150_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000029/frames/obs-000150_cam_high.jpg": "b92d553531676e467eb0030b77f2a67a32958f81b043261edc7e325a857ff994",
+            "trajectory_000029/frames/obs-000150_cam_right_wrist.jpg": "1d8c7d2b1f670d540519d67e91a56468eba8b79478069d50e6ac9a25e6b709ed"
+          },
+          "expected_stages": [
+            "verify_grasp"
+          ],
+          "observation_ref": "obs-000150",
+          "row_sha256": "07511fe9316da3926f6bbbefdc2b2be9c42762ff91380c4597c0b06518df65a1",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 6.0,
+          "actual_stage": "verify_grasp",
+          "differences": [],
+          "matched_timestamps": [
+            6.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 6.0,
+              "stage": "verify_grasp",
+              "observation_ref": "obs-000150",
+              "differences": []
+            }
+          ]
+        },
+        {
+          "episode_for_audit_only": 29,
+          "timestamp": 9.0,
+          "observed": "夹爪为空、刀在架，未带走刀便进入工作区；不推断夹持力或摩擦原因。",
+          "expected_fields": {
+            "state.preconditions.reliable_grasp": false,
+            "execution_status": "confirmed_failure"
+          },
+          "image_refs": [
+            "trajectory_000029/frames/obs-000225_cam_high.jpg",
+            "trajectory_000029/frames/obs-000225_cam_right_wrist.jpg"
+          ],
+          "image_sha256": {
+            "trajectory_000029/frames/obs-000225_cam_high.jpg": "22fb8fc59c9d7ee899bae7b1aa5636b5f569b1a6a9589a1c824380822b2a098a",
+            "trajectory_000029/frames/obs-000225_cam_right_wrist.jpg": "451a4b8beeb40ff009cb88dedcbb5969ea5cc2071eabbf6db0fdd250826840ab"
+          },
+          "expected_stages": [
+            "verify_grasp"
+          ],
+          "observation_ref": "obs-000225",
+          "row_sha256": "7d7eeef9072ca6938e494853ccfd8759b8b399ddeb343a79c97eea5b32569e0e",
+          "row_fingerprint_version": "canonical-json-full-row-v1",
+          "status": "passed",
+          "actual_timestamp": 9.0,
+          "actual_stage": "verify_grasp",
+          "differences": [],
+          "matched_timestamps": [
+            9.0
+          ],
+          "comparisons": [
+            {
+              "timestamp": 9.0,
+              "stage": "verify_grasp",
+              "observation_ref": "obs-000225",
+              "differences": []
+            }
+          ]
+        }
+      ],
+      "completion_evidence_chain": {
+        "reference": {
+          "timestamp": 1.0,
+          "ref": "obs-000025",
+          "cut_piece": "no"
+        },
+        "operation_times": [],
+        "confirmed_effect_times": [],
+        "current_return_confirmed_times": [],
+        "completion_times": [],
+        "reference_operation_effect_completion_ordered": false
+      },
+      "semantic_status": "passed",
+      "capability_gaps": [],
+      "engineering_checks": {
+        "full_replay": true,
+        "sample_coverage": true,
+        "source_files_match_snapshot": true,
+        "advisory_semantics": true,
+        "logged_capacities_respected": true,
+        "no_future_references": true,
+        "correction_contracts_valid": true,
+        "notification_types_known": true
+      },
+      "correction_contract_violations": [],
+      "capacity_violations": [],
+      "action_counts": {
+        "hold_and_observe": 1,
+        "open_gripper": 1
+      },
+      "joint_localization_decisions": 0,
+      "independent_readiness_decisions": 0,
+      "unknown_decision_timestamps": [
+        0.0,
+        6.0
+      ],
+      "unknown_stage_timestamps": [
+        0.0
+      ],
+      "elapsed_wall_s": 5.781999999999243,
+      "decisions_sha256": "41f095f4a2b615ffaa744eaa01c768e8fa82ff45fc2a5837ed4d97054b3af0a6",
+      "alerts": [
+        {
+          "timestamp": 8.0,
+          "type": "suspicion",
+          "event": {
+            "event_id": "event-0001",
+            "kind": "grasp_not_established",
+            "attempt": 1,
+            "opened_at": 8.0,
+            "updated_at": 8.0,
+            "state": "suspected",
+            "support_count": 1,
+            "evidence": [
+              {
+                "timestamp": 8.0,
+                "ref": "obs-000200",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000200",
+                    "camera": "cam_high",
+                    "timestamp": 8.0
+                  },
+                  {
+                    "ref": "obs-000025",
+                    "camera": "cam_high",
+                    "timestamp": 1.0
+                  },
+                  {
+                    "ref": "obs-000025",
+                    "timestamp": 1.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "recent_motion",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000200",
+                    "timestamp": 8.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000200",
+                    "timestamp": 8.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000200",
+                    "timestamp": 8.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000175",
+                    "start_timestamp": 7.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              }
+            ],
+            "last_support_at": 8.0,
+            "support_started_at": 8.0,
+            "observation_status": "supported",
+            "closure_reason": null
+          },
+          "reason": "new_suspicion"
+        },
+        {
+          "timestamp": 9.0,
+          "type": "failure_confirmation",
+          "event": {
+            "event_id": "event-0001",
+            "kind": "grasp_not_established",
+            "attempt": 1,
+            "opened_at": 8.0,
+            "updated_at": 9.0,
+            "state": "confirmed",
+            "support_count": 2,
+            "evidence": [
+              {
+                "timestamp": 8.0,
+                "ref": "obs-000200",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000200",
+                    "camera": "cam_high",
+                    "timestamp": 8.0
+                  },
+                  {
+                    "ref": "obs-000025",
+                    "camera": "cam_high",
+                    "timestamp": 1.0
+                  },
+                  {
+                    "ref": "obs-000025",
+                    "timestamp": 1.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "recent_motion",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000200",
+                    "timestamp": 8.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000200",
+                    "timestamp": 8.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000200",
+                    "timestamp": 8.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000175",
+                    "start_timestamp": 7.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              },
+              {
+                "timestamp": 9.0,
+                "ref": "obs-000225",
+                "claim": "当前支持 grasp_not_established",
+                "source": "real_multiview_effect_geometry",
+                "images": [
+                  {
+                    "ref": "obs-000225",
+                    "camera": "cam_high",
+                    "timestamp": 9.0
+                  },
+                  {
+                    "ref": "obs-000025",
+                    "camera": "cam_high",
+                    "timestamp": 1.0
+                  },
+                  {
+                    "ref": "obs-000025",
+                    "timestamp": 1.0,
+                    "camera": "cam_high"
+                  }
+                ],
+                "joint_motion": "stationary",
+                "sensor_refs": [
+                  {
+                    "ref": "obs-000225",
+                    "timestamp": 9.0,
+                    "field": "observation.state[7:13]"
+                  },
+                  {
+                    "ref": "obs-000225",
+                    "timestamp": 9.0,
+                    "field": "observation.velocity[7:13]"
+                  },
+                  {
+                    "ref": "obs-000225",
+                    "timestamp": 9.0,
+                    "field": "native_measured_joint_interval",
+                    "start_ref": "obs-000200",
+                    "start_timestamp": 8.0,
+                    "sample_count": 26,
+                    "complete": true
+                  }
+                ]
+              }
+            ],
+            "last_support_at": 9.0,
+            "support_started_at": 8.0,
+            "observation_status": "supported",
+            "closure_reason": null
+          },
+          "reason": "evidence_confirmed"
+        }
+      ]
+    }
+  ],
+  "capability_gaps": [],
+  "binding_report": {
+    "source_errors": [],
+    "checkpoints": [
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 0.0,
+        "episode_for_audit_only": 18,
+        "observation_ref": "obs-000000"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 9.0,
+        "episode_for_audit_only": 18,
+        "observation_ref": "obs-000225"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 20.0,
+        "episode_for_audit_only": 18,
+        "observation_ref": "obs-000500"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 8.0,
+        "episode_for_audit_only": 19,
+        "observation_ref": "obs-000200"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 10.0,
+        "episode_for_audit_only": 19,
+        "observation_ref": "obs-000250"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 16.0,
+        "episode_for_audit_only": 19,
+        "observation_ref": "obs-000400"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 7.0,
+        "episode_for_audit_only": 0,
+        "observation_ref": "obs-000175"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 10.0,
+        "episode_for_audit_only": 0,
+        "observation_ref": "obs-000250"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 2.0,
+        "episode_for_audit_only": 2,
+        "observation_ref": "obs-000050"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 3.0,
+        "episode_for_audit_only": 2,
+        "observation_ref": "obs-000075"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 7.0,
+        "episode_for_audit_only": 2,
+        "observation_ref": "obs-000175"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 11.0,
+        "episode_for_audit_only": 2,
+        "observation_ref": "obs-000275"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 4.0,
+        "episode_for_audit_only": 8,
+        "observation_ref": "obs-000100"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 5.0,
+        "episode_for_audit_only": 8,
+        "observation_ref": "obs-000125"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 8.0,
+        "episode_for_audit_only": 8,
+        "observation_ref": "obs-000200"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 6.0,
+        "episode_for_audit_only": 29,
+        "observation_ref": "obs-000150"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 9.0,
+        "episode_for_audit_only": 29,
+        "observation_ref": "obs-000225"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 18.0,
+        "episode_for_audit_only": 18,
+        "observation_ref": "obs-000450"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 14.0,
+        "episode_for_audit_only": 19,
+        "observation_ref": "obs-000350"
+      }
+    ],
+    "conditional_directions": [
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 2.0,
+        "episode_for_audit_only": 2,
+        "observation_ref": "obs-000050"
+      },
+      {
+        "status": "valid",
+        "errors": [],
+        "timestamp": 3.0,
+        "episode_for_audit_only": 2,
+        "observation_ref": "obs-000075"
+      }
+    ],
+    "valid": true
+  },
+  "conditional_direction_checks": [
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 2.0,
+      "observation_ref": "obs-000050",
+      "row_sha256": "5377bf4755dccc31dd6b015c283c5864dcaeddeb831e1731f8db39e115ca370e",
+      "image_path": "trajectory_000002/frames/obs-000050_cam_right_wrist.jpg",
+      "image_sha256": "c449b81cc33d51ceb1009e2d1a1411d425cda647ac3711a931dbc5bee6515cb3",
+      "camera": "cam_right_wrist",
+      "localization_frame": "cam_right_wrist_image_x_right_y_down",
+      "knife_handle_xy": [
+        417.773,
+        700.521
+      ],
+      "gripper_xy": [
+        513.672,
+        694.01
+      ],
+      "localization_method": "white_blade_to_wider_handle_neck_and_two_finger_inner_edges",
+      "expected_directions": [
+        "图像左侧"
+      ],
+      "reviewer": "root assistant visual inspection",
+      "observed_features": "可见刀柄颈部宽度过渡在两指内缘中点左侧，纵向在死区内。",
+      "reviewed_handle_neck": true,
+      "reviewed_two_finger_edges": true,
+      "coordinate_claim": "image_plane_only_no_robot_mapping",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "status": "passed",
+      "binding_errors": [],
+      "review_gaps": [],
+      "generated_direction": {
+        "coordinate_frame": "cam_right_wrist_image_x_right_y_down",
+        "translation": {
+          "kind": "qualitative_image_plane",
+          "direction": [
+            "图像左侧"
+          ],
+          "magnitude": null
+        },
+        "rotation": null,
+        "numeric_command": null,
+        "directly_executable": false,
+        "preconditions": [
+          "current knife handle and both finger edges located",
+          "current gripper open and object separate",
+          "independent depth, orientation, calibration and safe path before physical motion"
+        ],
+        "post_checks": [
+          "new image confirms finger midpoint and handle align",
+          "independent grasp readiness remains required"
+        ]
+      },
+      "evidence_kind": "conditional_direction_from_bound_real_pixels_and_visual_review",
+      "natural_failure_event_created": false,
+      "natural_alignment_action": false,
+      "actually_executed": false,
+      "execution_receipt": null,
+      "outcome_attributed_to_suggestion": false
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 3.0,
+      "observation_ref": "obs-000075",
+      "row_sha256": "adf6c06b142ff3193d59e2d5f99e9d0c7a70b1ce2b63ad4f4d4238e11bfbc1b3",
+      "image_path": "trajectory_000002/frames/obs-000075_cam_right_wrist.jpg",
+      "image_sha256": "9e9cb067028d7496b2daf4e729d813517d26b0d9372a4af9751a8c189efeb2a8",
+      "camera": "cam_right_wrist",
+      "localization_frame": "cam_right_wrist_image_x_right_y_down",
+      "knife_handle_xy": [
+        467.188,
+        880.208
+      ],
+      "gripper_xy": [
+        513.672,
+        683.594
+      ],
+      "localization_method": "white_blade_to_wider_handle_neck_and_two_finger_inner_edges",
+      "expected_directions": [
+        "图像下方"
+      ],
+      "reviewer": "root assistant visual inspection",
+      "observed_features": "可见刀柄颈部位于两指内缘中点下方，横向差未超过50/1000死区。",
+      "reviewed_handle_neck": true,
+      "reviewed_two_finger_edges": true,
+      "coordinate_claim": "image_plane_only_no_robot_mapping",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "status": "passed",
+      "binding_errors": [],
+      "review_gaps": [],
+      "generated_direction": {
+        "coordinate_frame": "cam_right_wrist_image_x_right_y_down",
+        "translation": {
+          "kind": "qualitative_image_plane",
+          "direction": [
+            "图像下方"
+          ],
+          "magnitude": null
+        },
+        "rotation": null,
+        "numeric_command": null,
+        "directly_executable": false,
+        "preconditions": [
+          "current knife handle and both finger edges located",
+          "current gripper open and object separate",
+          "independent depth, orientation, calibration and safe path before physical motion"
+        ],
+        "post_checks": [
+          "new image confirms finger midpoint and handle align",
+          "independent grasp readiness remains required"
+        ]
+      },
+      "evidence_kind": "conditional_direction_from_bound_real_pixels_and_visual_review",
+      "natural_failure_event_created": false,
+      "natural_alignment_action": false,
+      "actually_executed": false,
+      "execution_receipt": null,
+      "outcome_attributed_to_suggestion": false
+    }
+  ],
+  "direction_evidence_scope": "Natural align counts are separate from conditional real-pixel direction checks; neither implies a natural retry or physical execution.",
+  "manual_review_kind": "本轮助手逐图目视核查；非独立人工阶段标注，无首次可检测时刻标注",
+  "manual_review_sha256": "b04e805de3f2ac59a5a86a679ff859573cc03978422a833f19861580444595da",
+  "elapsed_wall_s_from_original_run": 49.31199999999808,
+  "totals": {
+    "native_rows": 1998,
+    "decoded_images": 3996,
+    "decisions": 82,
+    "confirmed_failure_episodes": 4,
+    "joint_localization_decisions": 2,
+    "directional_action_decisions": 0,
+    "reviewed_directional_checkpoints": 0,
+    "verified_conditional_real_directions": 2
+  },
+  "run_summary_sha256": "83a4763cc75f52120d76f2553e358213f845ef348728db475a5e857337b1493e",
+  "run_config_sha256": "058c688171a3ac9fbed7c26d46e3bf81e405c5aaa0e192c24264ff7bfd23f158",
+  "run_code_sha256": {
+    "contracts.py": "a83c5f03918ce154981281f225ee3ae59e320e9419d76e2b2a5caa9b35cde642",
+    "dynamics.py": "e6c58490a1d2fb2eba0e6f12db375814b331ebca539246f36837e626f4a210fc",
+    "engine.py": "831a1bc74e8116f5ae530831c058eb2b3f4c2dbcf6fffe1d3d655131f743f553",
+    "evaluation.py": "b0eef038b43fb40a159becdf1ce88573571503673f0dbc3401fbd2bf28bfd5eb",
+    "events.py": "ecdf0718a3c183cf5c7d148160cc4376a0aca0b5c34a6bbdc2c057999bde671f",
+    "fetch_functional_data.py": "0905cb6da9e52529e419a32ab5c333236582713e092dce2cc115f429dc902dbc",
+    "geometry.py": "81f6a8bd06d6836f847a0d8c97fbad1868216611e846265a3b8c7fa889028138",
+    "localization.py": "1204f22e2ee76ae57851287d4668fbf847c86f2c1198df5b8b77aaecca96583d",
+    "memory.py": "79bfefe9e848815e51cac2b05f89f666e90a3c5c9c6c23a002d8582f73c97c9e",
+    "multiview.py": "ca20c4ff5c983c333eea0735448802f9dd05d9843358ed6199e3e86560bd8736",
+    "probe.py": "b91dd5b5ba3e0280439f7a0f7a191e39b38f46eb81c6aefc423f5edf6b1a165e",
+    "recovery.py": "9adf51f3bf3a11e2469657de5427f19fa03e85746d051394a26c417547b03556",
+    "report.py": "a387dcbed65704166afd45b6fe5f134bb8ba9ed11fe214a6b66b30eb08317028",
+    "review_existing.py": "a29602aeba8afd2be5c6aa96d0e15595d5f5459b759ad1a2ff6f7fb10f5bc30c",
+    "source.py": "0572b42d63595a4385681efb4807e333b120b1bd9aea6b5ca65d67498df10fbf",
+    "task_spec.py": "d24532e9880f9337c51b4216ab1009a543964dc591e886c99fbd3d85a708780b",
+    "tracking.py": "68afb936078d61188a6195e4e65262ed614db4991b2b240669e4d1a04287a10e",
+    "validation.py": "a80b6f7967a660eff55ff54263e1e3c1e93b51d94562f53d74e647daf790d18e",
+    "vision.py": "f923409301f72d844c828e59cd9dc3c529fb188e7e4a7c23378e97aa8bbd7f97",
+    "__init__.py": "da8cc91889ca48ac6f50024508a5001c62749b687777232e418522bc934bdab8",
+    "__main__.py": "fa103e46942dd6728f36fd1dc58b05b6b62e053c6498203eb0314e30aab82afa"
+  },
+  "evaluator_sha256": "7f2d1c80b9a62788a2d1c8295bfb16fc36c2effe74131a3b7bbb395e5ac96a4a",
+  "frozen_test_split_sha256": "0cbc7eb3d349c5d5b4476f367376a36d9a322f8e5c1de9da3f05730cada06c09",
+  "detection_latency": null,
+  "latency_reason": "no independently annotated first-detectable failure timestamp",
+  "generalization_claim": false,
+  "sample_exposure": "regression: all six trajectories have now been inspected",
+  "not_verified_by_offline_log_audit": [
+    "causal counterfactual full-chain test",
+    "synthetic state regressions",
+    "natural retry and slip perception",
+    "physical execution",
+    "independent depth/pose/contact readiness"
+  ]
+}

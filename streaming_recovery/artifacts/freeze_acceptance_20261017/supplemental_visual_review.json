@@ -1,0 +1,89 @@
+{
+  "kind": "assistant visual inspection of nine actual new-run saved images; not independent human temporal ground truth",
+  "source_run": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\freeze_acceptance_20261017\\final_run",
+  "reviewer": "root assistant via view_image",
+  "records": [
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 5,
+      "observation_ref": "obs-000125",
+      "row_sha256": "5fe661bae13a47c5ae60788ddb68fe94cf1d8158f8f2cff6681ad88f00e48e63",
+      "image_path": "trajectory_000018/frames/obs-000125_cam_high.jpg",
+      "image_sha256": "c081f1187317a8630ce2ab434119f0a08077c16b7c4668801b4d806d85f93a68",
+      "observed": "砧板可见一根长条香肠，未见独立小圆段。"
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 9,
+      "observation_ref": "obs-000225",
+      "row_sha256": "c4e5f38e017a48dd931e47f12393645dc52e15042561e9b18e74fc621c1cf35b",
+      "image_path": "trajectory_000018/frames/obs-000225_cam_right_wrist.jpg",
+      "image_sha256": "15004707b7f44cd82fd168fe10786c6b8528220a2f59ba364f5369e596b211a8",
+      "observed": "刀刃与香肠端部相交，物体关系支持刀具作用；单张图不证明动作轨迹或已切开。"
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 14,
+      "observation_ref": "obs-000350",
+      "row_sha256": "c3180b9c57de7ef30a677a45b81c0f4867d8f026f9f754a990a0d69246a64e5a",
+      "image_path": "trajectory_000018/frames/obs-000350_cam_high.jpg",
+      "image_sha256": "0215ef7eee4e532fd8f27a47f63c3f9e3cd1917e253fb1d29bdb79cc6fc66fd8",
+      "observed": "长条下方出现独立圆形小段，相对5秒布局新增。"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 4,
+      "observation_ref": "obs-000100",
+      "row_sha256": "7f0c9fd85999eef76f9ba58b767583a06bd75bb86a6d72dbaf5fdc1bce18c2c0",
+      "image_path": "trajectory_000019/frames/obs-000100_cam_high.jpg",
+      "image_sha256": "fd19712c81b87e5a9fd7153a7bdaa83780d2ff614c26cc149be38accbcf3a14e",
+      "observed": "砧板上只有水平长条香肠，右端未见独立圆段。"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 8,
+      "observation_ref": "obs-000200",
+      "row_sha256": "4bf78c0fae99504a7c1583f3dc2a986ea3753f0d8b51504d75d70bcc81009e62",
+      "image_path": "trajectory_000019/frames/obs-000200_cam_right_wrist.jpg",
+      "image_sha256": "529e1f5c503a8ddfeeff7b60a092848a2f10a46ffc7ceb916e65f3e640d2d0bc",
+      "observed": "刀刃与香肠端部相交；需结合已到达帧间相对变化支持作用。"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 10,
+      "observation_ref": "obs-000250",
+      "row_sha256": "6d99ce91834d8f5e0fc8ba1027a15cbd5e7382a1ddd00abf6075bce12ec209ed",
+      "image_path": "trajectory_000019/frames/obs-000250_cam_high.jpg",
+      "image_sha256": "10aebf672009d3ba3bd3afa097c4c4ffbf195a71322a516e1de93d5f0306a82f",
+      "observed": "长条右侧可见独立小圆段，相对4秒布局新增。"
+    },
+    {
+      "episode_for_audit_only": 0,
+      "timestamp": 10,
+      "observation_ref": "obs-000250",
+      "row_sha256": "593a3b3fe60d928e0f384b41eeef48f6e02c013d202c0d10379790df5538bb55",
+      "image_path": "trajectory_000000/frames/obs-000250_cam_high.jpg",
+      "image_sha256": "1156fe917637afdb17714c9dbc36862be6cc7c6abc5c2459aecb79c5387f6ad2",
+      "observed": "刀具仍在右侧刀架；机械臂末端已到砧板香肠处。"
+    },
+    {
+      "episode_for_audit_only": 0,
+      "timestamp": 10,
+      "observation_ref": "obs-000250",
+      "row_sha256": "593a3b3fe60d928e0f384b41eeef48f6e02c013d202c0d10379790df5538bb55",
+      "image_path": "trajectory_000000/frames/obs-000250_cam_right_wrist.jpg",
+      "image_sha256": "d738d472e887851951b2b762b7869f01f58820384757db94e9ab38c3a19235f3",
+      "observed": "两指前方未见刀刃，香肠仍为长条，支持未建立取刀前置条件。"
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 2,
+      "observation_ref": "obs-000050",
+      "row_sha256": "ba09f9d07f106150079c568812bf74655a8907595da1229410d21a97213257e4",
+      "image_path": "trajectory_000002/frames/obs-000050_cam_right_wrist.jpg",
+      "image_sha256": "c449b81cc33d51ceb1009e2d1a1411d425cda647ac3711a931dbc5bee6515cb3",
+      "observed": "开爪两指之间可见刀架和柄颈，柄颈位于两指内缘中点左侧，纵向差异在配置死区内；仅支持图像平面交接。"
+    }
+  ],
+  "scope": "补查两条正常的操作前/作用/新效果、失败0、条件方向2；19+2原语义预期不变；不报告检测延迟"
+}

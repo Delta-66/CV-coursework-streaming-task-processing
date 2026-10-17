@@ -1,0 +1,21 @@
+source:
+  format: lerobot_v2.1
+  root: ../data/vifailback_lerobot
+  episodes: [0, 18]
+  cameras: [observation.images.cam_high]
+baseline:
+  camera: observation.images.cam_high
+  sample_every: 100
+  max_samples_per_episode: null
+  max_model_calls: 9
+  max_image_edge: 512
+model:
+  path: ../models/Qwen3-VL-2B-Instruct
+  device: cuda:0
+  max_new_tokens: 512
+  max_image_pixels: 196608
+  max_inference_s: 120
+  min_free_cuda_mib: 5000
+  min_inference_free_cuda_mib: 1024
+  gpu_poll_interval_s: 10
+output_dir: ../output/baseline_runs

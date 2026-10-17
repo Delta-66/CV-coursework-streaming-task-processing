@@ -1,0 +1,19 @@
+{
+  "parameter_effect_at_reviewed14_at8": {
+    "trained_label": "gripper",
+    "trained_score": [
+      0.5931120264946229,
+      0.2857674963028154,
+      0.12112047720256175
+    ],
+    "zero_weight_softmax": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "zero_weight_label_with_frozen_threshold": "unknown"
+  },
+  "parameters_readonly": true,
+  "selected_model_sha256": "f653456722ac3fb317e59817dc105c2145f1c942d6b47a97c507f03dd1d37905",
+  "fit_bindings_checked": 43
+}

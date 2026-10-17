@@ -1,0 +1,1156 @@
+{
+  "samples": [
+    {
+      "episode_for_grouping_only": 3,
+      "timestamp": 0,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000000_cam_high.jpg",
+          "sha256": "7702b1947cb460f3c18670c702805249282d153acb6226aad78b24e13c089dfa",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000000_cam_right_wrist.jpg",
+          "sha256": "3d3a4538ee52c4b470905faa99036f882676a1cc15bfdc9e883293de96b05211",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "201619ad65af9f6508b7aa49ce6aecca350c2d7180e7d36366835814422744fa",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 3,
+      "timestamp": 2,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000050_cam_high.jpg",
+          "sha256": "b2bc9b8e242b8bdc108667653b81cba915e2da10c8e85a529a59a560346f43de",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000050_cam_right_wrist.jpg",
+          "sha256": "bf9531eb4634891939785ec573fb8461bcbba7b8abd9384c555fa894c9f757fc",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "5b52321ef20575a5300f27afed564e55e49901149d26815eb91d5da38a6b9dcb",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 3,
+      "timestamp": 4,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "靠近/遮挡/归架接触时刻，单帧不能可靠区分支撑与持有",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000100_cam_high.jpg",
+          "sha256": "0aa9647e465888b8a7db24cf31e47c5f295e6c24de464685dc1685b7469a2a69",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000100_cam_right_wrist.jpg",
+          "sha256": "6608a96dfe659b81e0e49191a9bbe51dc7e656f907f097fc0e30ec03f5bde186",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "e247e47eb5ca91f9bc36b4f79c28dd21d7ca6b0f387f368d2bd84d321f73ee22",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 3,
+      "timestamp": 6,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "靠近/遮挡/归架接触时刻，单帧不能可靠区分支撑与持有",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000150_cam_high.jpg",
+          "sha256": "3ce57cee0aacafcf243db8bb384dca7b246bcd962db4130867b11eb1595cf456",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000150_cam_right_wrist.jpg",
+          "sha256": "65ae0b7d85019cff4861a3e45d537f002bd97fc66a5aa9a7ea928fc3b7428bc2",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "46e6f09fe26f7dc2369dcbaafe4dbb55d57c1d7e3d4eeaea2beec1d4f8b9921c",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 3,
+      "timestamp": 7,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "靠近/遮挡/归架接触时刻，单帧不能可靠区分支撑与持有",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000175_cam_high.jpg",
+          "sha256": "00ef8cbf2088dc2899b8c8b59e4f8699afad197148736810de9db739da6a0ce8",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000175_cam_right_wrist.jpg",
+          "sha256": "6cb5df7972b65bec91892ae7e9edeb4b02f13dfca615afd13139fd98d1bc520b",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "e55e0bb13afd058a93eaf12d8aa32aed991fe1ed649ab99a2d035333e1ce803a",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 3,
+      "timestamp": 8,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "靠近/遮挡/归架接触时刻，单帧不能可靠区分支撑与持有",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000200_cam_high.jpg",
+          "sha256": "3eb7d3cb436aa1f9e3ad9f4b9d0ca38ad89ab0f01d203ffa37fe3fafdf3c2fc1",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000200_cam_right_wrist.jpg",
+          "sha256": "f5e5f2d6c2fc83e8e334ac556561f2e7795abfe2ca90afdcaa0c2d15c6dfccc1",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "3ec077bc40c6d6fe98c403fdb3b9959d4c3e306d4557d22e809ec82d165a2e20",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 3,
+      "timestamp": 10,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000250_cam_high.jpg",
+          "sha256": "8eb72053f78c581120bbdb2bbb506918393e022d5e25e2d9029686e230e3efd5",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000250_cam_right_wrist.jpg",
+          "sha256": "e03334e639473a42482181c3432ded0067764425610ad29c5272d6e45c377332",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "51915310e2b4ec67323a98042de5aa8540e0ae3081ec81783d935e507b5e9b3f",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 3,
+      "timestamp": 12,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000300_cam_high.jpg",
+          "sha256": "f634dd72d936e6865c10ec8375b83bf95358861eafa4603129115bf017c5d19d",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000300_cam_right_wrist.jpg",
+          "sha256": "4ed08e192cfda6515160de589234601afc6452995c9e6da94be044f0f68b8014",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "30a86811d979392c273d16be277368d62718057ce4eee0afa295e2c843dbf1af",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 3,
+      "timestamp": 13,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000325_cam_high.jpg",
+          "sha256": "cde6c563ea0193f29e12d27d0b5da4b3f2671fa672993e74f1de3fec5c6ee3a9",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000003\\frames\\obs-000325_cam_right_wrist.jpg",
+          "sha256": "153d87a450506015c2e8a363d0d1e64d0e1e8b1a7052e68c0282f56b10d1c3d3",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "43aab7a6d3d83a68e1256d375ea9d49cefcf009c1b66e1e0793be89a96de1482",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 10,
+      "timestamp": 0,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000000_cam_high.jpg",
+          "sha256": "4af089114a56ba82029982f92ba86618aada832f1fc1f40f1a03f58199fdf0a0",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000000_cam_right_wrist.jpg",
+          "sha256": "38c1420541ce91a9375f8f5f52a5b827fd5b8dc0ec36dd408e23c6199bd1a74e",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "5580958ccd8b458847b2c2cf99fb6d33da51700fc5d145aa4ea6c331cc83acc1",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 10,
+      "timestamp": 2,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000050_cam_high.jpg",
+          "sha256": "ab4b2acf236cb0ab5f78d9e9f50d62cf1031be19b693dfc54257f8616f38d48e",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000050_cam_right_wrist.jpg",
+          "sha256": "eb5e9589d58f688aca4d3bc434c2b70cb2454456f5eccc617a7378a9f95d454a",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "650514a568287b97f91d2bca34a69b680167ae4118464ecac8053e3d52180fd7",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 10,
+      "timestamp": 3,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000075_cam_high.jpg",
+          "sha256": "3c954b7f7b11dac82de170b838c9510f15d3a16074e782567b9b852a9f94e5a3",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000075_cam_right_wrist.jpg",
+          "sha256": "2a51a665810d386cba25d4fc82fab3e8b180802ac8b94c3f5dab2ae5bcf578c7",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "d8178a42b73f549f02e79d6c7d70214496ff1a0c1567bffa432a361e4db57a26",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 10,
+      "timestamp": 4,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "靠近/遮挡/归架接触时刻，单帧不能可靠区分支撑与持有",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000100_cam_high.jpg",
+          "sha256": "cb37948826713227a11e4e86696e60d004de5bb27db067507c8e0ec3c59de231",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000100_cam_right_wrist.jpg",
+          "sha256": "1042aaf58d479cf7714f3a6b70916ad1fc65230f2185a177fb4f6964b6e41f9d",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "25d16290126f3383879c030820643f97e83a6323bf326b892dc60b3573780637",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 10,
+      "timestamp": 5,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "靠近/遮挡/归架接触时刻，单帧不能可靠区分支撑与持有",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000125_cam_high.jpg",
+          "sha256": "7899c554c82bce5fcbff93f54df1b0583b1d35c9d6b6e02428e9b3c0743f0588",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000125_cam_right_wrist.jpg",
+          "sha256": "1e38196c55e05e9f93a9c2984d84b9006a7c69894720bb7088300b967ab0e76a",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "9a2ab5d65c2b0f4a94c6ca8feb732286a281a2c6d7394e1e8c5ec16fe7031ec7",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 10,
+      "timestamp": 6,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000150_cam_high.jpg",
+          "sha256": "202e2b8b7a24a1775dbee7a259942a8efa89388cc8068d86b33788dccaae5ca3",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000150_cam_right_wrist.jpg",
+          "sha256": "d3ee18a6794b99c3b7579e069fa58708610cf5c98ed8555adf5e5d98b5ec6ef5",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "80169b733c97d4e82460a16ad6f1c680ad7f2ac61323fe4db2350a6d3d50ff5e",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 10,
+      "timestamp": 7,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000175_cam_high.jpg",
+          "sha256": "ade3097e97943cbdb10f540d16c43f14290efb56790872154621ead26c347694",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000175_cam_right_wrist.jpg",
+          "sha256": "fc6cf872252b78a1d27a41f42acab317d463273b21f677f2ed0e9a0d3f2fc3bd",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "1eff22030eec3c6989dfbc508df6ccb594a8f87e7028881e5c9d0ca3bf180285",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 10,
+      "timestamp": 10,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000250_cam_high.jpg",
+          "sha256": "fdf305d59dcc1c2288ff0c32d103d6c9bcf0db504eaa1bb6a9c0aa997882bd43",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000250_cam_right_wrist.jpg",
+          "sha256": "d268b44c6bc3024f63e9ca43e2d5bb131511de808c57a991d4437080a2610d5a",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "14be6de759e2c80cc8ebac4729003a7cea26ab1c254428de9ca718ed0653415a",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 10,
+      "timestamp": 14,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000350_cam_high.jpg",
+          "sha256": "21c2f0d3359cab1aa715719a0018d00541c86c5cff013f1d0ab6728995eb227a",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000350_cam_right_wrist.jpg",
+          "sha256": "e855cd52046f76f94bc3176ecdc41306d21b11bd23f712e99094cfabee457fca",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "22c04125abf2b2717bbec087139fd9e7963eca35848f9ec053920ab4ab14c0fa",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 10,
+      "timestamp": 15,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000375_cam_high.jpg",
+          "sha256": "d9a92b093c7ebb000388061c4431f8c81b8e49ebd9c62714559656f23d4278ff",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000010\\frames\\obs-000375_cam_right_wrist.jpg",
+          "sha256": "85d5f16364cc23360c45110128e6ae5019ba1fabb35db466ecb886add35424e4",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "8dcf4f928d70c5a33734ba403a8b936734ffed232acba5cceaba62dff13b266f",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 0,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000000_cam_high.jpg",
+          "sha256": "3cc8ecbb4e2e23f005daa4f739e3910d296bfde5d841755edca1a7155911b18f",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000000_cam_right_wrist.jpg",
+          "sha256": "7bcf99510cb4394ebf7ad58547bf7242a5960d164b84a3a53c2cfc7278979ff5",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "7e3542bab54414825a19427d479bbade9e61114d86d1bfc0d4c701dc832803ea",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 1,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000025_cam_high.jpg",
+          "sha256": "f48b20b0bf7e03ff55371c6cbc1b75ee4f984e7fa6ecff1db7f840bf56b23ea9",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000025_cam_right_wrist.jpg",
+          "sha256": "57e14de59fa12238e726ae46002ed0677dcea4e4a169e199a6e136380f264400",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "541492b092403026c5d231771edcec0b3743b8fd9e630fc991c07576c3c8f017",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 2,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000050_cam_high.jpg",
+          "sha256": "dadf45cb7712335a7a149c738bb147bd5c626472edb62c472d6a4fe7829878a3",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000050_cam_right_wrist.jpg",
+          "sha256": "761582d3afbeaae37defb42917f91cb8862ff677565d1033391b2ef9fb801d9f",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "3b345d89742f75c169d1b5b5e5644900efbaba5f9a5cca0202226259b0487a96",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 3,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "靠近/遮挡/归架接触时刻，单帧不能可靠区分支撑与持有",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000075_cam_high.jpg",
+          "sha256": "88b162bac9ec98d841d2a31be14d125ab636ee968b0a04fc541dc2f07415158a",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000075_cam_right_wrist.jpg",
+          "sha256": "239f91ebddc5773997d72bcaff73c6fa52a48aef99d6ff9584367d4efa185eaf",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "d71bfb08f43a50b1561080e2bb7948050dbd80f0dfeb69700d173bfb3fc3a7d7",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 4,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000100_cam_high.jpg",
+          "sha256": "281a43b10361a150563559c2d43421c59158d15bc268a49dec0d58ef0466eca5",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000100_cam_right_wrist.jpg",
+          "sha256": "a8216829ccfea7eb46c0550768155ba4f5fe54c6a49c816dba4b4a325ff5d723",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "47bf3bdf13e58b23b8e69aaa8850100df3fdc489e5d9cf18cc03531875cf8f73",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 5,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000125_cam_high.jpg",
+          "sha256": "f98b2479343bb3856a36577570d41054ae0f8b6a1af6397e0063ba657e1a31a9",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000125_cam_right_wrist.jpg",
+          "sha256": "40eeba5a33a0a37302b8e3a7eaec85cf8093b395af2476b37d56533a743d6222",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "1918fb238fd496b10de94a2f2df2489764d9a4ac707bcf028a9f22444b329b17",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 6,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000150_cam_high.jpg",
+          "sha256": "db913eac4be42f4893432df682a4ea6991206f3ffd1a4240797b954f4d48a296",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000150_cam_right_wrist.jpg",
+          "sha256": "009a1e7a3695a3d11154411d7a085607eab84176eac06e1edbb600c2ecaa24c4",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "f75cb5a9767c43a290cf93e13e2fd8b441a74c68b95d90d21aa905fbf04c5863",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 8,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000200_cam_high.jpg",
+          "sha256": "fec932057086d951c0d52853d4a1794a863c4784992507cae342e9fe183714fa",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000200_cam_right_wrist.jpg",
+          "sha256": "e1134449b7a5e206ef924091b2c62e62e38551348c6ddf8863dc5a475489e59d",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "644b035db00d3a506b5b87fdb76d8477062c4e91ac067bdcaa863a9b1ad24026",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 10,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000250_cam_high.jpg",
+          "sha256": "c7000a397823b3ee293a590f6900ef9a473fae0a3ec73571c85981853a7cca16",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000250_cam_right_wrist.jpg",
+          "sha256": "1acbbf74b7f7223addd29b7329704341b348bb419e6179c12e3f08d79b64cf76",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "bccf5fe24123bd0d930e4eec13118ca8ebb9de15afc97cb9fc2b360f71483fdd",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 11,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000275_cam_high.jpg",
+          "sha256": "4f91b295c224a627abefad5e7cc57af412ca2af5c56c48c477ecb33bc79cd6ec",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000275_cam_right_wrist.jpg",
+          "sha256": "afc27efc4fc6102be9302c50e3c8803f989747f21159dd38a31e88ca2959b568",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "d8a14274bd43d2cee43addfb84b2e94f29df61c1427201ae7abb78fb91bec764",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 17,
+      "timestamp": 12,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视归架附近被手遮挡；腕图未提取可见刀刃，当前接触关系保守标未知，不能借11秒持刀直接补标签",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000300_cam_high.jpg",
+          "sha256": "d0134a6ee1fd567daaff917818c680bbaaef096dd5f6ee5470c696e144fcb681",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000017\\frames\\obs-000300_cam_right_wrist.jpg",
+          "sha256": "3dead0240d6f1f89457eb744dfbfedd1683082c25042f68f0d94f5d56e6106fc",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "0e69de18bd9a54085e88dda0e71ffa56d2f871e4dd898fddbdcdcb31457cff6b",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 0,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000000_cam_high.jpg",
+          "sha256": "c37d56c55f2f333c7fbef421f88cf7ec2aa2c35888731aa167f10f86b87fc8f0",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000000_cam_right_wrist.jpg",
+          "sha256": "963bdcb79b46482dc6f5acdad66ce4c77837873a7b04558cc59ededb148eecf7",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "2e90e6c354d9ea17876abe75086b76d79f27c9e1b5a8bb29b627725296546921",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 1,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000025_cam_high.jpg",
+          "sha256": "0d101cb0240ef6f479962d9944b7a160f0ca8bdbe52d0f9c4c37cced6b6174bd",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000025_cam_right_wrist.jpg",
+          "sha256": "b67f74066b1e02b11a23521a153a16cc19698b34d25997fd0c16c83928210055",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "dc59921ed63412cd94e60f0e90e9ab471a727e020487b61e2b328614d7fdff32",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 2,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000050_cam_high.jpg",
+          "sha256": "20f9db50579f456489147133caa8f95ec961c8cc3cc006375d1b11d2bba11540",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000050_cam_right_wrist.jpg",
+          "sha256": "9c1939edc65d349bd213d647e72f70958cbd765c0d9875142e45107e10c7eb19",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "5fbbd50a3532c01dd2c5bc4a6fbc0b393cfca2b88d036290ea976eddaf430629",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 3,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "靠近/遮挡/归架接触时刻，单帧不能可靠区分支撑与持有",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000075_cam_high.jpg",
+          "sha256": "aaafbea955f3ae3b6c84e8db52ab013358b192e2037e82c91ae1d4e6e93c3c72",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000075_cam_right_wrist.jpg",
+          "sha256": "9055df49c735333ad4d370dde8316ca6cb24ec8fd7bdc4f2f2bb1b62b18d008a",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "d7c43d5ef5ea59c079d2840ed5f366be4d07f34f3d785382b6502550df3279d0",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 4,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000100_cam_high.jpg",
+          "sha256": "fd19712c81b87e5a9fd7153a7bdaa83780d2ff614c26cc149be38accbcf3a14e",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000100_cam_right_wrist.jpg",
+          "sha256": "9efb29ca81e8f686a252def5f5a94edf78ecb05a271d6de1d0ecab90826ca4c9",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "03d6e99306b5675ce0d209093002df43248d9cfaad0e7ff7c15aa6d8803e5cff",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 5,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000125_cam_high.jpg",
+          "sha256": "75346437ff1136862fa3ea7e5d8432aa1ea4504ecc0722fd2ae58940d3a9e122",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000125_cam_right_wrist.jpg",
+          "sha256": "ee24c4b6420ef0c92cf5c847c7b6844c8efe8f1b329e854b9d9adab7e45cd70c",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "b4edea9113a83b74e55e4003c37877a5ca7acedc0483b99b94bd87dd2773f62d",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 6,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000150_cam_high.jpg",
+          "sha256": "86f658355aa85f37ae7a9ea07ea6442211aa278e0d2ff454a5380978e37c5b98",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000150_cam_right_wrist.jpg",
+          "sha256": "3938662f24e37c008d6ae99139b432878db40910af38607664339047165a6423",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "7e0b94bfbc37d18a878f139662128144839ed116282b7c5cd1226c7edd68f725",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 8,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000200_cam_high.jpg",
+          "sha256": "7674c320156a6cfd288853f60740d9a7c7351f030b8197cfafd06b2e7a1ddae3",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000200_cam_right_wrist.jpg",
+          "sha256": "529e1f5c503a8ddfeeff7b60a092848a2f10a46ffc7ceb916e65f3e640d2d0bc",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "1a60fb44c2ae359b098c0a3843a2d0038f8147b37a807296d38cbdf6e401dc89",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 10,
+      "relation": "gripper",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "腕图可见刀刃位于两指之间，顶视位置与离架持刀相容",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000250_cam_high.jpg",
+          "sha256": "10aebf672009d3ba3bd3afa097c4c4ffbf195a71322a516e1de93d5f0306a82f",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000250_cam_right_wrist.jpg",
+          "sha256": "3c7da02f077e0bff807dc0a0b1d08d80079a1e9e68f72672908f0e81423ffb1e",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "4d5a569d6069cbab4e731b9c9fd09b68b2ef53f773d515d1e5fdfebb288efded",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 12,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "靠近/遮挡/归架接触时刻，单帧不能可靠区分支撑与持有",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000300_cam_high.jpg",
+          "sha256": "5341bec84b75ee03a4b5955ea7f70a702cde42d0b5a110d2c4abcd78a56017a9",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000300_cam_right_wrist.jpg",
+          "sha256": "6399e695522262869ec344a6d0d820da4388f46392ec3e357dae5c4749c164ad",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "648342a531446dfd7a3f8321af688c019151746c27f36bcdfd124e922af7a5ab",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 14,
+      "relation": "unknown",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "靠近/遮挡/归架接触时刻，单帧不能可靠区分支撑与持有",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000350_cam_high.jpg",
+          "sha256": "4cc6148b97aa887fc4d248f06db7b7b217c4888c06eeda85f7077ce0e01847b1",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000350_cam_right_wrist.jpg",
+          "sha256": "ca93d9ee2f75e8031a3a805e86373a9abd5fdde7b8a20ae64861245c0f9b4acc",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "9d7fd9c80cbf9ae0c53d8d092590667c5528fe4ed13765b2e89f9a33e8241bab",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 15,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000375_cam_high.jpg",
+          "sha256": "179656b2347c1e66e0472a12ba0efafd215a4c79a0e9d2508b4a306e4d710d07",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000375_cam_right_wrist.jpg",
+          "sha256": "c2e3028e68632fe6e3c4f6bd1f6f5343cfd5303da20c67070728912f8d086e1f",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "97422f113b1c8b328066c1262fab3946a280eda5407200f7529f5b0040fe3de0",
+      "actually_executed": false
+    },
+    {
+      "episode_for_grouping_only": 19,
+      "timestamp": 16,
+      "relation": "holder",
+      "review_status": "pixel_reviewed",
+      "reviewer": "assistant_direct_visual_review_not_independent_human_ground_truth",
+      "observed_fact": "顶视可见刀仍位于刀架；腕图没有建立离架夹持证据",
+      "cause_hypothesis": null,
+      "unknowns": [
+        "独立三维接触与力反馈不可用"
+      ],
+      "images": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000400_cam_high.jpg",
+          "sha256": "335f4f3c3a450e0cf1082b893a85991bd2854d5ac3212835dade9ecf8f47e593",
+          "camera": "cam_high"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\baseline_fit\\trajectory_000019\\frames\\obs-000400_cam_right_wrist.jpg",
+          "sha256": "c33ee781df892f7476c68f0c892b9580008b332a190ba45123bcbbaffa511423",
+          "camera": "cam_right_wrist"
+        }
+      ],
+      "prediction_source_sha256": "ff3588ea505984e6c485f7065c51364e8f5a73eb93e8840ea3b11d3db9911b1b",
+      "actually_executed": false
+    }
+  ],
+  "excluded": [
+    {
+      "episode": 12,
+      "reason": "initial_geometry_calibration_failed; all15 feature records invalid; image at0/3/10 checked, no fake features"
+    }
+  ],
+  "development_feedback": [
+    {
+      "episode": 17,
+      "timestamps": [
+        6,
+        8,
+        10,
+        11,
+        12
+      ],
+      "observed_problem": "held tool visited work area then withdrew; clear sausage remains intact",
+      "expected_postcheck": "new separated piece after work",
+      "baseline_problem": "no failure event after withdrawal",
+      "change": "bounded observed work-cycle exit + repeated clear no-piece evidence; no time-only failure"
+    },
+    {
+      "episode": 10,
+      "timestamps": [
+        10,
+        14,
+        15
+      ],
+      "observed_problem": "still in work area at end; intact in wrist view",
+      "change": "no end-of-stream or time-only failure; remains unresolved"
+    }
+  ],
+  "future_evidence_usage": "offline feedback review only; no future features or outcome labels in inference",
+  "second_review": "同一训练样本的17@12改为未知；基于19@15/16明确在架证据保留固定几何保护；不添加验证样本入fit"
+}

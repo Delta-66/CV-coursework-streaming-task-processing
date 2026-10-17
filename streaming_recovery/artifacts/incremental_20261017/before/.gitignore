@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+# 大文件测试夹具与逐帧图像保留在本地，避免误提交。
+artifacts/*/prefix_fixture_*/
+artifacts/existing_test_tmp/

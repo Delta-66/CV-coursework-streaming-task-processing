@@ -1,0 +1,67 @@
+{
+  "selected_C": 0.1,
+  "round": 2,
+  "candidates": [
+    {
+      "C": 0.1,
+      "validation_confirmed": 6,
+      "normal_completed": 2,
+      "normal_alerts": 0,
+      "14_at8_relation": "gripper",
+      "validation_unknown_stages": 4,
+      "summary_sha256": "cbd36d8913f741f90f8ef7a170d8bc0832824e4782e9bfb7b91ca3957b565b72"
+    },
+    {
+      "C": 1,
+      "validation_confirmed": 6,
+      "normal_completed": 2,
+      "normal_alerts": 0,
+      "14_at8_relation": "unknown",
+      "validation_unknown_stages": 9,
+      "summary_sha256": "01291b9e3f0e540de49b776704662039c416811af4eef6f1453e233f432c57f1"
+    },
+    {
+      "C": 10,
+      "validation_confirmed": 6,
+      "normal_completed": 2,
+      "normal_alerts": 0,
+      "14_at8_relation": "unknown",
+      "validation_unknown_stages": 10,
+      "summary_sha256": "281f23c3accd198a6082f280452bc1ed9f0c9b4c89ce183041821cc8e203c3cf"
+    }
+  ],
+  "reason": "All six validation failures confirmed and both seen normal controls complete without alerts; C0.1 additionally supports reviewed14@8 held relation and fewer validation unknown stages. Not selected by train loss.",
+  "reviewed_validation_images": {
+    "14": [
+      5,
+      8,
+      16,
+      17,
+      18,
+      24
+    ],
+    "11": [
+      7,
+      8,
+      13,
+      14,
+      15
+    ],
+    "18": [
+      5,
+      10,
+      14,
+      15,
+      19,
+      20
+    ],
+    "6": [
+      3,
+      8,
+      10
+    ]
+  },
+  "reviewer": "assistant_direct_pixel_review_not_independent_human",
+  "audit13_16_inspected_before_selection": false,
+  "stop": "two bounded development rounds reached; no further tuning from held-out audit"
+}

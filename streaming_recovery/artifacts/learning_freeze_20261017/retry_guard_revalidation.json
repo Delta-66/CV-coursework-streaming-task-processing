@@ -1,0 +1,20 @@
+{
+  "bug_reproduced_by": "work_retry_before.txt",
+  "fix_verified_by": "work_retry_after.txt",
+  "real_decisions_unchanged": {
+    "0": 12,
+    "1": 15,
+    "2": 12,
+    "6": 11,
+    "8": 10,
+    "11": 16,
+    "14": 25,
+    "18": 21,
+    "19": 17,
+    "29": 10,
+    "13": 13,
+    "16": 15
+  },
+  "model_weights_changed": false,
+  "new_feedback_fit_round": false
+}

@@ -1,0 +1,3114 @@
+[
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 2,
+    "total": 75,
+    "train": 60,
+    "validation": 15
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 2,
+    "total": 10,
+    "train": 8,
+    "validation": 2
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 2,
+    "total": 10,
+    "train": 9,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 2,
+    "total": 12,
+    "train": 10,
+    "validation": 2
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 2,
+    "total": 23,
+    "train": 19,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 54,
+    "total": 38,
+    "train": 31,
+    "validation": 7
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 54,
+    "total": 26,
+    "train": 21,
+    "validation": 5
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 54,
+    "total": 30,
+    "train": 25,
+    "validation": 5
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 54,
+    "total": 24,
+    "train": 20,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 3,
+    "total": 10,
+    "train": 9,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 3,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 3,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 3,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 32,
+    "total": 51,
+    "train": 41,
+    "validation": 10
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 32,
+    "total": 39,
+    "train": 32,
+    "validation": 7
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 32,
+    "total": 23,
+    "train": 19,
+    "validation": 4
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 32,
+    "total": 25,
+    "train": 21,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 39,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 39,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 39,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 39,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 7,
+    "total": 13,
+    "train": 11,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 7,
+    "total": 5,
+    "train": 4,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 7,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 9,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 9,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 9,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 9,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 23,
+    "total": 12,
+    "train": 10,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 23,
+    "total": 5,
+    "train": 4,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 23,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 23,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 42,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 42,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 42,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 42,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 46,
+    "total": 98,
+    "train": 79,
+    "validation": 19
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 46,
+    "total": 42,
+    "train": 34,
+    "validation": 8
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 46,
+    "total": 10,
+    "train": 8,
+    "validation": 2
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 46,
+    "total": 22,
+    "train": 18,
+    "validation": 4
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 46,
+    "total": 29,
+    "train": 24,
+    "validation": 5
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 61,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 61,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 61,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 61,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 11,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 11,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 11,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 11,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 18,
+    "total": 13,
+    "train": 11,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 18,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 18,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 15,
+    "total": 54,
+    "train": 44,
+    "validation": 10
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 15,
+    "total": 34,
+    "train": 28,
+    "validation": 6
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 15,
+    "total": 8,
+    "train": 7,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 15,
+    "total": 21,
+    "train": 17,
+    "validation": 4
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 15,
+    "total": 20,
+    "train": 16,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 21,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 21,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 21,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 21,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 26,
+    "total": 9,
+    "train": 8,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 26,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 26,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 26,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 27,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 27,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 27,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 27,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 20,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 20,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 20,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 20,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 24,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 24,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 24,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 24,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 34,
+    "total": 5,
+    "train": 4,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 34,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 34,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 34,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 97,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 97,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 97,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 97,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 95,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 95,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 95,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 95,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 40,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 40,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 40,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 40,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 38,
+    "total": 7,
+    "train": 6,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 38,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 38,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 38,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 44,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 44,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 44,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 44,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 30,
+    "total": 84,
+    "train": 68,
+    "validation": 16
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 30,
+    "total": 29,
+    "train": 24,
+    "validation": 5
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 30,
+    "total": 9,
+    "train": 8,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 30,
+    "total": 16,
+    "train": 13,
+    "validation": 3
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 30,
+    "total": 27,
+    "train": 22,
+    "validation": 5
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 31,
+    "total": 8,
+    "train": 7,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 31,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 31,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 31,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 33,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 33,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 33,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 33,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 94,
+    "total": 180,
+    "train": 144,
+    "validation": 36
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 94,
+    "total": 35,
+    "train": 28,
+    "validation": 7
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 94,
+    "total": 5,
+    "train": 4,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 35,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 35,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 35,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 35,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 55,
+    "total": 359,
+    "train": 288,
+    "validation": 71
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 55,
+    "total": 60,
+    "train": 49,
+    "validation": 11
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 55,
+    "total": 7,
+    "train": 6,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 55,
+    "total": 14,
+    "train": 12,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 63,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 63,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 63,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 63,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 68,
+    "total": 11,
+    "train": 9,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 68,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 68,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 68,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 88,
+    "total": 71,
+    "train": 57,
+    "validation": 14
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 88,
+    "total": 17,
+    "train": 14,
+    "validation": 3
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 88,
+    "total": 10,
+    "train": 8,
+    "validation": 2
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 88,
+    "total": 13,
+    "train": 11,
+    "validation": 2
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 88,
+    "total": 19,
+    "train": 16,
+    "validation": 3
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 51,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 51,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 51,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 51,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 71,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 71,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 71,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 71,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 74,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 74,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 74,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 74,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 78,
+    "total": 20,
+    "train": 16,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 78,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 78,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 78,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 76,
+    "total": 5,
+    "train": 4,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 76,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 76,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 76,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 83,
+    "total": 16,
+    "train": 13,
+    "validation": 3
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 83,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 83,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 83,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 80,
+    "total": 83,
+    "train": 67,
+    "validation": 16
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 80,
+    "total": 34,
+    "train": 28,
+    "validation": 6
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 80,
+    "total": 8,
+    "train": 7,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 80,
+    "total": 23,
+    "train": 19,
+    "validation": 4
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 80,
+    "total": 18,
+    "train": 15,
+    "validation": 3
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 85,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 85,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 85,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 85,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 91,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 91,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 91,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 91,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 92,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 92,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 92,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 92,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 67,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 67,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 67,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 67,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 87,
+    "total": 56,
+    "train": 45,
+    "validation": 11
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 87,
+    "total": 21,
+    "train": 17,
+    "validation": 4
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 87,
+    "total": 7,
+    "train": 6,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 87,
+    "total": 23,
+    "train": 19,
+    "validation": 4
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 87,
+    "total": 23,
+    "train": 19,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 99,
+    "total": 76,
+    "train": 61,
+    "validation": 15
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 99,
+    "total": 36,
+    "train": 29,
+    "validation": 7
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 99,
+    "total": 9,
+    "train": 8,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 99,
+    "total": 27,
+    "train": 22,
+    "validation": 5
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 99,
+    "total": 22,
+    "train": 18,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 96,
+    "total": 11,
+    "train": 9,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 96,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 96,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 96,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 98,
+    "total": 39,
+    "train": 32,
+    "validation": 7
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 98,
+    "total": 7,
+    "train": 6,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 98,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 98,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 4,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 4,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 4,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 4,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 36,
+    "total": 41,
+    "train": 33,
+    "validation": 8
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 36,
+    "total": 39,
+    "train": 32,
+    "validation": 7
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 36,
+    "total": 25,
+    "train": 20,
+    "validation": 5
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 36,
+    "total": 25,
+    "train": 21,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 79,
+    "total": 74,
+    "train": 60,
+    "validation": 14
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 79,
+    "total": 36,
+    "train": 29,
+    "validation": 7
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 79,
+    "total": 8,
+    "train": 7,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 79,
+    "total": 16,
+    "train": 13,
+    "validation": 3
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 79,
+    "total": 21,
+    "train": 17,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 8,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 8,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 8,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 8,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 10,
+    "total": 15,
+    "train": 12,
+    "validation": 3
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 10,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 10,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 10,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 41,
+    "total": 61,
+    "train": 49,
+    "validation": 12
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 41,
+    "total": 38,
+    "train": 31,
+    "validation": 7
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 41,
+    "total": 9,
+    "train": 8,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 41,
+    "total": 19,
+    "train": 16,
+    "validation": 3
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 41,
+    "total": 21,
+    "train": 17,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 45,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 45,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 45,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 45,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 49,
+    "total": 81,
+    "train": 65,
+    "validation": 16
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 49,
+    "total": 50,
+    "train": 40,
+    "validation": 10
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 49,
+    "total": 7,
+    "train": 6,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 49,
+    "total": 8,
+    "train": 7,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 49,
+    "total": 24,
+    "train": 20,
+    "validation": 4
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 53,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 53,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 53,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 53,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 58,
+    "total": 5,
+    "train": 4,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 58,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 58,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 58,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 13,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 13,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 13,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 13,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 62,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 62,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 62,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 62,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 5,
+    "total": 10,
+    "train": 8,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 5,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 5,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 5,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 12,
+    "total": 12,
+    "train": 10,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 12,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 12,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 6,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 6,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 6,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 6,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 14,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 14,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 14,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 14,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 17,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 17,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 17,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 17,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 16,
+    "total": 13,
+    "train": 11,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 16,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 16,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 16,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 25,
+    "total": 84,
+    "train": 68,
+    "validation": 16
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 25,
+    "total": 31,
+    "train": 25,
+    "validation": 6
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 25,
+    "total": 10,
+    "train": 8,
+    "validation": 2
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 25,
+    "total": 14,
+    "train": 12,
+    "validation": 2
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 25,
+    "total": 26,
+    "train": 21,
+    "validation": 5
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 22,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 22,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 22,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 22,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 19,
+    "total": 11,
+    "train": 9,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 19,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 19,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 19,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 37,
+    "total": 10,
+    "train": 8,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 37,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 37,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 37,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 69,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 69,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 69,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 69,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 0,
+    "total": 25,
+    "train": 20,
+    "validation": 5
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 0,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 0,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 43,
+    "total": 9,
+    "train": 8,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 43,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 43,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 43,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 47,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 47,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 47,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 47,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 29,
+    "total": 27,
+    "train": 22,
+    "validation": 5
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 29,
+    "total": 5,
+    "train": 4,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 29,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 29,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 57,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 57,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 57,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 57,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 59,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 59,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 59,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 59,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 28,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 28,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 28,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 28,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 64,
+    "total": 7,
+    "train": 6,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 64,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 64,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 64,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 66,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 66,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 66,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 66,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 89,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 89,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 89,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 89,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 70,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 70,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 70,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 70,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 50,
+    "total": 167,
+    "train": 134,
+    "validation": 33
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 50,
+    "total": 29,
+    "train": 24,
+    "validation": 5
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 50,
+    "total": 22,
+    "train": 18,
+    "validation": 4
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 50,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 56,
+    "total": 51,
+    "train": 41,
+    "validation": 10
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 56,
+    "total": 29,
+    "train": 24,
+    "validation": 5
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 56,
+    "total": 8,
+    "train": 7,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 56,
+    "total": 13,
+    "train": 11,
+    "validation": 2
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 56,
+    "total": 19,
+    "train": 16,
+    "validation": 3
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 65,
+    "total": 14,
+    "train": 12,
+    "validation": 2
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 65,
+    "total": 5,
+    "train": 4,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 65,
+    "total": 2,
+    "train": 1,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 65,
+    "total": 1,
+    "train": 1,
+    "validation": 0
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 75,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 75,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 75,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 75,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 77,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 77,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 77,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 77,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 82,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 82,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 82,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 82,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 81,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 81,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 81,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 81,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 90,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 90,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 90,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 90,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 86,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 86,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 86,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 86,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 93,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 93,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 93,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 93,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 1,
+    "total": 58,
+    "train": 47,
+    "validation": 11
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 1,
+    "total": 40,
+    "train": 32,
+    "validation": 8
+  },
+  {
+    "failure_type": "human intervention",
+    "outcome": "failure",
+    "task_index": 1,
+    "total": 10,
+    "train": 8,
+    "validation": 2
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 1,
+    "total": 22,
+    "train": 18,
+    "validation": 4
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 1,
+    "total": 27,
+    "train": 22,
+    "validation": 5
+  },
+  {
+    "failure_type": "gripper 6d-pose",
+    "outcome": "failure",
+    "task_index": 73,
+    "total": 6,
+    "train": 5,
+    "validation": 1
+  },
+  {
+    "failure_type": "gripper state",
+    "outcome": "failure",
+    "task_index": 73,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  },
+  {
+    "failure_type": "task planning",
+    "outcome": "failure",
+    "task_index": 73,
+    "total": 4,
+    "train": 3,
+    "validation": 1
+  },
+  {
+    "failure_type": "none",
+    "outcome": "success",
+    "task_index": 73,
+    "total": 3,
+    "train": 2,
+    "validation": 1
+  }
+]

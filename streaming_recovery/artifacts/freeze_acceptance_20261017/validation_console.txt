@@ -1,0 +1,6 @@
+状态/报告/区间回归、10000步合成容量与少量真实像素定位: passed
+参数化真实完整回放与语义关键时刻验收: passed
+包含新增联合定位和原生区间聚合的全链公共前缀因果性: passed
+实际双视角后端 2000 步动态全缓存容量: passed
+真实后端缺失/遮挡恢复与跨轨迹重置: passed
+验证记录：streaming_recovery\artifacts\freeze_acceptance_20261017\validation

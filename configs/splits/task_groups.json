@@ -1,0 +1,1511 @@
+[
+  {
+    "logical_task_sha256": "14076ca6f57b1ad3cc591cc273f807d0f4b11343e56e88e39b6521a41a7ffda9",
+    "source_tasks": [
+      "cut_sausage"
+    ],
+    "task_index": 0,
+    "task_instruction": "Use the right arm to pick up the knife from the knife holder, cut a small piece of sausage and put it back on the knife holder.",
+    "trajectory_counts": {
+      "dev_seen": 3,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 24,
+      "validation": 6
+    }
+  },
+  {
+    "logical_task_sha256": "5b405f7e48332f293757d489a1cb158ee1716d670b978a41e778c272c1695853",
+    "source_tasks": [
+      "drag_basket_place_cube_ep1"
+    ],
+    "task_index": 1,
+    "task_instruction": "Use the right gripper to drag the basket to the center of the table, then use the left gripper to grasp and place the blue cube into the basket.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 127,
+      "validation": 30
+    }
+  },
+  {
+    "logical_task_sha256": "7a71cc63b7f4067d9469be4965e82c69c05543b960d06fb09cc924928f92fd34",
+    "source_tasks": [
+      "grab_socket_unplug_charger_ep1"
+    ],
+    "task_index": 2,
+    "task_instruction": "Grab the socket with the right arm and unplug the charger with the left arm.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 20,
+      "train": 106,
+      "validation": 24
+    }
+  },
+  {
+    "logical_task_sha256": "b7ad0a0dcdfc8df7ff498e300656ee97836e0cbf95fafdd7cd8fe33abf85455f",
+    "source_tasks": [
+      "grasp_bottle_place_bowl"
+    ],
+    "task_index": 3,
+    "task_instruction": "Use the left arm to grasp the bottle and place it into the pink bowl.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 3
+    }
+  },
+  {
+    "logical_task_sha256": "691c246660bbc48850588bdb128917553aece47fbb8d9143b8da587cc7b3ba2d",
+    "source_tasks": [
+      "grasp_coke_can_put_tray"
+    ],
+    "task_index": 4,
+    "task_instruction": "Use the right arm to grasp the Coke can and place it on the green tray.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "0ede25bf6c8fab05942363aa3117d7be7f2996a37506258732b82b8d44994fe9",
+    "source_tasks": [
+      "grasp_cube_place_shelf"
+    ],
+    "task_index": 5,
+    "task_instruction": "Use the right arm to grasp the test tube and place it upright on the shelf.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 3
+    }
+  },
+  {
+    "logical_task_sha256": "d4f0dfda02c6eb03aca323344bacdda81df73f479efa22b7679372f7f9db85fc",
+    "source_tasks": [
+      "grasp_duck_put_cup"
+    ],
+    "task_index": 6,
+    "task_instruction": "Use the right arm to grasp the yellow duck and place it on the cup.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "a96e66a13ffe157aebcb70bde2ba8d4d83b4de73cbcf5a5724c2eb32a3a2ac3c",
+    "source_tasks": [
+      "grasp_filter_place_juicer"
+    ],
+    "task_index": 7,
+    "task_instruction": "Use the left arm to grasp the filter and place it into the juicer.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 16,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "adbc9e908812297ea5dad79bf7f190c5d94547326f5efd10e1a46d56ccb93a85",
+    "source_tasks": [
+      "grasp_knife_place_drawer"
+    ],
+    "task_index": 8,
+    "task_instruction": "Use the right arm to grasp the knife from the holder and place it in the drawer.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "eecadb883eb5455ae8ea1ac3464e4e9721a281546fb4a342345db29d41140a80",
+    "source_tasks": [
+      "grasp_knife_place_plate"
+    ],
+    "task_index": 9,
+    "task_instruction": "Use the left arm to grasp the knife from the holder and place it on the plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "7c93ba5c66ea7ab390adac5b2d2a6d4c54d126ab62b72f63f1c45908a6db2dde",
+    "source_tasks": [
+      "grasp_marker_place_in_cup"
+    ],
+    "task_index": 10,
+    "task_instruction": "Use the right arm to grasp the marker and place it in the purple cup.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 15,
+      "validation": 5
+    }
+  },
+  {
+    "logical_task_sha256": "343b2f8abd698a75382132d303bc51e94af5cec2811d653e51469f63f83b51d0",
+    "source_tasks": [
+      "grasp_spatula_place_basket"
+    ],
+    "task_index": 11,
+    "task_instruction": "Use the left arm to grasp the wooden spatula and place it in the blue basket.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "29f889d49227e937981d87a03e53401e9a838632a9d64d2765c36d7c04071f54",
+    "source_tasks": [
+      "grasp_spatula_put_pot"
+    ],
+    "task_index": 12,
+    "task_instruction": "Use the right arm to grasp the wooden spatula and put it into the pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 3
+    }
+  },
+  {
+    "logical_task_sha256": "ab756d43137063d9c7385d19a2d9dee68f4f1eeb760f1ccbdf09a8285fba9812",
+    "source_tasks": [
+      "grasp_test_tube_place_bowl"
+    ],
+    "task_index": 13,
+    "task_instruction": "Use the right arm to grasp the test tube and place it in the blue bowl.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "d4e336d953d0f7d409f09df3bb40e16d0e2cde3038d7f96a3ac522e46b344d65",
+    "source_tasks": [
+      "hold_socket_plug"
+    ],
+    "task_index": 14,
+    "task_instruction": "Use the right arm to hold the socket, left arm to insert the plug into it.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "bb780a0156f743a2d91c88a98b0bf97995ca3821d5df2d6c360045cfeea0e705",
+    "source_tasks": [
+      "lift_lid_and_place_cube_ep1"
+    ],
+    "task_index": 15,
+    "task_instruction": "Use the left arm to lift the lid off the pot. Then use the right arm to grasp and place the red cube into the pot and the left arm put the lid back on the pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 20,
+      "train": 112,
+      "validation": 25
+    }
+  },
+  {
+    "logical_task_sha256": "e724438dc45242ce1ea6bf5c576d64e5c75259202e897b3156473294428d0b8d",
+    "source_tasks": [
+      "lift_lid_and_put_green_duck"
+    ],
+    "task_index": 16,
+    "task_instruction": "Use the right arm to lift the lid off the pot, then use the left arm to place the green duck into the pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 15,
+      "validation": 3
+    }
+  },
+  {
+    "logical_task_sha256": "3298780068cdbf5a687b8b2b6515fd08a404103763e097954c6c7c9893a67316",
+    "source_tasks": [
+      "lift_lid_place_duck"
+    ],
+    "task_index": 17,
+    "task_instruction": "Use the right arm to lift the lid off the pot, then use the left arm to place the green duck inside.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "f2e0d0e13b2c83a16026700c4f91ee390ffce1f6a0be6d048d38b864b810e8c3",
+    "source_tasks": [
+      "lift_lid_place_pot"
+    ],
+    "task_index": 18,
+    "task_instruction": "Use the left arm to lift the lid of the pot and place it over the pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 13,
+      "validation": 2
+    }
+  },
+  {
+    "logical_task_sha256": "e15603a440e92df890fa47cd36b5e475531aeba2717b7863ffc9151ab01ac726",
+    "source_tasks": [
+      "open_box_place_cable"
+    ],
+    "task_index": 19,
+    "task_instruction": "Use the right arm to open the paper box. Then use the left arm to grasp and put the data cable into the paper box.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 3
+    }
+  },
+  {
+    "logical_task_sha256": "0f64ec97b78c3398acc27219d8319b8e78be03e8145bab320b1ae5648e30fabe",
+    "source_tasks": [
+      "open_box_place_marker"
+    ],
+    "task_index": 20,
+    "task_instruction": "Use the left arm to open the paper box, then use the right arm to place the marker inside.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "6dc4d776f211309967ec824447877f3aee16160fbd6fa430667c50e1827aa4aa",
+    "source_tasks": [
+      "open_drawer_put_marker"
+    ],
+    "task_index": 21,
+    "task_instruction": "Use the left arm to open the drawer, then use the right arm to put the marker inside.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "03d1548c0b39a135938a5fcce6eb9f5b51b9ee92780730152a7cd3c711a17de2",
+    "source_tasks": [
+      "open_drawer_put_stapler"
+    ],
+    "task_index": 22,
+    "task_instruction": "Use the right arm to open the drawer, then use the left arm to put the stapler inside.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "1aa01c28d5ec9175da2b40a0bc782a9754f709e2fd7fd1bacd66a68d4415213a",
+    "source_tasks": [
+      "open_left_right_door"
+    ],
+    "task_index": 23,
+    "task_instruction": "Use the left arm to grasp the left door handle and open the left door. Then use the right arm to grasp the right door handle and open the right door.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 16,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "7108bd6baf038950b9d55ff98173a849ae3be2adbc31fdd637821e4cdadfb999",
+    "source_tasks": [
+      "open_lid_place_filter"
+    ],
+    "task_index": 24,
+    "task_instruction": "Use the left arm to open the rice cooker lid, then use the right arm to place the filter inside.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "d92a861c2f59c4cc5676d2befa5cb56700040db5b662e6faf3362ab2710cb3f6",
+    "source_tasks": [
+      "open_lid_put_spoon",
+      "open_lid_put_spoon_ep2"
+    ],
+    "task_index": 25,
+    "task_instruction": "Use the right arm to open rice cooker lid. Then use the left arm to pick up the white spoon and put it into the rice cooker.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 134,
+      "validation": 31
+    }
+  },
+  {
+    "logical_task_sha256": "4527ff27107b10815c47d54d0bf79588a839d67bea7c911dfd7b3baf4f0e650f",
+    "source_tasks": [
+      "open_microwave_door_put_bowl"
+    ],
+    "task_index": 26,
+    "task_instruction": "Use the left arm to open the microwave oven door. Then use the right arm to put the blue bowl inside the microwave oven.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 13,
+      "validation": 2
+    }
+  },
+  {
+    "logical_task_sha256": "fce4c12db104020bbb956a601a356edb71569f122e32bb05137f2be5d45bf36d",
+    "source_tasks": [
+      "open_microwave_door_put_green_duck"
+    ],
+    "task_index": 27,
+    "task_instruction": "Use the left arm to open the microwave oven door. Then use the right arm to put the green duck inside the microwave oven.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "576a5bbad14295852f0d703758a16f57bb737231dc96a9ca0fa0d35d7658c966",
+    "source_tasks": [
+      "pick_ball_put_drawer"
+    ],
+    "task_index": 28,
+    "task_instruction": "Use the right arm to pick up the table tennis ball and place it in the open drawer.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "d37ead202e5a4b1ee78d48d5cf47ee026d1659c979cbb82b62f06d7f783fcf54",
+    "source_tasks": [
+      "pick_block_drawer_to_plate"
+    ],
+    "task_index": 29,
+    "task_instruction": "Use the right arm to pick up the purple block from inside the drawer and place it on the plate. Then, use the left arm to push the drawer closed.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 28,
+      "validation": 8
+    }
+  },
+  {
+    "logical_task_sha256": "e9ad5d942dd205f76df301e586e422d5f939298f22b49508a69048b954393c9d",
+    "source_tasks": [
+      "pick_bowl_cube",
+      "pick_bowl_cube_ep2"
+    ],
+    "task_index": 30,
+    "task_instruction": "Use the left arm to pick up the pink bowl and place it in the middle of the table. Then use the right arm to pick up the yellow cube and place it into the pink bowl.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 135,
+      "validation": 30
+    }
+  },
+  {
+    "logical_task_sha256": "730109b48ab59d59e33ad72e0c4c666bb9f7d92eb83f179959896290e2179b7d",
+    "source_tasks": [
+      "pick_bowl_on_top_shelf"
+    ],
+    "task_index": 31,
+    "task_instruction": "Use the left arm to pick up the pink bowl and place it on the top shelf.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 11,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "80473773787c4a34029320c012351064b2da5f132aad1b388dc8432880443bc7",
+    "source_tasks": [
+      "pick_coke_bottle_place_plate_ep1"
+    ],
+    "task_index": 32,
+    "task_instruction": "Use the left arm to grasp the coke bottle and place it upright on the blue plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 113,
+      "validation": 25
+    }
+  },
+  {
+    "logical_task_sha256": "ebbbee28e954232d4f09f47b945a2ef6b43f45f0a685b537dd331255cf145de1",
+    "source_tasks": [
+      "pick_cube_drawer_plate"
+    ],
+    "task_index": 33,
+    "task_instruction": "Use the left arm to pick up the pink cube from the drawer and place it on the plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "20e04f54d466b629aa99ca990d55597f2f96f085365eace786714c7612a4e99d",
+    "source_tasks": [
+      "pick_cube_place_plate"
+    ],
+    "task_index": 34,
+    "task_instruction": "Use the left arm to pick up the blue cube and place it on the green plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 8,
+      "validation": 2
+    }
+  },
+  {
+    "logical_task_sha256": "fbda52c9c9f381d4a256ba41648be0fff67964e1c0c7f185643f459bd29ecd0c",
+    "source_tasks": [
+      "pick_cube_put_pot"
+    ],
+    "task_index": 35,
+    "task_instruction": "Use the left arm to pick up the red cube and place it into the red pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "719109688d39da508f1c5e8a81dcde065057cc0cbd16190b9db4c5a04ea29ea0",
+    "source_tasks": [
+      "pick_cube_transfer_place_basket_ep1"
+    ],
+    "task_index": 36,
+    "task_instruction": "Use the right arm to grasp the blue cube, transfer it to the left arm and then use the left arm to put it in the basket.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 106,
+      "validation": 24
+    }
+  },
+  {
+    "logical_task_sha256": "9a74dae5f79ec5e02f5e6e13c3415fd53d7e7e659932b7a730e85ff98dfa136d",
+    "source_tasks": [
+      "pick_cup_on_left_table"
+    ],
+    "task_index": 37,
+    "task_instruction": "Use the right arm to pick up the blue cup and place it on the left table.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 11,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "e9fb2fc8963bf03f9232259abdc91bfca5fa9cc8d1d0b0e7748f8300a3172b2d",
+    "source_tasks": [
+      "pick_cylinder_place_drawer"
+    ],
+    "task_index": 38,
+    "task_instruction": "Use the left arm to pick up the green cylinder from the plate and place it in the drawer.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "0b65c67a99576f37f27e01e78917b077c38a16ae4314310db9b8520b57be3e90",
+    "source_tasks": [
+      "pick_eraser_place_right_box"
+    ],
+    "task_index": 39,
+    "task_instruction": "Use the left arm to grasp the eraser from the table and place it in the black box on the right.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "447fe8b6f8a047ec16ee9af2c177ba86cb2de41685452b949dd2cea2501a562f",
+    "source_tasks": [
+      "pick_green_cube_put_basket"
+    ],
+    "task_index": 40,
+    "task_instruction": "Use the left arm to pick up the green cube and place it into the woven basket.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "94a1de35405896b029575f0f079f56cb06cacc162ca1deca5ee6baf28a7ef20a",
+    "source_tasks": [
+      "pick_marker_draw_cross_ep1",
+      "pick_marker_draw_cross_ep2"
+    ],
+    "task_index": 41,
+    "task_instruction": "Use the right arm to grasp the marker in the green cup and draw a black cross mark on the table and then put it into the green cup.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 30,
+      "train": 121,
+      "validation": 27
+    }
+  },
+  {
+    "logical_task_sha256": "ccab825e84e5b8de028a689f2ca4f526b83813d5543aa97d80c69dfaf03959be",
+    "source_tasks": [
+      "pick_marker_draw_line"
+    ],
+    "task_index": 42,
+    "task_instruction": "Use the left arm to grasp the marker from the cup, draw a line on the table and put it back into the cup.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "a24f24bf627188f1eb6c6dfa230f406dfcae6c216e6de668e4957d433b4e4f0b",
+    "source_tasks": [
+      "pick_marker_place_bowl"
+    ],
+    "task_index": 43,
+    "task_instruction": "Use the right arm to pick up the marker and place it into the white bowl.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 13,
+      "validation": 2
+    }
+  },
+  {
+    "logical_task_sha256": "897d02b52acf0bb4f8f9147cb3a4bf1362a5df40c658d710c797f547d9980224",
+    "source_tasks": [
+      "pick_marker_place_cup"
+    ],
+    "task_index": 44,
+    "task_instruction": "Use the left arm to pick up the marker and place it in the purple cup.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "50578de9b449be8dc7d1c4b09ad8ef070e14fe01d7017eaaf9576c9a31596c35",
+    "source_tasks": [
+      "pick_marker_transfer_place_cup"
+    ],
+    "task_index": 45,
+    "task_instruction": "Use the right arm to grasp the marker, transfer it to the left arm and then place it in the cup.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "600d7a25fc63029d770b9e2e738b9909d0be923e172f4ab96445ba292a8e9231",
+    "source_tasks": [
+      "pick_marker_transfer_place_plate_ep1",
+      "pick_marker_transfer_place_plate_ep2"
+    ],
+    "task_index": 46,
+    "task_instruction": "Use the left arm to grasp the marker, transfer it to the right arm and then use the right arm to put it in the green plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 163,
+      "validation": 38
+    }
+  },
+  {
+    "logical_task_sha256": "47f6d38946bf28a83048dc2b2981eba69f59e8a4c2fc3e99cfd871b24182e650",
+    "source_tasks": [
+      "pick_mouse_basket"
+    ],
+    "task_index": 47,
+    "task_instruction": "Use the right arm to pick up the mouse from the tray and place it in the basket.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "0cd834b13631dbb36a272cb6f8e758034ceec73075757687b87f315cecff65e2",
+    "source_tasks": [
+      "pick_mouse_place_laptop"
+    ],
+    "task_index": 48,
+    "task_instruction": "Use the left arm to grasp the mouse and then place it on the middle of the laptop",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 16,
+      "train": 0,
+      "validation": 0
+    }
+  },
+  {
+    "logical_task_sha256": "7ebde76a1b781682853da5f38d7518f4f67c6ac5053b2af1aba5f53c823bc871",
+    "source_tasks": [
+      "pick_object_place_left_box_ep1",
+      "pick_object_place_left_box_ep2"
+    ],
+    "task_index": 49,
+    "task_instruction": "Use the right arm to grasp the object from the table and place it in the black box on the left.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 30,
+      "train": 138,
+      "validation": 32
+    }
+  },
+  {
+    "logical_task_sha256": "2c01ec96caa910351cbdb98a2e69159f3441ba4dcc59018ed03daa25c78ff442",
+    "source_tasks": [
+      "pick_orange_block_place_into_microwave"
+    ],
+    "task_index": 50,
+    "task_instruction": "Use the right arm to place the orange block into the bowl. Then, use the left arm to open the microwave door, use the right arm to put the bowl into the microwave, and finally, close the microwave door.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 30,
+      "train": 177,
+      "validation": 43
+    }
+  },
+  {
+    "logical_task_sha256": "1ff62fa630b18033bb0d07931e51a4e1333de824392880f94ade14cf81e88e6b",
+    "source_tasks": [
+      "pick_orange_block_place_pot"
+    ],
+    "task_index": 51,
+    "task_instruction": "Use the left arm to place the orange block into the pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "e8fc09bb705c0a301b83260ee00eb4c9685fe9b6de39c611cfee9c0f7882c797",
+    "source_tasks": [
+      "pick_pen_transfer_plate"
+    ],
+    "task_index": 52,
+    "task_instruction": "Use the left arm to grasp the pen, transfer it to the right arm and then place it in the blue plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 16,
+      "train": 0,
+      "validation": 0
+    }
+  },
+  {
+    "logical_task_sha256": "8955f32dbc1acc4d21a7a07e3d10225b7788c5419f0ca4f87fe54b639f7cf138",
+    "source_tasks": [
+      "pick_pepsi_place_bowl"
+    ],
+    "task_index": 53,
+    "task_instruction": "Use the right arm to grasp the pepsi bottle and place it upright in the blue bowl.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "3d0ad1a289f81adc0dbcd3c9299022a9d12a69bd9e89aa0c737d859ab71760bc",
+    "source_tasks": [
+      "pick_pepsi_transfer_place_plate_ep1"
+    ],
+    "task_index": 54,
+    "task_instruction": "Use the left arm to grasp the Pepsi can, transfer it to the right arm and then use the right arm to place it upright on the green plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 20,
+      "train": 97,
+      "validation": 21
+    }
+  },
+  {
+    "logical_task_sha256": "f585060cc1a8315f3926945817f1ee05ad8b42bf8f06aa132c846163b06388d5",
+    "source_tasks": [
+      "pick_place_chem_ep1",
+      "pick_place_chem_ep2"
+    ],
+    "task_index": 55,
+    "task_instruction": "Use the left arm to pick up the vial and place it in the left empty slot on the rack. Then use the right arm to grasp the test tube and place it in the right empty slot on the rack.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 60,
+      "train": 355,
+      "validation": 85
+    }
+  },
+  {
+    "logical_task_sha256": "4ff3557d99d1dc12d5b6f99d830919a407b0330e6d812c84e71ec4b268b74f88",
+    "source_tasks": [
+      "pick_plate_from_drawer_put_pink_cube_ep1"
+    ],
+    "task_index": 56,
+    "task_instruction": "Use the right arm to place the pink block on the drawer onto the table, and use the left arm to place the blue block onto the pink block.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 20,
+      "train": 99,
+      "validation": 21
+    }
+  },
+  {
+    "logical_task_sha256": "19634b3484b130dac1e618a7612983b947491277c6696caf8a89d054174b5998",
+    "source_tasks": [
+      "pick_red_marker_place_tray"
+    ],
+    "task_index": 57,
+    "task_instruction": "Use the right arm to pick up the red marker and place it on the white tray.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "5794df678099794661ecd5f54b8e1260f0e1d1fc07441ee6832b199c858392c3",
+    "source_tasks": [
+      "pick_remote_controller_transfer_board"
+    ],
+    "task_index": 58,
+    "task_instruction": "Use the right arm to grasp the remote controller, transfer it to the left arm, and then place it on the chopping board.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 11,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "7e43db31a3eedc054556daeb9202021f5d5857215d4459afd5dcfcfa43c0ff21",
+    "source_tasks": [
+      "pick_spoon_place_rice_cooker"
+    ],
+    "task_index": 59,
+    "task_instruction": "Use the right arm to pick up the spoon and place it into the rice cooker.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "0b22d18e2e21ba65b5fc7de2ff7597235b980af64a8e8ba61da80c101cae9ddd",
+    "source_tasks": [
+      "pick_tape_thread_marker"
+    ],
+    "task_index": 60,
+    "task_instruction": "Use the right arm to grasp the tape and thread the tape's central hole through the upright marker on the table.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 16,
+      "train": 0,
+      "validation": 0
+    }
+  },
+  {
+    "logical_task_sha256": "a35d025970847d4251ed3d764d074dbe473498a3aa0a3698dbc93412c22fc42f",
+    "source_tasks": [
+      "pick_test_tube_place_left_slot"
+    ],
+    "task_index": 61,
+    "task_instruction": "Use the left arm to grasp the test tube and place it in the left empty slot on the rack.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "f263be7aaa5f5cb4f038ca605bac72a50797d6369fb4e1015e4fb8b77b9c4d69",
+    "source_tasks": [
+      "pick_test_tube_place_middle_slot"
+    ],
+    "task_index": 62,
+    "task_instruction": "Use the right arm to grasp the test tube and place it in the middle empty slot on the rack.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "2ce2d36897ef8a932ec88dc24fdb942b4677e350ae59b4f959d8e292aa8b2a62",
+    "source_tasks": [
+      "pick_vial_place_middle_slot"
+    ],
+    "task_index": 63,
+    "task_instruction": "Use the left arm to pick up the vial and place it in the middle empty slot on the rack.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "4365849fd8a159514193f4140abafef2bae249f0f93f7babe863c463afbb14e7",
+    "source_tasks": [
+      "pick_vial_place_right_slot"
+    ],
+    "task_index": 64,
+    "task_instruction": "Use the right arm to pick up the vial and place it in the right empty slot on the rack.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "6d80b31c9404176e8b0725fda622b67ca9d7e6ba669d95332fb8e541ac21d139",
+    "source_tasks": [
+      "place_block_into_drawer"
+    ],
+    "task_index": 65,
+    "task_instruction": "Use the right arm to place the yellow block inside the drawer, and then push the drawer closed.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 10,
+      "train": 18,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "5c818c4640e6d561c1abcc8e173988b9dba01b38453a5d1409b1370182bc9de7",
+    "source_tasks": [
+      "place_cube_pot_lid"
+    ],
+    "task_index": 66,
+    "task_instruction": "Use the right arm to place the blue cube into the pot and then place the lid on top.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "b82817b382a1370d42a8b426f67bd47a196132e6c5a5229527d5db319516123b",
+    "source_tasks": [
+      "place_doll_stapler_swap"
+    ],
+    "task_index": 67,
+    "task_instruction": "Use the left arm to put the white and blue doll into the green plate, and use the right arm to put the stapler into the blue plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "0841eb6406dd1b843a80a70f68c2f7b08d2c712c46652443a39be088b27fdd35",
+    "source_tasks": [
+      "place_duck_on_block"
+    ],
+    "task_index": 68,
+    "task_instruction": "Use the left arm to place the green duck on top of the green block.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "d0857d7c1755094b7f35506a776c0d34075f31afbaedea6545e8fe8ad6e6d231",
+    "source_tasks": [
+      "place_green_duck_from_drawer_to_pot"
+    ],
+    "task_index": 69,
+    "task_instruction": "Use the right arm to pick up the green duck from the drawer and place it on the red pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "b304e647ff66a8c72d8801cfd30e431ad2e5930ead2e2ce7cc75e5a35953078b",
+    "source_tasks": [
+      "place_knife_in_drawer"
+    ],
+    "task_index": 70,
+    "task_instruction": "Use the right arm to place the green plastic knife into the open top drawer.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "c31b58634002bfb1468e0d0ab45a13d03fe062d0bb264d6a45421fd8a20aba09",
+    "source_tasks": [
+      "place_pen_in_drawer"
+    ],
+    "task_index": 71,
+    "task_instruction": "Use the left arm to place the pen into the open drawer.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "56a0fb4c15c04acbc061a206e2e79395ee60be252ae1b4f8d722b5144d54bba5",
+    "source_tasks": [
+      "place_spoon_drawer_push"
+    ],
+    "task_index": 72,
+    "task_instruction": "Use the right arm to place the spoon inside the drawer, and then use the left arm to push the drawer closed.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 16,
+      "train": 0,
+      "validation": 0
+    }
+  },
+  {
+    "logical_task_sha256": "a42def535c41135e570be09eaa8c2c1a085f2282d3d59a7584024a34b330ec83",
+    "source_tasks": [
+      "place_spoon_into_pot_cover_lid"
+    ],
+    "task_index": 73,
+    "task_instruction": "Use thw left arm to place the green spoon into the red pot, and then use the right arm to grasp the lid and cover the pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "057d49d6debec7c137d64f63286750740768648afedc623de1893c7577ae51bc",
+    "source_tasks": [
+      "place_spoon_on_plate"
+    ],
+    "task_index": 74,
+    "task_instruction": "Use the left arm to place the spoon on the purple plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "21052a71ddb13ca26a7464fb1044a1609f5993a569c6d2e32a2fbf8b5af2f870",
+    "source_tasks": [
+      "pour_cubes_into_box"
+    ],
+    "task_index": 75,
+    "task_instruction": "Use the right arm to pour the cubes from the cup into the yellow box.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "602d09841896dc628116298d4f06a0673831fe9af51727cf0254c410a6f26440",
+    "source_tasks": [
+      "pour_sausage_into_basket"
+    ],
+    "task_index": 76,
+    "task_instruction": "Use the left arm to pour the sausages from the plate into the white basket.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "8b3628e6b6a94017f5ea537e8a43b34cc1592e5e11b11bf258d28df9eca83999",
+    "source_tasks": [
+      "pour_sausage_into_bowl"
+    ],
+    "task_index": 77,
+    "task_instruction": "Use the right arm to pour the sausages from the plate into the pink bowl.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "418ae146a0dab0b413911c4a23b12183c7bff0b787d8cb1ec0d2bdf00c953eec",
+    "source_tasks": [
+      "pour_sausage_into_pot"
+    ],
+    "task_index": 78,
+    "task_instruction": "Use the left arm to pour the sausages from the plate into the pot, then use the right arm to place the lid on the pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 10,
+      "train": 19,
+      "validation": 5
+    }
+  },
+  {
+    "logical_task_sha256": "f0a164ddc62ebebc65f2056e22fb31ff419d030bdb8b60a48b5f6fc85a0c4dc2",
+    "source_tasks": [
+      "pour_water_transparent_cup_ep1",
+      "pour_water_transparent_cup_ep2"
+    ],
+    "task_index": 79,
+    "task_instruction": "Use the right arm to grasp the handle of the pink cup and pour the colored water into the transparent cup.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 30,
+      "train": 126,
+      "validation": 29
+    }
+  },
+  {
+    "logical_task_sha256": "4a950e95d466b08cc6e40ab1c89bcd0b6bc2b1bf160c82b60dc47fcb16d65d06",
+    "source_tasks": [
+      "pull_bottom_drawer_put_can_ep1",
+      "pull_bottom_drawer_put_can_ep2"
+    ],
+    "task_index": 80,
+    "task_instruction": "Use the left arm to pull the bottom drawer open, then use the right arm to place the can on the table into the drawer, and finally close the drawer with the left arm.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 36,
+      "train": 136,
+      "validation": 30
+    }
+  },
+  {
+    "logical_task_sha256": "04500f5c81d544551ce4c2982863b2403dfafaea4843dd1b06de8f783a311347",
+    "source_tasks": [
+      "pull_bottom_drawer_put_duck_into_pot"
+    ],
+    "task_index": 81,
+    "task_instruction": "Use the right arm to pull the bottom drawer, then use the left arm to take out the orange duck in it and put the orange duck into the red pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "9d81037dc8cabe6c34059bf1c9632b3bf01a1ddc0895affe79f436929a42c8a3",
+    "source_tasks": [
+      "pull_open_bottom_drawer"
+    ],
+    "task_index": 82,
+    "task_instruction": "Use the right arm to pull open the bottom drawer.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 11,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "38e3e4bc9d03257a880a5c2113c616fe4585796f6d98923aa62560bd169289e3",
+    "source_tasks": [
+      "pull_open_drawer"
+    ],
+    "task_index": 83,
+    "task_instruction": "Use the left arm to pull open the top drawer.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 10,
+      "train": 17,
+      "validation": 5
+    }
+  },
+  {
+    "logical_task_sha256": "53ba9b8c080df2c70d96cc97e4acac3810be1006f60a4a380b42b4b902e3a7c2",
+    "source_tasks": [
+      "pull_top_drawer_put_controller"
+    ],
+    "task_index": 84,
+    "task_instruction": "Use the right arm to pull the top drawer open, then use the left arm to place the remote controller into the drawer, and finally close the drawer with the right arm.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 16,
+      "train": 0,
+      "validation": 0
+    }
+  },
+  {
+    "logical_task_sha256": "99c68f5516bed1dc2127aaa8f97d1ef6c8acad473df6e6ceff1b537840eb9fbc",
+    "source_tasks": [
+      "push_middle_drawer"
+    ],
+    "task_index": 85,
+    "task_instruction": "Use the left arm to push to close the middle drawer.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "93a5407e9c122462d57898c22bc04251d4dc53f7f8776ce743487d004ecbb983",
+    "source_tasks": [
+      "put_blackboard_eraser_in_transparent_box"
+    ],
+    "task_index": 86,
+    "task_instruction": "Use the right arm to put the blackboard eraser into the transparent box.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "e830293d0c7dd21b609f4d0bf9ab51ae83482e68655c6c1fbbe4349eff9b60d2",
+    "source_tasks": [
+      "put_doll_pink_plate_stapler_purple_plate_ep1"
+    ],
+    "task_index": 87,
+    "task_instruction": "Use the left arm to put the yellow doll into the pink plate, and use the right arm to put the blue stapler into the purple plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 20,
+      "train": 106,
+      "validation": 24
+    }
+  },
+  {
+    "logical_task_sha256": "3c8005f70224df32f9f1bfc71054c9913d3e1903ee5cac488f996279b39df5e3",
+    "source_tasks": [
+      "put_mouse_basket_from_tray_ep1"
+    ],
+    "task_index": 88,
+    "task_instruction": "Use the left arm to place the mouse from the green tray into the basket",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 20,
+      "train": 106,
+      "validation": 24
+    }
+  },
+  {
+    "logical_task_sha256": "07b20637bf1b52e243ab2498409d252b55a8b2a256f34e2d5d86930b3af550b9",
+    "source_tasks": [
+      "put_mouse_on_pot"
+    ],
+    "task_index": 89,
+    "task_instruction": "Use the right arm to place the computer mouse on the red pot.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "c6cde61386ed159ce09439a0880c0375b9021e4dd81bf157e607de3846b2a6bc",
+    "source_tasks": [
+      "put_pen_in_basket"
+    ],
+    "task_index": 90,
+    "task_instruction": "Use the right arm to put the black pen into the basket.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "71b80f4b358e1e7cc4e280982b15fb9e4288488d152d03231e57b5cb9d1a3ac2",
+    "source_tasks": [
+      "put_stapler_blue_plate"
+    ],
+    "task_index": 91,
+    "task_instruction": "Use the left arm to put the blue stapler into the blue plate.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "e94c5d6de0f2023cb3d1d738bd9302b1df54d03b0505521a5ce32d93058cff81",
+    "source_tasks": [
+      "put_stapler_top_drawer_and_close"
+    ],
+    "task_index": 92,
+    "task_instruction": "Use the left arm to put the blue stapler into the top drawer, and then use the right arm to pull close the top drawer.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "b9aba6117ca48df87bcce295bef55c91f92dd6b3d8c58c91bbac7022c750ba8e",
+    "source_tasks": [
+      "put_two_objects_into_plate_and_box"
+    ],
+    "task_index": 93,
+    "task_instruction": "Use the right arm to put the doll on the blue plate and the left arm to put the stapler on the box.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "5866e3f8fd7197a82897130b70a65c03c9221c6f0a233781ac500dd98eabb421",
+    "source_tasks": [
+      "stack_cup_cola"
+    ],
+    "task_index": 94,
+    "task_instruction": "Use the left arm to pick up the purple cup and place it in the blue bowl. Then use the right arm to pick up the red coke can and place it into the purple cup.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 30,
+      "train": 176,
+      "validation": 44
+    }
+  },
+  {
+    "logical_task_sha256": "b8f31c07d7971b0bd0a941dc021656b9e6f8dcbf06569905640820e48a3d1190",
+    "source_tasks": [
+      "stack_cup_on_book"
+    ],
+    "task_index": 95,
+    "task_instruction": "Use the left arm to pick up the cup and place it on top of the closed book.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "ec0a965a766689a2b8f159e48313f0275f59ce4532ab2002dd833e3c1f776fb2",
+    "source_tasks": [
+      "stack_green_cup_into_purple_cup"
+    ],
+    "task_index": 96,
+    "task_instruction": "Use the left arm to stack the green cup into the purple cup.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 3
+    }
+  },
+  {
+    "logical_task_sha256": "f39d9ed00f4e5cbbcee90029be72bc7368b6696750156e20a3d7dab9ef496026",
+    "source_tasks": [
+      "stack_pepsi_can_cup"
+    ],
+    "task_index": 97,
+    "task_instruction": "Use the left arm to pick up the blue pepsi can and place it into the blue cup.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  {
+    "logical_task_sha256": "a3974e5b2faa84bb37011759e46ec75e61c950d915f29503affc51cb4c155879",
+    "source_tasks": [
+      "stack_three_block"
+    ],
+    "task_index": 98,
+    "task_instruction": "Use the left arm to stack the orange block on top of the green block, then use the right arm to stack the blue block on top of the orange block.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 0,
+      "train": 40,
+      "validation": 9
+    }
+  },
+  {
+    "logical_task_sha256": "ec8aec59f6a00ac288ce8d9484d58236754a344d152e1734848542eef41b1566",
+    "source_tasks": [
+      "stack_three_color_cubes_ep1",
+      "stack_three_color_cubes_ep2"
+    ],
+    "task_index": 99,
+    "task_instruction": "Use the left arm to stack the green cube on top of the blue cube. Subsequently, use the right arm to place the red cube on top of the green one to complete the three-layer structure.",
+    "trajectory_counts": {
+      "dev_seen": 0,
+      "exposed_benchmark": 0,
+      "test": 30,
+      "train": 138,
+      "validation": 32
+    }
+  }
+]

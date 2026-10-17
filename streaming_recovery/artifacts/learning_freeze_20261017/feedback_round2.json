@@ -1,0 +1,12 @@
+{
+  "trigger": "candidate family misses normal18 final return; no normal false alert",
+  "fit_change": "recheck17@12 uncertain current relation",
+  "rule_change": "retain clear holder + no current wrist connection, reject holder if current joined blade",
+  "evidence_source_for_rule": "train19@15/16",
+  "validation_not_fitted": [
+    11,
+    14,
+    18
+  ],
+  "stop_after_round": 2
+}

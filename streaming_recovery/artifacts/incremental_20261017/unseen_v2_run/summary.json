@@ -1,0 +1,368 @@
+{
+  "run_id": "20261017_125744_913945",
+  "date_timezone": "Asia/Shanghai",
+  "python": "3.11.17 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:16:54) [MSC v.1942 64 bit (AMD64)]",
+  "backend": "multiview_effect_geometry",
+  "actual_data": true,
+  "synthetic": false,
+  "execution_mode": "advisory_replay",
+  "clock_policy": "25 FPS source; configured sampling; synchronous backpressure, not wall-clock real-time guarantee",
+  "episodes": [
+    {
+      "episode_for_audit_only": 6,
+      "output_subdir": "trajectory_000006",
+      "counts": {
+        "decisions": 27,
+        "notifications": 2,
+        "confirmed_failure_decisions": 3,
+        "uncertain_decisions": 0,
+        "model_invalid": 0
+      },
+      "source_audit": {
+        "rows_read": 262,
+        "frames_decoded": {
+          "cam_high": 262,
+          "cam_right_wrist": 262
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure"
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 6,
+        "anchors": 1,
+        "feature_text_chars": 492,
+        "feature_payload_chars": 12721,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 4,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 16,
+        "task_reference_entries": 1,
+        "recovery_contexts": 1,
+        "recovery_event_evidence": 4,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 3,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 3,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 2,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.046999999998661224
+        },
+        {
+          "timestamp": 0.4,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 0.8,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 1.2,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 1.6,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 2.4,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 2.8,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 3.2,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 3.6,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 4.4,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 4.8,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 5.2,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 5.6,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 6.4,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 6.8,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 7.2,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 7.6,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 8.4,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 8.8,
+          "stage": "blocked_precondition",
+          "status": "suspicious",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.030999999995401595
+        },
+        {
+          "timestamp": 9.2,
+          "stage": "blocked_precondition",
+          "status": "suspicious",
+          "held": false,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 9.6,
+          "stage": "blocked_precondition",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "blocked_precondition",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.0319999999992433
+        },
+        {
+          "timestamp": 10.4,
+          "stage": "blocked_precondition",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 10.4,
+        "task_success": null,
+        "historical_completion": false,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000006.parquet",
+          "sha256": "fb7c33dbb6c77f0bfa6586bca6ade64c5434091a2a0e6db1e0485cb0e4009a5b"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000006.mp4",
+          "sha256": "62dc15c1c69d01cf902dcd005ca833afe19e547b7e89e3108901900b7b3eb8bc"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000006.mp4",
+          "sha256": "6dc86ef2790f67bcde1fac8f636d8ae27d3ce3d591900f0e174127255ac2e951"
+        }
+      ]
+    }
+  ],
+  "code_sha256": {
+    "contracts.py": "ae1cd931291b1d9a5575b528b951c9f1b3cd5427ad7968cb2b5c2a160bf4c73b",
+    "engine.py": "d29349b30ee976530cd1f31a05f3cf711d0136b77d0ac192bbc71b6aecba0436",
+    "events.py": "1c0550d6b2a3cb6ae28a6cadec22cab014007f418e0a1e2df88ea4a5e58b74f4",
+    "fetch_functional_data.py": "cdaebc6efba8c2ade16297fd15f1081d805aa5cd98fdec496539f9521bd33b24",
+    "geometry.py": "44fa7b9d08c17a7874d8493dd2a32603d7274f7da2d8fa6de68a81a711b9d4a0",
+    "memory.py": "c8d26981bee393877a7539b080c627eb45db13e1f61b0aba74acb4d7d152e363",
+    "multiview.py": "0c4a107ab6278cd151de2c6990b1a81a14090ec2791db328fcf85ccc26f90470",
+    "probe.py": "b91dd5b5ba3e0280439f7a0f7a191e39b38f46eb81c6aefc423f5edf6b1a165e",
+    "recovery.py": "26eaced8aa7df95ba4c1b7e98cad6a9fe763a67f2c9bd1beac12ee1c325a4f95",
+    "report.py": "98db84f034f62659f46653183b65a668521abddf2769f84d650a70e3bb7f52bf",
+    "review_existing.py": "a29602aeba8afd2be5c6aa96d0e15595d5f5459b759ad1a2ff6f7fb10f5bc30c",
+    "source.py": "c5bf8e181f34907638926a68c0b3c128d61c4f3e81e8c69f97159d2f28c96bd1",
+    "task_spec.py": "d24532e9880f9337c51b4216ab1009a543964dc591e886c99fbd3d85a708780b",
+    "tracking.py": "b313f0d833edbb5e26a82960ecb2e2810d3e5b91a7df14f73cf8daec1b468ea6",
+    "validation.py": "435db7e8b3e96a6fc9153f9a02fbef908eb31699be2cfaae5e98f2d8dfba0e07",
+    "vision.py": "f923409301f72d844c828e59cd9dc3c529fb188e7e4a7c23378e97aa8bbd7f97",
+    "__init__.py": "da8cc91889ca48ac6f50024508a5001c62749b687777232e418522bc934bdab8",
+    "__main__.py": "c45d0eec594bc2c546da3bbd678edc58f0b0787122ab11d01f6aa345f72a3406"
+  },
+  "test_sha256": {
+    "test_incremental_regressions.py": "ceb5ddc8c43cf334f72896553f5291241d1250c9117e37988d61c107c86156ff",
+    "test_system.py": "014b10eab60ab0b933d08c2453cb2a52865754b3fbb42bac3d619c039768586c"
+  },
+  "elapsed_wall_s": 3.6410000000032596
+}

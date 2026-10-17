@@ -1,0 +1,7 @@
+{
+  "changed": [
+    "recovery.py"
+  ],
+  "reason": "reject undeclared action fields and falsely satisfied executor preconditions; no visual/tracking threshold change",
+  "visual_tracking_freeze_matches": true
+}

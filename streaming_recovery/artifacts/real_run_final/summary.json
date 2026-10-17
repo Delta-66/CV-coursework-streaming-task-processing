@@ -1,0 +1,485 @@
+{
+  "run_id": "20261017_030453_277545",
+  "date_timezone": "Asia/Shanghai",
+  "python": "3.11.17 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:16:54) [MSC v.1942 64 bit (AMD64)]",
+  "backend": "calibrated_rgb_geometry",
+  "actual_data": true,
+  "synthetic": false,
+  "execution_mode": "advisory_replay",
+  "clock_policy": "25 FPS source; configured sampling; synchronous backpressure, not wall-clock real-time guarantee",
+  "episodes": [
+    {
+      "episode_for_audit_only": 0,
+      "output_subdir": "trajectory_000000",
+      "counts": {
+        "decisions": 12,
+        "notifications": 2,
+        "confirmed_failure_decisions": 2,
+        "uncertain_decisions": 2,
+        "model_invalid": 0
+      },
+      "source_audit": {
+        "rows_read": 300,
+        "frames_decoded": {
+          "cam_high": 300,
+          "cam_right_wrist": 300
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure"
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 1,
+        "feature_text_chars": 280,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 3,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 3,
+        "visual_mask_bytes": 589824,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "task_state_slots": 12,
+        "object_states": 3,
+        "aligner_latest_samples": 3,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 2,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 1,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0470000000204891
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015999999945051968
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015000000013969839
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000006146729
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "verify_grasp",
+          "status": "suspicious",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.015000000013969839
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.015000000013969839
+        },
+        {
+          "timestamp": 11.0,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.0
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 11.0,
+        "task_success": null,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000000.parquet",
+          "sha256": "ea0f895485816baff3ad5ddd86b6e2d6053a684d61d8e9b9c3ac29d31b188867"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000000.mp4",
+          "sha256": "332f1dc1ea2d49e38d0281143a60d193d3ec6e8297bd210aee5ad04b920b3b9e"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000000.mp4",
+          "sha256": "106ee31d07d240d09f58887eeff948c4cfdae1db89c61e76c97c91e0d6570dfd"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 18,
+      "output_subdir": "trajectory_000018",
+      "counts": {
+        "decisions": 21,
+        "notifications": 0,
+        "confirmed_failure_decisions": 0,
+        "uncertain_decisions": 14,
+        "model_invalid": 0
+      },
+      "source_audit": {
+        "rows_read": 519,
+        "frames_decoded": {
+          "cam_high": 519,
+          "cam_right_wrist": 519
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure"
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 2,
+        "feature_text_chars": 280,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 0,
+        "event_evidence": 0,
+        "active_events": 0,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 3,
+        "visual_mask_bytes": 589824,
+        "visual_tracks": 2,
+        "visual_calibration_entries": 2,
+        "task_state_slots": 12,
+        "object_states": 3,
+        "aligner_latest_samples": 3,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 5,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 1,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015000000013969839
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015000000013969839
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015999999945051968
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015000000013969839
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015999999945051968
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000006146729
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015000000013969839
+        },
+        {
+          "timestamp": 11.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015999999945051968
+        },
+        {
+          "timestamp": 12.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000006146729
+        },
+        {
+          "timestamp": 13.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 14.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015999999945051968
+        },
+        {
+          "timestamp": 15.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 16.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015999999945051968
+        },
+        {
+          "timestamp": 17.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015000000013969839
+        },
+        {
+          "timestamp": 18.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000006146729
+        },
+        {
+          "timestamp": 19.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015000000013969839
+        },
+        {
+          "timestamp": 20.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.015000000013969839
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 20.0,
+        "task_success": null,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000018.parquet",
+          "sha256": "1d5dd20ab081934ccf6b4b92de36337799590e4384189577c6e654bf48b63a68"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000018.mp4",
+          "sha256": "b2a114f654e449b6cee3338711923b7f8d0d1156e2a695e39ff3ae9ee7655246"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000018.mp4",
+          "sha256": "27ce268231a7da9adcaa45142ec0d2d88e6bb19229ee9ab7d9278457c6bce5e3"
+        }
+      ]
+    }
+  ],
+  "code_sha256": {
+    "contracts.py": "d0552175bdf80f54c65988a3b8e0947bb533dff0d6783428d0462ac7b7ab53a6",
+    "engine.py": "7aee5c6292f58b6b2d89e82711aadd1fcc65ee24c6c40454d30de9c65166f379",
+    "events.py": "c20ec89387cbeda1e1d2effbeffe0ecdf4fdcc9213970d06133da583633afb28",
+    "geometry.py": "f52e2c3538b1307835cd0da3683bba7f69059207d551010de1c503eb86f83a3c",
+    "memory.py": "6866b9dd07cfa4443b3b67b6efdef1b73594b6a64d8a87d22f4978c61140a132",
+    "probe.py": "b91dd5b5ba3e0280439f7a0f7a191e39b38f46eb81c6aefc423f5edf6b1a165e",
+    "recovery.py": "5bfacd5fcf23b1195237568db1cb8b9cf5c8615887f0d04dcde32c7049be883d",
+    "report.py": "8f1e34d4b6754136e890353f93c19db1c4ea36a408bd19e80516a9eb776d3dec",
+    "review_existing.py": "a29602aeba8afd2be5c6aa96d0e15595d5f5459b759ad1a2ff6f7fb10f5bc30c",
+    "source.py": "f73c927077b03b693d661ea0ffa0e9582767d518d0fbebe01ee06fc48cbeb179",
+    "tracking.py": "1f6087cd8988283e46ab0be8163cc43045d691606c69af6a3b49ba0d15703448",
+    "validation.py": "6c726561bd1fbf5ee32340d63526d6d8a9b83eca66d9d15f906aa8ff4bb4b55a",
+    "vision.py": "cc5e61634f3985c4fbca716a4ba2f7225bdfa8476344ae3977ab1bd264e7989c",
+    "__init__.py": "da8cc91889ca48ac6f50024508a5001c62749b687777232e418522bc934bdab8",
+    "__main__.py": "529f21a6a9ae6c0f401690215f1718b13c82b5a6bdd0988b53facddac6825938"
+  },
+  "elapsed_wall_s": 11.609000000054948
+}

@@ -1,0 +1,163 @@
+[
+  {
+    "name": "export_vs_development_inference_and_isolation",
+    "status": "passed",
+    "detail": {
+      "identical_semantic_rows": {
+        "0": 12,
+        "1": 15,
+        "2": 12,
+        "6": 11,
+        "8": 10,
+        "11": 16,
+        "14": 25,
+        "18": 21,
+        "19": 17,
+        "29": 10,
+        "13": 13,
+        "16": 15
+      },
+      "isolated_audit": "frozen_run/independence_audit.json"
+    },
+    "wall_s": 0.06302649999997811
+  },
+  {
+    "name": "full_pipeline_future_suffix_and_label_independence",
+    "status": "passed",
+    "detail": {
+      "cases": [
+        {
+          "source": 11,
+          "same_prefix_decisions": 15,
+          "prefix_end_exclusive_s": 15.0,
+          "reader_advanced_only_to_yield": true
+        },
+        {
+          "source": 14,
+          "same_prefix_decisions": 9,
+          "prefix_end_exclusive_s": 9.0,
+          "reader_advanced_only_to_yield": true
+        }
+      ],
+      "fixture": "real pixels prefix plus artificial future/path/label/action changes; not additional real trajectories"
+    },
+    "wall_s": 61.85051089999615
+  },
+  {
+    "name": "old_advice_does_not_affect_same_real_observations",
+    "status": "passed",
+    "detail": {
+      "same_decisions_with_irrelevant_old_advice": 16,
+      "advice_to_fact_writes": 0
+    },
+    "wall_s": 6.44498410000233
+  },
+  {
+    "name": "all_inference_memory_bounds_2000_dynamic_steps",
+    "status": "passed",
+    "detail": {
+      "decisions": 2000,
+      "maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 2,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1637,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 410,
+        "feature_payload_chars": 26055,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 4,
+        "event_evidence": 12,
+        "event_sensor_refs": 36,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "student_parameter_values": 78,
+        "student_history_items": 0,
+        "student_mutable_state_slots": 1,
+        "training_updates": 0,
+        "suggestion_history_items": 0,
+        "task_state_slots": 19,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "work_cycle_entries": 0,
+        "work_cycle_fields": 0,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 223,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 9,
+        "recovery_event_evidence": 3,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 7,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "source": "cycled real frames with synthetic monotonically increasing clock, not a natural long episode"
+    },
+    "wall_s": 46.85030140000163
+  },
+  {
+    "name": "reset_and_missing_invalid_future_modalities",
+    "status": "passed",
+    "detail": {
+      "cross_episode_equal_to_fresh": true,
+      "missing_black_and_resume": true,
+      "future_sample_rejected": true
+    },
+    "wall_s": 19.25353200000245
+  },
+  {
+    "name": "actual_input_modalities_affect_decision",
+    "status": "passed",
+    "detail": {
+      "actual": "gripper",
+      "changed": {
+        "actual": {
+          "relation": "gripper",
+          "motion": "recent_motion"
+        },
+        "open": {
+          "relation": "unknown",
+          "motion": "recent_motion"
+        },
+        "no_wrist": {
+          "relation": "unknown",
+          "motion": "recent_motion"
+        },
+        "no_joint": {
+          "relation": "unknown",
+          "motion": "unknown"
+        }
+      },
+      "note": "state13 gripper shares vector with positions; no independent third sensor claim"
+    },
+    "wall_s": 8.608947900000203
+  }
+]

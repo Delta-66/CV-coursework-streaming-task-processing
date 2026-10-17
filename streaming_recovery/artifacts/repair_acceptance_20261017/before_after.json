@@ -1,0 +1,143 @@
+{
+  "kind": "real six-trajectory regression; no unseen/generalization claim",
+  "per_episode": [
+    {
+      "episode": 18,
+      "official_outcome": "success",
+      "previous_completion": true,
+      "current_completion": true,
+      "previous_localized_decisions": 0,
+      "current_localized_decisions": 0,
+      "previous_unknown_times": [
+        4.0,
+        5.0,
+        14.0,
+        18.0
+      ],
+      "current_unknown_times": [
+        4.0,
+        5.0,
+        18.0
+      ],
+      "previous_corrections": {},
+      "current_corrections": {}
+    },
+    {
+      "episode": 19,
+      "official_outcome": "success",
+      "previous_completion": null,
+      "current_completion": true,
+      "previous_localized_decisions": 0,
+      "current_localized_decisions": 0,
+      "previous_unknown_times": [
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        11.0,
+        14.0
+      ],
+      "current_unknown_times": [
+        3.0,
+        4.0,
+        5.0,
+        14.0
+      ],
+      "previous_corrections": {},
+      "current_corrections": {}
+    },
+    {
+      "episode": 0,
+      "official_outcome": "failure",
+      "previous_completion": null,
+      "current_completion": null,
+      "previous_localized_decisions": 0,
+      "current_localized_decisions": 0,
+      "previous_unknown_times": [
+        7.0
+      ],
+      "current_unknown_times": [
+        7.0
+      ],
+      "previous_corrections": {
+        "hold_and_observe": 1,
+        "open_gripper": 2
+      },
+      "current_corrections": {
+        "hold_and_observe": 1,
+        "open_gripper": 2
+      }
+    },
+    {
+      "episode": 2,
+      "official_outcome": "failure",
+      "previous_completion": null,
+      "current_completion": null,
+      "previous_localized_decisions": 0,
+      "current_localized_decisions": 2,
+      "previous_unknown_times": [
+        0.0,
+        1.0,
+        9.0
+      ],
+      "current_unknown_times": [
+        0.0,
+        1.0,
+        9.0
+      ],
+      "previous_corrections": {
+        "hold_and_observe": 1,
+        "open_gripper": 1
+      },
+      "current_corrections": {
+        "hold_and_observe": 1,
+        "open_gripper": 1
+      }
+    },
+    {
+      "episode": 8,
+      "official_outcome": "failure",
+      "previous_completion": null,
+      "current_completion": null,
+      "previous_localized_decisions": 0,
+      "current_localized_decisions": 0,
+      "previous_unknown_times": [],
+      "current_unknown_times": [
+        6.0
+      ],
+      "previous_corrections": {
+        "hold_and_observe": 1,
+        "open_gripper": 2
+      },
+      "current_corrections": {
+        "hold_and_observe": 1,
+        "open_gripper": 2
+      }
+    },
+    {
+      "episode": 29,
+      "official_outcome": "failure",
+      "previous_completion": null,
+      "current_completion": null,
+      "previous_localized_decisions": 0,
+      "current_localized_decisions": 0,
+      "previous_unknown_times": [
+        0.0,
+        6.0
+      ],
+      "current_unknown_times": [
+        0.0,
+        6.0
+      ],
+      "previous_corrections": {
+        "hold_and_observe": 1,
+        "open_gripper": 1
+      },
+      "current_corrections": {
+        "hold_and_observe": 1,
+        "open_gripper": 1
+      }
+    }
+  ]
+}

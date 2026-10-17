@@ -1,0 +1,42 @@
+{
+  "repo": "sii-rhos-ai/vifailback-dataset-lerobot",
+  "revision": "619791b94f61667333fe179d471051e0bca0e06f",
+  "files": [
+    {
+      "path": "data/chunk-000/episode_000002.parquet",
+      "size": 42713,
+      "sha256": "35c041349811ea9680e875710466a6dda8d4618215f4f8ad53969d7783e35b26",
+      "remote_sha256": "35c041349811ea9680e875710466a6dda8d4618215f4f8ad53969d7783e35b26"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000002.mp4",
+      "size": 3139383,
+      "sha256": "4733826c1886b1128fd7c2d74a8ae70a96dcbdd71bd2a265487e8ce651276d90",
+      "remote_sha256": "4733826c1886b1128fd7c2d74a8ae70a96dcbdd71bd2a265487e8ce651276d90"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000002.mp4",
+      "size": 1558118,
+      "sha256": "3054a5e3adfaa91f90c7384d3fc93fff576753d713a767b28d8586777b77c67e",
+      "remote_sha256": "3054a5e3adfaa91f90c7384d3fc93fff576753d713a767b28d8586777b77c67e"
+    },
+    {
+      "path": "data/chunk-000/episode_000019.parquet",
+      "size": 61584,
+      "sha256": "af0cd65a1946aaa4f774ce5a6bcee0c4c6977ac0c8c353f0f153cdbcd636ee71",
+      "remote_sha256": "af0cd65a1946aaa4f774ce5a6bcee0c4c6977ac0c8c353f0f153cdbcd636ee71"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000019.mp4",
+      "size": 4447840,
+      "sha256": "b1bac6d2e1419317ba93014af41f7b7339c7ba01e0ac134d4eff33e94fc10deb",
+      "remote_sha256": "b1bac6d2e1419317ba93014af41f7b7339c7ba01e0ac134d4eff33e94fc10deb"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000019.mp4",
+      "size": 3095000,
+      "sha256": "739ee209189780e38c74e7ca981c23a255ddac368c92072eecf1f67769f6927b",
+      "remote_sha256": "739ee209189780e38c74e7ca981c23a255ddac368c92072eecf1f67769f6927b"
+    }
+  ]
+}

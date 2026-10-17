@@ -1,0 +1,426 @@
+{
+  "episodes": [
+    {
+      "episode": 0,
+      "role": "previously_exposed_regression",
+      "official_outcome": "failure",
+      "baseline_confirmed": true,
+      "final_confirmed": true,
+      "final_success": null,
+      "missed_failure": false,
+      "normal_false_alarm": null,
+      "confirm_timestamp_not_delay": [
+        10.0
+      ],
+      "alerts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [],
+      "unknown_information_timestamps": [
+        7.0
+      ],
+      "baseline_wall_s": 3.7659999999959837,
+      "final_wall_s": 3.5,
+      "decision_wall_total_s": 0.34399999999732245,
+      "decision_wall_max_s": 0.06300000000192085,
+      "baseline_wrist_calls": 6,
+      "final_wrist_calls": 12,
+      "student_forward_calls": 12,
+      "semantic_gaps": []
+    },
+    {
+      "episode": 1,
+      "role": "previously_exposed_regression",
+      "official_outcome": "failure",
+      "baseline_confirmed": true,
+      "final_confirmed": true,
+      "final_success": null,
+      "missed_failure": false,
+      "normal_false_alarm": null,
+      "confirm_timestamp_not_delay": [
+        14.0
+      ],
+      "alerts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [],
+      "unknown_information_timestamps": [
+        12.0
+      ],
+      "baseline_wall_s": 4.078000000001339,
+      "final_wall_s": 3.811999999998079,
+      "decision_wall_total_s": 0.40600000000267755,
+      "decision_wall_max_s": 0.0319999999992433,
+      "baseline_wrist_calls": 9,
+      "final_wrist_calls": 15,
+      "student_forward_calls": 15,
+      "semantic_gaps": []
+    },
+    {
+      "episode": 2,
+      "role": "previously_exposed_regression",
+      "official_outcome": "failure",
+      "baseline_confirmed": true,
+      "final_confirmed": true,
+      "final_success": null,
+      "missed_failure": false,
+      "normal_false_alarm": null,
+      "confirm_timestamp_not_delay": [
+        11.0
+      ],
+      "alerts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [
+        0.0,
+        1.0,
+        9.0
+      ],
+      "unknown_information_timestamps": [
+        0.0,
+        1.0,
+        9.0
+      ],
+      "baseline_wall_s": 3.2339999999967404,
+      "final_wall_s": 3.061999999998079,
+      "decision_wall_total_s": 0.2669999999998254,
+      "decision_wall_max_s": 0.0319999999992433,
+      "baseline_wrist_calls": 4,
+      "final_wrist_calls": 9,
+      "student_forward_calls": 9,
+      "semantic_gaps": []
+    },
+    {
+      "episode": 6,
+      "role": "previously_exposed_regression",
+      "official_outcome": "failure",
+      "baseline_confirmed": true,
+      "final_confirmed": true,
+      "final_success": null,
+      "missed_failure": false,
+      "normal_false_alarm": null,
+      "confirm_timestamp_not_delay": [
+        10.0
+      ],
+      "alerts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [],
+      "unknown_information_timestamps": [],
+      "baseline_wall_s": 2.75,
+      "final_wall_s": 2.827999999994063,
+      "decision_wall_total_s": 0.2660000000105356,
+      "decision_wall_max_s": 0.0319999999992433,
+      "baseline_wrist_calls": 4,
+      "final_wrist_calls": 11,
+      "student_forward_calls": 11,
+      "semantic_gaps": []
+    },
+    {
+      "episode": 8,
+      "role": "previously_exposed_regression",
+      "official_outcome": "failure",
+      "baseline_confirmed": true,
+      "final_confirmed": true,
+      "final_success": null,
+      "missed_failure": false,
+      "normal_false_alarm": null,
+      "confirm_timestamp_not_delay": [
+        8.0
+      ],
+      "alerts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [],
+      "unknown_information_timestamps": [],
+      "baseline_wall_s": 2.4219999999986612,
+      "final_wall_s": 2.562000000005355,
+      "decision_wall_total_s": 0.25000000000727596,
+      "decision_wall_max_s": 0.0319999999992433,
+      "baseline_wrist_calls": 4,
+      "final_wrist_calls": 10,
+      "student_forward_calls": 10,
+      "semantic_gaps": []
+    },
+    {
+      "episode": 11,
+      "role": "previously_exposed_regression",
+      "official_outcome": "failure",
+      "baseline_confirmed": false,
+      "final_confirmed": true,
+      "final_success": null,
+      "missed_failure": false,
+      "normal_false_alarm": null,
+      "confirm_timestamp_not_delay": [
+        15.0
+      ],
+      "alerts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [],
+      "unknown_information_timestamps": [
+        4.0,
+        6.0
+      ],
+      "baseline_wall_s": 4.1560000000026776,
+      "final_wall_s": 4.296999999998661,
+      "decision_wall_total_s": 0.3889999999955762,
+      "decision_wall_max_s": 0.0319999999992433,
+      "baseline_wrist_calls": 14,
+      "final_wrist_calls": 16,
+      "student_forward_calls": 16,
+      "semantic_gaps": []
+    },
+    {
+      "episode": 14,
+      "role": "previously_exposed_regression",
+      "official_outcome": "failure",
+      "baseline_confirmed": false,
+      "final_confirmed": true,
+      "final_success": null,
+      "missed_failure": false,
+      "normal_false_alarm": null,
+      "confirm_timestamp_not_delay": [
+        18.0
+      ],
+      "alerts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [],
+      "unknown_information_timestamps": [
+        4.0
+      ],
+      "baseline_wall_s": 6.2189999999973224,
+      "final_wall_s": 6.610000000000582,
+      "decision_wall_total_s": 0.6089999999967404,
+      "decision_wall_max_s": 0.0319999999992433,
+      "baseline_wrist_calls": 22,
+      "final_wrist_calls": 25,
+      "student_forward_calls": 25,
+      "semantic_gaps": [
+        "manual_key_phase_mismatch_or_unsampled"
+      ]
+    },
+    {
+      "episode": 18,
+      "role": "previously_exposed_regression",
+      "official_outcome": "success",
+      "baseline_confirmed": false,
+      "final_confirmed": false,
+      "final_success": true,
+      "missed_failure": null,
+      "normal_false_alarm": false,
+      "confirm_timestamp_not_delay": [],
+      "alerts": {
+        "suspicion": 0,
+        "failure_confirmation": 0,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [
+        16.0,
+        17.0,
+        18.0
+      ],
+      "unknown_information_timestamps": [
+        4.0,
+        5.0,
+        16.0,
+        17.0,
+        18.0
+      ],
+      "baseline_wall_s": 5.23399999999674,
+      "final_wall_s": 6.061999999998079,
+      "decision_wall_total_s": 0.49599999999190914,
+      "decision_wall_max_s": 0.0319999999992433,
+      "baseline_wrist_calls": 17,
+      "final_wrist_calls": 21,
+      "student_forward_calls": 21,
+      "semantic_gaps": []
+    },
+    {
+      "episode": 19,
+      "role": "fit_normal_control",
+      "official_outcome": "success",
+      "baseline_confirmed": false,
+      "final_confirmed": false,
+      "final_success": true,
+      "missed_failure": null,
+      "normal_false_alarm": false,
+      "confirm_timestamp_not_delay": [],
+      "alerts": {
+        "suspicion": 0,
+        "failure_confirmation": 0,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [
+        13.0,
+        14.0
+      ],
+      "unknown_information_timestamps": [
+        3.0,
+        4.0,
+        5.0,
+        13.0,
+        14.0
+      ],
+      "baseline_wall_s": 4.7189999999973224,
+      "final_wall_s": 4.936999999998079,
+      "decision_wall_total_s": 0.42200000001321314,
+      "decision_wall_max_s": 0.0319999999992433,
+      "baseline_wrist_calls": 13,
+      "final_wrist_calls": 17,
+      "student_forward_calls": 17,
+      "semantic_gaps": []
+    },
+    {
+      "episode": 29,
+      "role": "previously_exposed_regression",
+      "official_outcome": "failure",
+      "baseline_confirmed": true,
+      "final_confirmed": true,
+      "final_success": null,
+      "missed_failure": false,
+      "normal_false_alarm": null,
+      "confirm_timestamp_not_delay": [
+        9.0
+      ],
+      "alerts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [
+        0.0
+      ],
+      "unknown_information_timestamps": [
+        0.0,
+        6.0
+      ],
+      "baseline_wall_s": 2.7810000000026776,
+      "final_wall_s": 2.5939999999973224,
+      "decision_wall_total_s": 0.2339999999894644,
+      "decision_wall_max_s": 0.0319999999992433,
+      "baseline_wrist_calls": 6,
+      "final_wrist_calls": 9,
+      "student_forward_calls": 9,
+      "semantic_gaps": []
+    },
+    {
+      "episode": 13,
+      "role": "reserved_train_audit_after_selection",
+      "official_outcome": "failure",
+      "baseline_confirmed": false,
+      "final_confirmed": false,
+      "final_success": null,
+      "missed_failure": true,
+      "normal_false_alarm": null,
+      "confirm_timestamp_not_delay": [],
+      "alerts": {
+        "suspicion": 1,
+        "failure_confirmation": 0,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [
+        0.0
+      ],
+      "unknown_information_timestamps": [
+        0.0,
+        4.0
+      ],
+      "baseline_wall_s": 3.9060000000026776,
+      "final_wall_s": 3.5160000000032596,
+      "decision_wall_total_s": 0.2640000000028522,
+      "decision_wall_max_s": 0.031000000002677552,
+      "baseline_wrist_calls": 11,
+      "final_wrist_calls": 12,
+      "student_forward_calls": 12,
+      "semantic_gaps": [
+        "failure_not_confirmed"
+      ]
+    },
+    {
+      "episode": 16,
+      "role": "reserved_train_audit_after_selection",
+      "official_outcome": "failure",
+      "baseline_confirmed": false,
+      "final_confirmed": true,
+      "final_success": null,
+      "missed_failure": false,
+      "normal_false_alarm": null,
+      "confirm_timestamp_not_delay": [
+        14.0
+      ],
+      "alerts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "unknown_stage_timestamps": [],
+      "unknown_information_timestamps": [
+        4.0
+      ],
+      "baseline_wall_s": 4.25,
+      "final_wall_s": 4.046999999998661,
+      "decision_wall_total_s": 0.3600000000005821,
+      "decision_wall_max_s": 0.0319999999992433,
+      "baseline_wrist_calls": 13,
+      "final_wrist_calls": 15,
+      "student_forward_calls": 15,
+      "semantic_gaps": []
+    }
+  ],
+  "totals": {
+    "native_rows": 4311,
+    "decoded_images": 8622,
+    "decisions": 177,
+    "confirmed_failure_episodes": 9,
+    "joint_localization_decisions": 4,
+    "directional_action_decisions": 0,
+    "reviewed_directional_checkpoints": 0,
+    "verified_conditional_real_directions": 2
+  },
+  "immutable_splits_verified": true,
+  "frozen_test_used": false,
+  "no_detection_delay_annotation": true,
+  "no_generalization_claim": true,
+  "budget": "same25Hzsource1Hzdecisions max3images; baselineadaptivewrist finalalwayscurrentwristwhengeometryvalid",
+  "timing": "actual measured wall time; frozen run has audit profiler, not a controlled speed benchmark"
+}

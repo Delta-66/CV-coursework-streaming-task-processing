@@ -1,0 +1,442 @@
+{
+  "review_kind": "本轮助手逐图目视核查；非独立人工阶段标注，无首次可检测时刻标注",
+  "source_run": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\accepted_run",
+  "checkpoints": [
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 0.0,
+      "observed": "顶视初始只有长条香肠，刀在架；未出现新分离小段。",
+      "expected_fields": {
+        "state.task_completed": false
+      },
+      "image_refs": [
+        "trajectory_000018/frames/obs-000000_cam_high.jpg",
+        "trajectory_000018/frames/obs-000000_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000018/frames/obs-000000_cam_high.jpg": "306f84866c4661b01ef86c47481dfa79cfaa74d0cd8264913e8d3803ccb91ab5",
+        "trajectory_000018/frames/obs-000000_cam_right_wrist.jpg": "972f0886beb35d46426f757ea70e348e0d08a369454c9def9598ca1a7d76b21c"
+      }
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 9.0,
+      "observed": "腕图刀与两指连接，刀刃位于香肠端部；顶视机械手在砧板。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": true,
+        "visual_facts.measurements.cut_operation": "yes"
+      },
+      "image_refs": [
+        "trajectory_000018/frames/obs-000225_cam_high.jpg",
+        "trajectory_000018/frames/obs-000225_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000018/frames/obs-000225_cam_high.jpg": "257b629275e1a40c0e05113f605d941eb89c2b38ecb3ba1df747ac68e22383a7",
+        "trajectory_000018/frames/obs-000225_cam_right_wrist.jpg": "15004707b7f44cd82fd168fe10786c6b8528220a2f59ba364f5369e596b211a8"
+      },
+      "expected_stages": [
+        "cut_operation"
+      ]
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 20.0,
+      "observed": "与初始相比新增独立圆片；刀已回架且机械手退出。",
+      "expected_fields": {
+        "state.task_completed": true
+      },
+      "image_refs": [
+        "trajectory_000018/frames/obs-000500_cam_high.jpg",
+        "trajectory_000018/frames/obs-000500_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000018/frames/obs-000500_cam_high.jpg": "47cade25c5d10da5f902d355d0e37ae9e18ba4074c6fcb342b5675012ec32b96",
+        "trajectory_000018/frames/obs-000500_cam_right_wrist.jpg": "3b0cc2d93b843bb50e5167ee55c1b4c1f3c30910d93dfd4fb638fd084cf2fd25"
+      },
+      "expected_stages": [
+        "completed"
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 8.0,
+      "observed": "连续5至8秒腕图显示刀刃在两指之间、与香肠端部相对位置变化。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": true,
+        "visual_facts.measurements.cut_operation": "yes"
+      },
+      "image_refs": [
+        "trajectory_000019/frames/obs-000200_cam_high.jpg",
+        "trajectory_000019/frames/obs-000200_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000019/frames/obs-000200_cam_high.jpg": "7674c320156a6cfd288853f60740d9a7c7351f030b8197cfafd06b2e7a1ddae3",
+        "trajectory_000019/frames/obs-000200_cam_right_wrist.jpg": "529e1f5c503a8ddfeeff7b60a092848a2f10a46ffc7ceb916e65f3e640d2d0bc"
+      },
+      "expected_stages": [
+        "cut_operation"
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 10.0,
+      "observed": "与0秒相比新增明显圆片；仍持刀开始回架。单帧新增物需后续稳定确认。",
+      "expected_fields": {
+        "visual_facts.measurements.new_cut_effect": "yes"
+      },
+      "image_refs": [
+        "trajectory_000019/frames/obs-000250_cam_high.jpg",
+        "trajectory_000019/frames/obs-000250_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000019/frames/obs-000250_cam_high.jpg": "10aebf672009d3ba3bd3afa097c4c4ffbf195a71322a516e1de93d5f0306a82f",
+        "trajectory_000019/frames/obs-000250_cam_right_wrist.jpg": "3c7da02f077e0bff807dc0a0b1d08d80079a1e9e68f72672908f0e81423ffb1e"
+      },
+      "expected_stages": [
+        "return_tool"
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 16.0,
+      "observed": "新圆片仍在砧板，刀回架且右手退出；切割参考、作用和效果链可核查。",
+      "expected_fields": {
+        "state.task_completed": true
+      },
+      "image_refs": [
+        "trajectory_000019/frames/obs-000400_cam_high.jpg",
+        "trajectory_000019/frames/obs-000400_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000019/frames/obs-000400_cam_high.jpg": "335f4f3c3a450e0cf1082b893a85991bd2854d5ac3212835dade9ecf8f47e593",
+        "trajectory_000019/frames/obs-000400_cam_right_wrist.jpg": "c33ee781df892f7476c68f0c892b9580008b332a190ba45123bcbbaffa511423"
+      },
+      "expected_stages": [
+        "completed"
+      ]
+    },
+    {
+      "episode_for_audit_only": 0,
+      "timestamp": 7.0,
+      "observed": "腕图两指已收拢但刀柄在侧旁/原架，接触关系仍不清；不应由闭爪报告成功。",
+      "expected_fields": {
+        "failure_event": null
+      },
+      "image_refs": [
+        "trajectory_000000/frames/obs-000175_cam_high.jpg",
+        "trajectory_000000/frames/obs-000175_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000000/frames/obs-000175_cam_high.jpg": "f7ed625cf9f6616ad867988e1d18bd2110acce902aee6368bae4a19ebc31cbbe",
+        "trajectory_000000/frames/obs-000175_cam_right_wrist.jpg": "f071574e58d802dc2ab3bcfe00ee03bfe0e0e9bf8961a6193e1c8de661f3ddd8"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 0,
+      "timestamp": 10.0,
+      "observed": "顶视刀留架，腕图空夹爪在香肠上方，支持抓取未建立。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "state.candidate": "grasp_not_established",
+        "execution_status": "confirmed_failure"
+      },
+      "image_refs": [
+        "trajectory_000000/frames/obs-000250_cam_high.jpg",
+        "trajectory_000000/frames/obs-000250_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000000/frames/obs-000250_cam_high.jpg": "1156fe917637afdb17714c9dbc36862be6cc7c6abc5c2459aecb79c5387f6ad2",
+        "trajectory_000000/frames/obs-000250_cam_right_wrist.jpg": "d738d472e887851951b2b762b7869f01f58820384757db94e9ab38c3a19235f3"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 2.0,
+      "observed": "腕图可见独立刀柄颈部和两指内缘；两指张开，正在准备对齐。",
+      "expected_fields": {
+        "visual_facts.gripper": "open",
+        "visual_facts.measurements.localization.status": "localized",
+        "visual_facts.grasp_readiness": {}
+      },
+      "image_refs": [
+        "trajectory_000002/frames/obs-000050_cam_high.jpg",
+        "trajectory_000002/frames/obs-000050_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000002/frames/obs-000050_cam_high.jpg": "be357fcb4cce68975f74971410e089edf71e69189ec34edcdefd7b5a9ff3c003",
+        "trajectory_000002/frames/obs-000050_cam_right_wrist.jpg": "c449b81cc33d51ceb1009e2d1a1411d425cda647ac3711a931dbc5bee6515cb3"
+      },
+      "expected_stages": [
+        "align_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 3.0,
+      "observed": "刀柄颈部移至两指中点下方，仍为准备对齐，不表示已经接触。",
+      "expected_fields": {
+        "visual_facts.measurements.localization.status": "localized"
+      },
+      "image_refs": [
+        "trajectory_000002/frames/obs-000075_cam_high.jpg",
+        "trajectory_000002/frames/obs-000075_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000002/frames/obs-000075_cam_high.jpg": "8cf5eb0a9aa8ea5cc16091275a6111beb5ad7bf45471d26d143554952b7f6e36",
+        "trajectory_000002/frames/obs-000075_cam_right_wrist.jpg": "9e9cb067028d7496b2daf4e729d813517d26b0d9372a4af9751a8c189efeb2a8"
+      },
+      "expected_stages": [
+        "align_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 7.0,
+      "observed": "相对6秒可见两指明显收拢，刀仍未带离架；实际闭合应建立一次尝试而非成功。",
+      "expected_fields": {
+        "state.attempt": 1
+      },
+      "image_refs": [
+        "trajectory_000002/frames/obs-000175_cam_high.jpg",
+        "trajectory_000002/frames/obs-000175_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000002/frames/obs-000175_cam_high.jpg": "81ec7aa99cacef0326040abb943837e1ccf3e68d22d2bfba4c47a5d1f02b37ac",
+        "trajectory_000002/frames/obs-000175_cam_right_wrist.jpg": "ba65e25472fe523f82f17f3e231a40d97d35a854ea780d552c2c796bcf0d466c"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 11.0,
+      "observed": "刀留架而空夹爪已进入工作区；有前面的实际闭合，诊断该次抓取未建立。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "execution_status": "confirmed_failure",
+        "state.candidate": "grasp_not_established"
+      },
+      "image_refs": [
+        "trajectory_000002/frames/obs-000275_cam_high.jpg",
+        "trajectory_000002/frames/obs-000275_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000002/frames/obs-000275_cam_high.jpg": "97334506a2333d414d4ae327bab249034687a3bfe03f066b88d82d61225c535e",
+        "trajectory_000002/frames/obs-000275_cam_right_wrist.jpg": "582192b1058aa9b26ae3aabb64359f0d0b9ee615a0355634856b4c7e7f41bb79"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "timestamp": 4.0,
+      "observed": "两指在刀架旁，刀架和手指混连；应识别接近但不能伪造精确对齐坐标。",
+      "expected_fields": {
+        "visual_facts.knife_handle_xy": null,
+        "visual_facts.gripper_xy": null
+      },
+      "image_refs": [
+        "trajectory_000008/frames/obs-000100_cam_high.jpg",
+        "trajectory_000008/frames/obs-000100_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000008/frames/obs-000100_cam_high.jpg": "6b854009cbe86c1d71dafe39d6652739c405a8a6db35fa1223ba9ae2d177bf2d",
+        "trajectory_000008/frames/obs-000100_cam_right_wrist.jpg": "6730e913691dd3eea1fa3b6d116301c9a7c7f4f30d33738ca2fa876c96007a06"
+      },
+      "expected_stages": [
+        "approach_tool"
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "timestamp": 5.0,
+      "observed": "相对4秒两指收拢，刀仍在原架；进入抓取效果检查。",
+      "expected_fields": {
+        "state.attempt": 1
+      },
+      "image_refs": [
+        "trajectory_000008/frames/obs-000125_cam_high.jpg",
+        "trajectory_000008/frames/obs-000125_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000008/frames/obs-000125_cam_high.jpg": "b7d1e0bc5ac6f3f3671488b3c44a5d20d13be57d4ec5c97c16fd2c76db536537",
+        "trajectory_000008/frames/obs-000125_cam_right_wrist.jpg": "e9b222cb5fc90920320fae416bab49b5dd825552b04df3d705f25a5d4975faab"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "timestamp": 8.0,
+      "observed": "空夹爪处于砧板上，刀仍留在架；支持当前抓取失败。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "execution_status": "confirmed_failure",
+        "state.candidate": "grasp_not_established"
+      },
+      "image_refs": [
+        "trajectory_000008/frames/obs-000200_cam_high.jpg",
+        "trajectory_000008/frames/obs-000200_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000008/frames/obs-000200_cam_high.jpg": "d17e95260f3a71a000aa2b736c1a56957c9783ff5adcd700cce4552083148004",
+        "trajectory_000008/frames/obs-000200_cam_right_wrist.jpg": "8f8055bff05047dcc88356aaf5160102c166af8d96a1bebac850f83460458dd0"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 29,
+      "timestamp": 6.0,
+      "observed": "两指已收拢但仍有可见间隙，刀在架旁；closed只表示原始开度阈值，效果仍需检查。",
+      "expected_fields": {
+        "state.attempt": 1
+      },
+      "image_refs": [
+        "trajectory_000029/frames/obs-000150_cam_high.jpg",
+        "trajectory_000029/frames/obs-000150_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000029/frames/obs-000150_cam_high.jpg": "b92d553531676e467eb0030b77f2a67a32958f81b043261edc7e325a857ff994",
+        "trajectory_000029/frames/obs-000150_cam_right_wrist.jpg": "1d8c7d2b1f670d540519d67e91a56468eba8b79478069d50e6ac9a25e6b709ed"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 29,
+      "timestamp": 9.0,
+      "observed": "夹爪为空、刀在架，未带走刀便进入工作区；不推断夹持力或摩擦原因。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "execution_status": "confirmed_failure"
+      },
+      "image_refs": [
+        "trajectory_000029/frames/obs-000225_cam_high.jpg",
+        "trajectory_000029/frames/obs-000225_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000029/frames/obs-000225_cam_high.jpg": "22fb8fc59c9d7ee899bae7b1aa5636b5f569b1a6a9589a1c824380822b2a098a",
+        "trajectory_000029/frames/obs-000225_cam_right_wrist.jpg": "451a4b8beeb40ff009cb88dedcbb5969ea5cc2071eabbf6db0fdd250826840ab"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 18.0,
+      "observed": "归位接触交接被右臂与刀架遮挡，允许当前关系未知；后续清楚释放才能确认完成。",
+      "expected_fields": {
+        "execution_status": "information_insufficient",
+        "failure_event": null
+      },
+      "image_refs": [
+        "trajectory_000018/frames/obs-000450_cam_high.jpg",
+        "trajectory_000018/frames/obs-000450_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000018/frames/obs-000450_cam_high.jpg": "a1d3247a6b964d79f55500967b65159d92f46623c9a441617c091cf91c50b1d7",
+        "trajectory_000018/frames/obs-000450_cam_right_wrist.jpg": "ac33ce8cb67265d8885a7396ea3c910b16763c13d22869fb0c1e0b3e96885e89"
+      },
+      "expected_stages": [
+        "unknown"
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 14.0,
+      "observed": "回架时手指/刀架投影混叠，当前连接或释放尚不可靠；保留未知并继续观察。",
+      "expected_fields": {
+        "execution_status": "information_insufficient",
+        "failure_event": null
+      },
+      "image_refs": [
+        "trajectory_000019/frames/obs-000350_cam_high.jpg",
+        "trajectory_000019/frames/obs-000350_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000019/frames/obs-000350_cam_high.jpg": "4cc6148b97aa887fc4d248f06db7b7b217c4888c06eeda85f7077ce0e01847b1",
+        "trajectory_000019/frames/obs-000350_cam_right_wrist.jpg": "ca93d9ee2f75e8031a3a805e86373a9abd5fdde7b8a20ae64861245c0f9b4acc"
+      },
+      "expected_stages": [
+        "unknown"
+      ]
+    }
+  ],
+  "conditional_directions": [
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 2.0,
+      "observation_ref": "obs-000050",
+      "row_sha256": "5377bf4755dccc31dd6b015c283c5864dcaeddeb831e1731f8db39e115ca370e",
+      "image_path": "trajectory_000002/frames/obs-000050_cam_right_wrist.jpg",
+      "image_sha256": "c449b81cc33d51ceb1009e2d1a1411d425cda647ac3711a931dbc5bee6515cb3",
+      "camera": "cam_right_wrist",
+      "localization_frame": "cam_right_wrist_image_x_right_y_down",
+      "knife_handle_xy": [
+        417.773,
+        700.521
+      ],
+      "gripper_xy": [
+        513.672,
+        694.01
+      ],
+      "localization_method": "white_blade_to_wider_handle_neck_and_two_finger_inner_edges",
+      "expected_directions": [
+        "图像左侧"
+      ],
+      "reviewer": "root assistant visual inspection",
+      "observed_features": "可见刀柄颈部宽度过渡在两指内缘中点左侧，纵向在死区内。",
+      "reviewed_handle_neck": true,
+      "reviewed_two_finger_edges": true,
+      "coordinate_claim": "image_plane_only_no_robot_mapping"
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 3.0,
+      "observation_ref": "obs-000075",
+      "row_sha256": "adf6c06b142ff3193d59e2d5f99e9d0c7a70b1ce2b63ad4f4d4238e11bfbc1b3",
+      "image_path": "trajectory_000002/frames/obs-000075_cam_right_wrist.jpg",
+      "image_sha256": "9e9cb067028d7496b2daf4e729d813517d26b0d9372a4af9751a8c189efeb2a8",
+      "camera": "cam_right_wrist",
+      "localization_frame": "cam_right_wrist_image_x_right_y_down",
+      "knife_handle_xy": [
+        467.188,
+        880.208
+      ],
+      "gripper_xy": [
+        513.672,
+        683.594
+      ],
+      "localization_method": "white_blade_to_wider_handle_neck_and_two_finger_inner_edges",
+      "expected_directions": [
+        "图像下方"
+      ],
+      "reviewer": "root assistant visual inspection",
+      "observed_features": "可见刀柄颈部位于两指内缘中点下方，横向差未超过50/1000死区。",
+      "reviewed_handle_neck": true,
+      "reviewed_two_finger_edges": true,
+      "coordinate_claim": "image_plane_only_no_robot_mapping"
+    }
+  ],
+  "scope": "六条已见回归；少量关键时刻约束，不要求每帧确定，也不证明全部时刻正确。",
+  "remaining_gaps": [
+    "2:0/1秒初始化等待、9秒遮挡",
+    "8精确柄/两指对齐仍拒识",
+    "18:18秒与19:14秒回架交接未知",
+    "没有独立深度/姿态/接触准备",
+    "六条中没有自然失败后重新打开/重抓恢复过程"
+  ]
+}

@@ -1,0 +1,832 @@
+{
+  "schema_version": "1.2",
+  "timestamp": 10.0,
+  "observation_ref": "obs-000250",
+  "method": "bounded_visual_state_tracker",
+  "instruction": "Use the right arm to pick up the knife from the knife holder, cut a small piece of sausage and put it back on the knife holder.",
+  "scope": "右臂取刀、切下新小段并归位；固定场景双视角视觉，空间/接触准备须独立验证",
+  "state": {
+    "task_spec": {
+      "id": "right_knife_cut_sausage_return_v1",
+      "arm": "right",
+      "tool": "knife",
+      "workpiece": "sausage",
+      "ordered_subtasks": [
+        "acquire_knife",
+        "transport_to_board",
+        "cut_new_piece",
+        "return_knife",
+        "release_verify"
+      ],
+      "preconditions": {
+        "cut_new_piece": [
+          "reliable_grasp",
+          "tool_at_board"
+        ],
+        "release_verify": [
+          "knife_at_holder"
+        ]
+      },
+      "completion": [
+        "new_cut_effect_after_observed_operation",
+        "knife_currently_at_holder",
+        "released"
+      ],
+      "binding": "explicit_instruction_allowlist_normalized_whitespace_case_punctuation"
+    },
+    "stage": "verify_grasp",
+    "stage_zh": "抓取效果确认",
+    "subtask": "抓取效果确认",
+    "confirmed_subgoals": [],
+    "preconditions": {
+      "reliable_grasp": false,
+      "cut_effect_confirmed": false,
+      "tool_returned": false
+    },
+    "known_facts": [
+      "实测右臂六关节（排除夹爪维）运动状态=moving",
+      "右夹爪观测原始值 0.00000（数据集原始单位；不代表夹持成功）",
+      "夹爪开闭来自 observation.state[13]，不属于独立视觉互证",
+      "视觉观察：刀架刃区亮像素比例=0.939；腕部刀刃—两指连接=未观测；刀架/腕部联合夹持证据=False；新分离小段=unknown；腕部刀—香肠相对作用=unknown"
+    ],
+    "unknowns": [
+      "本次新切割效果尚未确认；已有小块不能补齐",
+      "当前刀具归位与释放尚未确认"
+    ],
+    "evidence": [
+      {
+        "timestamp": 10.0,
+        "ref": "obs-000250",
+        "claim": "right_arm_motion=moving",
+        "source": "measured_qpos_qvel",
+        "images": [],
+        "sensor_refs": [
+          {
+            "ref": "obs-000250",
+            "timestamp": 10.0,
+            "field": "observation.state[7:13]"
+          },
+          {
+            "ref": "obs-000250",
+            "timestamp": 10.0,
+            "field": "observation.velocity[7:13]"
+          },
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.state[7:13]"
+          }
+        ]
+      },
+      {
+        "timestamp": 10.0,
+        "ref": "obs-000250",
+        "claim": "knife_location=holder; contact=separate; motion=at_board",
+        "source": "real_multiview_effect_geometry",
+        "images": [
+          {
+            "ref": "obs-000250",
+            "camera": "cam_high",
+            "timestamp": 10.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          },
+          {
+            "ref": "obs-000000",
+            "timestamp": 0.0,
+            "camera": "cam_high"
+          }
+        ]
+      }
+    ],
+    "expected_effect": "刀应与夹爪连接并离开支撑位置；闭爪不等于成功",
+    "candidate": "grasp_not_established",
+    "recovered": false,
+    "observable": true,
+    "modality_conflict": false,
+    "new_attempt_observed": false,
+    "attempt": 1,
+    "attempt_held": false,
+    "task_completed": false,
+    "historical_completion": false,
+    "cut_reference": {
+      "timestamp": 0.0,
+      "ref": "obs-000000",
+      "cut_piece": "no"
+    },
+    "arm_activity": "moving",
+    "anchors": {
+      "cut_reference": {
+        "timestamp": 0.0,
+        "ref": "obs-000000",
+        "claim": "切割前布局；已有小块=no",
+        "source": "real_multiview_effect_geometry",
+        "images": [
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          },
+          {
+            "ref": "obs-000000",
+            "timestamp": 0.0,
+            "camera": "cam_high"
+          }
+        ]
+      },
+      "attempt": {
+        "timestamp": 7.0,
+        "ref": "obs-000175",
+        "claim": "观测到目标附近夹爪实际从开转闭；仅证明新抓取尝试",
+        "source": "real_multiview_effect_geometry",
+        "images": [
+          {
+            "ref": "obs-000175",
+            "timestamp": 7.0,
+            "camera": "cam_high"
+          },
+          {
+            "ref": "obs-000175",
+            "timestamp": 7.0,
+            "camera": "cam_right_wrist"
+          },
+          {
+            "ref": "obs-000000",
+            "timestamp": 0.0,
+            "camera": "cam_high"
+          },
+          {
+            "ref": "obs-000150",
+            "timestamp": 6.0,
+            "camera": "cam_right_wrist"
+          }
+        ]
+      }
+    }
+  },
+  "execution_status": "confirmed_failure",
+  "visual_facts": {
+    "timestamp": 10.0,
+    "ref": "obs-000250",
+    "visibility": "clear",
+    "knife_location": "holder",
+    "gripper": "closed",
+    "motion": "at_board",
+    "contact": "separate",
+    "co_motion": "unknown",
+    "cut_piece": "unknown",
+    "released": "yes",
+    "knife_handle_xy": null,
+    "gripper_xy": null,
+    "description": "刀架刃区亮像素比例=0.939；腕部刀刃—两指连接=未观测；刀架/腕部联合夹持证据=False；新分离小段=unknown；腕部刀—香肠相对作用=unknown",
+    "valid": true,
+    "error": null,
+    "provenance": "real_multiview_effect_geometry",
+    "evidence_refs": [
+      {
+        "ref": "obs-000250",
+        "camera": "cam_high",
+        "timestamp": 10.0
+      },
+      {
+        "ref": "obs-000000",
+        "camera": "cam_high",
+        "timestamp": 0.0
+      },
+      {
+        "ref": "obs-000000",
+        "timestamp": 0.0,
+        "camera": "cam_high"
+      }
+    ],
+    "measurements": {
+      "source_changed_fraction": 0.03027,
+      "source_dark_fraction": 0.01271,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.14157,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": true,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only",
+      "gripper_evidence_source": "observation.state[13] only; not independent visual corroboration",
+      "wrist": {
+        "available": false,
+        "consulted": false,
+        "blade": null,
+        "cut_operation": false,
+        "reason": "top_view_tool_still_on_holder_and_separate"
+      },
+      "rack_blade_bright_fraction": 0.93852,
+      "rack_blade_dark_fraction": 0.0,
+      "rack_present": true,
+      "wrist_contributes_connection": false,
+      "food_components": [
+        {
+          "bbox": [
+            122,
+            249,
+            101,
+            16
+          ],
+          "area": 733.5,
+          "roundness": 0.1936266435342088
+        }
+      ],
+      "initial_food_reference": {
+        "timestamp": 0.0,
+        "ref": "obs-000000",
+        "main": {
+          "bbox": [
+            123,
+            249,
+            100,
+            16
+          ],
+          "area": 740.5,
+          "roundness": 0.20064282914427348
+        },
+        "small": []
+      },
+      "new_cut_effect": "unknown",
+      "cut_reference_timestamp": 0.0,
+      "cut_operation": "unknown",
+      "joint_motion": {
+        "status": "moving",
+        "instantaneous": "moving",
+        "interval": "moved",
+        "arm": "right",
+        "joint_indices": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "max_abs_velocity_raw": 0.2529999911785126,
+        "max_abs_position_change_raw": 0.23285996913909912,
+        "interval_s": 1.0,
+        "position_threshold_raw": 0.02,
+        "velocity_threshold_raw": 0.2,
+        "units": "source qpos/qvel units; physical units not verified",
+        "position_available": true,
+        "velocity_available": true,
+        "evidence_refs": [
+          {
+            "ref": "obs-000250",
+            "timestamp": 10.0,
+            "field": "observation.state[7:13]"
+          },
+          {
+            "ref": "obs-000250",
+            "timestamp": 10.0,
+            "field": "observation.velocity[7:13]"
+          },
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.state[7:13]"
+          }
+        ],
+        "source": "measured_joint_state; gripper excluded; no action or EEF"
+      },
+      "cut_motion_check": "moving_supported"
+    },
+    "effect_usable": true,
+    "gripper_source": "observation.state[13]",
+    "grasp_readiness": {},
+    "localization_frame": "cam_high_image_x_right_y_down"
+  },
+  "failure_event": {
+    "event_id": "event-0001",
+    "kind": "grasp_not_established",
+    "attempt": 1,
+    "opened_at": 9.0,
+    "updated_at": 10.0,
+    "state": "confirmed",
+    "support_count": 2,
+    "evidence": [
+      {
+        "timestamp": 9.0,
+        "ref": "obs-000225",
+        "claim": "当前支持 grasp_not_established",
+        "source": "real_multiview_effect_geometry",
+        "images": [
+          {
+            "ref": "obs-000225",
+            "camera": "cam_high",
+            "timestamp": 9.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          },
+          {
+            "ref": "obs-000000",
+            "timestamp": 0.0,
+            "camera": "cam_high"
+          }
+        ],
+        "joint_motion": "moving",
+        "sensor_refs": [
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.state[7:13]"
+          },
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.velocity[7:13]"
+          },
+          {
+            "ref": "obs-000200",
+            "timestamp": 8.0,
+            "field": "observation.state[7:13]"
+          }
+        ]
+      },
+      {
+        "timestamp": 10.0,
+        "ref": "obs-000250",
+        "claim": "当前支持 grasp_not_established",
+        "source": "real_multiview_effect_geometry",
+        "images": [
+          {
+            "ref": "obs-000250",
+            "camera": "cam_high",
+            "timestamp": 10.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          },
+          {
+            "ref": "obs-000000",
+            "timestamp": 0.0,
+            "camera": "cam_high"
+          }
+        ],
+        "joint_motion": "moving",
+        "sensor_refs": [
+          {
+            "ref": "obs-000250",
+            "timestamp": 10.0,
+            "field": "observation.state[7:13]"
+          },
+          {
+            "ref": "obs-000250",
+            "timestamp": 10.0,
+            "field": "observation.velocity[7:13]"
+          },
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.state[7:13]"
+          }
+        ]
+      }
+    ],
+    "last_support_at": 10.0,
+    "support_started_at": 9.0,
+    "observation_status": "supported",
+    "closure_reason": null
+  },
+  "recovery_event": {
+    "event_id": "event-0001",
+    "kind": "grasp_not_established",
+    "attempt": 1,
+    "opened_at": 9.0,
+    "updated_at": 10.0,
+    "state": "confirmed",
+    "support_count": 2,
+    "evidence": [
+      {
+        "timestamp": 9.0,
+        "ref": "obs-000225",
+        "claim": "当前支持 grasp_not_established",
+        "source": "real_multiview_effect_geometry",
+        "images": [
+          {
+            "ref": "obs-000225",
+            "camera": "cam_high",
+            "timestamp": 9.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          },
+          {
+            "ref": "obs-000000",
+            "timestamp": 0.0,
+            "camera": "cam_high"
+          }
+        ],
+        "joint_motion": "moving",
+        "sensor_refs": [
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.state[7:13]"
+          },
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.velocity[7:13]"
+          },
+          {
+            "ref": "obs-000200",
+            "timestamp": 8.0,
+            "field": "observation.state[7:13]"
+          }
+        ]
+      },
+      {
+        "timestamp": 10.0,
+        "ref": "obs-000250",
+        "claim": "当前支持 grasp_not_established",
+        "source": "real_multiview_effect_geometry",
+        "images": [
+          {
+            "ref": "obs-000250",
+            "camera": "cam_high",
+            "timestamp": 10.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          },
+          {
+            "ref": "obs-000000",
+            "timestamp": 0.0,
+            "camera": "cam_high"
+          }
+        ],
+        "joint_motion": "moving",
+        "sensor_refs": [
+          {
+            "ref": "obs-000250",
+            "timestamp": 10.0,
+            "field": "observation.state[7:13]"
+          },
+          {
+            "ref": "obs-000250",
+            "timestamp": 10.0,
+            "field": "observation.velocity[7:13]"
+          },
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.state[7:13]"
+          }
+        ]
+      }
+    ],
+    "last_support_at": 10.0,
+    "support_started_at": 9.0,
+    "observation_status": "supported",
+    "closure_reason": null
+  },
+  "notify": true,
+  "notification_reason": "evidence_confirmed",
+  "decision_rules": {
+    "direction_deadband_normalized": 50
+  },
+  "diagnosis": {
+    "event_id": "event-0001",
+    "type": "grasp_not_established",
+    "problem": "抓取尝试后机器人已进入工作区，但刀仍留在刀架",
+    "expected_effect": "刀应与夹爪连接并离开支撑位置；闭爪不等于成功",
+    "observed_deviation": "当前尝试未建立可靠夹持",
+    "observed_facts": [
+      {
+        "timestamp": 9.0,
+        "ref": "obs-000225",
+        "claim": "当前支持 grasp_not_established",
+        "source": "real_multiview_effect_geometry",
+        "images": [
+          {
+            "ref": "obs-000225",
+            "camera": "cam_high",
+            "timestamp": 9.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          },
+          {
+            "ref": "obs-000000",
+            "timestamp": 0.0,
+            "camera": "cam_high"
+          }
+        ],
+        "joint_motion": "moving",
+        "sensor_refs": [
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.state[7:13]"
+          },
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.velocity[7:13]"
+          },
+          {
+            "ref": "obs-000200",
+            "timestamp": 8.0,
+            "field": "observation.state[7:13]"
+          }
+        ]
+      },
+      {
+        "timestamp": 10.0,
+        "ref": "obs-000250",
+        "claim": "当前支持 grasp_not_established",
+        "source": "real_multiview_effect_geometry",
+        "images": [
+          {
+            "ref": "obs-000250",
+            "camera": "cam_high",
+            "timestamp": 10.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          },
+          {
+            "ref": "obs-000000",
+            "timestamp": 0.0,
+            "camera": "cam_high"
+          }
+        ],
+        "joint_motion": "moving",
+        "sensor_refs": [
+          {
+            "ref": "obs-000250",
+            "timestamp": 10.0,
+            "field": "observation.state[7:13]"
+          },
+          {
+            "ref": "obs-000250",
+            "timestamp": 10.0,
+            "field": "observation.velocity[7:13]"
+          },
+          {
+            "ref": "obs-000225",
+            "timestamp": 9.0,
+            "field": "observation.state[7:13]"
+          }
+        ]
+      }
+    ],
+    "current_evidence_status": "supported",
+    "established_facts": [
+      "事件记录的是已观察效果偏差；当前是否仍成立另由本时刻证据判断"
+    ],
+    "cause_hypotheses": [
+      {
+        "hypothesis": "对齐/接触未建立",
+        "certainty": "unconfirmed",
+        "missing_evidence": "独立深度、接触及实际执行反馈"
+      }
+    ],
+    "uncertainty": "不从闭爪、历史失败或图像平面位置推断夹持力、三维姿态及确定原因",
+    "need_more_observation": true,
+    "requested_evidence": [
+      "当前刀位置与两指关系",
+      "新尝试后随动或分离证据"
+    ],
+    "confidence": null,
+    "confidence_explanation": "规则满足程度；不是经校准的概率"
+  },
+  "correction": {
+    "high_level": {
+      "event_id": "event-0001",
+      "recovery_goal_id": "event-0001:restore_reliable_grasp",
+      "object": "knife",
+      "blocked_subtask": "携刀转移与切割",
+      "failed_precondition": "reliable_grasp",
+      "impact": "缺少可靠夹持时不能继续携刀操作",
+      "strategy": "retry_tool_acquisition",
+      "next_recovery_subgoal": "在刀架重新定位刀柄，建立接触准备并确认可靠夹持",
+      "reason": "当前尝试未建立可靠夹持",
+      "resume_when": "新观测连续支持刀离开刀架并随右夹爪运动，再继续携刀转移"
+    },
+    "low_level": {
+      "event_id": "event-0001",
+      "recovery_goal_id": "event-0001:restore_reliable_grasp",
+      "object": "knife",
+      "actuator": "right_gripper",
+      "action_type": "open_gripper",
+      "recovery_phase": "prepare_open",
+      "instruction": "当前刀在刀架且与夹爪分离；由执行器确认夹爪内无其他物体并可安全打开后，保持末端位姿，单独打开右夹爪。",
+      "coordinate_frame": "right_gripper_actuator_no_translation",
+      "target_mode": "qualitative",
+      "translation": null,
+      "rotation": null,
+      "numeric_command": null,
+      "units": null,
+      "numeric_source": null,
+      "preconditions": [
+        {
+          "condition": "current_knife_separate",
+          "status": "supported_by_current_observation"
+        },
+        {
+          "condition": "empty_of_other_objects_and_safe_open",
+          "status": "requires_executor_check"
+        }
+      ],
+      "stop_condition": "收到实际打开反馈；出现异常交回执行器",
+      "post_checks": [
+        "右夹爪实际打开",
+        "刀仍在刀架",
+        "重新定位刀柄与两指"
+      ],
+      "directly_executable": false,
+      "handoff_requirements": [
+        "执行器检查保持/动作可行性与碰撞",
+        "需要物理移动时先提供标定映射"
+      ],
+      "missing_information": [],
+      "same_requirement_observations": 1,
+      "escalation": null
+    },
+    "execution": {
+      "mode": "advisory_replay",
+      "suggestion_generated": true,
+      "actually_executed": false,
+      "execution_receipt": null,
+      "outcome_attributed_to_suggestion": false,
+      "post_check_result": "pending_no_execution_receipt"
+    }
+  },
+  "modalities": {
+    "observation.state": {
+      "status": "available",
+      "timestamp": 10.0,
+      "age_s": 0.0,
+      "reason": null
+    },
+    "observation.velocity": {
+      "status": "available",
+      "timestamp": 10.0,
+      "age_s": 0.0,
+      "reason": null
+    },
+    "cam_high": {
+      "status": "available",
+      "timestamp": 10.0,
+      "age_s": 0.0,
+      "reason": null
+    },
+    "cam_right_wrist": {
+      "status": "available",
+      "timestamp": 10.0,
+      "age_s": 0.0,
+      "reason": null
+    }
+  },
+  "modalities_used": [
+    "cam_high",
+    "observation.state[7:13]",
+    "observation.state[13]",
+    "observation.velocity[7:13]"
+  ],
+  "modalities_for_audit_only": [
+    "cam_right_wrist"
+  ],
+  "observation_inputs": {
+    "observation.state": [
+      -0.34268736839294434,
+      0.6228903532028198,
+      -0.39276909828186035,
+      -0.026270663365721703,
+      0.2975946366786957,
+      0.21128173172473907,
+      0.0,
+      0.8177921772003174,
+      2.0852558612823486,
+      -1.8230375051498413,
+      0.06463001668453217,
+      1.2267143726348877,
+      0.7029408812522888,
+      0.0
+    ],
+    "observation.velocity": [
+      0.007000000216066837,
+      -0.003000000026077032,
+      0.0,
+      0.0,
+      0.0860000029206276,
+      0.03400000184774399,
+      0.0,
+      0.003000000026077032,
+      0.2529999911785126,
+      0.0,
+      -0.1889999955892563,
+      0.017000000923871994,
+      -0.017000000923871994,
+      0.0
+    ],
+    "sensor_relationship": "joint positions and gripper share observation.state; velocity is measured qvel; not three independent sensors",
+    "unused_state_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "target_action_used": false,
+    "target_eef_used": false
+  },
+  "memory_usage": {
+    "observations": 4,
+    "images": 8,
+    "image_bytes": 4718592,
+    "features": 5,
+    "anchors": 2,
+    "joint_vector_values": 112,
+    "joint_feature_refs": 15,
+    "feature_text_chars": 404,
+    "feature_payload_chars": 14600,
+    "conversation_turns": 0,
+    "persistent_model_kv_tokens": 0,
+    "log_reads": 0,
+    "events": 1,
+    "event_evidence": 2,
+    "event_sensor_refs": 6,
+    "active_events": 1,
+    "visual_reference_images": 1,
+    "visual_reference_bytes": 589824,
+    "visual_masks": 4,
+    "visual_mask_bytes": 786432,
+    "visual_tracks": 0,
+    "visual_calibration_entries": 2,
+    "wrist_track_entries": 0,
+    "food_reference_entries": 1,
+    "visual_scalar_states": 1,
+    "task_state_slots": 16,
+    "task_reference_entries": 1,
+    "recovery_contexts": 1,
+    "recovery_sensor_refs": 6,
+    "recovery_event_evidence": 2,
+    "recovery_state_slots": 3,
+    "object_states": 3,
+    "aligner_latest_samples": 4,
+    "task_instruction_chars": 127,
+    "model_last_response_chars": 0,
+    "anchor_image_refs": 7,
+    "model_request_queue_capacity": 1,
+    "model_response_queue_capacity": 1,
+    "model_input_images": 2,
+    "model_input_tokens": 0
+  },
+  "memory_limits": {
+    "frames": 4,
+    "window_s": 4.0,
+    "features": 6,
+    "events": 4,
+    "event_evidence": 4,
+    "anchors": 8,
+    "objects": 3
+  },
+  "execution": {
+    "mode": "advisory_replay",
+    "actually_executed": false,
+    "execution_receipt": null,
+    "outcome_attributed_to_suggestion": false
+  },
+  "processing": {
+    "decision_wall_s": 0.0,
+    "includes_decode_or_image_save": false
+  }
+}

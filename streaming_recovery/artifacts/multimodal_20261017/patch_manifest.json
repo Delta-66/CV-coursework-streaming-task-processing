@@ -1,0 +1,87 @@
+{
+  "README.md": {
+    "before_sha256": "8d3c6e6afaeeeca0a407086fc9fafeb90b7809b98384cb96ddd6fb0bec6e8765",
+    "after_sha256": "05f24d5d33ba016a2240c89dd1c8c5f33b7d6f9f2d1fec64ade5957aff114435"
+  },
+  "streaming_recovery/README.md": {
+    "before_sha256": "dc211539af81500e1f28f59d5ae25d0f533502188a35f717c568689cd17daa7b",
+    "after_sha256": "f1d1458535b58521ad0e70cd4b1636ddbc51ff65c6bbe6cfd5e5d33d73a7c1e1"
+  },
+  "streaming_recovery/__main__.py": {
+    "before_sha256": "c45d0eec594bc2c546da3bbd678edc58f0b0787122ab11d01f6aa345f72a3406",
+    "after_sha256": "8a80d10b3dd59afec09eafc5b942adba0c1ced829cf3ef040a3d27bc150f96fc"
+  },
+  "streaming_recovery/config.json": {
+    "before_sha256": "05f5b6a716974a5349d38b9c71502cd46206cf6f9a4eccfc1aacd7aa188f44e7",
+    "after_sha256": "801e0385c547289e5663eed546a277973f3facf0c020950cba3b4f6d576298de"
+  },
+  "streaming_recovery/config_multimodal.json": {
+    "before_sha256": null,
+    "after_sha256": "8f9d8dfc964a9f5da798380029c905c90f3fc01dccd96b6c2414d4b1d40ae1f8"
+  },
+  "streaming_recovery/contracts.py": {
+    "before_sha256": "ae1cd931291b1d9a5575b528b951c9f1b3cd5427ad7968cb2b5c2a160bf4c73b",
+    "after_sha256": "c7a6120db4a37d76543845e3bbe24bf8ce7f65810ccf99750fdc01f41ca1de47"
+  },
+  "streaming_recovery/docs/六条多模态测试_20261017.md": {
+    "before_sha256": null,
+    "after_sha256": "8f72d9b7e5555da465d612eb0f2b0e21dedbbae7c0eeee710f97f27e2376c8a1"
+  },
+  "streaming_recovery/dynamics.py": {
+    "before_sha256": null,
+    "after_sha256": "992581300a00d3221aabd05fdb2bb648610ebad9ad946995f8126823a3ac32d9"
+  },
+  "streaming_recovery/engine.py": {
+    "before_sha256": "d29349b30ee976530cd1f31a05f3cf711d0136b77d0ac192bbc71b6aecba0436",
+    "after_sha256": "7be9e7d3fcb3b12f99820806ee285c8bedc911611e20d35818b487e023b2bce9"
+  },
+  "streaming_recovery/events.py": {
+    "before_sha256": "1c0550d6b2a3cb6ae28a6cadec22cab014007f418e0a1e2df88ea4a5e58b74f4",
+    "after_sha256": "ecdf0718a3c183cf5c7d148160cc4376a0aca0b5c34a6bbdc2c057999bde671f"
+  },
+  "streaming_recovery/fetch_functional_data.py": {
+    "before_sha256": "cdaebc6efba8c2ade16297fd15f1081d805aa5cd98fdec496539f9521bd33b24",
+    "after_sha256": "0905cb6da9e52529e419a32ab5c333236582713e092dce2cc115f429dc902dbc"
+  },
+  "streaming_recovery/geometry.py": {
+    "before_sha256": "44fa7b9d08c17a7874d8493dd2a32603d7274f7da2d8fa6de68a81a711b9d4a0",
+    "after_sha256": "81f6a8bd06d6836f847a0d8c97fbad1868216611e846265a3b8c7fa889028138"
+  },
+  "streaming_recovery/memory.py": {
+    "before_sha256": "c8d26981bee393877a7539b080c627eb45db13e1f61b0aba74acb4d7d152e363",
+    "after_sha256": "6f108801cf6613f4e14210f2c30a1717cdb1bcc4b99ca6b77c4b99ba49d829ec"
+  },
+  "streaming_recovery/multiview.py": {
+    "before_sha256": "0c4a107ab6278cd151de2c6990b1a81a14090ec2791db328fcf85ccc26f90470",
+    "after_sha256": "e91e1b85204c64dbb45338b2bd501afbb7cf01254918c7044e9e6cb7fd819a75"
+  },
+  "streaming_recovery/recovery.py": {
+    "before_sha256": "997b47d61e9bfd728c9ef2dee457fb25988fd0b329323667264af08a417cbc32",
+    "after_sha256": "96205ee777b39f357f72bc52338e01e9a5ff152b755e9c7ead0a225a32739dfd"
+  },
+  "streaming_recovery/report.py": {
+    "before_sha256": "98db84f034f62659f46653183b65a668521abddf2769f84d650a70e3bb7f52bf",
+    "after_sha256": "a387dcbed65704166afd45b6fe5f134bb8ba9ed11fe214a6b66b30eb08317028"
+  },
+  "streaming_recovery/source.py": {
+    "before_sha256": "c5bf8e181f34907638926a68c0b3c128d61c4f3e81e8c69f97159d2f28c96bd1",
+    "after_sha256": "7c4805964f2797286d0af99747f2b1de503eaf1acf47ae5a95a9f74460ec7644"
+  },
+  "streaming_recovery/tests/test_multimodal.py": {
+    "before_sha256": null,
+    "after_sha256": "fd77c0ee36eda120cdfcc2efadb725eeb856f7820984deadf4c2985617dc5ccc"
+  },
+  "streaming_recovery/tracking.py": {
+    "before_sha256": "f2ab8ae26d2ab51137ea0b111478a508f00d60663c75f2099a80334f77efa52c",
+    "after_sha256": "86545e9ddd4bdd00feabe690ff8000b7e04938fe648821969a0d57d344a73071"
+  },
+  "streaming_recovery/validation.py": {
+    "before_sha256": "435db7e8b3e96a6fc9153f9a02fbef908eb31699be2cfaae5e98f2d8dfba0e07",
+    "after_sha256": "f8b46b82fd696877935c185dd1689dcf950ba8351d6b89ae99704e180a365da2"
+  },
+  "streaming_recovery/docs/数据契约.md": {
+    "before_sha256": null,
+    "before_source": "text reconstructed from this turn exact prefix-only edit; not an original byte snapshot",
+    "after_sha256": "019c0296f6b873641229f80d86b4335a8c7f7c01523b95aa3d6fdfd640f11b33"
+  }
+}

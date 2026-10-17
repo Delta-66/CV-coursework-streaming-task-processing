@@ -8,3 +8,13 @@
 *.pdf binary
 *.png binary
 *.zip binary
+# Frozen manifests and evidence hashes refer to exact bytes, including newlines.
+configs/splits/** -text
+streaming_recovery/artifacts/** -text
+# These live files are also hashed in delivery_manifest_v2.json.
+/README.md -text
+/docs/监督反馈学习与独立冻结验收_20261017.md -text
+/streaming_recovery/README.md -text
+/streaming_recovery/recovery.py -text
+/streaming_recovery/tracking.py -text
+/streaming_recovery/validation.py -text

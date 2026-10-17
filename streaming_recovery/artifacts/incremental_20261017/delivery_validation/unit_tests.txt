@@ -1,0 +1,34 @@
+test_aligner_future_stale_invalid_and_out_of_order (streaming_recovery.tests.test_system.SystemTests.test_aligner_future_stale_invalid_and_out_of_order) ... ok
+test_closed_gripper_not_success_then_evidence_failure (streaming_recovery.tests.test_system.SystemTests.test_closed_gripper_not_success_then_evidence_failure) ... ok
+test_completion_requires_effect_evidence_not_initial_layout (streaming_recovery.tests.test_system.SystemTests.test_completion_requires_effect_evidence_not_initial_layout) ... ok
+test_duplicate_timestamps_and_unsupported_task_rejected (streaming_recovery.tests.test_system.SystemTests.test_duplicate_timestamps_and_unsupported_task_rejected) ... ok
+test_event_dedup_and_actual_retry (streaming_recovery.tests.test_system.SystemTests.test_event_dedup_and_actual_retry) ... ok
+test_large_time_gap_cannot_make_new_attempt (streaming_recovery.tests.test_system.SystemTests.test_large_time_gap_cannot_make_new_attempt) ... ok
+test_leaving_visible_work_area_does_not_invent_a_retry_stage (streaming_recovery.tests.test_system.SystemTests.test_leaving_visible_work_area_does_not_invent_a_retry_stage) ... ok
+test_long_stream_every_history_bound (streaming_recovery.tests.test_system.SystemTests.test_long_stream_every_history_bound) ... ok
+test_loss_of_grasp_has_repeated_evidence (streaming_recovery.tests.test_system.SystemTests.test_loss_of_grasp_has_repeated_evidence) ... ok
+test_missing_breaks_suspicion_continuity (streaming_recovery.tests.test_system.SystemTests.test_missing_breaks_suspicion_continuity) ... ok
+test_missing_conflict_and_recovery_not_execution (streaming_recovery.tests.test_system.SystemTests.test_missing_conflict_and_recovery_not_execution) ... ok
+test_model_invalid_output_and_timeout_degrade_explicitly (streaming_recovery.tests.test_system.SystemTests.test_model_invalid_output_and_timeout_degrade_explicitly) ... ok
+test_model_request_has_only_bounded_past_images (streaming_recovery.tests.test_system.SystemTests.test_model_request_has_only_bounded_past_images) ... ok
+test_normal_incomplete_is_not_failure (streaming_recovery.tests.test_system.SystemTests.test_normal_incomplete_is_not_failure) ... ok
+test_reset_matches_fresh_monitor (streaming_recovery.tests.test_system.SystemTests.test_reset_matches_fresh_monitor) ... ok
+test_two_layer_consistency_coordinates_and_next_action (streaming_recovery.tests.test_system.SystemTests.test_two_layer_consistency_coordinates_and_next_action) ... ok
+test_visual_schema_rejects_hallucinated_coordinates_and_conflict (streaming_recovery.tests.test_system.SystemTests.test_visual_schema_rejects_hallucinated_coordinates_and_conflict) ... ok
+test_2d_alignment_waits_then_independent_readiness_allows_close (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_2d_alignment_waits_then_independent_readiness_allows_close) ... ok
+test_A_occluded_failure_cannot_open (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_A_occluded_failure_cannot_open) ... ok
+test_B_second_attempt_failure_after_historical_grasp (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_B_second_attempt_failure_after_historical_grasp) ... ok
+test_C_unknown_gap_preserves_recent_grasp_evidence (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_C_unknown_gap_preserves_recent_grasp_evidence) ... ok
+test_D_preexisting_piece_is_not_this_cut (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_D_preexisting_piece_is_not_this_cut) ... ok
+test_E_completion_does_not_freeze_current_return (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_E_completion_does_not_freeze_current_return) ... ok
+test_close_after_release_away_is_not_a_retry (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_close_after_release_away_is_not_a_retry) ... ok
+test_negated_and_other_instructions_rejected (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_negated_and_other_instructions_rejected) ... ok
+test_observed_close_advances_then_effect_resolves (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_observed_close_advances_then_effect_resolves) ... ok
+test_old_grasp_expires_and_unknown_does_not_prove_loss (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_old_grasp_expires_and_unknown_does_not_prove_loss) ... ok
+test_qwen_holder_and_legacy_rack_boundary_without_gpu (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_qwen_holder_and_legacy_rack_boundary_without_gpu) ... ok
+test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 3.136s
+
+OK

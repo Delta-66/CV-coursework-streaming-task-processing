@@ -1,0 +1,13 @@
+{
+  "checked_date": "2026-10-17 Asia/Shanghai",
+  "python": "3.11.17 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:16:54) [MSC v.1942 64 bit (AMD64)]",
+  "packages": {
+    "numpy": "2.4.6",
+    "opencv-python": "5.0.0.93",
+    "Pillow": "12.3.0",
+    "pyarrow": "26.0.0",
+    "av": "18.1.0"
+  },
+  "production_backend": "CPU classic vision; no API credentials needed",
+  "original_files_modified_by_this_work": false
+}

@@ -1,0 +1,18 @@
+test_direction_uses_image_axes_and_deadband_only (streaming_recovery.tests.test_localization.LocalizationTests.test_direction_uses_image_axes_and_deadband_only) ... ok
+test_real_handle_neck_and_two_finger_edges (streaming_recovery.tests.test_localization.LocalizationTests.test_real_handle_neck_and_two_finger_edges) ... ok
+test_real_merged_finger_and_holder_rejected (streaming_recovery.tests.test_localization.LocalizationTests.test_real_merged_finger_and_holder_rejected) ... ok
+test_real_visible_blade_segment_survives_lower_reflection (streaming_recovery.tests.test_localization.LocalizationTests.test_real_visible_blade_segment_survives_lower_reflection) ... FAIL
+test_textureless_images_cannot_supply_positions (streaming_recovery.tests.test_localization.LocalizationTests.test_textureless_images_cannot_supply_positions) ... ok
+
+======================================================================
+FAIL: test_real_visible_blade_segment_survives_lower_reflection (streaming_recovery.tests.test_localization.LocalizationTests.test_real_visible_blade_segment_survives_lower_reflection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_localization.py", line 22, in test_real_visible_blade_segment_survives_lower_reflection
+    self.assertTrue(all(r['blade'] is not None and r['joined'] for r in rows),rows)
+AssertionError: False is not true : [{'available': True, 'blade': [247, 0, 41, 268], 'joined': True, 'food': [12, 30, 238, 58], 'cut_operation': False, 'previous_ref': None, 'previous_timestamp': None, 'blade_region': 'visible_segment_above_finger_tip_band'}, {'available': True, 'blade': None, 'joined': False, 'food': None, 'cut_operation': False, 'previous_ref': 'obs-000125', 'previous_timestamp': 5.0, 'blade_region': 'visible_segment_above_finger_tip_band'}, {'available': True, 'blade': None, 'joined': False, 'food': None, 'cut_operation': False, 'previous_ref': 'obs-000150', 'previous_timestamp': 6.0, 'blade_region': 'visible_segment_above_finger_tip_band'}, {'available': True, 'blade': None, 'joined': False, 'food': None, 'cut_operation': False, 'previous_ref': 'obs-000175', 'previous_timestamp': 7.0, 'blade_region': 'visible_segment_above_finger_tip_band'}]
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.111s
+
+FAILED (failures=1)

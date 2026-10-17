@@ -1,0 +1,8 @@
+{
+  "stream_ended": true,
+  "last_decision_timestamp": 16.4,
+  "task_success": true,
+  "historical_completion": true,
+  "reason": "task_completion_evidence",
+  "actually_executed": false
+}

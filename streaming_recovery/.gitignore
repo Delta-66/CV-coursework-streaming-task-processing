@@ -1,0 +1,32 @@
+__pycache__/
+*.pyc
+# 大文件测试夹具与逐帧图像保留在本地，避免误提交。
+artifacts/*/prefix_fixture_*/
+artifacts/existing_test_tmp/
+
+# Generated raw/counterfactual data and repeated media stay local.
+artifacts/**/prefix_*/
+artifacts/**/test_tmp/
+artifacts/**/*.mp4
+artifacts/**/*.avi
+artifacts/**/*.mkv
+artifacts/**/*.parquet
+artifacts/**/*.hdf5
+artifacts/**/*.h5
+artifacts/**/*.jpg
+artifacts/**/*.jpeg
+artifacts/**/*.png
+artifacts/**/*.html
+
+# Keep the final reviewable replay and the exact training-review images.
+!artifacts/learning_freeze_20261017/frozen_run_v2/index.html
+!artifacts/learning_freeze_20261017/frozen_run_v2/trajectory_*/frames/*.jpg
+!artifacts/learning_freeze_20261017/baseline_fit/trajectory_*/frames/*.jpg
+
+# Six real-pixel fixtures used by the existing localization regression tests.
+!artifacts/multimodal_20261017/final_run/trajectory_000019/frames/obs-000125_cam_right_wrist.jpg
+!artifacts/multimodal_20261017/final_run/trajectory_000019/frames/obs-000150_cam_right_wrist.jpg
+!artifacts/multimodal_20261017/final_run/trajectory_000019/frames/obs-000175_cam_right_wrist.jpg
+!artifacts/multimodal_20261017/final_run/trajectory_000019/frames/obs-000200_cam_right_wrist.jpg
+!artifacts/multimodal_20261017/final_run/trajectory_000002/frames/obs-000050_cam_right_wrist.jpg
+!artifacts/multimodal_20261017/final_run/trajectory_000008/frames/obs-000100_cam_right_wrist.jpg

@@ -1,0 +1,31 @@
+{
+  "schema": "frozen_standalone_v1",
+  "files": {
+    "config.json": "51577893f74c5e51347ff9aa2e4526dac784ade289323fe7c42c9007b0a86272",
+    "fusion.json": "f653456722ac3fb317e59817dc105c2145f1c942d6b47a97c507f03dd1d37905",
+    "requirements.txt": "24fb8c160948de9516c1538acd15d8e79fef7912b68224965e06a1d786450d9e",
+    "run_frozen.py": "882b13ef1bcfc7571b8f836c96830aaa9b79665cf651512d64f2cec90efd5d08",
+    "streaming_recovery/attempts.py": "d05cac7ddf568fdbb600b06c04b262bccf2bbe5efb52f9ba5c3f40acef58473a",
+    "streaming_recovery/contracts.py": "a83c5f03918ce154981281f225ee3ae59e320e9419d76e2b2a5caa9b35cde642",
+    "streaming_recovery/dynamics.py": "e6c58490a1d2fb2eba0e6f12db375814b331ebca539246f36837e626f4a210fc",
+    "streaming_recovery/effects.py": "f277ab7df07516d8358bec88f57b14dff2e0fde34bde76d5e5452491be66c3a3",
+    "streaming_recovery/engine.py": "66d5b55bbf6d4b5b7c1c5b67960a53c090f14855f8d3954836e8b97fc15f11de",
+    "streaming_recovery/events.py": "ecdf0718a3c183cf5c7d148160cc4376a0aca0b5c34a6bbdc2c057999bde671f",
+    "streaming_recovery/fusion.py": "4941155024777f6b744ffcaa807e3e2dcbeb12bd52359e8daf8d22fcd9872481",
+    "streaming_recovery/geometry.py": "81f6a8bd06d6836f847a0d8c97fbad1868216611e846265a3b8c7fa889028138",
+    "streaming_recovery/localization.py": "1204f22e2ee76ae57851287d4668fbf847c86f2c1198df5b8b77aaecca96583d",
+    "streaming_recovery/memory.py": "79bfefe9e848815e51cac2b05f89f666e90a3c5c9c6c23a002d8582f73c97c9e",
+    "streaming_recovery/multiview.py": "a3c0fcb15dc948865d9226afd4b84541f136885f1f5838e496bfb89eb75b6e41",
+    "streaming_recovery/recovery.py": "067e5e485fdd22555ed7bb6059c8cdf3165b610191a023e4f4cb8541109b84db",
+    "streaming_recovery/report.py": "a387dcbed65704166afd45b6fe5f134bb8ba9ed11fe214a6b66b30eb08317028",
+    "streaming_recovery/source.py": "0572b42d63595a4385681efb4807e333b120b1bd9aea6b5ca65d67498df10fbf",
+    "streaming_recovery/task_spec.py": "d24532e9880f9337c51b4216ab1009a543964dc591e886c99fbd3d85a708780b",
+    "streaming_recovery/tracking.py": "9ef44c4ffb873b6af5aeaabe3c772089f94b8b2d82af152f1016af7841e9cd4f",
+    "streaming_recovery/__init__.py": "da8cc91889ca48ac6f50024508a5001c62749b687777232e418522bc934bdab8",
+    "streaming_recovery/__main__.py": "dbe9c6ce92dc43509cf94753e7897178a392f1f3eabf9e3fd472797aae692816"
+  },
+  "selection_sha256": "2edb4360f456f80a2eb5e0816c2bd33c819f436c4b8b72ee29b96da5258c037a",
+  "dev_files_included": false,
+  "model_inference": "fixed_numpy_linear_softmax_no_fit",
+  "run": "python -I run_frozen.py --output ABSOLUTE_NEW_DIRECTORY"
+}

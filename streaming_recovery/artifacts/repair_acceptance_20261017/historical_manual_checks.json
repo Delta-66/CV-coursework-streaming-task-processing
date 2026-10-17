@@ -1,0 +1,298 @@
+{
+  "review_kind": "historical assistant visual notes carried forward; not independent human annotations and not newly inspected by evaluator",
+  "source": "streaming_recovery\\artifacts\\multimodal_20261017\\build_review.py",
+  "source_sha256": "8e2ee7977770e058564d8506a48bf3afc639ba99c5ff42cb8c0fb6ec024a4f74",
+  "new_visual_review_required_for_changed_perception": true,
+  "checkpoints": [
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 5.0,
+      "observed": "5秒可见刀离架且与右夹爪连接；核查当前视觉事实，允许 reliable_grasp 等待连续确认。",
+      "expected_fields": {
+        "visual_facts.knife_location": "gripper",
+        "visual_facts.contact": "between_fingers"
+      },
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/18a.jpg",
+        "../multimodal_20261017/manual_frames/18b.jpg"
+      ]
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 9.0,
+      "observed": "9秒腕部刀在香肠端部作用。",
+      "expected_fields": {
+        "visual_facts.measurements.cut_operation": "yes",
+        "state.preconditions.reliable_grasp": true
+      },
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/18a.jpg",
+        "../multimodal_20261017/manual_frames/18b.jpg"
+      ]
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 20.0,
+      "observed": "末尾新圆片、刀具回架和夹爪分离清楚。",
+      "expected_fields": {
+        "state.task_completed": true
+      },
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/18a.jpg",
+        "../multimodal_20261017/manual_frames/18b.jpg"
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "start_s": 5.0,
+      "end_s": 8.0,
+      "observed": "5至8秒腕图可见刀邻接香肠；至少在这段内应建立当前持刀前提。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": true
+      },
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/19a.jpg",
+        "../multimodal_20261017/manual_frames/19b.jpg"
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "start_s": 5.0,
+      "end_s": 9.0,
+      "observed": "5至9秒可见刀在香肠端部作用；应有一次可靠持刀与操作联合证据。",
+      "expected_fields": {
+        "visual_facts.measurements.cut_operation": "yes",
+        "state.preconditions.reliable_grasp": true
+      },
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/19a.jpg",
+        "../multimodal_20261017/manual_frames/19b.jpg"
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "start_s": 15.0,
+      "end_s": 16.0,
+      "observed": "15至16秒新增圆片、刀具归位和释放清楚；应在末尾完成证据链。",
+      "expected_fields": {
+        "state.task_completed": true
+      },
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/19a.jpg",
+        "../multimodal_20261017/manual_frames/19b.jpg"
+      ]
+    },
+    {
+      "episode_for_audit_only": 0,
+      "timestamp": 10.0,
+      "observed": "10秒空夹爪在工作区，刀仍在架。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "state.candidate": "grasp_not_established"
+      },
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/0.jpg"
+      ]
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 2.0,
+      "observed": "2秒两指张开并接近刀具；仍定位刀具过粗。",
+      "expected_fields": {},
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/2.jpg"
+      ],
+      "expected_stages": [
+        "approach_tool",
+        "align_grasp",
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 2,
+      "start_s": 10.0,
+      "end_s": 11.0,
+      "observed": "10至11秒空夹爪进入工作区，刀仍在架。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "state.candidate": "prerequisite_unmet"
+      },
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/2.jpg"
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "timestamp": 4.0,
+      "observed": "4秒两指在刀旁、刀仍受刀架支撑；应至少识别接近/对齐。",
+      "expected_fields": {},
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/8.jpg"
+      ],
+      "expected_stages": [
+        "approach_tool",
+        "align_grasp",
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "start_s": 7.0,
+      "end_s": 8.0,
+      "observed": "7至8秒空夹爪在工作区，刀未被带走。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "state.candidate": "prerequisite_unmet"
+      },
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/8.jpg"
+      ]
+    },
+    {
+      "episode_for_audit_only": 29,
+      "start_s": 5.0,
+      "end_s": 6.0,
+      "observed": "5至6秒两指向刀收拢、刀仍在架；应处于对齐或抓取结果检查。",
+      "expected_fields": {},
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/29.jpg"
+      ],
+      "expected_stages": [
+        "align_grasp",
+        "verify_grasp"
+      ]
+    },
+    {
+      "episode_for_audit_only": 29,
+      "start_s": 8.0,
+      "end_s": 9.0,
+      "observed": "8至9秒空夹爪在工作区，刀仍在架。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "state.candidate": "grasp_not_established"
+      },
+      "image_refs": [
+        "../multimodal_20261017/manual_frames/29.jpg"
+      ]
+    }
+  ],
+  "historical_notes": {
+    "18": {
+      "times": [
+        0,
+        4,
+        5,
+        9,
+        14,
+        19,
+        20
+      ],
+      "sheets": [
+        "18a.jpg",
+        "18b.jpg"
+      ],
+      "observed": "初始无分离小块；5s 刀已离架、腕部可见刀与两指连接；9s 刀在香肠端部作用；14s 已见新圆片但算法当前夹持未知；19/20s 小片与刀具回架、夹爪分离清楚。",
+      "assessment": "完整成功得到证据，无失败误报。4/5s 保守等待连续夹持；14/18s 仍漏掉部分当前关系，不能称所有阶段均正确。",
+      "phase_gaps": [
+        "4/5s 抓取确认等待",
+        "14/18s 当前阶段未知"
+      ],
+      "completion_missed": false
+    },
+    "19": {
+      "times": [
+        0,
+        5,
+        8,
+        10,
+        12,
+        15,
+        16
+      ],
+      "sheets": [
+        "19a.jpg",
+        "19b.jpg"
+      ],
+      "observed": "初始无小片；5/8s 腕图可见持刀邻接香肠；10s 已出现分离圆片并持刀离开砧板；12s 刀返回刀架；15/16s 圆片与归位清楚。",
+      "assessment": "无失败误报，但整任务成功漏确认。1Hz 下 5s 有刀—食物框、6至8s 腕部刀刃轮廓未识别，未建立连续相对作用证据；不得借最终标签补齐。首次运行的回架/释放阶段映射错误已通过独立逻辑回归修复，切割识别缺口保留。",
+      "phase_gaps": [
+        "3至7s 可靠夹持仍待确认",
+        "切割作用未确认，故新效果/完整成功不确认",
+        "11s 切割效果待确认",
+        "14s 当前阶段未知"
+      ],
+      "completion_missed": true
+    },
+    "0": {
+      "times": [
+        7,
+        9,
+        10
+      ],
+      "sheets": [
+        "0.jpg"
+      ],
+      "observed": "7s 夹爪已闭但刀仍在架边；9/10s 空夹爪在香肠上方、刀留架，支持当前尝试未建立持刀。",
+      "assessment": "抓取未建立提醒与目视证据一致；未误把闭爪当成功。原因仍未知。",
+      "phase_gaps": [
+        "7s 抓取效果未知",
+        "刀柄/指尖精确对齐未识别"
+      ],
+      "completion_missed": false
+    },
+    "2": {
+      "times": [
+        2,
+        10,
+        11
+      ],
+      "sheets": [
+        "2.jpg"
+      ],
+      "observed": "2s 顶视刀在架、腕图两指张开接近；10/11s 顶视刀仍在架、腕图空夹爪进入工作区。",
+      "assessment": "前置条件未满足诊断正确；没有可靠记录目标附近闭合，attempt=0，因此未编造具体失败尝试次数。对齐/闭合阶段识别不足。",
+      "phase_gaps": [
+        "0/1s 初始校准失败",
+        "接近/对齐/闭合仍多次输出 locate_tool",
+        "9s 场景证据不可用"
+      ],
+      "completion_missed": false
+    },
+    "8": {
+      "times": [
+        4,
+        7,
+        8
+      ],
+      "sheets": [
+        "8.jpg"
+      ],
+      "observed": "4s 两指在刀旁、刀仍支撑于架；7/8s 空夹爪进入砧板上方，刀未被带走。",
+      "assessment": "未见样例首次冻结测试正确提醒缺少持刀前置条件；未确认目标附近的完整开闭尝试（attempt=0）。4/5s 仍是 locate_tool，阶段粒度不足，即使 execution_status 没有 information_insufficient 也不能称全阶段正确。",
+      "phase_gaps": [
+        "4/5s 对齐/尝试没有可靠定位",
+        "未确认实际抓取尝试次数"
+      ],
+      "completion_missed": false
+    },
+    "29": {
+      "times": [
+        5,
+        6,
+        8,
+        9
+      ],
+      "sheets": [
+        "29.jpg"
+      ],
+      "observed": "5/6s 两指向刀收拢但刀仍在架；8/9s 夹爪空手到砧板，刀留架。腕图仍能看见指间间隙；原始开度约0.0188被既有阈值归为closed，不能解释为完全闭合或成功夹持。",
+      "assessment": "未见样例首次冻结测试正确提醒抓取未建立。算法未断言夹持力/摩擦原因，也没有精确诊断官方 gripper state 原因标签。",
+      "phase_gaps": [
+        "0s 刀架初始化不确定",
+        "6s 抓取效果未知",
+        "closed 为粗阈值区间，完全闭合和接触仍未知"
+      ],
+      "completion_missed": false
+    }
+  }
+}

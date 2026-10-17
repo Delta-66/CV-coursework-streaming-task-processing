@@ -1,0 +1,128 @@
+{
+  "selected": [
+    {
+      "episode_index": 18,
+      "exposure_reason": "prior_model_development",
+      "logical_task_sha256": "14076ca6f57b1ad3cc591cc273f807d0f4b11343e56e88e39b6521a41a7ffda9",
+      "num_frames": 519,
+      "source_episode": "episode_18",
+      "source_hdf5": "raw_data/cut_sausage/episode_18.hdf5",
+      "source_task": "cut_sausage",
+      "split": "dev_seen",
+      "stratification": {
+        "failure_type": "none",
+        "outcome": "success"
+      },
+      "task_index": 0,
+      "prior_tuning_exposure": true,
+      "prior_execution_exposure": true,
+      "unseen_before_this_run": false
+    },
+    {
+      "episode_index": 19,
+      "exposure_reason": null,
+      "logical_task_sha256": "14076ca6f57b1ad3cc591cc273f807d0f4b11343e56e88e39b6521a41a7ffda9",
+      "num_frames": 420,
+      "source_episode": "episode_19",
+      "source_hdf5": "raw_data/cut_sausage/episode_19.hdf5",
+      "source_task": "cut_sausage",
+      "split": "train",
+      "stratification": {
+        "failure_type": "none",
+        "outcome": "success"
+      },
+      "task_index": 0,
+      "prior_tuning_exposure": true,
+      "prior_execution_exposure": true,
+      "unseen_before_this_run": false
+    },
+    {
+      "episode_index": 0,
+      "exposure_reason": "prior_model_development",
+      "logical_task_sha256": "14076ca6f57b1ad3cc591cc273f807d0f4b11343e56e88e39b6521a41a7ffda9",
+      "num_frames": 300,
+      "source_episode": "episode_0",
+      "source_hdf5": "raw_data/cut_sausage/episode_0.hdf5",
+      "source_task": "cut_sausage",
+      "split": "dev_seen",
+      "stratification": {
+        "failure_type": "gripper 6d-pose",
+        "outcome": "failure"
+      },
+      "task_index": 0,
+      "prior_tuning_exposure": true,
+      "prior_execution_exposure": true,
+      "unseen_before_this_run": false
+    },
+    {
+      "episode_index": 2,
+      "exposure_reason": null,
+      "logical_task_sha256": "14076ca6f57b1ad3cc591cc273f807d0f4b11343e56e88e39b6521a41a7ffda9",
+      "num_frames": 289,
+      "source_episode": "episode_2",
+      "source_hdf5": "raw_data/cut_sausage/episode_2.hdf5",
+      "source_task": "cut_sausage",
+      "split": "validation",
+      "stratification": {
+        "failure_type": "gripper 6d-pose",
+        "outcome": "failure"
+      },
+      "task_index": 0,
+      "prior_tuning_exposure": false,
+      "prior_execution_exposure": true,
+      "unseen_before_this_run": false
+    },
+    {
+      "episode_index": 8,
+      "exposure_reason": null,
+      "logical_task_sha256": "14076ca6f57b1ad3cc591cc273f807d0f4b11343e56e88e39b6521a41a7ffda9",
+      "num_frames": 233,
+      "source_episode": "episode_8",
+      "source_hdf5": "raw_data/cut_sausage/episode_8.hdf5",
+      "source_task": "cut_sausage",
+      "split": "validation",
+      "stratification": {
+        "failure_type": "gripper 6d-pose",
+        "outcome": "failure"
+      },
+      "task_index": 0,
+      "prior_tuning_exposure": false,
+      "prior_execution_exposure": false,
+      "unseen_before_this_run": true
+    },
+    {
+      "episode_index": 29,
+      "exposure_reason": null,
+      "logical_task_sha256": "14076ca6f57b1ad3cc591cc273f807d0f4b11343e56e88e39b6521a41a7ffda9",
+      "num_frames": 237,
+      "source_episode": "episode_29",
+      "source_hdf5": "raw_data/cut_sausage/episode_29.hdf5",
+      "source_task": "cut_sausage",
+      "split": "validation",
+      "stratification": {
+        "failure_type": "gripper state",
+        "outcome": "failure"
+      },
+      "task_index": 0,
+      "prior_tuning_exposure": false,
+      "prior_execution_exposure": false,
+      "unseen_before_this_run": true
+    }
+  ],
+  "selection_before_new_pixels": true,
+  "policy": "same instruction, two available successful trajectories, four failures including two unseen validation examples; no frozen test samples",
+  "same_task_outcome_counts": {
+    "success": 2,
+    "failure": 31
+  },
+  "split_sha256": {
+    "dev_seen.jsonl": "110ab1d847746eaaafdba8afdcaa488cf117ea35d61ab330984d044578d31a8e",
+    "exposed_benchmark.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "protocol.json": "bb020e9a848e0b96cffbb39b183eca3152abe3f843567e49ddc98348e427ea0e",
+    "strata.json": "1e2859a3a124e5f5e5ffd00b5a986cc5811cc14b31d170ae4674b7f02599f72a",
+    "task_groups.json": "d21a840f47a37dd6767892532698c45730da91ef2c39e915b4d169705d5dfc1e",
+    "test.jsonl": "0cbc7eb3d349c5d5b4476f367376a36d9a322f8e5c1de9da3f05730cada06c09",
+    "train.jsonl": "bcbdbbf28ad3ee39e486983edbf523e47ac382764de5e75902e82f554eb1b915",
+    "validation.jsonl": "457b1011fd91f3c53db61d2962e523bd44b66027f0d30b7f0a7c2c4dbf07293d"
+  }
+}

@@ -1,0 +1,10 @@
+Downloading: data/chunk-000/episode_000001.parquet (0.1 MiB)
+Downloading: videos/chunk-000/observation.images.cam_high/episode_000001.mp4 (3.5 MiB)
+Downloading: videos/chunk-000/observation.images.cam_right_wrist/episode_000001.mp4 (2.2 MiB)
+Downloading: data/chunk-000/episode_000011.parquet (0.1 MiB)
+Downloading: videos/chunk-000/observation.images.cam_high/episode_000011.mp4 (4.5 MiB)
+Downloading: videos/chunk-000/observation.images.cam_right_wrist/episode_000011.mp4 (3.2 MiB)
+Downloading: data/chunk-000/episode_000014.parquet (0.1 MiB)
+Downloading: videos/chunk-000/observation.images.cam_high/episode_000014.mp4 (5.8 MiB)
+Downloading: videos/chunk-000/observation.images.cam_right_wrist/episode_000014.mp4 (5.1 MiB)
+downloaded/verified [18, 19, 1, 6, 11, 14]

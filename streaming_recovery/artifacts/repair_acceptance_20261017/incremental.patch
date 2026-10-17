@@ -1,0 +1,2422 @@
+--- a/README.md
++++ b/README.md
+@@ -1,10 +1,10 @@
+ # CV大作业—流式任务处理
+ 
+-目前有两条独立路线，不能混用运行次数或效果结论。2026-10-17 最新在现有 `streaming_recovery/` 上完成 **6 条真实轨迹的 1 Hz 多模态测试**：RGB、实测右臂关节位置/速度、夹爪开度均参与判断。位置与夹爪来自同一个状态向量，不是三个独立传感器。同任务仅有两条成功数据，因此采用 2 正常＋4 失败；8/29 是首次规则冻结后的新增验证样例，冻结测试集未使用。
++目前有两条独立路线，不能混用运行次数或效果结论。2026-10-17 最新在现有 `streaming_recovery/` 上完成 **6 条真实轨迹的 1 Hz 多模态测试**：RGB、实测右臂关节位置/速度、夹爪开度均参与判断。位置与夹爪来自同一个状态向量，不是三个独立传感器。同任务仅有两条成功数据，因此采用 2 正常＋4 失败；六条现在均为已见开发/验证回归（8/29不再称未见样例），冻结测试集未使用。
+ 
+ | 路线 | 目标 1—3 当前证据 | 尚未验证 |
+ |---|---|---|
+-| `streaming_recovery`，CPU 条件双视角经典视觉＋关节运动＋有限状态 | 6 条完整真实轨迹、82 次判断、24.50 s；4 条失败正确提醒，正常无失败误报；18 确认完成，19 在 1 Hz 下漏确认成功；实际查看 27 个关键时刻 | 19 的切割作用识别、部分对齐/尝试阶段；可靠联合定位、深度/接触准备、自然滑落/重试和物理执行 |
++| `streaming_recovery`，CPU 条件双视角经典视觉＋关节运动＋有限状态 | 6 条完整真实轨迹、82 次判断、49.31 s 墙钟；4 条失败确认，两条正常均确认完成且无失败提醒；2 个真实联合定位时刻支持条件化图像方向 | 遮挡/混连时关系未知；独立深度/接触准备、自然滑落/重试和物理执行 |
+ | 根目录 Qwen 当前观测/时序路线 | 保留历史输入、启动、资源与工程测试记录 | 500 条正式基准仍为 0 条完成；未获该路线完整诊断/分层纠错效果结论 |
+ 
+ 本次主入口（项目根目录 PowerShell）：
+@@ -13,7 +13,7 @@
+ & 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run --config streaming_recovery/config_multimodal.json
+ ```
+ 
+-详见 [运行说明](streaming_recovery/README.md)、[六条多模态测试汇总](streaming_recovery/docs/六条多模态测试_20261017.md) 和 [真实逐时刻查看页](streaming_recovery/artifacts/multimodal_20261017/final_run/index.html)。旧的 2.5 Hz 五条实验保存在 [上一轮增量验收](streaming_recovery/docs/增量修复与验收_20261017.md)，其结果不能替代本次 1 Hz 测试。新增验证样例首次输出完整保留，不宣称小样本泛化成绩。
++详见 [运行说明](streaming_recovery/README.md)、[本轮增量修复与验收](docs/增量修复与验收_20261017.md) 和 [最新真实查看页](streaming_recovery/artifacts/repair_acceptance_20261017/accepted_run/index.html)。旧回放与源码保留；旧六条报告的字符串标签错误已独立重算为 [v2](streaming_recovery/artifacts/repair_acceptance_20261017/review_summary_v2_final.json)。旧 2.5 Hz 和 Qwen 路线不混入本次结果；这些小样本不支持泛化结论。
+ 
+ 以下保留根目录 Qwen 路线的历史进展与原入口。原“第2步尚未完成、第3步暂缓”的判断适用于该路线及当时版本，不代表上面的 CPU 增量实现。
+ 
+--- /dev/null
++++ b/docs/增量修复与验收_20261017.md
+@@ -0,0 +1,201 @@
++# 流式任务理解、失败诊断与分层纠错：2026-10-17 增量修复与验收
++
++本文对应 `streaming_recovery/` 的 CPU 主方案：`bounded_visual_state_tracker + multiview_effect_geometry`。它修复已有原型并使用六条真实 ViFailback 轨迹回归，不另建平台，也不与根目录 Qwen 路线的速度、测试数或识别结果混报。
++
++**本轮选定任务验收已通过：74项回归、5组验收、六条真实逐条核查和2个真实图像方向核查通过。** 下文区分实际像素证据、合成逻辑回归及尚未验证的能力；“程序读取完成”与“语义判断正确”分别检查。
++
++## 1. 支持范围与需求映射
++
++本轮支持任务为：右臂从刀架取刀，切下一小段香肠，将刀放回刀架。指令通过明确的任务绑定进入既有状态跟踪器；不声称支持任意自然语言任务。固定顶视、白柄刀、黑刀架、棕色砧板和橙色香肠是该透明视觉基线的场景假设。
++
++| 课题目标 | 本轮功能与输出 | 验证依据 |
++|---|---|---|
++| 目标1：流式输入与基础方法 | 原生时钟顺序读取、因果对齐、有限观测与结构状态、约 1 Hz 决策、实际使用的模态及容量审计 | 六条完整读取与决策采样覆盖；公共前缀反事实后缀；长流容量；缺失、过期和重置检查 |
++| 目标2：进度理解与失败诊断 | 当前阶段、当前与历史前置条件、操作—效果链、带时间引用的诊断、疑似/确认/持续/结束事件 | 正常与失败真实回放及关键时刻目视核查；A—C 组合逻辑回归；19 的真实操作与新增效果链 |
++| 目标3：一致的两层建议 | 同一事件与恢复目标约束高低层输出；当前下一动作；坐标、前置条件、停止与后置检查；建议与执行隔离 | 真实失败的保持/开爪建议；真实图像的条件化方向交接；对齐、准备、闭合与重试推进合成回归 |
++
++滑动观测、规则状态机、经典视觉、事件缓存与固定阈值属于本实现的工程选择，不是课题强制要求。未开展目标4的完整对比实验、消融或泛化统计。
++
++## 2. 数据、资源与输入事实
++
++工作区为 `C:/Users/lenovo/Desktop/CV`，执行环境沿用 `C:/Users/lenovo/.conda/envs/cv-streaming/python.exe`。本轮主方案使用 CPU、OpenCV、NumPy、Pillow、PyArrow 和 PyAV；没有新训练模型、运行长时间 GPU 基准或迁移大型依赖。具体版本、输入文件哈希、配置和源码快照以本次运行目录为准。
++
++数据来自本地 `data/vifailback_lerobot`，既有固定版本 `619791b94f61667333fe179d471051e0bca0e06f`。适配器支持已核实的 LeRobot v2.1 结构，原生时钟为 25 FPS。推理只读取 `timestamp`、`frame_index`、`observation.state`、`observation.velocity` 和配置的两路当前图像。
++
++| 实际输入 | 本轮用途 | 不能由此推出的结论 |
++|---|---|---|
++| `cam_high` RGB | 刀架、机器人所在粗区域、砧板布局、刀具归位及新增分离小段 | 图像区域共现不等于可靠抓取；没有标定不能换算机器人方向 |
++| 按需查询的当前 `cam_right_wrist` RGB | 取刀关系不清或开爪对齐准备时核查刀刃—两指关系；刀—香肠端部相对作用；可见时定位柄颈与两指内缘 | 二维投影不证明深度、接触、姿态或安全路径 |
++| `observation.state[7:13]` | 实测右臂六关节位置，辅助判断当前/近期运动 | 关节运动不证明物体随动或任务效果 |
++| `observation.velocity[7:13]` | 实测右臂六关节速度，并参与已到达区间的峰值汇总 | 原始单位尚未核实为可直接生成控制命令的物理单位 |
++| `observation.state[13]` | 实测右夹爪开合、实际开闭转换与尝试识别 | 闭爪不等于持刀成功 |
++
++关节位置与夹爪开度来自**同一个 14 维 `observation.state` 向量**，不能称为三个独立传感器。左臂关节和左夹爪未用于本右臂任务判断。目标 `action`、目标 `complementary_info.action_eef`、最终成功标签、阶段/失败离线标注均不进入在线推理；目标 EEF 不能冒充实测 EEF。
++
++六条固定配置为 `[18, 19, 0, 2, 8, 29]`。18、19 是同任务中现有的两条正常样例，0、2、8、29 是失败样例，因此采用 2 正常＋4 失败。8、29 在首次冻结运行前曾未参与调参；本轮已经查看并修复后重跑，**六条均是已暴露的开发/回归样例**，不能再次称为独立未见结果。冻结测试集未用于本轮调参或验收。
++
++## 3. 运行入口与交付记录
++
++在工作区根目录执行以下命令可生成新的完整六条回放目录。自动使用新目录，保留此前结果。
++
++```powershell
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run --config streaming_recovery/config_multimodal.json
++```
++
++本轮实际交付目录是：
++
++`streaming_recovery/artifacts/repair_acceptance_20261017/accepted_run/`
++
++其中 `index.html` 是查看页，`trajectory_*/decisions.jsonl` 保存逐时刻结构化结果，`frames/` 保存对应图像，`end.json` 明确流结束与任务成功的区别。`summary.json`、`config_snapshot.json` 与 `source_snapshot/` 保存消费计数、处理耗时、输入/源码哈希和配置边界。目录已经存在时，运行器拒绝覆盖。
++
++本轮验收命令如下，直接复用已生成的回放，不为修报告重新推理六条轨迹；验收自身仍会运行必要的逻辑、因果、容量和故障注入检查。
++
++```powershell
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery validate --config streaming_recovery/config_multimodal.json --run streaming_recovery/artifacts/repair_acceptance_20261017/accepted_run --manual-review streaming_recovery/artifacts/repair_acceptance_20261017/manual_review.json --output streaming_recovery/artifacts/repair_acceptance_20261017/validation --require-complete
++```
++
++`manual_review.json` 绑定实际决策行、图像及 SHA，记录关键阶段和两个方向判断；`bind_manual_review.py` 只服务离线核查，在线模块不读取这些标注。重复执行验收时应另选新的 `--output` 目录，不覆盖本次证据。最终检查结果在 `validation/validation.json`，真实六条的参数化统计在该验收目录内的报告文件。
++
++## 4. 修复内容及对应证据
++
++### 4.1 离线报告标签与统计
++
++旧 `build_review.py` 对字符串 `episode_success` 直接做布尔判断，导致 `"failure"` 也被当成真。这是报告错误，不代表检测器真的误报。
++
++新的离线统计显式解析 `success` / `failure`，其他值报错；分别统计失败确认、疑似通知与恢复通知，不把全部 `notify` 混算为失败误报。完整读取也不再是常量：逐条核对元数据期待长度、Parquet 消费行数、顶视/腕视频消费帧数，并单列决策时钟覆盖。
++
++原错误报告和原始决策日志保留。基于上轮原始日志重算的正确报告为 `repair_acceptance_20261017/review_summary_v2_final.json`，其 `run` 仍明确指向旧 `multimodal_20261017/final_run`。它正确保留旧19尚未完成的语义缺口，**不是本轮新 accepted_run 的结果**。合法标签、非法标签以及成功/失败与提醒/确认的组合均有回归检查。
++
++### 4.2 A：明确分离反证优先于短期持有假设
++
++`tracking.py` 先处理当前 `contact=separate` 或 `released=yes`，及时将当前夹持置否并移除过期连接锚点。即使粗代理 `tool_on_board`、`robot_at_board` 同时为真，也不能覆盖明确释放；冲突写入 `evidence_conflicts`。正常回架释放结束旧连接，不再作为随后失抓的前件。
++
++验证采用“可靠持刀→当前回架分离释放，但粗代理仍为真”的合成组合反例；不是自然滑落视觉样例。
++
++### 4.3 B：曾持刀不替代当前夹持前置条件
++
++`attempt_held` 保留“本次尝试曾成功”的历史意义。尚未切割时提前回架释放，若随后当前明确空手、关节确有运动且再次进入砧板/后续操作区域，则建立 `prerequisite_unmet` 并进入受阻阶段。正常回架、驻留、视觉未知本身不足以触发失败。
++
++验证采用“打开→闭合→可靠持刀→提前回架→空手继续工作”的合成语义序列；真实六条不提供对应自然重试链。
++
++### 4.4 C：砧板/其他支撑面的实际重抓能结束旧事件等待
++
++实际观察到新的开闭尝试时，建立一个有界 `attempt_context`，记录对象、支撑位置、开始时间、引用、预期效果与坐标系。砧板/其他支撑面重抓后，只有连续清晰证据同时支持“刀留在原支撑面、闭合两指与刀明确分离、同图定位显著分离”时才确认新的抓取失败。
++
++仅等待时间长、仅夹爪闭合或尚未抬起都不能触发该结论。旧事件可以因实际重试转为 `closed_for_retry`，新成功、新失败与信息不足分别更新恢复状态；实际重新打开时允许回到定位准备。输出重试建议不会增加 `attempt`，也不会伪造动作已发生。
++
++### 4.5 D：恢复条件不再机械套用当前位置
++
++`recovery.py` 使用已记录的原支撑面或“刀与两指保持连接并连续随动”描述恢复条件。当前刀在 `gripper` 时，不再生成“刀离开夹爪内”这种相反目标。高层恢复目标、低层当前动作、执行器检查与执行后状态继续共享事件编号和恢复目标编号。
++
++A—D 修改前反例与修改后结果分别保存在 `state_before.txt`、`state_after*.txt`、`state_repair_examples.json` 等记录中。其证据类别明确为合成语义逻辑，不用于声称真实视觉恢复准确率。
++
++### 4.6 已到达 25 FPS 关节区间，避免端点采样混叠
++
++`source.py` 在顺序消费原生关节样本时，使用 `dynamics.JointInterval` 汇总区间路径长度和最大实测速度。决策仍约 1 Hz；没有把整条轨迹载入推理缓存。
++
++完整、连续且有效的原生区间才能支持“本区间未检测到运动”。如果只有两个端点 qpos 接近、当前 qvel 较低，则输出 `low_motion_support`，不能据此断言两次判断之间没有往复运动。缺失、无效、覆盖不全、未来或不合时钟的区间不能伪装为完整证据。原始阈值为显式工程配置，未经物理单位标定，不解释成准确速度或成功概率。
++
++区间往复反例属于构造的设计回归。19 的旧漏确认已由真实像素定位到视觉候选连通问题，不能把关节混叠风险反写成已证明的19根因。
++
++### 4.7 19 的真实操作链及2/8阶段
++
++19 的6—8秒腕图中，亮刀刃与浅色香肠亮边在原颜色掩膜下连成过宽轮廓，导致细长刀刃候选被拒绝；部分反光还延伸到两指下方。只裁掉下部仍失败，该中间结果保留在 `visual_regression_after.txt`。最终方案保留两指尖端上方实际可见的长刃段，用纵向开运算去掉短横亮桥，同时保留颜色、中央细长几何、两指连接和离架证据要求。
++
++修复没有写入 episode 编号、未来时刻或最终标签，没有删除“参考→有效操作→新增分离效果→归位释放”的完成链。原始三条小实验与最终 `accepted_run` 均保持1 Hz。19在8秒确认刀—香肠操作、11秒连续确认新增分离效果、16秒确认完整完成；18在20秒确认完整完成。最终结果未用离线标签补齐。
++
++2/8 的旧接近判断过度依赖“机械手遮挡刀架”，而实际机器人经常位于架上方或侧方，刀仍清晰可见。新增当前顶视相对初始参考的近架机器人粗投影证据，只服务接近/准备阶段，不冒充指尖、接触或三维距离。2的联合定位进一步支持对齐准备；8定位混连时保持未知，但实际开闭与区域关系仍支持进入抓取效果确认。
++
++阶段核查记录要求具体时刻和实际证据，不能用某个阶段名曾经出现来证明整个时序正确。`visual_real_evidence.json` 和最终 `manual_review.json` 保留期望阶段、程序输出及差异。
++
++## 5. 真实方向交接与建议边界
++
++新增 `localization.py` 从当前腕图检测“细刃变为宽白柄”的可见颈部横截面，并检测左右两指实际内缘角点。`knife_handle_xy` 是可见柄颈的抓取参考点，`gripper_xy` 是两指内缘的中点；二者均不使用整刀或机器人区域质心代替。遮挡、刀架与手指混连、柄颈截断或宽度变化不清时返回 `None`。
++
++2的2秒和3秒真实图像中，两点可核查。方向采用共享 `image_alignment_directions`，坐标系为 `cam_right_wrist_image_x_right_y_down`，位置以图像归一化0—1000表达，死区为50。2秒给出图像左侧方向，3秒给出图像下方方向；后者水平差未超过死区，因此不添加左侧方向。
++
++这些记录是**基于当前真实像素的独立条件化方向交接**：当前夹爪打开，刀柄/两指可见；执行器仍须独立验证深度、姿态、路径与坐标映射，才能转换为物理移动。停止条件是新图像进入二维对齐死区或目标丢失，之后还要检查独立接触准备。没有位移、角度、速度或夹持力数值，没有三维控制指令。
++
++六条真实失败确认之后没有再次打开夹爪，因此自然事件链中仍未发生“失败后重新打开→图像对齐→准备→闭合→效果恢复”的全过程。不能为展示 `align_in_image` 构造未发生的事件或把早期帧接到后来的失败上。真实保持与开爪建议有效，真实定位验证方向交接；完整恢复推进、独立准备后的闭合与再试分支属于合成验证。
++
++所有回放输出持续保持：
++
++```json
++{
++  "mode": "advisory_replay",
++  "actually_executed": false,
++  "execution_receipt": null,
++  "outcome_attributed_to_suggestion": false
++}
++```
++
++原视频后续的成功、归位或状态变化不能归因于建议已执行。
++
++## 6. 因果性、容量与故障处理
++
++系统按原生时间递增消费完整轨迹，决策每25帧一次。非决策帧也顺序读取，但不能使用未来样本进行对齐、平滑、选帧或归一化。当前模态超时、无效或缺失均显式标记；每条轨迹重置源、视觉参考、观测、阶段、事件和恢复状态。流结束不等于任务完成。
++
++| 用于推理的状态 | 容量边界 |
++|---|---|
++| 历史观测 | 最多4条、4秒窗口；每条最多当前两路图像 |
++| 语义特征 | 最多6条；每条 `measurements` JSON最多9000字符；总体特征负载另有限制 |
++| 事件与证据 | 最多4个事件，每事件最多4条证据；持续问题更新原编号 |
++| 结构锚点与对象 | 最多8个锚点、3个对象；一次当前尝试上下文，最多6字段 |
++| 视觉参考与跟踪 | 初始参考图1张、掩膜最多4个、粗视觉轨迹最多2条、腕部几何记录最多3条、食物参考最多5项 |
++| 每次视觉输入 | 当前顶视＋起始顶视参考＋按需当前腕图，合计最多3张 |
++| 原生关节区间聚合器 | 6个前位置值＋6个路径和，即12个数值；最多10个固定标量；不缓存原生样本序列 |
++| 区间快照 | 每条观测至多一个14字段摘要，随4条观测窗口淘汰；不是额外无限历史 |
++| 新联合定位 | 当前轮廓至多16点、5条柄颈横截面及固定字段，进入原9000字符测量/6条特征范围；没有新增跨帧定位缓存 |
++| 恢复上下文 | 最多一个事件副本；等待类型和计数固定，计数饱和到3 |
++| 模型对话、持久KV、累计日志读取 | CPU主方案均为0；审计日志只写出，不回读作推理记忆 |
++
++因果验收包含真实公共前缀、人工修改后缀，覆盖读取、原生区间聚合、解码、对齐、视觉候选、联合定位、有限记忆、状态、事件与建议。长流采用真实像素循环构造的动态压力输入验证容量，并明确它不是自然连续长轨迹。缺图、黑图、视频打开/解码错误、过期和初始等待采用故障注入；不把注入测试称为真实遮挡标注实验。
++
++## 7. 本轮最终结果登记
++
++以下均来自最终 `accepted_run/summary.json` 与 `validation/real_acceptance.json`，耗时包含读取、推理与输出写入。先前24.50秒、独立审查46.92秒和本轮49.31秒运行条件不同，不据此作性能结论。
++
++| 轨迹 | 官方结果 | 当前完成/失败判断 | 误报、漏报与仍不确定时刻（秒） | 墙钟耗时 |
++|---|---|---|---|---|
++| 18 | success | 20秒确认完整成功 | 无失败误报、无成功漏确认；4/5抓取证据积累，18归位交接未知 | 12.453 s |
++| 19 | success | 8秒作用→11秒效果→16秒完整成功 | 无失败误报，原成功漏确认已修；3/4/5抓取确认等待，14归位交接未知 | 10.515 s |
++| 0 | failure | 9秒疑似、10秒确认抓取未建立 | 无整轨迹失败漏报；7秒抓取关系未知；原因不臆断 | 7.344 s |
++| 2 | failure | 2/3秒对齐、7秒实际闭合尝试、11秒确认抓取未建立 | 无整轨迹失败漏报；0/1初始化等待、9遮挡；6秒姿态/接触仍未知 | 7.391 s |
++| 8 | failure | 2—4秒接近、5秒实际闭合尝试、8秒确认抓取未建立 | 无整轨迹失败漏报；6秒抓取效果未知；没有可靠柄/两指精确定位 | 5.765 s |
++| 29 | failure | 6秒效果确认、9秒确认抓取未建立 | 无整轨迹失败漏报；0初始化、6抓取效果未知；closed不是完全闭合/接触 | 5.782 s |
++
++统计为 **1,998行真实原生数据、3,996张解码图、82次决策，总墙钟49.312秒**。实际查询当前腕图50次，每次至多3图（包含起始参考）。四条失败各有一个事件、一次疑似和一次确认提醒，持续失败沿用原编号；两条正常无失败提醒。自然纠错包含4次保持观察与6次开爪下一动作，全部未执行、无回执、无效果归因。
++
++“正确”仅指本轮检查的整轨迹结果与关键时刻证据一致。19个逐图核查约束、2个SHA绑定的真实像素方向均通过；核查者为助手，并非独立人工逐帧标注。两个方向来自失败前的当前观测，按独立条件化交接登记；自然失败事件中的 `align_in_image` 次数仍为0。14个信息不足时刻继续保留，不以未知率为零作为验收目标。没有人工首次可检测时刻标注，不报告检测延迟。
++
++| 验证 | 实际结果 | 证据类别 |
++|---|---|---|
++| 原40项＋本轮新增回归 | 74项，失败0、错误0；包含3项真实局部图像检查 | 合成、离线统计与局部真实像素明确分列 |
++| 参数化六条数据与语义核查 | 读取/采样/输入哈希/建议契约通过；19个时刻约束通过 | 真实完整回放＋离线核查 |
++| 同前缀异后缀全链 | 旧几何和新双视角各11个前缀判断一致；另2号前缀7个一致，其中2个有新联合定位；原生聚合也逐项一致 | 真实像素前缀＋人工反事实后缀 |
++| 有限容量 | 10,000步合成检查、2,000步真实像素循环均通过；后者67次观测尝试，事件最多4、证据16、原生摘要4×14字段、无日志回读 | 容量工程压力，不是自然长轨迹 |
++| 缺失、黑图、视频打开/解码失败、过期、初始化等待与重置 | 通过；失败轨迹后reset的18与全新监测器输出相同 | 实际管线故障注入 |
++
++总验收 `engineering_status=passed`、`semantic_status=passed`，指上述显式检查范围；不表示没有范围外能力缺口。查看 [完整验收](../streaming_recovery/artifacts/repair_acceptance_20261017/validation/validation.json) 和 [逐条报告](../streaming_recovery/artifacts/repair_acceptance_20261017/validation/real_acceptance.json)。
++
++## 8. 目标1—3的交付状态与限制
++
++| 目标 | 已有真实运行证据 | 合成或故障注入验证 | 未完成/未验证边界 |
++|---|---|---|---|
++| 目标1 | 六条真实输入、当前模态实际参与、完整顺序回放与结构化输出；工程及新增路径因果/容量/重置验收通过 | 同前缀异后缀、动态长流容量、缺失/过期/解码故障、跨轨迹重置 | 无真机在线吞吐/通信延迟验证；离线顺序回放不等于部署实时性保证 |
++| 目标2 | 正常/失败轨迹的阶段与效果证据；19真实操作链修复，2/8准备及尝试识别改善；少量关键时刻逐项核查 | 明确释放与粗代理冲突、提前释放后继续执行、砧板重抓失败、新事件与历史状态转换、往复关节聚合 | 未验证跨场景/跨任务精度；自然滑落与完整自然重试数据缺失；遮挡和局部阶段仍允许未知 |
++| 目标3 | 失败对应的高层恢复子目标和真实保持/开爪下一动作；2的真实像素提供两个可核查的二维条件化方向交接 | 对齐、独立准备门控、闭合、实际重试后的新失败/恢复；非法物理数值和错误前置条件拒绝 | 无真实独立深度、姿态、接触准备；无自然失败后完整恢复链；不输出物理三维动作或宣称已执行 |
++
++没有真机执行不妨碍交付有依据的建议模块；同样，几个结构字段合法也不足以宣称全部建议质量已在真实自然过程中验证。本轮合理结论应限定为：选定固定场景任务上的核心流式工程、真实阶段/失败与效果证据、以及有前置条件的两层建议，其余明确按表列出。六条样本不足以支持泛化、识别准确率或完整研究实验结论。
++
++关键审计入口均位于 `streaming_recovery/artifacts/repair_acceptance_20261017/`：历史报告重算 `review_summary_v2_final.json`；状态组合反例 `state_before.txt`、`state_repair_examples.json`；视觉前后证据 `visual_regression_before.txt`、`visual_regression_after_v2.txt`、`visual_real_evidence.json`；最终真实回放 `accepted_run/`；最终核查 `manual_review.json` 与 `validation/`。原有成果、旧快照和旧运行均保留。
++
++## 9. 文件补丁、结果示例与交付分类
++
++[本轮补丁](../streaming_recovery/artifacts/repair_acceptance_20261017/incremental.patch) 以本轮 `before/` 快照为比较基线，覆盖增量源代码、测试与说明，不包含原始数据或运行大文件。[交付清单](../streaming_recovery/artifacts/repair_acceptance_20261017/delivery_manifest.json) 保存修改前后SHA、最终源码匹配、输入与冻结划分边界核查。[真实输出摘录](../streaming_recovery/artifacts/repair_acceptance_20261017/real_examples.json) 给出正常完成、失败、高低层建议和条件化方向。
++
++真实0号10秒的高层建议是“在刀架重新定位刀柄，建立接触准备并确认可靠夹持”；低层当前动作是“刀已在架且与夹爪分离，由执行器检查夹爪内无其他物体且可安全打开后，保持末端位姿、打开右夹爪”。停止条件为收到实际打开反馈；之后检查夹爪已打开、刀仍在架、重新定位柄与两指。两层共享 `event-0001:restore_reliable_grasp`，没有提前假定重新抓取成功。
++
++- **已实现并完成真实运行验证**：目标1的完整流式数据链；目标2在六条中的阶段、抓取失败、19新增操作与效果链；目标3的真实失败高低层保持/开爪建议，以及来自2个真实定位时刻的条件化二维方向。原40项回归保持，新增问题和证据可追溯。
++- **已实现，但缺少对应真实数据/环境验证**：提前释放后继续操作、砧板/其他支撑面重抓失败与事件更新；真实重试中对齐—独立准备—闭合—再确认的连续推进。这些已有明确合成回归；本六条没有该自然过程。
++- **尚未完成及阻碍**：跨场景/任意任务视觉泛化；真实独立深度、姿态、接触准备和机器人坐标映射（本次所用模态不提供可靠标定/接触证据）；可靠的所有时刻定位（遮挡/混连仍拒识）。真机执行和目标4大规模实验不属于本轮必需范围，未开展也不伪称完成。
+--- a/streaming_recovery/README.md
++++ b/streaming_recovery/README.md
+@@ -2,9 +2,11 @@
+ 
+ 这是对现有 `streaming_recovery/` 的增量实现，范围为课题目标 1—3。当前主方法是 **`bounded_visual_state_tracker`＋`multiview_effect_geometry`**：真实顶视图、需要时的当前右腕图、实测右臂关节位置/速度和夹爪状态、有限记忆与透明规则。没有训练新模型，没有接入真机。
+ 
+-最新实际回放 **6 条完整取刀—切香肠—归位轨迹**：18、19 正常，0、2、8、29 失败；同任务只有两条成功数据，故不能凑成 3＋3。1 Hz 采样，共 1,998 个原生时刻、3,996 张解码图、82 次判断，CPU 处理 24.50 s。4 条失败均确认、正常无失败误报；18 确认完整成功，19 的切割作用及成功仍漏确认。8、29 首次运行前未参与调参；首次输出和后续阶段逻辑修复记录均保留。**这些是功能验证，不是泛化准确率或检测延迟。**
++2026-10-17 本轮在现有实现上修复报告枚举、状态反证优先级、提前释放、真实重试生命周期和关节采样混叠，再回放 **6 条完整同任务真实轨迹**：18、19 正常，0、2、8、29 失败。仍统一 1 Hz，共 1,998 个原生时刻、3,996 张解码图、82 次判断；最终独立运行墙钟 49.31 s（含读取和输出，非性能对比）。两条正常均确认完整成功，无失败提醒；四条失败均确认。六条现在均为已见回归，冻结测试集未使用。
+ 
+-真实刀柄/两指联合定位、独立接触准备、完整真实重试建议过程仍未验证。当前实际纠错演示为“恢复夹持前置条件→条件允许时打开空夹爪”；二维对齐、准备检查、闭合建议和效果确认的推进链已用明确标记的合成输入验证。不会把这两类结果混写。
++真实联合定位已在 2 的 2/3 秒取得并逐图核查，可生成向腕图左侧/下方的条件化对齐交接。自然失败日志仍只有保持观察/打开空夹爪；没有编造失败后的自然重试。独立深度、姿态、接触准备仍缺失，真实闭合恢复过程未验证；不输出三维控制量。**这里只交付选定固定场景的功能证据，不报告泛化准确率或检测延迟。**
++
++旧离线报告把非空字符串 `failure` 当真值的问题已修复。旧文件保留，正确重算见 [历史报告 v2](artifacts/repair_acceptance_20261017/review_summary_v2_final.json)；它修正统计，不意味着原检测器曾把失败样例当正常。
+ 
+ ## 运行
+ 
+@@ -25,7 +27,7 @@
+ 功能验收与合成逻辑回归：
+ 
+ ```powershell
+-& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery validate
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery validate --config streaming_recovery/config_multimodal.json --run streaming_recovery/artifacts/repair_acceptance_20261017/accepted_run --manual-review streaming_recovery/artifacts/repair_acceptance_20261017/manual_review.json --require-complete
+ & 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m unittest discover -s streaming_recovery/tests -v
+ ```
+ 
+@@ -33,8 +35,11 @@
+ 
+ ## 可核查结果
+ 
+-- [本次六条多模态测试](docs/六条多模态测试_20261017.md)：字段核实、逐条判断、未知阶段、耗时与目视抽查。
+-- [六条完整查看页](artifacts/multimodal_20261017/final_run/index.html)、[独立离线核查](artifacts/multimodal_20261017/review_summary.json)、[40 项回归与 5 组验收](artifacts/multimodal_20261017/final_validation/validation.json)。
++- [本轮修复与验收说明](../docs/增量修复与验收_20261017.md)：逐条结果、补丁、验证等级、运行命令与边界。
++- [六条真实查看页](artifacts/repair_acceptance_20261017/accepted_run/index.html)、[逐条验收](artifacts/repair_acceptance_20261017/validation/real_acceptance.json)、[综合验收](artifacts/repair_acceptance_20261017/validation/validation.json)。
++- [关键时刻目视约束及方向证据](artifacts/repair_acceptance_20261017/manual_review.json)：助手逐图检查，非独立人工时序标注。
++- [本轮修改前源码](artifacts/repair_acceptance_20261017/before/)、[合成状态失败反例](artifacts/repair_acceptance_20261017/state_before.txt)、[采样混叠反例](artifacts/repair_acceptance_20261017/joint_interval_before.txt)。
++- [上一轮六条测试说明](docs/六条多模态测试_20261017.md)和[原始回放](artifacts/multimodal_20261017/final_run/index.html)仅作为历史；原 review_summary.json 的标签统计错误，以报告 v2 为准。
+ 
+ 以下是上一轮 2.5 Hz 实现的历史证据（原代码快照和结果保留，不能作为本次 1 Hz 成绩）：
+ 
+@@ -62,7 +67,7 @@
+ 
+ 这是固定相机、棕色砧板、黑刀架、白柄刀、橙色香肠的经典视觉方法，没有训练或通用识别保证。所有参考只来自已到达图像。首帧无效时允许在起始 3 s 内等待可校准观测；记录实际参考时间，不倒填历史；超过该范围明确要求从可验证初始状态重启。颜色、遮挡和镜头变化可造成未知或误识别。
+ 
+-历史容量同时约束：观测 4 条/4 s、图像至多 8 张、特征 6 条/4 s、任务锚点 8 条、事件 4 个且每事件 4 条证据。双视角后端额外保留 1 张参考、4 个掩码、2 个区域运动点、3 条腕部几何记录、最多 5 个初始食物几何条目。恢复上下文至多 1 个事件和 3 个状态槽。特征扩展字典单条最多 9,000 字符，整体 payload 也受检查；没有无限对话、模型 KV 或日志回读。详细容量见交付说明和每个输出的 `memory_usage`。
++历史容量同时约束：观测 4 条/4 s、图像至多 8 张、特征 6 条/4 s、任务锚点 8 条、事件 4 个且每事件 4 条证据。双视角后端额外保留 1 张参考、4 个掩码、2 个区域运动点、3 条腕部几何记录、最多 5 个初始食物几何条目。恢复上下文至多 1 个事件和 3 个状态槽；当前尝试上下文 1 条、6 字段。原生 25 Hz 关节聚合只保留前一位置 6 值、路径和 6 值、10 个标量，不留原生历史列表。每个决策摘要 14 字段，最多 4 条；全部区间必须已经到达并覆盖前次决策，才可用低运动反证，端点低差本身不证明静止。特征扩展字典单条最多 9,000 字符，整体 payload 也受检查；没有无限对话、模型 KV 或日志回读。详细容量见交付说明和每个输出的 `memory_usage`。
+ 
+ 同步背压只保证因果次序，不承诺真机墙钟实时控制。两后端均通过完整输入链公共前缀对照；对齐只取已到达且未过期的样本，默认 0.12 s，无未来插值。流结束不触发成功。
+ 
+--- a/streaming_recovery/__main__.py
++++ b/streaming_recovery/__main__.py
+@@ -126,13 +126,16 @@
+     parser.add_argument("command",choices=["run","validate"],nargs="?",default="run")
+     parser.add_argument("--config")
+     parser.add_argument("--output")
++    parser.add_argument("--run",help="validate 复用已生成的真实回放，不重复六条推理")
++    parser.add_argument("--manual-review",help="validate 使用的离线关键时刻核查 JSON")
++    parser.add_argument("--require-complete",action="store_true",help="语义能力仍有缺口时也返回非零状态")
+     args=parser.parse_args()
+     config=load_config(args.config)
+     if args.command=="run":
+         run(config,args.output)
+     else:
+         from .validation import validate
+-        validate(config,args.output)
++        validate(config,args.output,args.run,args.manual_review,args.require_complete)
+ 
+ 
+ if __name__=="__main__":
+--- /dev/null
++++ b/streaming_recovery/artifacts/repair_acceptance_20261017/bind_manual_review.py
+@@ -0,0 +1,65 @@
++"""保存本轮助手实际逐图核查记录；不进行推理、不制造事件或独立人工标注。"""
++import argparse
++import hashlib
++import json
++from pathlib import Path
++from streaming_recovery.evaluation import row_fingerprint
++
++
++def build(run):
++    run=Path(run)
++    notes=[
++        (18,0,"顶视初始只有长条香肠，刀在架；未出现新分离小段。",None,{"state.task_completed":False}),
++        (18,9,"腕图刀与两指连接，刀刃位于香肠端部；顶视机械手在砧板。",["cut_operation"],{"state.preconditions.reliable_grasp":True,"visual_facts.measurements.cut_operation":"yes"}),
++        (18,20,"与初始相比新增独立圆片；刀已回架且机械手退出。",["completed"],{"state.task_completed":True}),
++        (19,8,"连续5至8秒腕图显示刀刃在两指之间、与香肠端部相对位置变化。",["cut_operation"],{"state.preconditions.reliable_grasp":True,"visual_facts.measurements.cut_operation":"yes"}),
++        (19,10,"与0秒相比新增明显圆片；仍持刀开始回架。单帧新增物需后续稳定确认。",["return_tool"],{"visual_facts.measurements.new_cut_effect":"yes"}),
++        (19,16,"新圆片仍在砧板，刀回架且右手退出；切割参考、作用和效果链可核查。",["completed"],{"state.task_completed":True}),
++        (0,7,"腕图两指已收拢但刀柄在侧旁/原架，接触关系仍不清；不应由闭爪报告成功。",["verify_grasp"],{"failure_event":None}),
++        (0,10,"顶视刀留架，腕图空夹爪在香肠上方，支持抓取未建立。",["verify_grasp"],{"state.preconditions.reliable_grasp":False,"state.candidate":"grasp_not_established","execution_status":"confirmed_failure"}),
++        (2,2,"腕图可见独立刀柄颈部和两指内缘；两指张开，正在准备对齐。",["align_grasp"],{"visual_facts.gripper":"open","visual_facts.measurements.localization.status":"localized","visual_facts.grasp_readiness":{}}),
++        (2,3,"刀柄颈部移至两指中点下方，仍为准备对齐，不表示已经接触。",["align_grasp"],{"visual_facts.measurements.localization.status":"localized"}),
++        (2,7,"相对6秒可见两指明显收拢，刀仍未带离架；实际闭合应建立一次尝试而非成功。",["verify_grasp"],{"state.attempt":1}),
++        (2,11,"刀留架而空夹爪已进入工作区；有前面的实际闭合，诊断该次抓取未建立。",["verify_grasp"],{"state.preconditions.reliable_grasp":False,"execution_status":"confirmed_failure","state.candidate":"grasp_not_established"}),
++        (8,4,"两指在刀架旁，刀架和手指混连；应识别接近但不能伪造精确对齐坐标。",["approach_tool"],{"visual_facts.knife_handle_xy":None,"visual_facts.gripper_xy":None}),
++        (8,5,"相对4秒两指收拢，刀仍在原架；进入抓取效果检查。",["verify_grasp"],{"state.attempt":1}),
++        (8,8,"空夹爪处于砧板上，刀仍留在架；支持当前抓取失败。",["verify_grasp"],{"state.preconditions.reliable_grasp":False,"execution_status":"confirmed_failure","state.candidate":"grasp_not_established"}),
++        (29,6,"两指已收拢但仍有可见间隙，刀在架旁；closed只表示原始开度阈值，效果仍需检查。",["verify_grasp"],{"state.attempt":1}),
++        (29,9,"夹爪为空、刀在架，未带走刀便进入工作区；不推断夹持力或摩擦原因。",["verify_grasp"],{"state.preconditions.reliable_grasp":False,"execution_status":"confirmed_failure"}),
++        (18,18,"归位接触交接被右臂与刀架遮挡，允许当前关系未知；后续清楚释放才能确认完成。",["unknown"],{"execution_status":"information_insufficient","failure_event":None}),
++        (19,14,"回架时手指/刀架投影混叠，当前连接或释放尚不可靠；保留未知并继续观察。",["unknown"],{"execution_status":"information_insufficient","failure_event":None}),
++    ]
++    rows={ep:{r['timestamp']:r for r in map(json.loads,(run/f'trajectory_{ep:06d}/decisions.jsonl').read_text(encoding='utf-8').splitlines())} for ep in (18,19,0,2,8,29)}
++    checkpoints=[]
++    for ep,t,observed,stages,fields in notes:
++        refs=[f'trajectory_{ep:06d}/frames/obs-{t*25:06d}_{c}.jpg' for c in ('cam_high','cam_right_wrist')]
++        item={'episode_for_audit_only':ep,'timestamp':float(t),'observed':observed,'expected_fields':fields,
++              'image_refs':refs,'image_sha256':{p:hashlib.sha256((run/p).read_bytes()).hexdigest() for p in refs}}
++        if stages:item['expected_stages']=stages
++        checkpoints.append(item)
++    directions=[]
++    for t,direction,observed in ((2,'图像左侧','可见刀柄颈部宽度过渡在两指内缘中点左侧，纵向在死区内。'),
++                                 (3,'图像下方','可见刀柄颈部位于两指内缘中点下方，横向差未超过50/1000死区。')):
++        row=rows[2][t];facts=row['visual_facts']
++        image_path=f'trajectory_000002/frames/{row["observation_ref"]}_cam_right_wrist.jpg'
++        directions.append({'episode_for_audit_only':2,'timestamp':float(t),'observation_ref':row['observation_ref'],
++            'row_sha256':row_fingerprint(row),'image_path':image_path,'image_sha256':hashlib.sha256((run/image_path).read_bytes()).hexdigest(),
++            'camera':'cam_right_wrist','localization_frame':facts['localization_frame'],
++            'knife_handle_xy':facts['knife_handle_xy'],'gripper_xy':facts['gripper_xy'],
++            'localization_method':facts['measurements']['localization']['method'],
++            'expected_directions':[direction],'reviewer':'root assistant visual inspection',
++            'observed_features':observed,'reviewed_handle_neck':True,'reviewed_two_finger_edges':True,
++            'coordinate_claim':'image_plane_only_no_robot_mapping'})
++    return {'review_kind':'本轮助手逐图目视核查；非独立人工阶段标注，无首次可检测时刻标注',
++            'source_run':str(run.resolve()),'checkpoints':checkpoints,'conditional_directions':directions,
++            'scope':'六条已见回归；少量关键时刻约束，不要求每帧确定，也不证明全部时刻正确。',
++            'remaining_gaps':['2:0/1秒初始化等待、9秒遮挡','8精确柄/两指对齐仍拒识',
++                              '18:18秒与19:14秒回架交接未知','没有独立深度/姿态/接触准备',
++                              '六条中没有自然失败后重新打开/重抓恢复过程']}
++
++
++if __name__=='__main__':
++    parser=argparse.ArgumentParser();parser.add_argument('--run',required=True);parser.add_argument('--output',required=True)
++    args=parser.parse_args()
++    with Path(args.output).open('x',encoding='utf-8') as f:
++        json.dump(build(args.run),f,ensure_ascii=False,indent=2)
+--- /dev/null
++++ b/streaming_recovery/artifacts/repair_acceptance_20261017/build_delivery.py
+@@ -0,0 +1,101 @@
++"""离线整理本轮交付，不改变推理记录与历史报告。"""
++from pathlib import Path
++import difflib
++import hashlib
++import importlib.metadata
++import json
++import os
++import platform
++import sys
++from streaming_recovery.evaluation import parse_outcome
++
++ROOT=Path(__file__).resolve().parents[3]
++BASE=ROOT/'streaming_recovery'
++OUT=Path(__file__).resolve().parent
++
++
++def read(path):
++    return json.loads(path.read_text(encoding='utf-8'))
++
++
++def sha(path):
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def write(path,value):
++    with path.open('x',encoding='utf-8') as f:
++        json.dump(value,f,ensure_ascii=False,indent=2,allow_nan=False)
++
++
++def main():
++    run=OUT/'accepted_run';summary=read(run/'summary.json')
++    validation=read(OUT/'validation/validation.json');acceptance=read(OUT/'validation/real_acceptance.json')
++    assert validation['passed'] and acceptance['overall_status']=='passed'
++    source_match={name:sha(BASE/name)==value for name,value in summary['code_sha256'].items()}
++    test_match={name:sha(BASE/'tests'/name)==value for name,value in summary['test_sha256'].items()}
++    assert all(source_match.values()) and all(test_match.values()),'final snapshot drift'
++    before=read(OUT/'before/sha256.json')
++    candidates={Path(p) for p in before}
++    candidates.update(p.relative_to(ROOT) for p in BASE.glob('*.py'))
++    candidates.update(p.relative_to(ROOT) for p in (BASE/'tests').glob('test_*.py'))
++    candidates.add(Path('docs/增量修复与验收_20261017.md'))
++    candidates.update(p.relative_to(ROOT) for p in (OUT/'build_delivery.py',OUT/'bind_manual_review.py'))
++    changes=[];patch=[]
++    for rel in sorted(candidates,key=str):
++        old=OUT/'before'/rel;new=ROOT/rel
++        if not new.is_file():continue
++        old_text=old.read_text(encoding='utf-8') if old.is_file() else ''
++        new_text=new.read_text(encoding='utf-8')
++        if old_text==new_text:continue
++        changes.append({'path':rel.as_posix(),'before_sha256':sha(old) if old.is_file() else None,'after_sha256':sha(new)})
++        patch+=difflib.unified_diff(old_text.splitlines(True),new_text.splitlines(True),
++                                   fromfile='a/'+rel.as_posix() if old.is_file() else '/dev/null',tofile='b/'+rel.as_posix())
++    (OUT/'incremental.patch').write_text(''.join(patch),encoding='utf-8')
++    examples=[]
++    for ep,t in ((18,20),(19,8),(19,16),(0,10),(2,2),(2,7),(8,8),(29,9)):
++        row=next(r for r in map(json.loads,(run/f'trajectory_{ep:06d}/decisions.jsonl').read_text(encoding='utf-8').splitlines()) if r['timestamp']==t)
++        examples.append({'episode_for_audit_only':ep,'decision':row})
++    write(OUT/'real_examples.json',{'real_decisions':examples,'conditional_direction_checks':acceptance['conditional_direction_checks'],
++                                  'warning':'条件化方向不是自然失败事件后的执行；所有建议未执行。'})
++    data=ROOT/'data/vifailback_lerobot';info=read(data/'meta/info.json')
++    import pyarrow.parquet as pq
++    fields={}
++    for ep in (18,19,0,2,8,29):
++        f=pq.ParquetFile(data/f'data/chunk-000/episode_{ep:06d}.parquet')
++        row=next(f.iter_batches(batch_size=1,columns=['timestamp','observation.state','observation.velocity'])).to_pylist()[0]
++        fields[str(ep)]={'parquet_rows':f.metadata.num_rows,'first_timestamp':row['timestamp'],
++                         'state_length':len(row['observation.state']),'velocity_length':len(row['observation.velocity'])}
++    write(OUT/'environment_and_data.json',{'python':sys.version,'executable':sys.executable,'platform':platform.platform(),
++        'cpu_logical_cores':os.cpu_count(),'backend':'CPU OpenCV; no learned weights/API/GPU invoked',
++        'packages':{name:importlib.metadata.version(name) for name in ('numpy','opencv-python','Pillow','pyarrow','av')},
++        'data_root':str(data),'codebase_version':info['codebase_version'],'fps':info['fps'],
++        'actual_fields':fields,'relationship':'qpos and gripper share observation.state; qvel measured, action/target EEF unused',
++        'units':'source raw qpos/qvel/gripper units; physical calibration unavailable',
++        'frames':acceptance['totals'],'frozen_split_sha256':acceptance['frozen_test_split_sha256']})
++    old=read(OUT/'review_summary_v2_final.json')
++    before_semantic={str(e['episode_for_audit_only']):e for e in old['per_episode']}
++    comparisons=[]
++    for e in acceptance['per_episode']:
++        prior=before_semantic[str(e['episode_for_audit_only'])]
++        comparisons.append({'episode':e['episode_for_audit_only'],'official_outcome':parse_outcome(e['official_outcome']).value,
++            'previous_completion':prior['final_task_success'],'current_completion':e['final_task_success'],
++            'previous_localized_decisions':prior['joint_localization_decisions'],'current_localized_decisions':e['joint_localization_decisions'],
++            'previous_unknown_times':prior['unknown_decision_timestamps'],'current_unknown_times':e['unknown_decision_timestamps'],
++            'previous_corrections':prior['action_counts'],'current_corrections':e['action_counts']})
++    write(OUT/'before_after.json',{'kind':'real six-trajectory regression; no unseen/generalization claim','per_episode':comparisons})
++    write(OUT/'delivery_manifest.json',{'modified_files':changes,'patch_sha256':sha(OUT/'incremental.patch'),
++        'run_source_hash_matches_current':source_match,'run_test_hash_matches_current':test_match,
++        'frozen_test_split_sha256':acceptance['frozen_test_split_sha256'],
++        'frozen_split_unchanged_from_pre_repair_audit':old['frozen_test_split_sha256']==acceptance['frozen_test_split_sha256'],
++        'engineering_status':validation['engineering_status'],'selected_semantic_acceptance':validation['semantic_status'],
++        'unit_tests':validation['checks'][0]['detail'],'validation_groups':len(validation['checks']),
++        'selected_samples_exposure':'all six seen regression; no frozen test samples',
++        'run_summary_sha256':sha(run/'summary.json'),'manual_review_sha256':sha(OUT/'manual_review.json'),
++        'acceptance_report_sha256':sha(OUT/'validation/real_acceptance.json'),'validation_report_sha256':sha(OUT/'validation/validation.json'),
++        'historical_wrong_report_preserved_sha256':sha(BASE/'artifacts/multimodal_20261017/review_summary.json'),
++        'actual_execution':False,'detection_latency_reported':False,'generalization_claim':False})
++    print(json.dumps({'changed_files':len(changes),'source_snapshot_matches':all(source_match.values()),
++                      'tests':validation['checks'][0]['detail']['tests_run'],'validation_groups':len(validation['checks'])}))
++
++
++if __name__=='__main__':main()
+--- a/streaming_recovery/contracts.py
++++ b/streaming_recovery/contracts.py
+@@ -28,6 +28,8 @@
+     grasp_readiness: dict | None = None
+     # 与 observation_state 同时刻的实测 qvel；兼容原有位置参数，不以 action 补值。
+     observation_velocity: list[float] | None = None
++    # 仅聚合上一次决策以来已到达的原生关节样本；不保留完整原生历史。
++    joint_interval: dict | None = None
+ 
+ 
+ ENUMS = {
+--- a/streaming_recovery/dynamics.py
++++ b/streaming_recovery/dynamics.py
+@@ -1,9 +1,95 @@
+-"""仅用当前实测 qvel 和有限窗口中的前一个 qpos；不读取 action/EEF/轨迹统计量。
++"""仅用已到达实测 qpos/qvel 的固定容量区间汇总和有限窗口；不读取 action/EEF/全轨迹统计量。
+ 
+ 位置与夹爪来自同一向量。右臂任务只使用右侧六关节，排除夹爪维，避免把闭爪当作手臂移动。
+ 阈值是显式原始单位工程阈值，不是校准后的物理速度或成功概率。
+ """
+ from math import isfinite
++
++
++class JointInterval:
++    """25 FPS 已到达数据的区间聚合：前一位置6值＋路径和6值＋固定标量。"""
++    def __init__(self, fps=25.):
++        self.fps=fps
++        self.reset()
++
++    def reset(self):
++        self.first_time=self.last_time=None
++        self.first_ref=self.last_ref=None
++        self.last_position=None
++        self.path_length=[0.]*6
++        self.peak_velocity=None
++        self.count=self.position_count=self.velocity_count=0
++        self.contiguous=True
++
++    def push(self, timestamp, qpos, qvel, ref):
++        if not isfinite(timestamp) or (self.last_time is not None and timestamp<=self.last_time):
++            raise ValueError("native_joint_clock_reversal")
++        if self.last_time is not None and abs(timestamp-self.last_time-1/self.fps)>1e-5:
++            self.contiguous=False
++        if self.first_time is None:
++            self.first_time,self.first_ref=timestamp,ref
++        self.last_time,self.last_ref=timestamp,ref
++        self.count+=1
++        if valid_vector(qpos):
++            values=qpos[7:13]
++            if self.last_position is not None:
++                self.path_length=[a+abs(b-c) for a,b,c in zip(self.path_length,values,self.last_position)]
++            self.last_position=values
++            self.position_count+=1
++        else:
++            self.last_position=None
++        if valid_vector(qvel):
++            peak=max(abs(v) for v in qvel[7:13])
++            self.peak_velocity=peak if self.peak_velocity is None else max(self.peak_velocity,peak)
++            self.velocity_count+=1
++
++    def snapshot(self):
++        if self.last_time is None:
++            return None
++        span=self.last_time-self.first_time
++        expected=round(span*self.fps)+1
++        return {"source":"native_measured_joint_interval","start_timestamp":self.first_time,
++                "end_timestamp":self.last_time,"start_ref":self.first_ref,"end_ref":self.last_ref,
++                "span_s":span,"sample_count":self.count,"expected_sample_count":expected,
++                "valid_position_samples":self.position_count,"valid_velocity_samples":self.velocity_count,
++                "contiguous":self.contiguous,
++                "complete":bool(span>0 and self.contiguous and self.count==expected==self.position_count==self.velocity_count),
++                "max_abs_velocity_raw":self.peak_velocity,
++                "max_joint_path_raw":max(self.path_length) if self.position_count else None}
++
++    def usage(self):
++        return {"native_joint_previous_values":len(self.last_position or []),"native_joint_path_values":6,
++                "native_joint_scalar_slots":10,"native_joint_history_samples":0}
++
++
++def valid_interval(value, now):
++    keys={"source","start_timestamp","end_timestamp","start_ref","end_ref","span_s","sample_count",
++          "expected_sample_count","valid_position_samples","valid_velocity_samples","contiguous","complete",
++          "max_abs_velocity_raw","max_joint_path_raw"}
++    if not isinstance(value,dict) or set(value)!=keys or value["source"]!="native_measured_joint_interval":
++        return False
++    for k in ("start_timestamp","end_timestamp","span_s"):
++        if isinstance(value[k],bool) or not isinstance(value[k],(int,float)) or not isfinite(value[k]):
++            return False
++    if value["end_timestamp"]!=now or not 0<=value["start_timestamp"]<=now or abs(value["span_s"]-(now-value["start_timestamp"]))>1e-6:
++        return False
++    if any(not isinstance(value[k],str) or not 0<len(value[k])<=80 for k in ("start_ref","end_ref")):
++        return False
++    for k in ("sample_count","expected_sample_count","valid_position_samples","valid_velocity_samples"):
++        if type(value[k]) is not int or not 0<=value[k]<=1_000_000:
++            return False
++    if not 0<value["sample_count"] or any(value[k]>value["sample_count"] for k in ("valid_position_samples","valid_velocity_samples")):
++        return False
++    if any(type(value[k]) is not bool for k in ("complete","contiguous")):
++        return False
++    for k in ("max_abs_velocity_raw","max_joint_path_raw"):
++        if value[k] is not None and (isinstance(value[k],bool) or not isinstance(value[k],(int,float)) or not isfinite(value[k]) or value[k]<0):
++            return False
++    if value["complete"] and not (value["span_s"]>0 and value["sample_count"]>=2 and value["contiguous"] and
++        value["sample_count"]==value["expected_sample_count"]==value["valid_position_samples"]==value["valid_velocity_samples"] and
++        value["max_abs_velocity_raw"] is not None and value["max_joint_path_raw"] is not None):
++        return False
++    return True
+ 
+ 
+ def valid_vector(value):
+@@ -32,12 +118,34 @@
+     position_threshold = rules.get("joint_position_change_raw", .02)
+     instantaneous = "unknown" if speed is None else ("moving" if speed >= velocity_threshold else "below_motion_threshold")
+     interval = "unknown" if delta is None else ("moved" if delta >= position_threshold else "no_resolved_change")
++    native=observation.joint_interval
++    native=native if valid_interval(native,observation.timestamp) and native["span_s"]<=rules["max_evidence_gap_s"] else None
++    coverage="endpoints_only"
++    if native is not None:
++        covers_decision_interval=(previous is not None and 0<dt<=rules["max_evidence_gap_s"] and
++                                  native["start_timestamp"]<=previous.timestamp+1e-6)
++        coverage=("native_complete" if native["complete"] and covers_decision_interval else
++                  "native_partial_window" if native["complete"] else "native_partial")
++        # 决策/事件引用实际参与判断的原生摘要区间；替换第3个端点引用，数量仍至多3。
++        refs=[ref for ref in refs if not (ref["field"]=="observation.state[7:13]" and
++                                          ref["timestamp"]!=observation.timestamp)]
++        refs.append({"ref":native["end_ref"],"timestamp":native["end_timestamp"],
++                     "field":"native_measured_joint_interval","start_ref":native["start_ref"],
++                     "start_timestamp":native["start_timestamp"],"sample_count":native["sample_count"],
++                     "complete":native["complete"]})
++        peak,path=native["max_abs_velocity_raw"],native["max_joint_path_raw"]
++        if (peak is not None and peak>=velocity_threshold) or (path is not None and path>=position_threshold):
++            interval="moved"
++        elif native["complete"] and covers_decision_interval and interval!="moved":
++            interval="no_resolved_native_motion"
+     if instantaneous == "moving":
+         status = "moving"
+     elif interval == "moved":
+         status = "recent_motion"  # 过去采样间隔发生移动，不宣称当前瞬间仍在运动。
++    elif interval=="no_resolved_native_motion" and native["complete"]:
++        status = "stationary"
+     elif speed is not None and delta is not None:
+-        status = "stationary"
++        status = "low_motion_support"  # 端点低差不能证明区间内没有往复。
+     else:
+         status = "unknown"
+     return {"status": status, "instantaneous": instantaneous, "interval": interval,
+@@ -46,4 +154,5 @@
+             "position_threshold_raw": position_threshold, "velocity_threshold_raw": velocity_threshold,
+             "units": "source qpos/qvel units; physical units not verified",
+             "position_available": qpos is not None, "velocity_available": qvel is not None,
++            "interval_coverage":coverage,"native_interval":native,
+             "evidence_refs": refs, "source": "measured_joint_state; gripper excluded; no action or EEF"}
+--- a/streaming_recovery/engine.py
++++ b/streaming_recovery/engine.py
+@@ -8,7 +8,7 @@
+ from .tracking import TaskTracker
+ from .recovery import diagnose, propose, validate_consistency, RecoveryContext
+ from .contracts import VisualFacts, evidence
+-from .dynamics import joint_motion, valid_vector
++from .dynamics import joint_motion, valid_vector, valid_interval
+ 
+ 
+ class Monitor:
+@@ -49,6 +49,14 @@
+             if fresh(name) and not valid_vector(value):
+                 modalities[name].update(status="invalid",reason="invalid_14d_measurement")
+         observation=replace(observation,modalities=modalities)
++        interval_status="missing" if observation.joint_interval is None else "available"
++        if observation.joint_interval is not None:
++            value=observation.joint_interval
++            if isinstance(value,dict) and isinstance(value.get("end_timestamp"),(int,float)) and value["end_timestamp"]>observation.timestamp:
++                raise ValueError("future joint interval exposed to inference")
++            if not valid_interval(value,observation.timestamp):
++                observation=replace(observation,joint_interval=None)
++                interval_status="invalid_or_stale"
+         observation=replace(observation,images={k:v for k,v in observation.images.items() if fresh(k)},
+                             observation_state=observation.observation_state if fresh("observation.state") else None,
+                             observation_velocity=observation.observation_velocity if fresh("observation.velocity") else None)
+@@ -59,9 +67,11 @@
+         facts = self.vision.observe(observation,previous)
+         facts.measurements["joint_motion"] = joint_motion(observation,previous,self.config["rules"])
+         # 腕部像素相对运动可能来自抖动。实测关节在本间隔内无可分辨运动时，不确认刀在作用。
+-        if facts.measurements.get("cut_operation")=="yes" and facts.measurements["joint_motion"]["status"]=="stationary":
++        if (facts.measurements.get("cut_operation")=="yes" and facts.measurements["joint_motion"]["status"]=="stationary" and
++                facts.measurements["joint_motion"]["interval_coverage"]=="native_complete"):
+             facts.measurements["cut_operation"]="unknown"
+             facts.measurements["cut_motion_check"]="joint_stationary_visual_motion_unconfirmed"
++            facts.description=(facts.description+"；已到达原生关节区间低运动，视觉作用证据降级")[:400]
+         else:
+             facts.measurements["cut_motion_check"]="moving_supported" if facts.measurements["joint_motion"]["status"] in ("moving","recent_motion") else "joint_evidence_unknown"
+         if not fresh("cam_high"):
+@@ -117,7 +127,9 @@
+             modalities_used += ["observation.state[7:13]","observation.state[13]"]
+         if observation.observation_velocity is not None:
+             modalities_used += ["observation.velocity[7:13]"]
+-        result = {"schema_version":"1.2","timestamp":observation.timestamp,"observation_ref":observation.ref,
++        if facts.measurements.get("joint_motion",{}).get("native_interval") is not None:
++            modalities_used += ["native_joint_interval[7:13]"]
++        result = {"schema_version":"1.3","timestamp":observation.timestamp,"observation_ref":observation.ref,
+                   "method":self.config["method"],"instruction":observation.instruction,
+                   "scope":("右臂取刀、切下新小段并归位；固定场景双视角视觉，空间/接触准备须独立验证" if self.config["backend"]=="multiview_effect_geometry"
+                            else "经典单视角对照：只支持取刀效果，切割完成/归位未获该后端支持"),
+@@ -129,6 +141,7 @@
+                   "modalities_for_audit_only":[k for k in observation.images if k not in images_used],
+                   "observation_inputs":{"observation.state":observation.observation_state,
+                       "observation.velocity":observation.observation_velocity,
++                      "joint_interval":observation.joint_interval,"joint_interval_status":interval_status,
+                       "sensor_relationship":"joint positions and gripper share observation.state; velocity is measured qvel; not three independent sensors",
+                       "unused_state_indices":[0,1,2,3,4,5,6],"target_action_used":False,"target_eef_used":False},
+                   "memory_usage":usage,"memory_limits":self.config["memory"],
+@@ -153,6 +166,8 @@
+         limits.update(aligner_latest_samples=4)
+         limits.update(joint_vector_values=28*m["frames"],joint_feature_refs=3*m["features"],
+                       event_sensor_refs=3*m["events"]*m["event_evidence"],recovery_sensor_refs=3*m["event_evidence"])
++        limits.update(native_aggregate_records=m["frames"],native_aggregate_fields=14*m["frames"],native_aggregate_chars=1200*m["frames"])
++        limits.update(attempt_context_entries=1,attempt_context_fields=6)
+         for key,limit in limits.items():
+             if u.get(key,0)>limit:
+                 raise ValueError(f"memory_capacity_exceeded:{key}")
+--- /dev/null
++++ b/streaming_recovery/evaluation.py
+@@ -0,0 +1,440 @@
++"""离线验收：标签仅在已有推理输出生成后读取，绝不送回监测器。"""
++from __future__ import annotations
++
++import argparse
++from collections import Counter
++from enum import Enum
++import hashlib
++import json
++from pathlib import Path
++
++
++class Outcome(str, Enum):
++    SUCCESS = "success"
++    FAILURE = "failure"
++
++
++def parse_outcome(value):
++    """精确枚举，拒绝字符串真值、bool、缺失与未知拼写。"""
++    if not isinstance(value, str) or value not in {"success", "failure"}:
++        raise ValueError(f"invalid episode_success: {value!r}")
++    return Outcome(value)
++
++
++def notification_kind(row):
++    if not row.get("notify", False):
++        return None
++    reason = row.get("notification_reason")
++    event = row.get("failure_event") or {}
++    if reason == "recovery_observed_without_execution_attribution" or event.get("state") in {"resolved", "retracted"}:
++        return "recovery"
++    if reason == "new_attempt_observed" or event.get("state") == "closed_for_retry":
++        return "retry"
++    if reason == "evidence_confirmed" or event.get("state") in {"confirmed", "persistent"}:
++        return "failure_confirmation"
++    if reason == "new_suspicion" or event.get("state") == "suspected":
++        return "suspicion"
++    return "other"
++
++
++def outcome_statistics(label, rows, task_success):
++    outcome = parse_outcome(label)
++    counts = Counter(notification_kind(row) for row in rows if row.get("notify"))
++    confirmed_events = sorted({(row.get("failure_event") or {}).get("event_id", "unidentified")
++                               for row in rows if row.get("execution_status") == "confirmed_failure"
++                               or (row.get("failure_event") or {}).get("state") in {"confirmed", "persistent"}})
++    confirmed = bool(confirmed_events)
++    failure_alerts = counts["suspicion"] + counts["failure_confirmation"]
++    return {
++        "official_outcome": outcome.value,
++        "confirmed_failure": confirmed,
++        "confirmed_event_ids": confirmed_events,
++        "failure_missed_at_episode_level": not confirmed if outcome is Outcome.FAILURE else None,
++        "false_failure_alarm_on_normal": bool(failure_alerts) if outcome is Outcome.SUCCESS else None,
++        "false_confirmed_failure_on_normal": confirmed if outcome is Outcome.SUCCESS else None,
++        "completion_missed": task_success is not True if outcome is Outcome.SUCCESS else None,
++        "false_task_success_on_failure": task_success is True if outcome is Outcome.FAILURE else None,
++        "final_task_success": task_success,
++        "notification_counts": {key: counts[key] for key in
++                                ("suspicion", "failure_confirmation", "recovery", "retry", "other")},
++    }
++
++
++def replay_audit(expected_rows, parquet_rows, source_audit, timestamps, sample_every, fps, cameras):
++    """分别检查完整源读取与决策采样；不可把 reader 的消费量当成期待长度。"""
++    if isinstance(sample_every, bool) or not isinstance(sample_every, int) or sample_every < 1:
++        raise ValueError("sample_every must be a positive integer")
++    expected_times = [i / fps for i in range(0, parquet_rows, sample_every)]
++    actual_frames = source_audit.get("frames_decoded", {})
++    consumption = {
++        "metadata_matches_parquet": expected_rows == parquet_rows,
++        "parquet_consumed_completely": source_audit.get("rows_read") == parquet_rows,
++        "both_videos_consumed_completely": all(actual_frames.get(camera) == parquet_rows for camera in cameras),
++        "video_timestamps_valid": source_audit.get("invalid_video_timestamps") == 0,
++    }
++    coverage = len(timestamps) == len(expected_times) and all(abs(a-b) <= 1e-5 for a, b in zip(timestamps, expected_times))
++    return {"metadata_expected_rows": expected_rows, "parquet_actual_rows": parquet_rows,
++            "consumed_parquet_rows": source_audit.get("rows_read"),
++            "consumed_video_frames": {camera: actual_frames.get(camera) for camera in cameras},
++            "full_replay": all(consumption.values()), "full_replay_checks": consumption,
++            "decision_sample_coverage": coverage, "expected_decision_count": len(expected_times),
++            "actual_decision_count": len(timestamps), "sample_every_native_frames": sample_every,
++            "last_expected_decision_timestamp": expected_times[-1] if expected_times else None,
++            "last_actual_decision_timestamp": timestamps[-1] if timestamps else None}
++
++
++def _path_value(value, dotted):
++    for key in dotted.split("."):
++        if not isinstance(value, dict) or key not in value:
++            return None
++        value = value[key]
++    return value
++
++
++def check_manual_moments(rows, checkpoints):
++    """外部目视记录与日志独立比对；不把阶段名出现过当成时序正确。"""
++    results = []
++    for checkpoint in checkpoints:
++        if "timestamp" in checkpoint:
++            requested = checkpoint["timestamp"]
++            row = min(rows, key=lambda row: abs(row["timestamp"]-requested)) if rows else None
++            tolerance = checkpoint.get("tolerance_s", 0.001)
++            candidates = [row] if row is not None and abs(row["timestamp"]-requested) <= tolerance else []
++        else:
++            start, end = checkpoint["start_s"], checkpoint["end_s"]
++            if end < start:
++                raise ValueError("manual checkpoint end precedes start")
++            candidates = [row for row in rows if start <= row["timestamp"] <= end]
++        mode = checkpoint.get("mode", "any")
++        if mode not in {"any", "all"}:
++            raise ValueError("manual checkpoint mode must be any or all")
++        if not checkpoint.get("expected_stages") and not checkpoint.get("expected_fields"):
++            raise ValueError("manual checkpoint requires explicit stage or predicate expectation")
++        if not candidates:
++            results.append({**checkpoint, "status": "not_observed", "actual_timestamp": None,
++                            "differences": ["no decision within declared timestamp tolerance"]})
++            continue
++        comparisons = []
++        for row in candidates:
++            differences = []
++            if "expected_stages" in checkpoint and row["state"]["stage"] not in checkpoint["expected_stages"]:
++                differences.append(f"stage={row['state']['stage']}; expected one of {checkpoint['expected_stages']}")
++            for key, expected in checkpoint.get("expected_fields", {}).items():
++                actual = _path_value(row, key)
++                if actual != expected:
++                    differences.append(f"{key}={actual!r}; expected {expected!r}")
++            comparisons.append({"timestamp": row["timestamp"], "stage": row["state"]["stage"],
++                                "observation_ref": row.get("observation_ref"), "differences": differences})
++        passing = [item for item in comparisons if not item["differences"]]
++        passed = bool(passing) if mode == "any" else len(passing) == len(comparisons)
++        row_result = passing[0] if passed else comparisons[0]
++        differences = [] if passed else [difference for item in comparisons for difference in item["differences"]]
++        results.append({**checkpoint, "status": "passed" if not differences else "gap",
++                        "actual_timestamp": row_result["timestamp"], "actual_stage": row_result["stage"],
++                        "observation_ref": row_result["observation_ref"], "differences": differences,
++                        "matched_timestamps": [item["timestamp"] for item in passing], "comparisons": comparisons})
++    return results
++
++
++def capacity_audit(row, config):
++    """复用在线容量契约，并检查所有图像字节与禁止历史；不是仅检查帧窗口。"""
++    from types import SimpleNamespace
++    from .engine import Monitor
++    violations = []
++    try:
++        Monitor.check_capacity(SimpleNamespace(config=config), row)
++    except (ValueError, KeyError, TypeError) as error:
++        violations.append(str(error))
++    usage, memory = row["memory_usage"], config["memory"]
++    edge = config["model"]["image_edge"]
++    additional_limits = {"image_bytes": 2*memory["frames"]*edge*edge*3,
++                         "visual_reference_bytes": config["geometry"]["max_reference_images"]*edge*edge*3,
++                         "visual_mask_bytes": config["geometry"]["max_masks"]*edge*edge,
++                         "visual_calibration_entries": 2, "active_events": 1,
++                         "model_request_queue_capacity": 1, "model_response_queue_capacity": 1,
++                         "model_input_images": 3}
++    violations += [f"capacity_exceeded:{key}" for key, limit in additional_limits.items() if usage.get(key, 0) > limit]
++    return violations
++
++
++def completion_chain(rows):
++    reference = next((row["state"].get("cut_reference") for row in rows if row["state"].get("cut_reference")), None)
++    operations = [row["timestamp"] for row in rows
++                  if row["visual_facts"].get("measurements", {}).get("cut_operation") == "yes"
++                  and row["state"]["preconditions"].get("reliable_grasp") is True]
++    effects = [row["timestamp"] for row in rows if row["state"]["preconditions"].get("cut_effect_confirmed") is True]
++    returned = [row["timestamp"] for row in rows if row["state"]["preconditions"].get("tool_returned") is True]
++    complete = [row["timestamp"] for row in rows if row["state"].get("task_completed") is True]
++    ordered = bool(reference and operations and effects and returned and complete
++                   and reference["timestamp"] < operations[0] <= effects[0] <= complete[0]
++                   and returned[0] <= complete[0])
++    return {"reference": reference, "operation_times": operations, "confirmed_effect_times": effects,
++            "current_return_confirmed_times": returned, "completion_times": complete,
++            "reference_operation_effect_completion_ordered": ordered}
++
++
++def _sha(path):
++    value = hashlib.sha256()
++    with Path(path).open("rb") as stream:
++        while data := stream.read(1024*1024):
++            value.update(data)
++    return value.hexdigest()
++
++
++def _read(path):
++    return json.loads(Path(path).read_text(encoding="utf-8"))
++
++
++def _jsonl(path):
++    return [json.loads(line) for line in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()]
++
++
++def row_fingerprint(row):
++    """绑定一次真实回放的完整行，包括处理耗时；重跑后必须重新绑定。"""
++    encoded = json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode("utf-8")
++    return hashlib.sha256(encoded).hexdigest()
++
++
++def conditional_direction_checks(rows_by_episode, run_dir, records):
++    """独立真实像素方向核查，不构造失败事件，不计作自然恢复或建议已执行。"""
++    if not records:
++        return []
++    from .recovery import image_alignment_directions
++    run_dir = Path(run_dir).resolve()
++    results = []
++    for record in records:
++        binding_errors, review_gaps = [], []
++        rows = rows_by_episode.get(record.get("episode_for_audit_only"), [])
++        matching = [row for row in rows if row["timestamp"] == record.get("timestamp")
++                    and row.get("observation_ref") == record.get("observation_ref")]
++        directions, coordinate_frame = [], None
++        if len(matching) != 1:
++            binding_errors.append("unique_real_decision_not_found")
++        else:
++            row = matching[0]
++            facts = row["visual_facts"]
++            loc = facts.get("measurements", {}).get("localization", {})
++            coordinate_frame = facts.get("localization_frame")
++            camera = record.get("camera")
++            expected_image = (f"trajectory_{record['episode_for_audit_only']:06d}/frames/"
++                              f"{row['observation_ref']}_{camera}.jpg")
++            if record.get("row_sha256") != row_fingerprint(row):
++                binding_errors.append("real_decision_hash_mismatch")
++            if record.get("image_path") != expected_image:
++                binding_errors.append("image_does_not_belong_to_bound_real_decision")
++            else:
++                path = (run_dir/expected_image).resolve()
++                if run_dir not in path.parents or not path.is_file() or record.get("image_sha256") != _sha(path):
++                    binding_errors.append("real_image_hash_or_path_mismatch")
++            if not facts.get("valid") or not facts.get("effect_usable") or facts.get("visibility") not in {"clear", "partial"}:
++                binding_errors.append("current_visual_evidence_unusable")
++            if facts.get("provenance") != "real_multiview_effect_geometry" or loc.get("status") != "localized":
++                binding_errors.append("real_joint_localization_not_available")
++            if record.get("localization_method") != loc.get("method") or not loc.get("method"):
++                binding_errors.append("localization_source_mismatch")
++            for key in ("knife_handle_xy", "gripper_xy", "localization_frame"):
++                if record.get(key) != facts.get(key) or facts.get(key) is None:
++                    binding_errors.append("bound_localization_mismatch:"+key)
++            if coordinate_frame != f"{camera}_image_x_right_y_down":
++                binding_errors.append("image_coordinate_frame_mismatch")
++            modality = row.get("modalities", {}).get(camera, {})
++            if modality.get("status") != "available" or modality.get("timestamp") != row["timestamp"]:
++                binding_errors.append("current_image_not_available")
++            if facts.get("gripper") != "open" or facts.get("contact") != "separate":
++                review_gaps.append("conditional_alignment_requires_current_open_and_separate_evidence")
++            if not binding_errors:
++                directions = image_alignment_directions(facts["knife_handle_xy"], facts["gripper_xy"],
++                                                         row["decision_rules"]["direction_deadband_normalized"])
++                if not directions:
++                    review_gaps.append("no_direction_outside_declared_deadband")
++                if record.get("expected_directions") != directions:
++                    review_gaps.append("shared_direction_rule_disagrees_with_visual_review")
++        if not record.get("reviewer") or not isinstance(record.get("observed_features"), str) or not record["observed_features"].strip():
++            review_gaps.append("visual_review_text_or_reviewer_missing")
++        if record.get("reviewed_handle_neck") is not True or record.get("reviewed_two_finger_edges") is not True:
++            review_gaps.append("handle_and_two_finger_edges_not_both_visually_reviewed")
++        if record.get("coordinate_claim") != "image_plane_only_no_robot_mapping":
++            review_gaps.append("coordinate_scope_not_explicitly_image_only")
++        results.append({**record, "status": "invalid" if binding_errors else "gap" if review_gaps else "passed",
++                        "binding_errors": binding_errors, "review_gaps": review_gaps,
++                        "generated_direction": {"coordinate_frame": coordinate_frame,
++                            "translation": {"kind": "qualitative_image_plane", "direction": directions, "magnitude": None},
++                            "rotation": None, "numeric_command": None, "directly_executable": False,
++                            "preconditions": ["current knife handle and both finger edges located", "current gripper open and object separate",
++                                              "independent depth, orientation, calibration and safe path before physical motion"],
++                            "post_checks": ["new image confirms finger midpoint and handle align", "independent grasp readiness remains required"]},
++                        "evidence_kind": "conditional_direction_from_bound_real_pixels_and_visual_review",
++                        "natural_failure_event_created": False, "natural_alignment_action": False,
++                        "actually_executed": False, "execution_receipt": None, "outcome_attributed_to_suggestion": False})
++    return results
++
++
++def evaluate_run(config, run_dir, manual_review=None):
++    """读取任意配置所选非测试轨迹；不运行模型、不修改历史输出。"""
++    import pyarrow.parquet as pq
++    from .recovery import validate_consistency
++
++    run_dir, root = Path(run_dir), Path(config["source"]["root"])
++    summary = _read(run_dir/"summary.json")
++    snapshot = _read(run_dir/"config_snapshot.json")
++    annotations = {row["episode_index"]: row for row in _jsonl(root/"meta/vifailback_annotations.jsonl")}
++    metadata = {row["episode_index"]: row for row in _jsonl(root/"meta/episodes.jsonl")}
++    info = _read(root/"meta/info.json")
++    selected = config["source"]["episodes"]
++    by_episode = {row["episode_for_audit_only"]: row for row in summary["episodes"]}
++    checks = {"config_episode_selection_matches_run": set(selected) == set(by_episode),
++              "config_matches_snapshot": config == snapshot,
++              "real_data_declaration": summary.get("actual_data") is True and summary.get("synthetic") is False,
++              "advisory_replay_mode": summary.get("execution_mode") == "advisory_replay",
++              "selected_camera_pair": set(config["source"]["cameras"]) == {"cam_high", "cam_right_wrist"}}
++    split_path = Path(__file__).resolve().parents[1]/"configs/splits/test.jsonl"
++    frozen = {item["episode_index"] for item in _jsonl(split_path)}
++    checks["no_frozen_test_episode"] = not (set(selected) & frozen)
++    manual_review = manual_review or {"review_kind": "not_provided", "checkpoints": []}
++    checkpoints = manual_review.get("checkpoints", [])
++    per_episode = []
++    rows_by_episode = {}
++    capability_gaps = []
++    for episode in selected:
++        if episode not in by_episode:
++            capability_gaps.append(f"episode {episode}: run missing")
++            continue
++        item = by_episode[episode]
++        path = run_dir/item["output_subdir"]/"decisions.jsonl"
++        rows = _jsonl(path)
++        rows_by_episode[episode] = rows
++        chunks_size = info.get("chunks_size", 1000)
++        parquet = root/f"data/chunk-{episode//chunks_size:03d}/episode_{episode:06d}.parquet"
++        replay = replay_audit(metadata[episode]["length"], pq.ParquetFile(parquet).metadata.num_rows,
++                              item["source_audit"], [row["timestamp"] for row in rows],
++                              config["source"]["sample_every"], info["fps"], config["source"]["cameras"])
++        stats = outcome_statistics(annotations[episode]["episode_success"], rows, item["end"]["task_success"])
++        moments = check_manual_moments(rows, [c for c in checkpoints if c["episode_for_audit_only"] == episode])
++        chain = completion_chain(rows)
++        corrections, violations = Counter(), []
++        for row in rows:
++            if row.get("correction"):
++                corrections[row["correction"]["low_level"]["action_type"]] += 1
++                try:
++                    validate_consistency(row)
++                except (ValueError, KeyError, TypeError) as error:
++                    violations.append({"timestamp": row["timestamp"], "error": str(error)})
++        future = []
++        for row in rows:
++            refs = list(row["visual_facts"].get("evidence_refs", []))
++            refs += row["visual_facts"].get("measurements", {}).get("joint_motion", {}).get("evidence_refs", [])
++            future += [{"decision_timestamp": row["timestamp"], "reference": ref} for ref in refs if ref["timestamp"] > row["timestamp"]]
++        execution_safe = all(row["execution"].get("actually_executed") is False
++                             and row["execution"].get("execution_receipt") is None
++                             and row["execution"].get("outcome_attributed_to_suggestion") is False for row in rows)
++        capacity_violations = [{"timestamp": row["timestamp"], "errors": errors} for row in rows
++                               if (errors := capacity_audit(row, config))]
++        source_valid = len(item["source_files"]) == len(config["source"]["cameras"])+1 and all(
++            Path(source["path"]).is_file() and _sha(source["path"]) == source["sha256"] for source in item["source_files"])
++        local_checks = {"full_replay": replay["full_replay"], "sample_coverage": replay["decision_sample_coverage"],
++                        "source_files_match_snapshot": source_valid, "advisory_semantics": execution_safe,
++                        "logged_capacities_respected": not capacity_violations, "no_future_references": not future,
++                        "correction_contracts_valid": not violations,
++                        "notification_types_known": stats["notification_counts"]["other"] == 0}
++        checks.update({f"episode_{episode}:{key}": value for key, value in local_checks.items()})
++        gaps = []
++        if stats["failure_missed_at_episode_level"]:
++            gaps.append("failure_not_confirmed")
++        if stats["false_failure_alarm_on_normal"] or stats["false_confirmed_failure_on_normal"]:
++            gaps.append("failure_alarm_on_success")
++        if stats["completion_missed"]:
++            gaps.append("task_completion_not_confirmed")
++        if stats["false_task_success_on_failure"]:
++            gaps.append("task_success_claimed_on_failure")
++        if stats["official_outcome"] == "success" and not chain["reference_operation_effect_completion_ordered"]:
++            gaps.append("reference_operation_new_effect_completion_chain_incomplete")
++        if not moments:
++            gaps.append("manual_phase_checks_missing")
++        elif any(m["status"] != "passed" for m in moments):
++            gaps.append("manual_key_phase_mismatch_or_unsampled")
++        capability_gaps += [f"episode {episode}: {gap}" for gap in gaps]
++        per_episode.append({"episode_for_audit_only": episode, **stats, **replay,
++                            "manual_moments": moments, "completion_evidence_chain": chain,
++                            "semantic_status": "partial" if gaps else "passed", "capability_gaps": gaps,
++                            "engineering_checks": local_checks, "correction_contract_violations": violations,
++                            "capacity_violations": capacity_violations,
++                            "action_counts": dict(corrections),
++                            "joint_localization_decisions": sum(row["visual_facts"].get("knife_handle_xy") is not None
++                                                                and row["visual_facts"].get("gripper_xy") is not None for row in rows),
++                            "independent_readiness_decisions": sum(
++                                all(row["visual_facts"].get("grasp_readiness", {}).get(key) == "confirmed"
++                                    for key in ("depth", "orientation", "contact_region"))
++                                and row["visual_facts"].get("grasp_readiness", {}).get("source") in
++                                {"measured_depth_and_contact", "validated_controller_observation"} for row in rows),
++                            "unknown_decision_timestamps": [row["timestamp"] for row in rows if row["execution_status"] == "information_insufficient"],
++                            "unknown_stage_timestamps": [row["timestamp"] for row in rows if row["state"]["stage"] == "unknown"],
++                            "elapsed_wall_s": item["elapsed_wall_s"], "decisions_sha256": _sha(path),
++                            "alerts": [{"timestamp": row["timestamp"], "type": notification_kind(row),
++                                        "event": row.get("failure_event"), "reason": row.get("notification_reason")}
++                                       for row in rows if row.get("notify")]})
++    localization = sum(row["joint_localization_decisions"] for row in per_episode)
++    directions = sum(row["action_counts"].get("align_in_image", 0) for row in per_episode)
++    conditional = conditional_direction_checks(rows_by_episode, run_dir, manual_review.get("conditional_directions", []))
++    conditional_passed = sum(item["status"] == "passed" for item in conditional)
++    checks["conditional_direction_real_evidence_bindings_valid"] = all(item["status"] != "invalid" for item in conditional)
++    if not localization:
++        capability_gaps.append("real_handle_and_two_finger_localization_not_observed")
++    if not directions and not conditional_passed:
++        capability_gaps.append("neither_natural_nor_verified_conditional_real_direction_available")
++    reviewed_directions = sum(c.get("reviewed_directional_action") is True and c["status"] == "passed"
++                              and c.get("expected_fields", {}).get("correction.low_level.action_type") == "align_in_image"
++                              for item in per_episode for c in item["manual_moments"])
++    if not reviewed_directions and not conditional_passed:
++        capability_gaps.append("directional_action_visual_review_not_provided")
++    if any(item["status"] != "passed" for item in conditional):
++        capability_gaps.append("conditional_direction_visual_or_evidence_gap")
++    engineering = all(checks.values())
++    return {"report_version": 2, "run": str(run_dir.resolve()), "offline_only": True,
++            "independent_labels_read_after_inference": True, "inference_repeated_for_this_report": False,
++            "engineering_status": "passed" if engineering else "failed",
++            "semantic_status": "partial" if capability_gaps else "passed",
++            "overall_status": "failed" if not engineering else "partial" if capability_gaps else "passed",
++            "checks": checks, "per_episode": per_episode, "capability_gaps": capability_gaps,
++            "conditional_direction_checks": conditional,
++            "direction_evidence_scope": "Natural align counts are separate from conditional real-pixel direction checks; neither implies a natural retry or physical execution.",
++            "manual_review_kind": manual_review.get("review_kind", "not_provided"),
++            "manual_review_sha256": hashlib.sha256(json.dumps(manual_review, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest(),
++            "elapsed_wall_s_from_original_run": summary["elapsed_wall_s"],
++            "totals": {"native_rows": sum(r["consumed_parquet_rows"] for r in per_episode),
++                       "decoded_images": sum(sum(r["consumed_video_frames"].values()) for r in per_episode),
++                       "decisions": sum(r["actual_decision_count"] for r in per_episode),
++                       "confirmed_failure_episodes": sum(r["confirmed_failure"] for r in per_episode),
++                       "joint_localization_decisions": localization, "directional_action_decisions": directions,
++                       "reviewed_directional_checkpoints": reviewed_directions,
++                       "verified_conditional_real_directions": conditional_passed},
++            "run_summary_sha256": _sha(run_dir/"summary.json"), "run_config_sha256": _sha(run_dir/"config_snapshot.json"),
++            "run_code_sha256": summary.get("code_sha256", {}), "evaluator_sha256": _sha(__file__),
++            "frozen_test_split_sha256": _sha(split_path),
++            "detection_latency": None, "latency_reason": "no independently annotated first-detectable failure timestamp",
++            "generalization_claim": False, "sample_exposure": "regression: all six trajectories have now been inspected",
++            "not_verified_by_offline_log_audit": ["causal counterfactual full-chain test", "synthetic state regressions",
++                "natural retry and slip perception", "physical execution", "independent depth/pose/contact readiness"]}
++
++
++def main():
++    parser = argparse.ArgumentParser(description="参数化真实回放离线验收；不重复推理、不向推理输入标签")
++    parser.add_argument("--config", required=True)
++    parser.add_argument("--run", required=True)
++    parser.add_argument("--manual-review")
++    parser.add_argument("--output", required=True)
++    parser.add_argument("--require-complete", action="store_true", help="能力缺口也返回非零退出码")
++    args = parser.parse_args()
++    from .__main__ import load_config
++    report = evaluate_run(load_config(args.config), args.run, _read(args.manual_review) if args.manual_review else None)
++    output = Path(args.output)
++    output.parent.mkdir(parents=True, exist_ok=True)
++    with output.open("x", encoding="utf-8") as stream:
++        json.dump(report, stream, ensure_ascii=False, indent=2, allow_nan=False)
++    print(json.dumps({"report": str(output), "engineering_status": report["engineering_status"],
++                      "semantic_status": report["semantic_status"], "totals": report["totals"]}, ensure_ascii=False))
++    if report["engineering_status"] != "passed" or args.require_complete and report["overall_status"] != "passed":
++        raise SystemExit(1)
++
++
++if __name__ == "__main__":
++    main()
+--- /dev/null
++++ b/streaming_recovery/localization.py
+@@ -0,0 +1,104 @@
++"""受限腕部图像定位：真实柄颈宽度过渡与两指内缘，不用对象区域质心。
++
++输出是刀柄可见颈部的抓取参考点，不是完整刀具的质心，也不是三维抓取位姿。
++必须同时看到细刃、宽柄颈和两指轮廓；混连、截断或宽度关系不清时拒识。
++所有阈值均是本固定腕部安装的像素比例配置，无学习权重、轨迹编号或标签。
++"""
++from __future__ import annotations
++import cv2
++import numpy as np
++
++
++def image_alignment_directions(knife_handle_xy, gripper_xy, deadband):
++    """图像 x 向右、y 向下；不转换到机器人坐标，不产生物理数值。"""
++    directions=[]
++    for delta,negative,positive in zip(np.subtract(knife_handle_xy,gripper_xy),
++                                     ("图像左侧","图像上方"),("图像右侧","图像下方")):
++        if abs(float(delta))>deadband:
++            directions.append(positive if delta>0 else negative)
++    return directions
++
++
++def localize_wrist_handle_and_fingers(image):
++    im=np.asarray(image.convert("RGB")) if hasattr(image,"convert") else np.asarray(image)
++    h,w=im.shape[:2]
++    result={"status":"unknown","reason":None,"frame":"cam_right_wrist_image_x_right_y_down",
++            "unit":"normalized_image_0_1000","image_size_pixels":[w,h],
++            "knife_handle_xy":None,"gripper_xy":None,"finger_inner_points_pixels":[],
++            "handle_neck_pixels":None,"rack_contour_pixels":[],
++            "method":"white_blade_to_wider_handle_neck_and_two_finger_inner_edges"}
++    if im.std()<8:
++        result["reason"]="black_or_textureless_image";return result
++    hsv=cv2.cvtColor(im,cv2.COLOR_RGB2HSV)
++    dark=(hsv[:,:,2]<85)&(hsv[:,:,1]<150)
++    contours=cv2.findContours(dark.astype("uint8"),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[0]
++    fingers=[]
++    for left in (True,False):
++        candidates=[]
++        for c in contours:
++            x,y,bw,bh=cv2.boundingRect(c)
++            if y+bh<h-2 or cv2.contourArea(c)<h*w*.02:
++                continue
++            p=c.reshape(-1,2)
++            p=p[(p[:,1]>.60*h)&(p[:,1]<.75*h)]
++            p=p[(p[:,0]>.18*w)&(p[:,0]<.48*w)] if left else p[(p[:,0]>.52*w)&(p[:,0]<.85*w)]
++            if not len(p):continue
++            edge=int(p[:,0].max() if left else p[:,0].min())
++            edge_points=p[abs(p[:,0]-edge)<=2]
++            # 内缘最上端角点；上方须是背景，否则可能把混连刀架当作手指。
++            tip_y=int(edge_points[:,1].min())
++            above=hsv[max(0,tip_y-18):max(1,tip_y-6),max(0,edge-2):min(w,edge+3),2]
++            if not above.size or float(np.mean(above>95))<.6:
++                continue
++            candidates.append([float(edge),float(tip_y)])
++        if len(candidates)!=1:
++            result["reason"]="finger_inner_edge_missing_or_merged";return result
++        fingers.append(candidates[0])
++    if not (.12*w<fingers[1][0]-fingers[0][0]<.72*w and abs(fingers[0][1]-fingers[1][1])<.08*h):
++        result["reason"]="two_finger_geometry_ambiguous";return result
++    result["finger_inner_points_pixels"]=fingers
++    racks=[]
++    for c in contours:
++        x,y,bw,bh=cv2.boundingRect(c)
++        if (.12*w<x+bw/2<.80*w and 2<bh/max(bw,1)<8 and bh>.40*h and bw<.27*w
++                and y+bh<h-5 and cv2.contourArea(c)>h*w*.015):
++            racks.append(c)
++    if len(racks)!=1:
++        result["reason"]="separate_rack_contour_unavailable";return result
++    c=racks[0]
++    hull=cv2.convexHull(c)
++    mask=np.zeros((h,w),np.uint8);cv2.drawContours(mask,[hull],0,1,-1)
++    white=(hsv[:,:,1]<75)&(hsv[:,:,2]>110)&mask.astype(bool)
++    x,y,bw,bh=cv2.boundingRect(c)
++    rows=[]
++    for yy in range(y+3,min(h-2,y+bh-3)):
++        xx=np.flatnonzero(white[yy])
++        if len(xx):
++            # 只允许一个主要连续白色条段；多条反光不能拼成刀柄。
++            groups=np.split(xx,np.flatnonzero(np.diff(xx)>1)+1)
++            group=max(groups,key=len)
++            if len(group)>=2:
++                rows.append((yy,int(group[0]),int(group[-1]),len(group)))
++    shaft=[r for r in rows if y+.08*bh<r[0]<y+.65*bh and 2<=r[3]<.025*w]
++    if len(shaft)<.28*bh:
++        result["reason"]="thin_blade_shaft_not_observed";return result
++    shaft_width=float(np.median([r[3] for r in shaft]))
++    slope,intercept=np.polyfit([r[0] for r in shaft],[(r[1]+r[2])/2 for r in shaft],1)
++    fit_error=float(np.median([abs((r[1]+r[2])/2-(slope*r[0]+intercept)) for r in shaft]))
++    if fit_error>3:
++        result["reason"]="blade_shaft_not_straight";return result
++    neck=[r for r in rows if r[0]>y+.62*bh and r[3]>=max(2.2*shaft_width,.022*w)
++          and r[3]<.09*w and abs((r[1]+r[2])/2-(slope*r[0]+intercept))<.025*w]
++    if len(neck)<6 or neck[5][0]-neck[0][0]>8 or neck[0][0]>h-12:
++        result["reason"]="visible_handle_width_transition_unavailable";return result
++    band=neck[1:6]
++    center=[float(np.mean([(r[1]+r[2])/2 for r in band])),float(np.mean([r[0] for r in band]))]
++    midpoint=[(fingers[0][0]+fingers[1][0])/2,(fingers[0][1]+fingers[1][1])/2]
++    # 明确输出局部柄颈横截面、两指内缘；不输出深度、姿态或接触 readiness。
++    result.update(status="localized",reason=None,
++        knife_handle_xy=[round(center[0]/w*1000,3),round(center[1]/h*1000,3)],
++        gripper_xy=[round(midpoint[0]/w*1000,3),round(midpoint[1]/h*1000,3)],
++        handle_neck_pixels={"center":center,"edge_segments":[[r[1],r[0],r[2],r[0]]for r in band],
++                            "thin_blade_width_pixels":shaft_width,"shaft_fit_error_pixels":fit_error},
++        rack_contour_pixels=cv2.approxPolyDP(hull,2,True).reshape(-1,2).tolist()[:16])
++    return result
+--- a/streaming_recovery/memory.py
++++ b/streaming_recovery/memory.py
+@@ -31,6 +31,9 @@
+                 "image_bytes": sum(im.width * im.height * 3 for o in self.frames for im in o.images.values()),
+                 "features": len(self.features), "anchors": len(self.anchors),
+                 "joint_vector_values": sum(len(o.observation_state or [])+len(o.observation_velocity or []) for o in self.frames),
++                "native_aggregate_records":sum(o.joint_interval is not None for o in self.frames),
++                "native_aggregate_fields":sum(len(o.joint_interval or {}) for o in self.frames),
++                "native_aggregate_chars":sum(len(json.dumps(o.joint_interval)) for o in self.frames if o.joint_interval is not None),
+                 "joint_feature_refs": sum(len(f.measurements.get("joint_motion",{}).get("evidence_refs",[])) for f in self.features),
+                 "feature_text_chars": sum(len(f.description) + len(f.error or "") for f in self.features),
+                 "feature_payload_chars":sum(len(json.dumps(asdict(f),ensure_ascii=False)) for f in self.features),
+--- a/streaming_recovery/multiview.py
++++ b/streaming_recovery/multiview.py
+@@ -5,6 +5,7 @@
+ import cv2
+ import numpy as np
+ from .geometry import GeometryVision
++from .localization import localize_wrist_handle_and_fingers
+ 
+ class MultiViewGeometryVision(GeometryVision):
+     provenance = "real_multiview_effect_geometry"
+@@ -65,6 +66,13 @@
+         candidates=[]
+         for threshold in (120,160,180,200):
+             white=(hsv[:,:,1]<75)&(hsv[:,:,2]>threshold)
++            # 只检测两指尖端上方可见的刀刃段。刃下部镜面反光可延伸至画面底端，
++            # 不能因此把同一把真实刀拒绝；仍要求中央、细长、足够长度以及两指夹持证据。
++            white[int(h*.70):,:]=False
++            # 香肠亮边可能与刀刃相连；纵向开运算保留可见长刃，去掉短横向亮桥。
++            # 不改变颜色门槛、不用当前位置以外的图像，也不把宽背景裁成细刃。
++            white=cv2.morphologyEx(white.astype("uint8"),cv2.MORPH_OPEN,
++                                   np.ones((max(3,int(h*.28)),1),np.uint8)).astype(bool)
+             for c in self.contours(white):
+                 x,y,bw,bh=cv2.boundingRect(c)
+                 if (.42*w < x+bw/2 < .62*w and bh>.28*h and bw<.13*w and bh/max(bw,1)>5 and
+@@ -102,7 +110,8 @@
+         self.wrist_tracks.append(row)
+         return {"available":True,"blade":row["blade"],"joined":joined,"food":row["food"],
+                 "cut_operation":bool(operation),"previous_ref":old["ref"] if old else None,
+-                "previous_timestamp":old["timestamp"] if old else None}
++                "previous_timestamp":old["timestamp"] if old else None,
++                "blade_region":"visible_segment_above_finger_tip_band"}
+ 
+     def observe(self, observation, previous=None):
+         facts=super().observe(observation,previous)
+@@ -117,19 +126,34 @@
+         dark=float((hsv[:,:,2][self.rack_blade_mask]<60).mean())
+         rack_clear=not m["source_occluded"]
+         rack_present=bright>=self.config.get("rack_blade_present_fraction",.60) and dark<.35
++        # 顶视图中机械手可在架的上方/侧方接近而尚未遮住刀。该粗区域变化仅用于
++        # 接近阶段，不作为两指定位、接触或三维距离；区域来自起始已观测刀架。
++        h,w=image.shape[:2]
++        rx,ry,rw,rh=self.rack_box
++        xa,xb=max(0,int(rx-.12*w)),min(w,int(rx+rw+.20*w))
++        ya,yb=max(0,int(ry-.22*h)),min(h,int(ry+.35*rh))
++        prior=cv2.cvtColor(self.reference,cv2.COLOR_RGB2HSV)
++        near=(hsv[ya:yb,xa:xb,2]<70)&(prior[ya:yb,xa:xb,2]>100)
++        near_fraction=float(near.mean()) if near.size else 0.
++        robot_near_holder=near_fraction>.035
++        m["robot_near_holder_projection"]={"present":bool(robot_near_holder),
++            "new_dark_fraction":round(near_fraction,5),"region_pixels":[xa,ya,xb, yb],
++            "meaning":"coarse_current_robot_projection_near_holder_not_contact_or_finger_localization"}
+         # 先看当前顶视；刀架被遮挡/刀已离架时，才补看当前腕部确认刀—两指关系。
+         # 不读未来腕部，不将未查询的腕部写作实际使用；旧腕部只保留有界几何特征。
+-        need_wrist = not (rack_present and rack_clear)
++        raw=observation.observation_state[13] if observation.observation_state else None
++        opened=raw is not None and raw>=self.rules["gripper_open_raw"]
++        # 开爪准备取刀时顶视仍不能解释柄—两指的投影关系，也查询当前腕图。
++        need_wrist = not (rack_present and rack_clear) or opened
+         if need_wrist:
+             wrist=self.wrist_observation(observation)
+             wrist["consulted"]="cam_right_wrist" in observation.images
+-            wrist["selection_reason"]="top_view_grasp_relation_ambiguous"
++            wrist["selection_reason"]="open_gripper_handle_alignment_unclear" if opened else "top_view_grasp_relation_ambiguous"
+         else:
+             self.wrist_tracks.clear()
+             wrist={"available":False,"consulted":False,"blade":None,"cut_operation":False,
+                    "reason":"top_view_tool_still_on_holder_and_separate"}
+         m["wrist"]=wrist
+-        raw=observation.observation_state[13] if observation.observation_state else None
+         closed=raw is not None and raw<=self.rules["gripper_closed_raw"]
+         # 腕部刀刃在两指之间，同时原刀架刃区已改变。两个视角均进入判定。
+         connected=bool(wrist.get("joined") and closed and bright<.6)
+@@ -144,7 +168,7 @@
+             facts.knife_location="holder"
+             facts.contact="separate"
+             facts.released="yes"
+-            facts.motion="at_board" if m["robot_at_board"] else ("away" if self.tool_departed else "unknown")
++            facts.motion="at_board" if m["robot_at_board"] else ("at_holder" if robot_near_holder else ("away" if self.tool_departed else "unknown"))
+         elif m["tool_on_board"] and not m["robot_at_board"] and wrist.get("available") and not wrist.get("blade"):
+             facts.knife_location="board"
+             facts.contact="separate"
+@@ -176,6 +200,15 @@
+                  cut_operation="yes" if wrist.get("cut_operation") and connected and m["robot_at_board"] else "unknown")
+         # 此数据无经校准深度/接触反馈，绝不把腕部投影或区域质心当接触准备。
+         facts.grasp_readiness={}
++        localization=localize_wrist_handle_and_fingers(observation.images["cam_right_wrist"]) if wrist.get("consulted") and opened else {
++            "status":"unknown","reason":"current_open_wrist_localization_not_requested"}
++        m["localization"]=localization
++        if localization["status"]=="localized":
++            facts.knife_handle_xy=localization["knife_handle_xy"]
++            facts.gripper_xy=localization["gripper_xy"]
++            facts.localization_frame=localization["frame"]
++            if facts.knife_location=="holder" and not m["robot_at_board"]:
++                facts.motion="at_holder"
+         facts.description=(f"刀架刃区亮像素比例={bright:.3f}；腕部刀刃—两指连接={wrist.get('joined', '未观测')}；"
+                            f"刀架/腕部联合夹持证据={connected}；新分离小段={m['new_cut_effect']}；"
+                            f"腕部刀—香肠相对作用={m['cut_operation']}")
+--- a/streaming_recovery/recovery.py
++++ b/streaming_recovery/recovery.py
+@@ -2,9 +2,10 @@
+ from __future__ import annotations
+ from copy import deepcopy
+ from dataclasses import asdict
++from .localization import image_alignment_directions
+ 
+ PROBLEMS = {
+-    "grasp_not_established": ("抓取尝试后机器人已进入工作区，但刀仍留在刀架", "当前尝试未建立可靠夹持"),
++    "grasp_not_established": ("实际抓取尝试后观察到空手推进，或刀仍在原支撑面且与闭合两指明确分离", "当前尝试未建立可靠夹持"),
+     "prerequisite_unmet": ("进入工作区时没有可靠持刀证据", "后续切割所需的夹持前置条件未满足"),
+     "lost_grasp": ("近期可靠夹持后观察到刀与夹爪分离", "夹持连接失效；意外滑落与有意放下的原因尚未区分"),
+ }
+@@ -80,6 +81,9 @@
+     current=usable(f,state,now)
+     location=facts.knife_location if current else "unknown"
+     location_zh={"holder":"刀架","board":"砧板","elsewhere":"当前可见支撑位置","unknown":"待重新定位位置","gripper":"夹爪内"}[location]
++    context = state.get("attempt_context") or {}
++    support = context.get("support_location") if location == "gripper" else location
++    support_zh = {"holder":"刀架", "board":"砧板", "elsewhere":"原观测支撑位置"}.get(support)
+     lost=event["kind"]=="lost_grasp"
+     strategy="reacquire_from_observed_support" if lost else ("restore_missing_precondition" if event["kind"]=="prerequisite_unmet" else "retry_tool_acquisition")
+     goal_id=event["event_id"]+(":reacquire_detached_knife" if lost else ":restore_reliable_grasp")
+@@ -88,7 +92,11 @@
+         "failed_precondition":"reliable_grasp","impact":"缺少可靠夹持时不能继续携刀操作",
+         "strategy":strategy,"next_recovery_subgoal":f"在{location_zh}重新定位刀柄，建立接触准备并确认可靠夹持",
+         "reason":diagnosis["observed_deviation"],
+-        "resume_when":f"新观测连续支持刀离开{location_zh}并随右夹爪运动，再继续" + ("归位" if state["preconditions"]["cut_effect_confirmed"] else "携刀转移")}
++        "resume_when":"新观测连续支持刀与两指保持连接并连续随动" +
++            (f"，移动时已离开{support_zh}" if support_zh else "") +
++            "，再继续" + ("归位" if state["preconditions"]["cut_effect_confirmed"] else "携刀转移")}
++    if current and location == "gripper":
++        high["next_recovery_subgoal"] = "核查当前刀与两指连接，取得连续随动证据后再恢复可靠夹持前置条件"
+     low={"event_id":event["event_id"],"recovery_goal_id":goal_id,"object":"knife","actuator":"right_gripper",
+         "action_type":"hold_and_observe","recovery_phase":"observe_scene",
+         "instruction":f"保持当前末端与夹爪设定，暂停后续携刀操作；取得{location_zh}的刀具及两指清晰新观测。",
+@@ -100,7 +108,10 @@
+         "directly_executable":False,"handoff_requirements":["执行器检查保持/动作可行性与碰撞","需要物理移动时先提供标定映射"],
+         "missing_information":["当前刀位置、两指接触关系和开闭状态"] if not current else []}
+     empty=current and location in ("holder","board","elsewhere") and facts.contact=="separate"
+-    retry_pending=event["state"]=="closed_for_retry" and state["attempt"]>event["attempt"]
++    # 明确又打开且刀仍分离，表示这次接触检查已被实际动作中断，可以重新准备。
++    # 不由建议增加 attempt；未知/遮挡仍只等待新证据。
++    retry_pending=(event["state"]=="closed_for_retry" and state["attempt"]>event["attempt"] and
++                   not (empty and facts.gripper=="open"))
+     points=facts.knife_handle_xy is not None and facts.gripper_xy is not None
+     if not current or event["state"]=="suspected":
+         if current:
+@@ -119,13 +130,8 @@
+             stop_condition="收到实际打开反馈；出现异常交回执行器",
+             post_checks=["右夹爪实际打开",f"刀仍在{location_zh}","重新定位刀柄与两指"])
+     elif empty and facts.gripper=="open" and points:
+-        delta=[a-b for a,b in zip(facts.knife_handle_xy,facts.gripper_xy)]
+         deadband=rules["direction_deadband_normalized"]
+-        directions=[]
+-        if abs(delta[0])>deadband:
+-            directions.append("图像右侧" if delta[0]>0 else "图像左侧")
+-        if abs(delta[1])>deadband:
+-            directions.append("图像下方" if delta[1]>0 else "图像上方")
++        directions=image_alignment_directions(facts.knife_handle_xy,facts.gripper_xy,deadband)
+         if directions:
+             low.update(action_type="align_in_image",recovery_phase="align_image",coordinate_frame=facts.localization_frame,
+                 target_mode="relative_image_alignment",
+@@ -218,13 +224,8 @@
+             raise ValueError("unfounded_translation")
+         if not tr["direction"] or not set(tr["direction"])<=set(("图像右侧","图像左侧","图像下方","图像上方")):
+             raise ValueError("invalid_direction")
+-        delta=[a-b for a,b in zip(f["knife_handle_xy"],f["gripper_xy"])]
+         deadband=result.get("decision_rules",{}).get("direction_deadband_normalized",50)
+-        expected=[]
+-        if abs(delta[0])>deadband:
+-            expected.append("图像右侧" if delta[0]>0 else "图像左侧")
+-        if abs(delta[1])>deadband:
+-            expected.append("图像下方" if delta[1]>0 else "图像上方")
++        expected=image_alignment_directions(f["knife_handle_xy"],f["gripper_xy"],deadband)
+         if tr["direction"]!=expected:
+             raise ValueError("direction_not_supported_by_points")
+     if action=="close_gripper":
+--- a/streaming_recovery/source.py
++++ b/streaming_recovery/source.py
+@@ -5,6 +5,7 @@
+ import math
+ from pathlib import Path
+ from .contracts import Observation, Sample
++from .dynamics import JointInterval
+ 
+ 
+ class CausalAligner:
+@@ -70,6 +71,11 @@
+         import av
+         import pyarrow.parquet as pq
+         self.aligner.reset()
++        self.audit.update(rows_read=0,frames_decoded={c:0 for c in self.cameras},future_frames_exposed=0,
++                          invalid_video_timestamps=0)
++        self.audit.pop("last_source_timestamp",None)
++        self.audit.pop("joint_interval_capacity",None)
++        joint_interval=JointInterval(self.fps)
+         path = self.root / f"data/chunk-{self.chunk:03d}/episode_{self.episode:06d}.parquet"
+         table = pq.ParquetFile(path)
+         columns = [c for c in self.COLUMNS if c in table.schema_arrow.names]
+@@ -106,6 +112,8 @@
+                     valid = isinstance(state, list) and len(state) == 14 and all(not isinstance(v, bool) and isinstance(v, (float, int)) and math.isfinite(v) for v in state)
+                     self.aligner.push(Sample(name, now, now, state if valid else None,
+                                              valid, None if valid else "invalid_14d_measurement"), now)
++                joint_interval.push(now,row.get("observation.state"),row.get("observation.velocity"),f"obs-{expected:06d}")
++                self.audit["joint_interval_capacity"]=joint_interval.usage()
+                 for camera in self.cameras:
+                     if camera not in decoders:
+                         self.aligner.push(Sample(camera, now, now, None, False, errors.get(camera, "video_exhausted")), now)
+@@ -136,9 +144,12 @@
+                         self.aligner.push(Sample(camera, frame_time, now, im), now)
+                 if expected % self.sample_every == 0:
+                     values, status = self.aligner.snapshot(now)
++                    aggregate=joint_interval.snapshot()
++                    joint_interval.reset()
++                    joint_interval.push(now,row.get("observation.state"),row.get("observation.velocity"),f"obs-{expected:06d}")
+                     yield Observation(now, self.instruction,
+                         {c: values[c] for c in self.cameras if c in values}, values.get("observation.state"),
+-                        status, f"obs-{expected:06d}", observation_velocity=values.get("observation.velocity"))
++                        status, f"obs-{expected:06d}", observation_velocity=values.get("observation.velocity"),joint_interval=aggregate)
+         finally:
+             for video in videos.values():
+                 video.close()
+--- /dev/null
++++ b/streaming_recovery/tests/test_evaluation.py
+@@ -0,0 +1,134 @@
++import unittest
++import hashlib
++from pathlib import Path
++from tempfile import TemporaryDirectory
++from streaming_recovery.evaluation import (Outcome, parse_outcome, notification_kind,
++                                          outcome_statistics, replay_audit, check_manual_moments,
++                                          conditional_direction_checks, row_fingerprint)
++
++
++def row(state, status, reason, notify=True):
++    return {"notify": notify, "notification_reason": reason, "execution_status": status,
++            "failure_event": {"event_id": "event-0001", "state": state}}
++
++
++class EvaluationTests(unittest.TestCase):
++    def test_explicit_label_enums(self):
++        self.assertIs(parse_outcome("success"), Outcome.SUCCESS)
++        self.assertIs(parse_outcome("failure"), Outcome.FAILURE)
++        for invalid in (True, False, None, 0, 1, "", "unknown", "SUCCESS", "failure "):
++            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
++                parse_outcome(invalid)
++
++    def test_result_combinations_are_not_string_truthiness(self):
++        confirmed = [row("confirmed", "confirmed_failure", "evidence_confirmed")]
++        for label, records, missed, false_alarm in (
++            ("success", [], None, False), ("success", confirmed, None, True),
++            ("failure", [], True, None), ("failure", confirmed, False, None)):
++            with self.subTest(label=label, records=bool(records)):
++                result = outcome_statistics(label, records, None)
++                self.assertEqual(result["official_outcome"], label)
++                self.assertEqual(result["failure_missed_at_episode_level"], missed)
++                self.assertEqual(result["false_failure_alarm_on_normal"], false_alarm)
++
++    def test_suspicion_does_not_count_as_confirmation(self):
++        records = [row("suspected", "suspicious", "new_suspicion")]
++        failure = outcome_statistics("failure", records, None)
++        self.assertTrue(failure["failure_missed_at_episode_level"])
++        self.assertEqual(failure["notification_counts"]["suspicion"], 1)
++        normal = outcome_statistics("success", records, None)
++        self.assertTrue(normal["false_failure_alarm_on_normal"])
++        self.assertFalse(normal["false_confirmed_failure_on_normal"])
++
++    def test_recovery_retry_and_silent_persistence(self):
++        records = [row("resolved", "recovered", "recovery_observed_without_execution_attribution"),
++                   row("closed_for_retry", "executing", "new_attempt_observed")]
++        stats = outcome_statistics("success", records, True)
++        self.assertFalse(stats["false_failure_alarm_on_normal"])
++        self.assertEqual(stats["notification_counts"]["recovery"], 1)
++        self.assertEqual(stats["notification_counts"]["retry"], 1)
++        silent = row("persistent", "confirmed_failure", None, False)
++        self.assertIsNone(notification_kind(silent))
++        self.assertTrue(outcome_statistics("failure", [silent], None)["confirmed_failure"])
++
++    def test_invalid_label_is_rejected_before_counting(self):
++        with self.assertRaises(ValueError):
++            outcome_statistics("maybe", [], None)
++
++    def test_metadata_short_read_and_camera_truncation_fail(self):
++        audit = {"rows_read": 100, "frames_decoded": {"cam_high": 100, "cam_right_wrist": 100}, "invalid_video_timestamps": 0}
++        args = (100, 100, audit, [0., 1., 2., 3.], 25, 25, ["cam_high", "cam_right_wrist"])
++        self.assertTrue(replay_audit(*args)["full_replay"])
++        self.assertFalse(replay_audit(101, *args[1:])["full_replay"])
++        audit["rows_read"] = 99
++        self.assertFalse(replay_audit(*args)["full_replay"])
++        audit["rows_read"] = 100
++        audit["frames_decoded"]["cam_right_wrist"] = 99
++        self.assertFalse(replay_audit(*args)["full_replay"])
++
++    def test_full_native_read_does_not_imply_decision_coverage(self):
++        audit = {"rows_read": 100, "frames_decoded": {"a": 100, "b": 100}, "invalid_video_timestamps": 0}
++        result = replay_audit(100, 100, audit, [0., 1., 2.], 25, 25, ["a", "b"])
++        self.assertTrue(result["full_replay"])
++        self.assertFalse(result["decision_sample_coverage"])
++
++    def test_phase_checks_use_timestamp_and_predicates(self):
++        rows = [{"timestamp": 2., "state": {"stage": "locate_tool", "attempt": 0}}]
++        checks = [{"timestamp": 2., "expected_stages": ["align_grasp"], "expected_fields": {"state.attempt": 1}},
++                  {"timestamp": 5., "expected_stages": ["locate_tool"]}]
++        result = check_manual_moments(rows, checks)
++        self.assertEqual(result[0]["status"], "gap")
++        self.assertEqual(len(result[0]["differences"]), 2)
++        self.assertEqual(result[1]["status"], "not_observed")
++
++    def test_phase_window_does_not_hide_failed_all_or_invalid_expectations(self):
++        rows = [{"timestamp": 1., "state": {"stage": "verify_grasp"}},
++                {"timestamp": 2., "state": {"stage": "cutting"}}]
++        check = {"start_s": 1., "end_s": 2., "expected_stages": ["cutting"]}
++        self.assertEqual(check_manual_moments(rows, [check])[0]["status"], "passed")
++        self.assertEqual(check_manual_moments(rows, [{**check, "mode": "all"}])[0]["status"], "gap")
++        with self.assertRaises(ValueError):
++            check_manual_moments(rows, [{"timestamp": 1.}])
++
++    def test_conditional_direction_binding_and_visual_review_are_required(self):
++        """纯契约故障注入；测试文件与坐标是合成输入，不是视觉识别验证。"""
++        row = {"timestamp": 2., "observation_ref": "obs-000050",
++               "visual_facts": {"valid": True, "effect_usable": True, "visibility": "clear",
++                   "provenance": "real_multiview_effect_geometry", "gripper": "open", "contact": "separate",
++                   "knife_handle_xy": [400., 700.], "gripper_xy": [500., 700.],
++                   "localization_frame": "cam_right_wrist_image_x_right_y_down",
++                   "measurements": {"localization": {"status": "localized", "method": "fixture_only"}}},
++               "modalities": {"cam_right_wrist": {"status": "available", "timestamp": 2.}},
++               "decision_rules": {"direction_deadband_normalized": 50}}
++        relative = "trajectory_000002/frames/obs-000050_cam_right_wrist.jpg"
++        image = b"synthetic contract fixture; not real image validation"
++        record = {"episode_for_audit_only": 2, "timestamp": 2., "observation_ref": "obs-000050",
++                  "row_sha256": row_fingerprint(row), "image_path": relative,
++                  "image_sha256": hashlib.sha256(image).hexdigest(), "camera": "cam_right_wrist",
++                  "localization_frame": row["visual_facts"]["localization_frame"],
++                  "knife_handle_xy": [400., 700.], "gripper_xy": [500., 700.], "localization_method": "fixture_only",
++                  "expected_directions": ["图像左侧"], "reviewer": "synthetic_test",
++                  "observed_features": "synthetic fixture only", "reviewed_handle_neck": True,
++                  "reviewed_two_finger_edges": True, "coordinate_claim": "image_plane_only_no_robot_mapping"}
++        with TemporaryDirectory(dir=Path(__file__).parent) as directory:
++            path = Path(directory)/relative
++            path.parent.mkdir(parents=True)
++            path.write_bytes(image)
++            audit = lambda item: conditional_direction_checks({2: [row]}, directory, [item])[0]
++            result = audit(record)
++            self.assertEqual(result["status"], "passed")
++            self.assertFalse(result["natural_alignment_action"])
++            self.assertFalse(result["actually_executed"])
++            self.assertIsNone(result["generated_direction"]["numeric_command"])
++            for key, invalid in (("row_sha256", "bad"), ("image_sha256", "bad"),
++                                 ("image_path", "../wrong.jpg"), ("knife_handle_xy", [100., 700.])):
++                with self.subTest(key=key):
++                    self.assertEqual(audit({**record, key: invalid})["status"], "invalid")
++            for key, missing in (("reviewer", ""), ("observed_features", ""), ("reviewed_handle_neck", False),
++                                 ("reviewed_two_finger_edges", False), ("expected_directions", ["图像右侧"])):
++                with self.subTest(key=key):
++                    self.assertEqual(audit({**record, key: missing})["status"], "gap")
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- /dev/null
++++ b/streaming_recovery/tests/test_interval_review.py
+@@ -0,0 +1,55 @@
++"""独立审查补充：原生区间只覆盖末端一小段时，不得否定整个决策间隔的运动。"""
++import unittest
++from streaming_recovery.__main__ import load_config
++from streaming_recovery.dynamics import JointInterval, joint_motion, valid_interval
++from streaming_recovery.engine import Monitor
++from streaming_recovery.tests.test_multimodal import measured
++from streaming_recovery.tests.test_system import SyntheticVision, facts
++
++
++class IntervalReviewTests(unittest.TestCase):
++    def native(self, start=.96, end=1., moving=False):
++        collector=JointInterval()
++        velocity=[0.]*14
++        velocity[7]=.3 if moving else 0.
++        collector.push(start,[0.]*14,velocity,"native-start")
++        collector.push(end,[0.]*14,[0.]*14,"native-end")
++        return collector.snapshot()
++
++    def test_short_complete_suffix_does_not_veto_longer_visual_interval(self):
++        vision=SyntheticVision();monitor=Monitor(load_config(),vision)
++        vision.current=facts(0,location="gripper",gripper="closed",motion="at_board",contact="between_fingers")
++        monitor.step(measured(0))
++        observation=measured(1);observation.joint_interval=self.native()
++        vision.current=facts(1,location="gripper",gripper="closed",motion="at_board",contact="between_fingers",
++                             measurements={"cut_operation":"yes"})
++        result=monitor.step(observation)
++        motion=result["visual_facts"]["measurements"]["joint_motion"]
++        self.assertNotEqual(motion["status"],"stationary")
++        self.assertEqual(result["visual_facts"]["measurements"]["cut_operation"],"yes")
++
++    def test_positive_short_interval_is_still_evidence_of_recent_motion(self):
++        observation=measured(1);observation.joint_interval=self.native(moving=True)
++        motion=joint_motion(observation,measured(0),load_config()["rules"])
++        self.assertEqual(motion["status"],"recent_motion")
++        self.assertLessEqual(len(motion["evidence_refs"]),3)
++        self.assertTrue(any(ref.get("field")=="native_measured_joint_interval" and
++                            ref.get("start_ref")=="native-start" and ref.get("ref")=="native-end"
++                            for ref in motion["evidence_refs"]))
++
++    def test_stationarity_requires_a_previous_interval_within_gap(self):
++        observation=measured(1);observation.joint_interval=self.native()
++        for previous in (None,measured(-3)):
++            with self.subTest(previous=previous.timestamp if previous else None):
++                motion=joint_motion(observation,previous,load_config()["rules"])
++                self.assertNotEqual(motion["status"],"stationary")
++
++    def test_single_sample_cannot_claim_complete_nonzero_interval(self):
++        native=self.native()
++        native.update(start_timestamp=0.,span_s=1.,sample_count=1,expected_sample_count=1,
++                      valid_position_samples=1,valid_velocity_samples=1)
++        self.assertFalse(valid_interval(native,1.))
++
++
++if __name__=="__main__":
++    unittest.main()
+--- /dev/null
++++ b/streaming_recovery/tests/test_joint_interval.py
+@@ -0,0 +1,95 @@
++"""25 FPS 合成关节往复输入用于混叠回归，不是机器人视觉验证。"""
++import json
++import math
++from pathlib import Path
++import tempfile
++import unittest
++import pyarrow as pa
++import pyarrow.parquet as pq
++from streaming_recovery.__main__ import load_config
++from streaming_recovery.source import LeRobotStream
++from streaming_recovery.dynamics import JointInterval, joint_motion, valid_interval
++from streaming_recovery.engine import Monitor
++from streaming_recovery.tests.test_multimodal import measured
++from streaming_recovery.tests.test_system import SyntheticVision, facts
++from streaming_recovery.tests.test_system import INSTRUCTION
++
++
++class JointIntervalTests(unittest.TestCase):
++    def test_direct_positive_position_evidence_cannot_be_overridden_by_injected_static_summary(self):
++        obs=measured(1,position=.2,native=True)
++        result=joint_motion(obs,measured(0),load_config()["rules"])
++        self.assertEqual(result["status"],"recent_motion")
++
++    def test_out_and_back_native_motion_is_not_stationary_from_equal_endpoints(self):
++        base=Path(__file__).resolve().parents[1]/"artifacts/test_tmp"
++        base.mkdir(exist_ok=True)
++        with tempfile.TemporaryDirectory(dir=base) as tmp:
++            root=Path(tmp);(root/"meta").mkdir();(root/"data/chunk-000").mkdir(parents=True)
++            (root/"meta/info.json").write_text(json.dumps({"codebase_version":"v2.1","fps":25,"chunks_size":1000}))
++            rows=[]
++            for i in range(26):
++                t=i/25
++                state=[0.]*14;velocity=[0.]*14
++                state[7]=.2*math.sin(math.pi*t)**2
++                velocity[7]=.2*math.pi*math.sin(2*math.pi*t)
++                rows.append({"timestamp":t,"frame_index":i,"observation.state":state,"observation.velocity":velocity})
++            pq.write_table(pa.Table.from_pylist(rows),root/"data/chunk-000/episode_000000.parquet")
++            stream=LeRobotStream(root,0,[],sample_every=25,instruction=INSTRUCTION)
++            observations=list(stream)
++            result=joint_motion(observations[-1],observations[0],load_config()["rules"])
++            self.assertNotEqual(result["status"],"stationary", "端点相同不能否认区间内的实际往复运动")
++            self.assertEqual(result["interval_coverage"],"native_complete")
++            self.assertEqual(result["native_interval"]["sample_count"],26)
++            self.assertGreater(result["native_interval"]["max_joint_path_raw"],.35)
++            again=list(stream)
++            self.assertEqual(again[0].joint_interval["sample_count"],1)
++            self.assertEqual(again[-1].joint_interval,observations[-1].joint_interval)
++            self.assertEqual(stream.audit["rows_read"],26)
++
++    def test_missing_native_sample_or_modality_cannot_prove_stationarity(self):
++        for fault in ("gap","position","velocity"):
++            collector=JointInterval()
++            for i in range(26):
++                if fault=="gap" and i==12:
++                    continue
++                collector.push(i/25,None if fault=="position" and i==12 else [0.]*14,
++                               None if fault=="velocity" and i==12 else [0.]*14,f"f{i}")
++            obs=measured(1);obs.joint_interval=collector.snapshot()
++            result=joint_motion(obs,measured(0),load_config()["rules"])
++            self.assertFalse(obs.joint_interval["complete"])
++            self.assertNotEqual(result["status"],"stationary")
++
++    def test_low_endpoints_do_not_veto_current_visual_operation(self):
++        vision=SyntheticVision();monitor=Monitor(load_config(),vision)
++        for t in (0,1):
++            vision.current=facts(t,location="gripper",gripper="closed",motion="at_board",contact="between_fingers",
++                                 measurements={"cut_operation":"yes" if t else "unknown"})
++            result=monitor.step(measured(t))
++        self.assertEqual(result["visual_facts"]["measurements"]["joint_motion"]["status"],"low_motion_support")
++        self.assertEqual(result["visual_facts"]["measurements"]["cut_operation"],"yes")
++
++    def test_aggregate_future_rejected_invalid_explicit_and_storage_bounded(self):
++        collector=JointInterval()
++        for i in range(10001):
++            collector.push(i/25,[0.]*14,[0.]*14,f"f{i}")
++        usage=collector.usage()
++        self.assertEqual(usage["native_joint_history_samples"],0)
++        self.assertEqual(usage["native_joint_previous_values"],6)
++        self.assertEqual(usage["native_joint_path_values"],6)
++        vision=SyntheticVision();monitor=Monitor(load_config(),vision)
++        obs=measured(0);obs.joint_interval=collector.snapshot();vision.current=facts(0)
++        with self.assertRaisesRegex(ValueError,"future"):
++            monitor.step(obs)
++        collector.reset()
++        collector.push(0,[0.]*14,[0.]*14,"f0")
++        self.assertEqual(collector.snapshot()["sample_count"],1)
++        obs.joint_interval=collector.snapshot();obs.joint_interval["max_joint_path_raw"]=float("nan")
++        self.assertFalse(valid_interval(obs.joint_interval,0))
++        result=Monitor(load_config(),vision).step(obs)
++        self.assertEqual(result["observation_inputs"]["joint_interval_status"],"invalid_or_stale")
++        self.assertIsNone(result["observation_inputs"]["joint_interval"])
++
++
++if __name__=="__main__":
++    unittest.main()
+--- /dev/null
++++ b/streaming_recovery/tests/test_localization.py
+@@ -0,0 +1,51 @@
++"""局部图像定位与腕部候选回归；真实 JPEG 检查单列，不代表泛化实验。"""
++from pathlib import Path
++import unittest
++import numpy as np
++from PIL import Image
++from streaming_recovery.__main__ import load_config
++from streaming_recovery.contracts import Observation
++from streaming_recovery.localization import localize_wrist_handle_and_fingers, image_alignment_directions
++from streaming_recovery.multiview import MultiViewGeometryVision
++
++REAL=Path(__file__).resolve().parents[1]/'artifacts/multimodal_20261017/final_run'
++
++class LocalizationTests(unittest.TestCase):
++    def test_real_visible_blade_segment_survives_lower_reflection(self):
++        cfg=load_config();vision=MultiViewGeometryVision(cfg['geometry'],cfg['rules'])
++        rows=[]
++        for t in (5,6,7,8):
++            p=REAL/f'trajectory_000019/frames/obs-{t*25:06d}_cam_right_wrist.jpg'
++            if not p.exists():self.skipTest('verified local real image unavailable')
++            obs=Observation(float(t),'',{'cam_right_wrist':Image.open(p)},None,{},f'obs-{t*25:06d}')
++            rows.append(vision.wrist_observation(obs))
++        self.assertTrue(all(r['blade'] is not None and r['joined'] for r in rows),rows)
++        self.assertTrue(any(r['cut_operation'] for r in rows[1:]),rows)
++
++    def test_real_handle_neck_and_two_finger_edges(self):
++        p=REAL/'trajectory_000002/frames/obs-000050_cam_right_wrist.jpg'
++        if not p.exists():self.skipTest('verified local real image unavailable')
++        r=localize_wrist_handle_and_fingers(Image.open(p))
++        self.assertEqual(r['status'],'localized')
++        self.assertEqual(len(r['finger_inner_points_pixels']),2)
++        self.assertEqual(len(r['handle_neck_pixels']['edge_segments']),5)
++        self.assertEqual(image_alignment_directions(r['knife_handle_xy'],r['gripper_xy'],50),['图像左侧'])
++        self.assertNotIn('grasp_readiness',r)
++
++    def test_real_merged_finger_and_holder_rejected(self):
++        p=REAL/'trajectory_000008/frames/obs-000100_cam_right_wrist.jpg'
++        if not p.exists():self.skipTest('verified local real image unavailable')
++        r=localize_wrist_handle_and_fingers(Image.open(p))
++        self.assertEqual(r['status'],'unknown')
++        self.assertIsNone(r['knife_handle_xy']);self.assertIsNone(r['gripper_xy'])
++
++    def test_textureless_images_cannot_supply_positions(self):
++        for gray in (0,128,255):
++            r=localize_wrist_handle_and_fingers(np.full((384,512,3),gray,dtype='uint8'))
++            self.assertEqual(r['status'],'unknown');self.assertIsNone(r['knife_handle_xy'])
++
++    def test_direction_uses_image_axes_and_deadband_only(self):
++        self.assertEqual(image_alignment_directions([400,800],[600,600],50),['图像左侧','图像下方'])
++        self.assertEqual(image_alignment_directions([550,550],[500,500],50),[])
++
++if __name__=='__main__':unittest.main()
+--- a/streaming_recovery/tests/test_multimodal.py
++++ b/streaming_recovery/tests/test_multimodal.py
+@@ -7,18 +7,26 @@
+ import unittest
+ 
+ from streaming_recovery.__main__ import load_config
+-from streaming_recovery.dynamics import joint_motion
++from streaming_recovery.dynamics import JointInterval, joint_motion
+ from streaming_recovery.engine import Monitor
+ from streaming_recovery.source import LeRobotStream
+ from streaming_recovery.tests.test_system import observation, facts, SyntheticVision, INSTRUCTION
+ 
+ 
+-def measured(t, velocity=0., position=0., gripper=.005):
++def measured(t, velocity=0., position=0., gripper=.005, native=False):
+     obs=observation(t,gripper)
+     obs.observation_state[7]=position
+     obs.observation_velocity=[0.]*14
+     obs.observation_velocity[7]=velocity
+     obs.modalities["observation.velocity"]={"status":"available","timestamp":float(t),"age_s":0.,"reason":None}
++    if native:
++        # 显式合成整个区间，不能再用两个静止端点冒充连续静止。
++        interval=JointInterval()
++        start=max(0.,float(t)-1.)
++        for i in range(round((float(t)-start)*25)+1):
++            timestamp=start+i/25
++            interval.push(timestamp,obs.observation_state,obs.observation_velocity,f"synthetic-{timestamp:.2f}")
++        obs.joint_interval=interval.snapshot()
+     return obs
+ 
+ 
+@@ -30,7 +38,10 @@
+         for t in (0,1,2):
+             raw=.06 if kw.get("gripper")=="open" else .005
+             vision.current=facts(t,**deepcopy(kw))
+-            rows.append(monitor.step(measured(t,velocity,t*position_step,raw)))
++            if t==0 and vision.current.measurements.get("cut_operation")=="yes":
++                # 相对运动证据要先建立参考，首个样本尚无区间。
++                vision.current.measurements["cut_operation"]="unknown"
++            rows.append(monitor.step(measured(t,velocity,t*position_step,raw,native=True)))
+         return rows,monitor
+ 
+     def test_measured_motion_changes_stage_without_changing_grasp_evidence(self):
+@@ -49,7 +60,7 @@
+         self.assertEqual(len(result["evidence_refs"]),3)
+ 
+     def test_gripper_motion_is_excluded_from_joint_motion(self):
+-        a,b=measured(0,gripper=.06),measured(1,gripper=0.)
++        a,b=measured(0,gripper=.06),measured(1,gripper=0.,native=True)
+         b.observation_velocity[13]=5.
+         result=joint_motion(b,a,load_config()["rules"])
+         self.assertEqual(result["status"],"stationary")
+@@ -74,6 +85,7 @@
+         # 独立字典避免测试替身在前一个引擎内被修改。
+         stopped,monitor=self.sequence(**kw)
+         self.assertIsNone(monitor.tracker.operation_at)
++        self.assertTrue(all(r["visual_facts"]["measurements"].get("cut_operation")!="yes" for r in stopped[1:]))
+         self.assertEqual(stopped[-1]["visual_facts"]["measurements"]["cut_motion_check"],"joint_stationary_visual_motion_unconfirmed")
+         kw["measurements"]={"cut_operation":"yes"}
+         moving,monitor=self.sequence(velocity=.4,**kw)
+--- /dev/null
++++ b/streaming_recovery/tests/test_repair_state.py
+@@ -0,0 +1,162 @@
++"""2026-10-17 组合反例：合成语义逻辑，不代表真实像素/自然重试验证。"""
++from dataclasses import replace
++import unittest
++
++from streaming_recovery.__main__ import load_config
++from streaming_recovery.engine import Monitor
++from streaming_recovery.tests.test_system import SyntheticVision, facts, observation
++
++
++class RepairStateTests(unittest.TestCase):
++    def setUp(self):
++        self.config = load_config()
++        self.vision = SyntheticVision()
++        self.monitor = Monitor(self.config, self.vision)
++
++    def feed(self, t, raw=.06, moving=False, **kw):
++        self.vision.current = facts(t, **kw)
++        obs = observation(t, raw)
++        velocity = [0.] * 14
++        velocity[7] = .3 if moving else 0.
++        obs.modalities["observation.velocity"] = {"status":"available", "timestamp":float(t), "age_s":0., "reason":None}
++        return self.monitor.step(replace(obs, observation_velocity=velocity))
++
++    def held(self, start=0):
++        for t in (start, start+1):
++            result = self.feed(t, .005, moving=True, location="gripper", gripper="closed",
++                               contact="between_fingers", released="no", motion="to_board")
++        self.assertTrue(result["state"]["preconditions"]["reliable_grasp"])
++        return result
++
++    def lost_then_board_retry(self, support="board"):
++        self.held()
++        for t in (2, 3):
++            lost = self.feed(t, .005, location=support, gripper="closed", contact="separate", motion="at_board")
++        self.assertEqual(lost["failure_event"]["kind"], "lost_grasp")
++        self.assertEqual(lost["failure_event"]["state"], "confirmed")
++        self.feed(4, location=support, gripper="open", contact="separate", motion="at_board",
++                  knife_handle_xy=[700,500], gripper_xy=[400,500])
++        retry = self.feed(5, .005, location=support, gripper="closed", contact="separate", motion="at_board",
++                          knife_handle_xy=[700,500], gripper_xy=[400,500])
++        self.assertTrue(retry["state"]["new_attempt_observed"])
++        self.assertEqual(retry["failure_event"]["state"], "closed_for_retry")
++        return lost, retry
++
++    def test_A_explicit_release_overrides_stale_positive_proxies(self):
++        self.held()
++        for t in (2, 3):
++            result = self.feed(t, .005, location="holder", gripper="closed", contact="separate",
++                               released="yes", motion="at_board",
++                               measurements={"tool_on_board":True, "robot_at_board":True})
++            with self.subTest(timestamp=t):
++                self.assertFalse(result["state"]["preconditions"]["reliable_grasp"])
++                self.assertNotIn("grasp", result["state"]["anchors"])
++                self.assertNotEqual(result["state"]["stage"], "cutting")
++                self.assertTrue(result["state"].get("evidence_conflicts"))
++        self.assertTrue(result["state"]["preconditions"]["tool_returned"])
++        result = self.feed(4, .005, location="board", gripper="closed", contact="separate", motion="at_board")
++        self.assertNotEqual(result["state"]["candidate"], "lost_grasp")
++
++    def test_B_early_release_then_empty_motion_invalidates_current_precondition(self):
++        self.feed(0)
++        self.feed(1, .005, gripper="closed")
++        self.held(2)
++        for t in (4, 5):
++            released = self.feed(t, location="holder", gripper="open", contact="separate", released="yes", motion="at_holder")
++            self.assertIsNone(released["state"]["candidate"], "正常释放本身不能被判失败")
++        for t in (6, 7):
++            result = self.feed(t, moving=True, location="holder", gripper="open", contact="separate",
++                               released="yes", motion="at_board")
++        self.assertTrue(result["state"]["attempt_held"], "保留本次曾成功的历史语义")
++        self.assertFalse(result["state"]["preconditions"]["reliable_grasp"])
++        self.assertEqual(result["state"]["candidate"], "prerequisite_unmet")
++        self.assertEqual(result["state"]["stage"], "blocked_precondition")
++        self.assertEqual(result["execution_status"], "confirmed_failure")
++
++    def test_B_return_without_subsequent_action_is_not_failure(self):
++        self.held()
++        for t in range(2, 8):
++            result = self.feed(t, location="holder", gripper="open", contact="separate", released="yes", motion="away")
++            self.assertIsNone(result["state"]["candidate"])
++            self.assertFalse(result["notify"])
++
++    def test_C_failed_board_or_elsewhere_retry_creates_fresh_event(self):
++        for support in ("board", "elsewhere"):
++            with self.subTest(support=support):
++                self.setUp()
++                lost, retry = self.lost_then_board_retry(support)
++                for t in (6, 7, 8):
++                    result = self.feed(t, .005, location=support, gripper="closed", contact="separate", motion="at_board",
++                                       knife_handle_xy=[700,500], gripper_xy=[400,500])
++                self.assertIsNotNone(result["failure_event"])
++                self.assertEqual(result["failure_event"]["kind"], "grasp_not_established")
++                self.assertEqual(result["failure_event"]["state"], "confirmed")
++                self.assertNotEqual(result["failure_event"]["event_id"], lost["failure_event"]["event_id"])
++                self.assertEqual(result["recovery_event"]["event_id"], result["failure_event"]["event_id"])
++                self.assertEqual(result["correction"]["low_level"]["action_type"], "open_gripper")
++                self.assertEqual(result["state"]["attempt_context"]["support_location"], support)
++                self.assertEqual(result["state"]["attempt_context"]["object"], "knife")
++                self.assertFalse(result["execution"]["actually_executed"])
++
++    def test_C_closed_waiting_or_aligned_points_are_not_failure_evidence(self):
++        for contact in ("unknown", "separate"):
++            with self.subTest(contact=contact):
++                self.setUp()
++                self.lost_then_board_retry()
++                for t in range(6, 16):
++                    result = self.feed(t, .005, location="board", gripper="closed", contact=contact, motion="at_board",
++                                       knife_handle_xy=[500,500], gripper_xy=[500,500])
++                    self.assertIsNone(result["state"]["candidate"])
++                    self.assertIsNone(result["failure_event"])
++                    self.assertEqual(result["correction"]["low_level"]["recovery_phase"], "verify_grasp_effect")
++                    self.assertFalse(result["execution"]["actually_executed"])
++
++    def test_C_occluded_retry_waits_without_opening_or_false_resolution(self):
++        self.lost_then_board_retry()
++        result = self.feed(6, .005, location="unknown", gripper="closed", contact="unknown", valid=False, error="occluded")
++        self.assertEqual(result["execution_status"], "information_insufficient")
++        self.assertEqual(result["recovery_event"]["observation_status"], "unobservable")
++        self.assertEqual(result["correction"]["low_level"]["action_type"], "hold_and_observe")
++
++    def test_C_positive_retry_resolves_context_without_execution_attribution(self):
++        self.lost_then_board_retry()
++        for t in (6, 7):
++            result = self.feed(t, .005, moving=True, location="gripper", gripper="closed", contact="between_fingers", motion="to_board")
++        self.assertTrue(result["state"]["preconditions"]["reliable_grasp"])
++        self.assertIsNone(result["recovery_event"])
++        self.assertIsNone(result["correction"])
++        self.assertFalse(result["execution"]["outcome_attributed_to_suggestion"])
++
++    def test_C_actual_reopen_returns_to_preparation_without_inventing_attempt(self):
++        self.lost_then_board_retry()
++        attempt=self.monitor.tracker.attempt
++        result=self.feed(6,location="board",gripper="open",contact="separate",motion="at_board",
++                         knife_handle_xy=[700,500],gripper_xy=[400,500])
++        self.assertEqual(result["state"]["attempt"],attempt)
++        self.assertFalse(result["state"]["new_attempt_observed"])
++        self.assertEqual(result["correction"]["low_level"]["action_type"],"align_in_image")
++        self.assertEqual(result["correction"]["low_level"]["recovery_phase"],"align_image")
++        self.assertFalse(result["execution"]["actually_executed"])
++
++    def test_D_recovery_condition_keeps_connection_inside_gripper(self):
++        self.lost_then_board_retry()
++        result = self.feed(6, .005, moving=True, location="gripper", gripper="closed", contact="between_fingers", motion="to_board")
++        self.assertIsNotNone(result["correction"])
++        resume_when = result["correction"]["high_level"]["resume_when"]
++        self.assertNotIn("离开夹爪内", resume_when)
++        self.assertIn("保持连接", resume_when)
++        self.assertIn("砧板", resume_when)
++
++    def test_visible_joint_localization_keeps_alignment_stage_without_readiness_claim(self):
++        result = self.feed(0, moving=True, location="holder", contact="separate", motion="at_holder")
++        self.assertEqual(result["state"]["stage"], "approach_tool")
++        result = self.feed(1, moving=True, location="holder", contact="separate", motion="at_holder",
++                           knife_handle_xy=[700,500], gripper_xy=[400,500])
++        self.assertEqual(result["state"]["stage"], "align_grasp")
++        self.assertFalse(result["state"]["preconditions"]["reliable_grasp"])
++        self.assertEqual(result["visual_facts"]["grasp_readiness"], {})
++        self.assertIsNone(result["correction"])
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/streaming_recovery/tracking.py
++++ b/streaming_recovery/tracking.py
+@@ -34,6 +34,8 @@
+         self.attempt_started = None
+         self.cut_reference = None
+         self.operation_at = None
++        # 仅保存最新一次实际尝试：6 个固定字段，无累计尝试历史。
++        self.attempt_context = None
+ 
+     supports = staticmethod(supports)
+ 
+@@ -75,13 +77,19 @@
+         if new_attempt:
+             self.attempt += 1
+             self.armed, self.attempt_held, self.attempt_started = False, False, now
++            self.attempt_context = {
++                "object":"knife", "support_location":facts.knife_location if facts.knife_location in ("holder","board","elsewhere") else "unknown",
++                "started_at":now, "ref":facts.ref,
++                "expected_effect":"刀与两指建立连接并在移动时离开原支撑面；仅闭合或等待不证明成败",
++                "localization_frame":facts.localization_frame,
++            }
+             self.held = old_held = None
+             for key in ("grasp", "lost_grasp"):
+                 self.memory.anchors.pop(key, None)
+             self.memory.anchor("attempt", evidence(facts, "观测到目标附近夹爪实际从开转闭；仅证明新抓取尝试"))
+         self.last_gripper, self.last_visual_gripper = raw if good else None, facts.gripper if good else "unknown"
+         self.last_time, self.previous_holder = now, near_object
+-        known, unknown, current_evidence = [], [], []
++        known, unknown, current_evidence, evidence_conflicts = [], [], [], []
+         joint = facts.measurements.get("joint_motion", {"status":"unknown", "evidence_refs":[]})
+         active = joint["status"] in ("moving", "recent_motion")
+         if joint["status"] == "unknown":
+@@ -102,7 +110,7 @@
+         if not good:
+             self.held, self.returned, self.stage = None, None, "unknown"
+             unknown.append("当前视觉证据不可用：" + (facts.error or facts.visibility))
+-            return self._result(known, unknown, current_evidence, None, False, False, conflict, new_attempt)
++            return self._result(known, unknown, current_evidence, None, False, False, conflict, new_attempt, evidence_conflicts)
+         known.append(f"视觉观察：{facts.description}")
+         current_evidence.append(evidence(facts, f"knife_location={facts.knife_location}; contact={facts.contact}; motion={facts.motion}"))
+         if self.cut_reference is None and not self.ever_held and facts.cut_piece in ("yes", "no"):
+@@ -112,21 +120,30 @@
+         held_stable, _ = self._stable(attached, now)
+         grasp = self.memory.anchors.get("grasp")
+         recent_grasp = grasp is not None and 0 <= now-grasp["timestamp"] <= self.rules.get("grasp_evidence_ttl_s", 4.)
+-        if held_stable:
++        explicit_separation = facts.contact == "separate" or facts.released == "yes"
++        if explicit_separation:
++            # 清晰分离/释放是当前反证，优先于旧夹持与粗区域存在代理。
++            self.held = False
++            self.memory.anchors.pop("grasp", None)
++            if facts.measurements.get("tool_on_board") and facts.measurements.get("robot_at_board"):
++                evidence_conflicts.append({"timestamp":now, "ref":facts.ref,
++                    "type":"coarse_presence_vs_explicit_separation",
++                    "resolution":"优先采用当前刀与夹爪分离/释放证据；区域共现不能维持夹持"})
++                known.append("粗区域共现与明确分离反证冲突：当前可靠夹持为否，不继续沿用夹持锚点")
++            if facts.knife_location == "holder" and facts.released == "yes":
++                # 正常回架释放明确结束连接，不可随后误用为失抓前件。
++                recent_grasp = False
++                self.memory.anchors.pop("lost_grasp", None)
++        elif held_stable:
+             self.held, self.ever_held, self.attempt_held = True, True, True
+             self.memory.anchor("grasp", evidence(facts, "连续图像支持刀具与夹爪连接；闭爪值本身不是成功依据"))
+             self.memory.anchors.pop("lost_grasp", None)
+             known.append("连续视觉接触/随动证据支持当前持刀")
+         elif (old_held is True and recent_grasp and facts.measurements.get("tool_on_board") and
+-              facts.measurements.get("robot_at_board") and raw_closed and facts.knife_location != "board"):
++              facts.measurements.get("robot_at_board") and raw_closed and facts.knife_location != "board" and
++              facts.contact != "separate" and facts.released != "yes"):
+             self.held = True
+             known.append("近期夹持证据有效且当前未出现分离反证，维持有条件的夹持假设")
+-        elif facts.knife_location in ("holder", "board", "elsewhere") and facts.contact == "separate":
+-            self.held = False
+-            if facts.knife_location == "holder" and facts.released == "yes":
+-                # 已明确回架释放，旧连接已经结束；它与短暂不可见不同。
+-                self.memory.anchors.pop("grasp", None)
+-                recent_grasp = False
+         else:
+             self.held = None
+             unknown.append("当前可靠夹持尚未确认；历史夹持不等于当前持有")
+@@ -166,6 +183,26 @@
+                           (self.attempt > 0 or visually_closed or (facts.motion=="at_board" and active)))
+         if not current_complete and departed_empty and not self.attempt_held:
+             candidate = "grasp_not_established" if self.attempt > 0 else "prerequisite_unmet"
++        # 曾持刀并不等于现在持刀：提前回架后，明确空手继续切割需要重新建立前置条件。
++        # 回架/释放本身、驻留或视觉不明均不足以触发此分支。
++        if (not self.cut_confirmed and self.held is False and self.attempt_held and
++                facts.knife_location == "holder" and facts.contact == "separate" and
++                facts.motion in ("to_board", "at_board") and active):
++            candidate = "prerequisite_unmet"
++        def retry_miss(f):
++            context = self.attempt_context
++            return bool(context and context["support_location"] in ("board","elsewhere") and
++                f.timestamp > context["started_at"] and f.knife_location == context["support_location"] and
++                f.contact == "separate" and f.gripper == "closed" and
++                f.localization_frame == context["localization_frame"] and
++                f.knife_handle_xy is not None and f.gripper_xy is not None and
++                any(abs(a-b) > self.rules["direction_deadband_normalized"]
++                    for a,b in zip(f.knife_handle_xy, f.gripper_xy)))
++        retry_missed, _ = self._stable(retry_miss, now)
++        if not current_complete and not self.attempt_held and self.held is False and retry_missed:
++            candidate = "grasp_not_established"
++            current_evidence.append(evidence(facts,
++                "实际重抓后连续清晰观测：刀仍在原支撑面且与闭合两指显著分离；不是仅由等待或尚未抬起判断失败"))
+         detached = facts.knife_location in ("board", "elsewhere") and facts.contact == "separate"
+         if detached and (recent_grasp or "lost_grasp" in self.memory.anchors):
+             candidate = "lost_grasp"
+@@ -199,15 +236,16 @@
+         # 关节只限定动作是否正在发生，绝不据此建立物体夹持或切开事实。
+         if self.stage == "transport_tool" and joint["status"] == "stationary":
+             self.stage = "holding_tool" if self.held is True else "verify_grasp"
+-        elif self.stage == "align_grasp" and active and not new_attempt:
++        elif (self.stage == "align_grasp" and active and not new_attempt and
++              (facts.knife_handle_xy is None or facts.gripper_xy is None)):
+             self.stage = "approach_tool"
+         if not self.cut_confirmed:
+             unknown.append("本次新切割效果尚未确认；已有小块不能补齐")
+         if self.returned is not True:
+             unknown.append("当前刀具归位与释放尚未确认")
+-        return self._result(known, unknown, current_evidence, candidate, held_stable, True, conflict, new_attempt)
+-
+-    def _result(self, known, unknown, current_evidence, candidate, recovered, observable, conflict, new_attempt):
++        return self._result(known, unknown, current_evidence, candidate, held_stable and not explicit_separation, True, conflict, new_attempt, evidence_conflicts)
++
++    def _result(self, known, unknown, current_evidence, candidate, recovered, observable, conflict, new_attempt, evidence_conflicts):
+         goals = []
+         if self.ever_held:
+             goals.append("曾建立刀具夹持")
+@@ -238,6 +276,8 @@
+                 "expected_effect": expectations[self.stage], "candidate": candidate, "recovered": recovered,
+                 "observable": observable, "modality_conflict": conflict, "new_attempt_observed": new_attempt,
+                 "attempt": self.attempt, "attempt_held": self.attempt_held,
++                "attempt_context": dict(self.attempt_context) if self.attempt_context is not None else None,
++                "evidence_conflicts": evidence_conflicts,
+                 "task_completed": self.cut_confirmed and self.returned is True,
+                 "historical_completion": self.completed, "cut_reference": self.cut_reference,
+                 "arm_activity": (self.memory.features[-1].measurements.get("joint_motion",{}).get("status","unknown") if self.memory.features else "unknown"),
+@@ -245,5 +285,7 @@
+ 
+     def usage(self):
+         return {"task_state_slots": len([k for k in vars(self) if k not in ("rules", "memory")]),
+-                "task_reference_entries": int(self.cut_reference is not None)}
+-
++                "task_reference_entries": int(self.cut_reference is not None),
++                "attempt_context_entries":int(self.attempt_context is not None),
++                "attempt_context_fields":len(self.attempt_context) if self.attempt_context else 0}
++
+--- a/streaming_recovery/validation.py
++++ b/streaming_recovery/validation.py
+@@ -26,11 +26,14 @@
+         expected=round(obs.timestamp*stream.fps)+1
+         assert stream.audit["rows_read"]==expected,"reader consumed future rows before yielding"
+         assert all(n<=expected for n in stream.audit["frames_decoded"].values()),"decoder exposed future transport steps"
++        native=stream.audit["joint_interval_capacity"]
++        assert native["native_joint_previous_values"]<=6 and native["native_joint_path_values"]==6
++        assert native["native_joint_scalar_slots"]<=10 and native["native_joint_history_samples"]==0
+         results.append(monitor.step(obs))
+     return results,stream.audit,monitor
+ 
+ 
+-def build_prefix_fixture(config, directory, suffix_black=False):
++def build_prefix_fixture(config, directory, suffix_black=False, source_episode=0, prefix_frames=275):
+     """离线测试数据制作者：真实像素公共前缀＋显式修改的测试后缀，不是新增真实轨迹。"""
+     import av
+     import numpy as np
+@@ -43,12 +46,11 @@
+     (directory/"data/chunk-000").mkdir(parents=True)
+     info={"codebase_version":"v2.1","fps":25,"chunks_size":1000}
+     (directory/"meta/info.json").write_text(json.dumps(info),encoding="utf-8")
+-    instruction=instruction_for_episode(root,0)
++    instruction=instruction_for_episode(root,source_episode)
+     (directory/"meta/tasks.jsonl").write_text(json.dumps({"task_index":0,"task":instruction})+"\n",encoding="utf-8")
+     # 故意改变路径编号和全部事后标签，公共前缀诊断不能随之变化。
+     episode=901 if suffix_black else 101
+-    rows=pq.read_table(root/"data/chunk-000/episode_000000.parquet").to_pylist()
+-    prefix_frames=275
++    rows=pq.read_table(root/f"data/chunk-000/episode_{source_episode:06d}.parquet").to_pylist()
+     generated=[]
+     for i,row in enumerate(rows):
+         state=row["observation.state"]
+@@ -63,7 +65,7 @@
+     for camera in config["source"]["cameras"]:
+         folder=directory/f"videos/chunk-000/observation.images.{camera}"
+         folder.mkdir(parents=True)
+-        source=av.open(str(root/f"videos/chunk-000/observation.images.{camera}/episode_000000.mp4"))
++        source=av.open(str(root/f"videos/chunk-000/observation.images.{camera}/episode_{source_episode:06d}.mp4"))
+         # FFV1 帧内无损容器，避免压缩器的未来参考改变公共前缀像素。扩展名沿用适配器布局。
+         target=av.open(str(folder/f"episode_{episode:06d}.mp4"),mode="w",format="matroska")
+         stream=target.add_stream("ffv1",rate=25)
+@@ -83,7 +85,7 @@
+     return episode,prefix_frames/25
+ 
+ 
+-def validate(config,output=None):
++def validate(config,output=None,run_dir=None,manual_review=None,require_complete=False):
+     name=datetime.now(timezone(timedelta(hours=8))).strftime("validation_%Y%m%d_%H%M%S_%f")
+     directory=Path(output) if output else BASE/"artifacts"/name
+     directory.mkdir(parents=True,exist_ok=False)
+@@ -103,79 +105,67 @@
+     def logic():
+         suite=unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(name) for name in
+             ("streaming_recovery.tests.test_system","streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions",
+-             "streaming_recovery.tests.test_multimodal"))
++             "streaming_recovery.tests.test_multimodal","streaming_recovery.tests.test_joint_interval",
++             "streaming_recovery.tests.test_interval_review","streaming_recovery.tests.test_repair_state",
++             "streaming_recovery.tests.test_evaluation","streaming_recovery.tests.test_localization"))
+         stream=io.StringIO()
+         result=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)
+         (directory/"unit_tests.txt").write_text(stream.getvalue(),encoding="utf-8")
+         assert result.wasSuccessful(),stream.getvalue()
+         return {"tests_run":result.testsRun,"failures":len(result.failures),"errors":len(result.errors),
+                 "long_synthetic_decisions":10000,"warning":"合成语义替身；不证明真实视觉准确率"}
+-    record("合成状态机、事件、坐标、回放、重置与 10000 步全历史容量",logic,"synthetic_semantic_inputs")
++    record("状态/报告/区间回归、10000步合成容量与少量真实像素定位",logic,"mixed_regressions_with_explicit_real_pixel_checks")
+ 
+     real_cache={}
++    real_report={}
+     def real_runs():
+-        for episode in (0,18):
+-            rows,audit,monitor=real_decisions(config,config["source"]["root"],episode)
+-            real_cache[episode]=rows
+-            (directory/f"real_{episode}_decisions.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False,allow_nan=False)+"\n" for r in rows),encoding="utf-8")
+-            assert audit["invalid_video_timestamps"]==0
+-            assert all(not r["execution"]["actually_executed"] for r in rows)
+-            if episode==0:
+-                assert monitor.end_of_stream()["task_success"] is None
+-        assert not any(r["notify"] for r in real_cache[18]),"正常片段误提醒"
+-        assert any(r["state"]["preconditions"]["reliable_grasp"] is True for r in real_cache[18]),"正常持刀未获得证据"
+-        if config["backend"]=="multiview_effect_geometry":
+-            stages={r["state"]["stage"] for r in real_cache[18]}
+-            assert {"transport_tool","cut_operation","return_tool","verify_completion","completed"}<=stages,stages
+-            assert any(r["visual_facts"]["measurements"].get("new_cut_effect")=="yes" for r in real_cache[18])
+-            assert real_cache[18][-1]["state"]["task_completed"],"没有获得全部任务效果证据"
+-            assert not real_cache[0][-1]["state"]["preconditions"]["cut_effect_confirmed"]
+-        failures=[r for r in real_cache[0] if r["execution_status"]=="confirmed_failure"]
+-        assert failures,"真实失败未确认"
+-        assert len({r["failure_event"]["event_id"] for r in failures})==1
+-        assert failures[0]["correction"]["low_level"]["action_type"]=="open_gripper"
+-        assert not failures[-1]["notify"],"持续失败重复提醒"
+-        # 标签只在全部推理结束后单独打开，不输入监测器。
+-        labels={}
+-        with (Path(config["source"]["root"])/"meta/vifailback_annotations.jsonl").open(encoding="utf-8") as file:
+-            for line in file:
+-                item=json.loads(line)
+-                if item["episode_index"] in (0,18):
+-                    labels[item["episode_index"]]={"episode_success":item["episode_success"],"avoid_keyframe_indices":item["avoid_keyframe_indices"]}
+-        return {"decisions":{str(k):len(v) for k,v in real_cache.items()},"independent_labels":labels,
+-                "first_suspicion_s":next(r["timestamp"] for r in real_cache[0] if r["execution_status"]=="suspicious"),
+-                "first_confirmation_s":failures[0]["timestamp"],
+-                "normal_grasp_confirmed_times":[r["timestamp"] for r in real_cache[18] if r["state"]["preconditions"]["reliable_grasp"] is True],
+-                "normal_stages":sorted({r["state"]["stage"] for r in real_cache[18]}),
+-                "normal_unknown_times":[r["timestamp"] for r in real_cache[18] if r["execution_status"]=="information_insufficient"],
+-                "normal_current_completion":real_cache[18][-1]["state"]["task_completed"],
+-                "scope":"仅演示；阈值用这两个可见场景开发，不能报告无偏识别精度或泛化性能",
+-                "first_detectable_failure_time":"not_annotated; avoid keyframe is not assumed to be first-detectable"}
+-    record("真实正常/失败完整回放与两层建议",real_runs,"real_robot_pixels_and_proprioception")
++        from .__main__ import run
++        from .evaluation import evaluate_run
++        path=Path(run_dir) if run_dir else run(config,directory/"real_run")
++        review=json.loads(Path(manual_review).read_text(encoding="utf-8")) if manual_review else None
++        report=evaluate_run(config,path,review)
++        real_report.update(report)
++        (directory/"real_acceptance.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
++        for episode in config["source"]["episodes"]:
++            rows=[json.loads(line) for line in (path/f"trajectory_{episode:06d}/decisions.jsonl").read_text(encoding="utf-8").splitlines()]
++            # 处理耗时是运行审计，不属于语义；reset复核排除此字段。
++            real_cache[episode]=[{key:value for key,value in row.items() if key!="processing"} for row in rows]
++        assert report["engineering_status"]=="passed",report["checks"]
++        return {"engineering_status":report["engineering_status"],"semantic_status":report["semantic_status"],
++                "capability_gaps":report["capability_gaps"],"totals":report["totals"],
++                "episodes":config["source"]["episodes"],"reused_run":str(path),
++                "scope":"六条已见开发/验证回归；目视约束独立于推理，不报告无偏精度或检测延迟"}
++    record("参数化真实完整回放与语义关键时刻验收",real_runs,"real_robot_pixels_and_proprioception")
+ 
+     def causal():
+-        a=directory/"prefix_fixture_A"
+-        b=directory/"prefix_fixture_B"
+-        ep_a,cut=build_prefix_fixture(config,a,False)
+-        ep_b,_=build_prefix_fixture(config,b,True)
+         compared={}
+-        for backend in ("calibrated_rgb_geometry","multiview_effect_geometry"):
+-            cfg=deepcopy(config);cfg["backend"]=backend
+-            ra,aa,_=real_decisions(cfg,a,ep_a)
+-            rb,ab,_=real_decisions(cfg,b,ep_b)
+-            pa=[r for r in ra if r["timestamp"]<cut]
+-            pb=[r for r in rb if r["timestamp"]<cut]
+-            assert pa==pb,"公共前缀结果受到后缀/标签/路径改变影响:"+backend
+-            assert ra[-1]!=rb[-1],"后缀没有真正改变"
+-            compared[backend]=len(pa)
+-            (directory/f"prefix_A_{backend}.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False)+"\n" for r in ra),encoding="utf-8")
+-            (directory/f"prefix_B_{backend}.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False)+"\n" for r in rb),encoding="utf-8")
+-        return {"common_prefix_native_frames":275,"identical_decisions":len(pa),"prefix_end_exclusive_s":cut,
+-                "suffix_modified":True,"path_episode_labels_actions_modified":True,
+-                "backends_compared":compared,"reader_progress_checked_at_every_yield":True,
+-                "coverage":"Parquet读取、逐帧解码、对齐、初始图像校准、视觉特征、记忆、状态、事件、两层纠错、结构化输出",
+-                "fixture_kind":"真实图像公共前缀＋人工修改后缀；不是新增真实机器人轨迹"}
+-    record("完整链路公共前缀因果性与标签路径隔离",causal,"real_pixels_counterfactual_suffix_fixture")
++        for seed,prefix_frames,backends in ((0,275,("calibrated_rgb_geometry","multiview_effect_geometry")),
++                                           (2,175,("multiview_effect_geometry",))):
++            a,b=directory/f"prefix_{seed}_A",directory/f"prefix_{seed}_B"
++            ep_a,cut=build_prefix_fixture(config,a,False,seed,prefix_frames)
++            ep_b,_=build_prefix_fixture(config,b,True,seed,prefix_frames)
++            for backend in backends:
++                cfg=deepcopy(config);cfg["backend"]=backend
++                ra,aa,_=real_decisions(cfg,a,ep_a)
++                rb,ab,_=real_decisions(cfg,b,ep_b)
++                pa=[r for r in ra if r["timestamp"]<cut]
++                pb=[r for r in rb if r["timestamp"]<cut]
++                assert pa==pb,"公共前缀受到后缀/标签/路径改变影响:"+backend
++                assert ra[-1]!=rb[-1],"后缀没有真正改变"
++                localized=sum(r["visual_facts"]["knife_handle_xy"] is not None for r in pa)
++                if seed==2:
++                    assert localized>=2,"新联合定位路径必须真正进入因果性测试"
++                key=f"{seed}_{backend}"
++                compared[key]={"identical_decisions":len(pa),"localized_decisions":localized,
++                               "native_joint_aggregates":sum(r["observation_inputs"]["joint_interval"] is not None for r in pa),
++                               "prefix_end_exclusive_s":cut}
++                for label,rows in (("A",ra),("B",rb)):
++                    (directory/f"prefix_{label}_{key}.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False)+"\n" for r in rows),encoding="utf-8")
++        return {"backends_and_prefixes":compared,"suffix_path_labels_actions_modified":True,
++                "reader_progress_checked_at_every_yield":True,
++                "coverage":"逐行读取/原生关节聚合/逐帧解码/因果对齐/视觉候选/联合定位/有限记忆/阶段/事件/两层建议",
++                "fixture_kind":"真实像素公共前缀＋人工修改后缀；不是新增真实轨迹"}
++    record("包含新增联合定位和原生区间聚合的全链公共前缀因果性",causal,"real_pixels_counterfactual_suffix_fixture")
+ 
+     def long_vision():
+         root=Path(config["source"]["root"])
+@@ -186,7 +176,15 @@
+         maxima={}
+         for i in range(2000):
+             obs=cycle[i%len(cycle)]
+-            current=replace(obs,timestamp=float(i),ref=f"obs-{i:06d}",modalities={k:dict(v,timestamp=float(i)) for k,v in obs.modalities.items()})
++            interval=deepcopy(obs.joint_interval)
++            if interval is not None:
++                offset=float(i)-obs.timestamp
++                interval["start_timestamp"]+=offset
++                interval["end_timestamp"]+=offset
++                interval["start_ref"]=f"stress-start-{i}"
++                interval["end_ref"]=f"stress-end-{i}"
++            current=replace(obs,timestamp=float(i),ref=f"obs-{i:06d}",joint_interval=interval,
++                            modalities={k:dict(v,timestamp=float(i)) for k,v in obs.modalities.items()})
+             r=monitor.step(current)
+             for k,v in r["memory_usage"].items():
+                 maxima[k]=max(maxima.get(k,0),v)
+@@ -208,7 +206,10 @@
+             monitor.step(obs)
+         monitor.reset()
+         reset_rows=[monitor.step(obs) for obs in source(18)]
+-        assert reset_rows==real_cache[18],"跨轨迹状态泄漏"
++        fresh=real_cache.get(18)
++        if fresh is None:
++            fresh,_,_=real_decisions(config,root,18)
++        assert reset_rows==fresh,"跨轨迹状态泄漏"
+         monitor.reset()
+         initial=next(iter(source(0)))
+         monitor.step(initial)
+@@ -256,13 +257,19 @@
+                 "occlusion_kind":"人工缺帧/黑帧/解码故障注入，不是真实遮挡标注集"}
+     record("真实后端缺失/遮挡恢复与跨轨迹重置",missing_and_reset,"real_pipeline_with_injected_faults")
+ 
+-    report={"checks":checks,"passed":all(c["status"]=="passed" for c in checks),
++    engineering_passed=all(c["status"]=="passed" for c in checks)
++    semantic_passed=real_report.get("semantic_status")=="passed"
++    report={"checks":checks,"passed":engineering_passed and semantic_passed,
++            "engineering_status":"passed" if engineering_passed else "failed",
++            "semantic_status":real_report.get("semantic_status","not_verified"),
++            "overall_status":"failed" if not engineering_passed else "passed" if semantic_passed else "partial",
+             "code_sha256":{p.name:sha256(p) for p in BASE.glob("*.py")},"config":config,
+             "not_validated":["识别精度与跨场景泛化", "真实机器人重试和滑落样本", "真实坐标变换和物理动作执行",
+-                             "真实刀柄/两指联合定位及闭合准备", "Qwen可靠结构化诊断", "目标4完整实验"],
++                             "独立深度/姿态/接触准备", "Qwen可靠结构化诊断", "目标4完整实验"],
++            "semantic_capability_gaps":real_report.get("capability_gaps",["real acceptance did not finish"]),
+             "no_execution_claim":True,"synthetic_not_used_as_visual_accuracy":True}
+     (directory/"validation.json").write_text(json.dumps(report,ensure_ascii=False,indent=2,allow_nan=False),encoding="utf-8")
+     print("验证记录："+str(directory),flush=True)
+-    if not report["passed"]:
+-        raise RuntimeError("one or more checks failed; inspect validation.json")
++    if not engineering_passed or require_complete and not report["passed"]:
++        raise RuntimeError("engineering failure or requested semantic acceptance incomplete; inspect validation.json")
+     return directory

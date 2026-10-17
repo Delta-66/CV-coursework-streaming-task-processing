@@ -1,0 +1,29 @@
+source:
+  format: lerobot_v2.1
+  root: ../data/vifailback_lerobot
+  episodes: [0, 18]
+  cameras: [observation.images.cam_high]
+monitor:
+  camera: observation.images.cam_high
+  sample_every: 25
+  include_last_frame: true
+  max_samples_per_episode: null
+  max_model_calls: null
+  max_image_edge: 384
+  history_size: 2
+  max_history_s: 8
+tracking:
+  stage_confirmation: 2
+  failure_confirmation: 2
+  recovery_confirmation: 2
+  cooldown_s: 8.0
+model:
+  path: ../models/Qwen3-VL-2B-Instruct
+  device: cuda:0
+  max_new_tokens: 768
+  max_image_pixels: 98304
+  max_inference_s: 120
+  min_free_cuda_mib: 6500
+  min_inference_free_cuda_mib: 1024
+  gpu_poll_interval_s: 10
+output_dir: ../output/monitor_runs

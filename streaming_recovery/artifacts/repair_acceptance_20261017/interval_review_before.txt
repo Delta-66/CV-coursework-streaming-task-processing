@@ -1,0 +1,51 @@
+test_positive_short_interval_is_still_evidence_of_recent_motion (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_positive_short_interval_is_still_evidence_of_recent_motion) ... FAIL
+test_short_complete_suffix_does_not_veto_longer_visual_interval (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_short_complete_suffix_does_not_veto_longer_visual_interval) ... FAIL
+test_single_sample_cannot_claim_complete_nonzero_interval (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_single_sample_cannot_claim_complete_nonzero_interval) ... FAIL
+test_stationarity_requires_a_previous_interval_within_gap (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_stationarity_requires_a_previous_interval_within_gap) ... 
+  test_stationarity_requires_a_previous_interval_within_gap (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_stationarity_requires_a_previous_interval_within_gap) (previous=None) ... FAIL
+  test_stationarity_requires_a_previous_interval_within_gap (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_stationarity_requires_a_previous_interval_within_gap) (previous=-3.0) ... FAIL
+
+======================================================================
+FAIL: test_positive_short_interval_is_still_evidence_of_recent_motion (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_positive_short_interval_is_still_evidence_of_recent_motion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_interval_review.py", line 36, in test_positive_short_interval_is_still_evidence_of_recent_motion
+    self.assertTrue(any(ref.get("field")=="native_measured_joint_interval" and
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_short_complete_suffix_does_not_veto_longer_visual_interval (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_short_complete_suffix_does_not_veto_longer_visual_interval)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_interval_review.py", line 28, in test_short_complete_suffix_does_not_veto_longer_visual_interval
+    self.assertNotEqual(motion["status"],"stationary")
+AssertionError: 'stationary' == 'stationary'
+
+======================================================================
+FAIL: test_single_sample_cannot_claim_complete_nonzero_interval (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_single_sample_cannot_claim_complete_nonzero_interval)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_interval_review.py", line 51, in test_single_sample_cannot_claim_complete_nonzero_interval
+    self.assertFalse(valid_interval(native,1.))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_stationarity_requires_a_previous_interval_within_gap (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_stationarity_requires_a_previous_interval_within_gap) (previous=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_interval_review.py", line 45, in test_stationarity_requires_a_previous_interval_within_gap
+    self.assertNotEqual(motion["status"],"stationary")
+AssertionError: 'stationary' == 'stationary'
+
+======================================================================
+FAIL: test_stationarity_requires_a_previous_interval_within_gap (streaming_recovery.tests.test_interval_review.IntervalReviewTests.test_stationarity_requires_a_previous_interval_within_gap) (previous=-3.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_interval_review.py", line 45, in test_stationarity_requires_a_previous_interval_within_gap
+    self.assertNotEqual(motion["status"],"stationary")
+AssertionError: 'stationary' == 'stationary'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.010s
+
+FAILED (failures=5)

@@ -1,0 +1,782 @@
+[
+  {
+    "episode": 2,
+    "timestamp": 0.0,
+    "stage": "unknown",
+    "location": "unknown",
+    "motion": "unknown",
+    "gripper": "unknown",
+    "wrist": null,
+    "cut_operation": null,
+    "arm_activity": "unknown",
+    "new_cut_effect": null
+  },
+  {
+    "episode": 2,
+    "timestamp": 1.0,
+    "stage": "unknown",
+    "location": "unknown",
+    "motion": "unknown",
+    "gripper": "unknown",
+    "wrist": null,
+    "cut_operation": null,
+    "arm_activity": "moving",
+    "new_cut_effect": null
+  },
+  {
+    "episode": 2,
+    "timestamp": 2.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "open",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 2,
+    "timestamp": 3.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "open",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 2,
+    "timestamp": 4.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "open",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 2,
+    "timestamp": 5.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "open",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 2,
+    "timestamp": 6.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "unknown",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "stationary",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 2,
+    "timestamp": 7.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 2,
+    "timestamp": 8.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 2,
+    "timestamp": 9.0,
+    "stage": "unknown",
+    "location": "unknown",
+    "motion": "unknown",
+    "gripper": "unknown",
+    "wrist": null,
+    "cut_operation": null,
+    "arm_activity": "moving",
+    "new_cut_effect": null
+  },
+  {
+    "episode": 2,
+    "timestamp": 10.0,
+    "stage": "blocked_precondition",
+    "location": "holder",
+    "motion": "at_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 2,
+    "timestamp": 11.0,
+    "stage": "blocked_precondition",
+    "location": "holder",
+    "motion": "at_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 8,
+    "timestamp": 0.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "unknown",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 8,
+    "timestamp": 1.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "unknown",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 8,
+    "timestamp": 2.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "open",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 8,
+    "timestamp": 3.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "open",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 8,
+    "timestamp": 4.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "open",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 8,
+    "timestamp": 5.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 8,
+    "timestamp": 6.0,
+    "stage": "approach_tool",
+    "location": "unknown",
+    "motion": "at_holder",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": null,
+      "joined": false,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": null,
+      "previous_timestamp": null,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 8,
+    "timestamp": 7.0,
+    "stage": "blocked_precondition",
+    "location": "holder",
+    "motion": "at_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 8,
+    "timestamp": 8.0,
+    "stage": "blocked_precondition",
+    "location": "holder",
+    "motion": "at_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 8,
+    "timestamp": 9.0,
+    "stage": "blocked_precondition",
+    "location": "holder",
+    "motion": "at_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 0.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "unknown",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 1.0,
+    "stage": "locate_tool",
+    "location": "holder",
+    "motion": "unknown",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 2.0,
+    "stage": "approach_tool",
+    "location": "unknown",
+    "motion": "at_holder",
+    "gripper": "open",
+    "wrist": {
+      "available": true,
+      "blade": null,
+      "joined": false,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": null,
+      "previous_timestamp": null,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 3.0,
+    "stage": "verify_grasp",
+    "location": "unknown",
+    "motion": "at_holder",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": null,
+      "joined": false,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000050",
+      "previous_timestamp": 2.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 4.0,
+    "stage": "verify_grasp",
+    "location": "unknown",
+    "motion": "at_holder",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": null,
+      "joined": false,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000075",
+      "previous_timestamp": 3.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 5.0,
+    "stage": "verify_grasp",
+    "location": "gripper",
+    "motion": "at_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": [
+        245,
+        0,
+        42,
+        269
+      ],
+      "joined": true,
+      "food": [
+        12,
+        30,
+        238,
+        58
+      ],
+      "cut_operation": false,
+      "previous_ref": "obs-000100",
+      "previous_timestamp": 4.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 6.0,
+    "stage": "verify_grasp",
+    "location": "unknown",
+    "motion": "at_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": null,
+      "joined": false,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000125",
+      "previous_timestamp": 5.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 7.0,
+    "stage": "verify_grasp",
+    "location": "gripper",
+    "motion": "at_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": null,
+      "joined": false,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000150",
+      "previous_timestamp": 6.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 8.0,
+    "stage": "cutting",
+    "location": "gripper",
+    "motion": "at_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": null,
+      "joined": false,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000175",
+      "previous_timestamp": 7.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 9.0,
+    "stage": "cutting",
+    "location": "gripper",
+    "motion": "at_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": [
+        245,
+        0,
+        46,
+        273
+      ],
+      "joined": true,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000200",
+      "previous_timestamp": 8.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "unknown"
+  },
+  {
+    "episode": 19,
+    "timestamp": 10.0,
+    "stage": "return_tool",
+    "location": "gripper",
+    "motion": "returning_holder",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": [
+        245,
+        0,
+        39,
+        277
+      ],
+      "joined": true,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000225",
+      "previous_timestamp": 9.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "yes"
+  },
+  {
+    "episode": 19,
+    "timestamp": 11.0,
+    "stage": "verify_cut",
+    "location": "gripper",
+    "motion": "to_board",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": [
+        246,
+        0,
+        38,
+        276
+      ],
+      "joined": true,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000250",
+      "previous_timestamp": 10.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "yes"
+  },
+  {
+    "episode": 19,
+    "timestamp": 12.0,
+    "stage": "return_tool",
+    "location": "gripper",
+    "motion": "returning_holder",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": [
+        247,
+        0,
+        36,
+        271
+      ],
+      "joined": true,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000275",
+      "previous_timestamp": 11.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "yes"
+  },
+  {
+    "episode": 19,
+    "timestamp": 13.0,
+    "stage": "return_tool",
+    "location": "gripper",
+    "motion": "returning_holder",
+    "gripper": "closed",
+    "wrist": {
+      "available": true,
+      "blade": [
+        249,
+        0,
+        33,
+        273
+      ],
+      "joined": true,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000300",
+      "previous_timestamp": 12.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "recent_motion",
+    "new_cut_effect": "yes"
+  },
+  {
+    "episode": 19,
+    "timestamp": 14.0,
+    "stage": "unknown",
+    "location": "unknown",
+    "motion": "at_holder",
+    "gripper": "unknown",
+    "wrist": {
+      "available": true,
+      "blade": [
+        265,
+        166,
+        18,
+        115
+      ],
+      "joined": true,
+      "food": null,
+      "cut_operation": false,
+      "previous_ref": "obs-000325",
+      "previous_timestamp": 13.0,
+      "consulted": true,
+      "selection_reason": "top_view_grasp_relation_ambiguous"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "yes"
+  },
+  {
+    "episode": 19,
+    "timestamp": 15.0,
+    "stage": "verify_completion",
+    "location": "holder",
+    "motion": "away",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "yes"
+  },
+  {
+    "episode": 19,
+    "timestamp": 16.0,
+    "stage": "verify_completion",
+    "location": "holder",
+    "motion": "away",
+    "gripper": "closed",
+    "wrist": {
+      "available": false,
+      "consulted": false,
+      "blade": null,
+      "cut_operation": false,
+      "reason": "top_view_tool_still_on_holder_and_separate"
+    },
+    "cut_operation": "unknown",
+    "arm_activity": "moving",
+    "new_cut_effect": "yes"
+  }
+]

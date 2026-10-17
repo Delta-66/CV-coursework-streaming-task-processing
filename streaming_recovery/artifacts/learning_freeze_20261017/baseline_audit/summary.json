@@ -1,0 +1,526 @@
+{
+  "run_id": "20261017_184808_645128",
+  "date_timezone": "Asia/Shanghai",
+  "python": "3.11.17 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:16:54) [MSC v.1942 64 bit (AMD64)]",
+  "backend": "multiview_effect_geometry",
+  "actual_data": true,
+  "synthetic": false,
+  "execution_mode": "advisory_replay",
+  "clock_policy": "25 FPS source; configured sampling; synchronous backpressure, not wall-clock real-time guarantee",
+  "episodes": [
+    {
+      "episode_for_audit_only": 13,
+      "output_subdir": "trajectory_000013",
+      "counts": {
+        "decisions": 13,
+        "notifications": 0,
+        "confirmed_failure_decisions": 0,
+        "uncertain_decisions": 2,
+        "model_invalid": 1
+      },
+      "elapsed_wall_s": 3.9060000000026776,
+      "decision_wall_total_s": 0.29800000000250293,
+      "decision_wall_max_s": 0.046999999998661224,
+      "source_audit": {
+        "rows_read": 323,
+        "frames_decoded": {
+          "cam_high": 323,
+          "cam_right_wrist": 323
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state",
+          "observation.velocity"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure",
+        "missing_columns": [],
+        "last_source_timestamp": 12.88,
+        "joint_interval_capacity": {
+          "native_joint_previous_values": 6,
+          "native_joint_path_values": 6,
+          "native_joint_scalar_slots": 10,
+          "native_joint_history_samples": 0
+        }
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 4,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1570,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 404,
+        "feature_payload_chars": 22815,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 0,
+        "event_evidence": 0,
+        "event_sensor_refs": 0,
+        "active_events": 0,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 2,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 18,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 0,
+        "attempt_context_fields": 0,
+        "effect_state_slots": 5,
+        "effect_layout_records": 2,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 1,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 5,
+        "effect_state_chars": 393,
+        "recovery_contexts": 0,
+        "recovery_sensor_refs": 0,
+        "recovery_event_evidence": 0,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 15,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.046999999998661224
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0319999999992433
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 11.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 12.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 12.0,
+        "task_success": null,
+        "historical_completion": false,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000013.parquet",
+          "sha256": "812196d8a9fe810a8751504a20b2eb4d156add084a95494514d5ae745614e8f2"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000013.mp4",
+          "sha256": "7f15f7a17b3dc541a0a2402d0e2039d02aba809285b1f9e8aada9b471d033ec4"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000013.mp4",
+          "sha256": "8c6a96799a12828837cf68531df9087d2920cc3c05ddbc81260c3230c24ad6a2"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 16,
+      "output_subdir": "trajectory_000016",
+      "counts": {
+        "decisions": 15,
+        "notifications": 0,
+        "confirmed_failure_decisions": 0,
+        "uncertain_decisions": 0,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 4.25,
+      "decision_wall_total_s": 0.27899999999499414,
+      "decision_wall_max_s": 0.031000000002677552,
+      "source_audit": {
+        "rows_read": 371,
+        "frames_decoded": {
+          "cam_high": 371,
+          "cam_right_wrist": 371
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state",
+          "observation.velocity"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure",
+        "missing_columns": [],
+        "last_source_timestamp": 14.8,
+        "joint_interval_capacity": {
+          "native_joint_previous_values": 6,
+          "native_joint_path_values": 6,
+          "native_joint_scalar_slots": 10,
+          "native_joint_history_samples": 0
+        }
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 3,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1571,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 403,
+        "feature_payload_chars": 22244,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 0,
+        "event_evidence": 0,
+        "event_sensor_refs": 0,
+        "active_events": 0,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 2,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 18,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 0,
+        "attempt_context_fields": 0,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 219,
+        "recovery_contexts": 0,
+        "recovery_sensor_refs": 0,
+        "recovery_event_evidence": 0,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 11,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "transport_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 11.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.030999999995401595
+        },
+        {
+          "timestamp": 12.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 13.0,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 14.0,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 14.0,
+        "task_success": null,
+        "historical_completion": false,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000016.parquet",
+          "sha256": "2e69c300379baabf3957d3cff1b96910b8d6d37ff0bf5ddde7f4bc369fcdd9d1"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000016.mp4",
+          "sha256": "0413aa831deba25c868388080cbdae45e560766492ccbaa711663d22212964ae"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000016.mp4",
+          "sha256": "9f0b63cbf92ff31a48d63c2f5dcc2a451dff6c320e606e8424d59dda9661f5b2"
+        }
+      ]
+    }
+  ],
+  "code_sha256": {
+    "attempts.py": "d05cac7ddf568fdbb600b06c04b262bccf2bbe5efb52f9ba5c3f40acef58473a",
+    "contracts.py": "a83c5f03918ce154981281f225ee3ae59e320e9419d76e2b2a5caa9b35cde642",
+    "dynamics.py": "e6c58490a1d2fb2eba0e6f12db375814b331ebca539246f36837e626f4a210fc",
+    "effects.py": "f277ab7df07516d8358bec88f57b14dff2e0fde34bde76d5e5452491be66c3a3",
+    "engine.py": "425064580c5d3032bc23c53b0020619230baae85e7cfe9998e3d3ac3d93a047b",
+    "evaluation.py": "6e61234784c8ac21580e98fe6cabb49d1dace24c0579e528076a351e8b1ee4b8",
+    "events.py": "ecdf0718a3c183cf5c7d148160cc4376a0aca0b5c34a6bbdc2c057999bde671f",
+    "fetch_functional_data.py": "0905cb6da9e52529e419a32ab5c333236582713e092dce2cc115f429dc902dbc",
+    "geometry.py": "81f6a8bd06d6836f847a0d8c97fbad1868216611e846265a3b8c7fa889028138",
+    "localization.py": "1204f22e2ee76ae57851287d4668fbf847c86f2c1198df5b8b77aaecca96583d",
+    "memory.py": "79bfefe9e848815e51cac2b05f89f666e90a3c5c9c6c23a002d8582f73c97c9e",
+    "multiview.py": "465e02ac7bba441f61b7fd21abf87a29de0fd1a14766a77e1a702107fcfefff4",
+    "probe.py": "b91dd5b5ba3e0280439f7a0f7a191e39b38f46eb81c6aefc423f5edf6b1a165e",
+    "recovery.py": "9adf51f3bf3a11e2469657de5427f19fa03e85746d051394a26c417547b03556",
+    "report.py": "a387dcbed65704166afd45b6fe5f134bb8ba9ed11fe214a6b66b30eb08317028",
+    "review_binding.py": "5640195f9c8a153833ec0f06c41e3c5a15277cb665f661c35fe21ca4ca6184ce",
+    "review_existing.py": "a29602aeba8afd2be5c6aa96d0e15595d5f5459b759ad1a2ff6f7fb10f5bc30c",
+    "source.py": "0572b42d63595a4385681efb4807e333b120b1bd9aea6b5ca65d67498df10fbf",
+    "task_spec.py": "d24532e9880f9337c51b4216ab1009a543964dc591e886c99fbd3d85a708780b",
+    "tracking.py": "a533fe8198cb23037e18a1c07dc3986bbd0e18f975e09f1471951e6c44b38117",
+    "validation.py": "4a0955601503fd2e50875936860ffadb35059b21c2fb3ec1919f0dd597130de3",
+    "vision.py": "f923409301f72d844c828e59cd9dc3c529fb188e7e4a7c23378e97aa8bbd7f97",
+    "__init__.py": "da8cc91889ca48ac6f50024508a5001c62749b687777232e418522bc934bdab8",
+    "__main__.py": "fa103e46942dd6728f36fd1dc58b05b6b62e053c6498203eb0314e30aab82afa"
+  },
+  "test_sha256": {},
+  "elapsed_wall_s": 8.171999999998661
+}
