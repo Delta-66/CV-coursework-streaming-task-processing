@@ -1,0 +1,75 @@
+{
+  "schema": "offline_fit_v1",
+  "review_sha256": "34cb31374ee99e795c6e621848e8acee893a5f3d1a0e159baa53256b69707afa",
+  "features_sha256": "263b91ad264cc164e75e154533e0736738708cef956e4ed6540e090aea666598",
+  "seed": 17,
+  "sklearn": "1.9.1",
+  "samples": 43,
+  "group_counts": {
+    "3": 9,
+    "10": 10,
+    "17": 11,
+    "19": 13
+  },
+  "class_counts": {
+    "holder": 16,
+    "unknown": 11,
+    "gripper": 16
+  },
+  "excluded": [
+    {
+      "episode": 12,
+      "reason": "initial_geometry_calibration_failed; all15 feature records invalid; image at0/3/10 checked, no fake features"
+    }
+  ],
+  "standardizer_fit_groups": [
+    3,
+    10,
+    17,
+    19
+  ],
+  "validation_used_in_fit": false,
+  "labels_are_current_relation_not_episode_outcome": true,
+  "uniform_initial_log_loss": 1.0986122886681098,
+  "candidates": [
+    {
+      "C": 0.1,
+      "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\fusion_C0.1.json",
+      "sha256": "f653456722ac3fb317e59817dc105c2145f1c942d6b47a97c507f03dd1d37905",
+      "fit_wall_s": 0.0243209999971441,
+      "iterations": [
+        12
+      ],
+      "log_loss": 0.3539654412573111,
+      "training_relation_accuracy": 0.8860334110334109,
+      "parameter_l2_from_zero": 1.1132413249321889,
+      "export_probability_max_abs_error": 2.220446049250313e-16
+    },
+    {
+      "C": 1.0,
+      "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\fusion_C1.json",
+      "sha256": "ac622a1987b5cc01b22cc80d47748c62e048a85d9b59fd69d180984c7bec3a3b",
+      "fit_wall_s": 0.01757799999904819,
+      "iterations": [
+        18
+      ],
+      "log_loss": 0.156483752203652,
+      "training_relation_accuracy": 0.9750000000000001,
+      "parameter_l2_from_zero": 2.6769527962079476,
+      "export_probability_max_abs_error": 2.220446049250313e-16
+    },
+    {
+      "C": 10.0,
+      "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\fusion_C10.json",
+      "sha256": "c506b3d658d8fbf5bde001899a3323140f9ea8679b5339930906ef23701bb6c6",
+      "fit_wall_s": 0.018101199995726347,
+      "iterations": [
+        26
+      ],
+      "log_loss": 0.07055576832752102,
+      "training_relation_accuracy": 0.9750000000000001,
+      "parameter_l2_from_zero": 5.695095954263747,
+      "export_probability_max_abs_error": 2.220446049250313e-16
+    }
+  ]
+}

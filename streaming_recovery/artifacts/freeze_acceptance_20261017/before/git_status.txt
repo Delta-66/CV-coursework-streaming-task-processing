@@ -1,0 +1,33 @@
+ M README.md
+ M current_observation.py
+ M "docs/ViFailback\350\276\223\345\205\245\346\216\245\345\217\243.md"
+ M "docs/\345\275\223\345\211\215\350\247\202\346\265\213\345\237\272\347\272\277.md"
+ M tests/test_current_observation.py
+?? .vscode/
+?? configs/splits/
+?? configs/task_monitor.yaml
+?? configs/temporal_benchmark.yaml
+?? diagnostic_tracking.py
+?? docs/data-split-summary.json
+?? docs/task-monitor-validation.json
+?? docs/temporal-resource-check.json
+?? "docs/\344\273\273\345\212\241\350\277\233\345\272\246\344\270\216\345\244\261\350\264\245\350\257\212\346\226\255.md"
+?? "docs/\345\242\236\351\207\217\344\277\256\345\244\215\344\270\216\351\252\214\346\224\266_20261017.md"
+?? "docs/\347\251\272\351\227\262\346\227\266\350\277\220\350\241\214\345\256\214\346\225\264\346\265\213\350\257\225.md"
+?? download_temporal_benchmark.py
+?? evaluate_temporal_benchmark.py
+?? prepare_dataset_splits.py
+?? probe_temporal_resources.py
+?? run_task_monitor.py
+?? run_temporal_benchmark.py
+?? streaming_recovery/
+?? temporal_diagnosis.py
+?? tests/test_dataset_splits.py
+?? tests/test_diagnostic_tracking.py
+?? tests/test_task_monitor_runner.py
+?? tests/test_task_monitor_verifier.py
+?? tests/test_temporal_benchmark.py
+?? tests/test_temporal_diagnosis.py
+?? tests/test_temporal_download.py
+?? tests/test_temporal_evaluation.py
+?? verify_task_monitor.py

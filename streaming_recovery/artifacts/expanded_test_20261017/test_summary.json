@@ -1,0 +1,457 @@
+{
+  "scope": "additional four same-task dev/validation episodes plus two seen normal controls; frozen source and thresholds",
+  "engineering_status": "passed",
+  "evidence_status": "valid",
+  "semantic_status": "partial",
+  "require_complete_exit_code": 1,
+  "totals": {
+    "native_rows": 2558,
+    "decoded_images": 5116,
+    "decisions": 105,
+    "confirmed_failure_episodes": 2,
+    "joint_localization_decisions": 2,
+    "directional_action_decisions": 0,
+    "reviewed_directional_checkpoints": 0,
+    "verified_conditional_real_directions": 0
+  },
+  "additional_only": {
+    "episodes": [
+      1,
+      6,
+      11,
+      14
+    ],
+    "native_rows": 1619,
+    "decoded_images": 3238,
+    "decisions": 67,
+    "failure_confirmed": [
+      1,
+      6
+    ],
+    "failure_not_confirmed": [
+      11,
+      14
+    ]
+  },
+  "combined_with_previous_six": {
+    "unique_episodes": [
+      0,
+      1,
+      2,
+      6,
+      8,
+      11,
+      14,
+      18,
+      19,
+      29
+    ],
+    "normal_completion_observed": [
+      18,
+      19
+    ],
+    "failure_confirmed": [
+      0,
+      1,
+      2,
+      6,
+      8,
+      29
+    ],
+    "failure_not_confirmed": [
+      11,
+      14
+    ],
+    "warning": "counts of these inspected development/validation examples; not generalization accuracy"
+  },
+  "elapsed_wall_s": 28.29699999999866,
+  "per_episode": [
+    {
+      "episode_for_audit_only": 18,
+      "official_outcome": "success",
+      "semantic_status": "passed",
+      "failure_missed_at_episode_level": null,
+      "false_failure_alarm_on_normal": false,
+      "false_task_success_on_failure": null,
+      "unknown_decision_timestamps": [
+        4.0,
+        5.0,
+        18.0
+      ],
+      "unknown_stage_timestamps": [
+        18.0
+      ],
+      "elapsed_wall_s": 7.39100000000326,
+      "action_counts": {},
+      "notification_counts": {
+        "suspicion": 0,
+        "failure_confirmation": 0,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "decisions": 21,
+      "final_task_success": true,
+      "first_completion_s": 20.0,
+      "first_confirmed_failure_s": null,
+      "stages": {
+        "locate_tool": 2,
+        "approach_tool": 2,
+        "verify_grasp": 1,
+        "transport_tool": 1,
+        "cutting": 3,
+        "cut_operation": 5,
+        "return_tool": 4,
+        "unknown": 1,
+        "verify_completion": 1,
+        "completed": 1
+      },
+      "modalities_used": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 4,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 17
+      },
+      "manual_gaps": [],
+      "actual_execution_claims": 0
+    },
+    {
+      "episode_for_audit_only": 19,
+      "official_outcome": "success",
+      "semantic_status": "passed",
+      "failure_missed_at_episode_level": null,
+      "false_failure_alarm_on_normal": false,
+      "false_task_success_on_failure": null,
+      "unknown_decision_timestamps": [
+        3.0,
+        4.0,
+        5.0,
+        14.0
+      ],
+      "unknown_stage_timestamps": [
+        14.0
+      ],
+      "elapsed_wall_s": 4.281999999999243,
+      "action_counts": {},
+      "notification_counts": {
+        "suspicion": 0,
+        "failure_confirmation": 0,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "decisions": 17,
+      "final_task_success": true,
+      "first_completion_s": 16.0,
+      "first_confirmed_failure_s": null,
+      "stages": {
+        "locate_tool": 2,
+        "approach_tool": 1,
+        "verify_grasp": 3,
+        "cutting": 3,
+        "cut_operation": 1,
+        "return_tool": 4,
+        "unknown": 1,
+        "verify_completion": 1,
+        "completed": 1
+      },
+      "modalities_used": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 4,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 13
+      },
+      "manual_gaps": [],
+      "actual_execution_claims": 0
+    },
+    {
+      "episode_for_audit_only": 1,
+      "official_outcome": "failure",
+      "semantic_status": "passed",
+      "failure_missed_at_episode_level": false,
+      "false_failure_alarm_on_normal": null,
+      "false_task_success_on_failure": false,
+      "unknown_decision_timestamps": [
+        9.0,
+        12.0
+      ],
+      "unknown_stage_timestamps": [],
+      "elapsed_wall_s": 3.6089999999967404,
+      "action_counts": {
+        "hold_and_observe": 3,
+        "open_gripper": 1
+      },
+      "notification_counts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "decisions": 15,
+      "final_task_success": null,
+      "first_completion_s": null,
+      "first_confirmed_failure_s": 14.0,
+      "stages": {
+        "locate_tool": 2,
+        "align_grasp": 2,
+        "approach_tool": 5,
+        "verify_grasp": 6
+      },
+      "modalities_used": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 6,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 9
+      },
+      "manual_gaps": [],
+      "actual_execution_claims": 0
+    },
+    {
+      "episode_for_audit_only": 6,
+      "official_outcome": "failure",
+      "semantic_status": "passed",
+      "failure_missed_at_episode_level": false,
+      "false_failure_alarm_on_normal": null,
+      "false_task_success_on_failure": false,
+      "unknown_decision_timestamps": [],
+      "unknown_stage_timestamps": [],
+      "elapsed_wall_s": 2.6710000000020955,
+      "action_counts": {
+        "hold_and_observe": 1,
+        "open_gripper": 1
+      },
+      "notification_counts": {
+        "suspicion": 1,
+        "failure_confirmation": 1,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "decisions": 11,
+      "final_task_success": null,
+      "first_completion_s": null,
+      "first_confirmed_failure_s": 10.0,
+      "stages": {
+        "locate_tool": 2,
+        "approach_tool": 4,
+        "verify_grasp": 5
+      },
+      "modalities_used": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 7,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 4
+      },
+      "manual_gaps": [],
+      "actual_execution_claims": 0
+    },
+    {
+      "episode_for_audit_only": 11,
+      "official_outcome": "failure",
+      "semantic_status": "partial",
+      "failure_missed_at_episode_level": true,
+      "false_failure_alarm_on_normal": null,
+      "false_task_success_on_failure": false,
+      "unknown_decision_timestamps": [
+        15.0
+      ],
+      "unknown_stage_timestamps": [
+        15.0
+      ],
+      "elapsed_wall_s": 4.0789999999979045,
+      "action_counts": {},
+      "notification_counts": {
+        "suspicion": 0,
+        "failure_confirmation": 0,
+        "recovery": 0,
+        "retry": 0,
+        "other": 0
+      },
+      "decisions": 16,
+      "final_task_success": null,
+      "first_completion_s": null,
+      "first_confirmed_failure_s": null,
+      "stages": {
+        "locate_tool": 4,
+        "approach_tool": 3,
+        "cut_operation": 2,
+        "cutting": 5,
+        "return_tool": 1,
+        "unknown": 1
+      },
+      "modalities_used": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 2,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 14
+      },
+      "manual_gaps": [],
+      "actual_execution_claims": 0
+    },
+    {
+      "episode_for_audit_only": 14,
+      "official_outcome": "failure",
+      "semantic_status": "partial",
+      "failure_missed_at_episode_level": true,
+      "false_failure_alarm_on_normal": null,
+      "false_task_success_on_failure": false,
+      "unknown_decision_timestamps": [
+        9.0,
+        17.0,
+        18.0,
+        22.0,
+        23.0,
+        24.0
+      ],
+      "unknown_stage_timestamps": [
+        9.0,
+        17.0,
+        18.0,
+        22.0,
+        23.0,
+        24.0
+      ],
+      "elapsed_wall_s": 6.203000000001339,
+      "action_counts": {
+        "hold_and_observe": 2
+      },
+      "notification_counts": {
+        "suspicion": 1,
+        "failure_confirmation": 0,
+        "recovery": 1,
+        "retry": 0,
+        "other": 0
+      },
+      "decisions": 25,
+      "final_task_success": null,
+      "first_completion_s": null,
+      "first_confirmed_failure_s": null,
+      "stages": {
+        "locate_tool": 3,
+        "approach_tool": 2,
+        "return_tool": 4,
+        "cutting": 9,
+        "blocked_precondition": 1,
+        "unknown": 6
+      },
+      "modalities_used": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 3,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 22
+      },
+      "manual_gaps": [
+        {
+          "timestamp": 8,
+          "observed": "当前刀在末端，腕图刀刃与两指连接，香肠位于刀右侧。模型未查询此腕图却称刀在架/分离，这是明确图像判断错误。",
+          "differences": [
+            "visual_facts.knife_location='holder'; expected 'gripper'",
+            "visual_facts.contact='separate'; expected 'between_fingers'",
+            "state.preconditions.reliable_grasp=False; expected True",
+            "state.candidate='prerequisite_unmet'; expected None"
+          ]
+        },
+        {
+          "timestamp": 24,
+          "observed": "刀已在右侧刀架，机械手退出顶视范围，香肠仍完整；模型将刀位置标未知，归位感知不足。",
+          "differences": [
+            "visual_facts.knife_location='unknown'; expected 'holder'"
+          ]
+        }
+      ],
+      "actual_execution_claims": 0
+    }
+  ],
+  "capability_gaps": [
+    "episode 11: failure_not_confirmed",
+    "episode 14: failure_not_confirmed",
+    "episode 14: manual_key_phase_mismatch_or_unsampled",
+    "neither_natural_nor_verified_conditional_real_direction_available",
+    "directional_action_visual_review_not_provided"
+  ],
+  "manual_review": {
+    "bound_checkpoints": 19,
+    "passed": 17,
+    "gaps": 2,
+    "new_images_actually_viewed": 20,
+    "independent_human_temporal_labels": false
+  },
+  "issues_observed": [
+    {
+      "episode": 11,
+      "issue": "切割未产生可见新增小段，但只有效果未确认，没有失败事件；官方标注失败子任务4。",
+      "evidence_times": [
+        7,
+        10,
+        14,
+        15
+      ],
+      "cause_hypothesis": "当前失败类型偏向夹持/前置条件，没有操作后无切割效果的充分诊断规则。不能据此断言物理力或姿态原因。"
+    },
+    {
+      "episode": 14,
+      "issue": "8秒实际持刀却判刀仍在架，生成错误prerequisite_unmet疑似；10秒retracted/recovered；整体未确认失败。",
+      "evidence_times": [
+        8,
+        10,
+        16,
+        24
+      ],
+      "implementation_evidence": "8秒rack_blade_bright_fraction=0.62397超过0.60门槛，腕图可用但consulted=false；当前腕图能看到刀刃与两指连接。",
+      "additional_gap": "24秒顶视刀已回架但模型位置unknown；官方失败子任务3未获得有效诊断。"
+    }
+  ],
+  "no_code_or_threshold_changes": true,
+  "frozen_test_split_unchanged": true,
+  "source_sha256_matches_frozen": {
+    "attempts.py": true,
+    "contracts.py": true,
+    "dynamics.py": true,
+    "effects.py": true,
+    "engine.py": true,
+    "evaluation.py": true,
+    "events.py": true,
+    "fetch_functional_data.py": true,
+    "geometry.py": true,
+    "localization.py": true,
+    "memory.py": true,
+    "multiview.py": true,
+    "probe.py": true,
+    "recovery.py": true,
+    "report.py": true,
+    "review_binding.py": true,
+    "review_existing.py": true,
+    "source.py": true,
+    "task_spec.py": true,
+    "tracking.py": true,
+    "validation.py": true,
+    "vision.py": true,
+    "__init__.py": true,
+    "__main__.py": true
+  },
+  "prior_local_data_hashes_preserved": {
+    "README.md": true,
+    "meta/info.json": true,
+    "meta/tasks.jsonl": true,
+    "meta/episodes.jsonl": true,
+    "meta/vifailback_annotations.jsonl": true,
+    "data/chunk-000/episode_000000.parquet": true,
+    "videos/chunk-000/observation.images.cam_high/episode_000000.mp4": true,
+    "videos/chunk-000/observation.images.cam_left_wrist/episode_000000.mp4": true,
+    "videos/chunk-000/observation.images.cam_right_wrist/episode_000000.mp4": true,
+    "data/chunk-000/episode_000018.parquet": true,
+    "videos/chunk-000/observation.images.cam_high/episode_000018.mp4": true,
+    "videos/chunk-000/observation.images.cam_left_wrist/episode_000018.mp4": true,
+    "videos/chunk-000/observation.images.cam_right_wrist/episode_000018.mp4": true,
+    "data/chunk-000/episode_000196.parquet": true,
+    "videos/chunk-000/observation.images.cam_high/episode_000196.mp4": true,
+    "data/chunk-000/episode_000002.parquet": true,
+    "videos/chunk-000/observation.images.cam_high/episode_000002.mp4": true,
+    "videos/chunk-000/observation.images.cam_right_wrist/episode_000002.mp4": true,
+    "data/chunk-000/episode_000019.parquet": true,
+    "videos/chunk-000/observation.images.cam_high/episode_000019.mp4": true,
+    "videos/chunk-000/observation.images.cam_right_wrist/episode_000019.mp4": true,
+    "data/chunk-000/episode_000006.parquet": true,
+    "videos/chunk-000/observation.images.cam_high/episode_000006.mp4": true,
+    "videos/chunk-000/observation.images.cam_right_wrist/episode_000006.mp4": true,
+    "data/chunk-000/episode_000008.parquet": true,
+    "videos/chunk-000/observation.images.cam_high/episode_000008.mp4": true,
+    "videos/chunk-000/observation.images.cam_right_wrist/episode_000008.mp4": true,
+    "data/chunk-000/episode_000029.parquet": true,
+    "videos/chunk-000/observation.images.cam_high/episode_000029.mp4": true,
+    "videos/chunk-000/observation.images.cam_right_wrist/episode_000029.mp4": true
+  },
+  "physical_execution": false,
+  "generalization_claim": false,
+  "detection_latency": null,
+  "validation_scope": "本轮未改业务代码，运行6条真实回放及严格离线容量/时间引用/完整读取/输入哈希/动作一致性/核查绑定检查；上轮108项和5组全链验收未重复运行。"
+}

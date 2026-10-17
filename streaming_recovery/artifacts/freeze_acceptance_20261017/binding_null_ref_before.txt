@@ -1,0 +1,15 @@
+test_migration_refuses_bad_existing_bindings_instead_of_overwriting (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_migration_refuses_bad_existing_bindings_instead_of_overwriting) ... 
+  test_migration_refuses_bad_existing_bindings_instead_of_overwriting (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_migration_refuses_bad_existing_bindings_instead_of_overwriting) (kind='explicit_null_ref') ... FAIL
+
+======================================================================
+FAIL: test_migration_refuses_bad_existing_bindings_instead_of_overwriting (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_migration_refuses_bad_existing_bindings_instead_of_overwriting) (kind='explicit_null_ref')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_review_binding.py", line 124, in test_migration_refuses_bad_existing_bindings_instead_of_overwriting
+    with self.subTest(kind=kind), self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.054s
+
+FAILED (failures=1)

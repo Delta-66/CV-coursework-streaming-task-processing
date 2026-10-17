@@ -1,0 +1,68 @@
+{
+  "python": "3.11.17 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:16:54) [MSC v.1942 64 bit (AMD64)]",
+  "executable": "C:\\Users\\lenovo\\.conda\\envs\\cv-streaming\\python.exe",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "cpu_logical_cores": 32,
+  "backend": "CPU OpenCV; no learned weights/API/GPU invoked",
+  "packages": {
+    "numpy": "2.4.6",
+    "opencv-python": "5.0.0.93",
+    "Pillow": "12.3.0",
+    "pyarrow": "26.0.0",
+    "av": "18.1.0"
+  },
+  "data_root": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot",
+  "codebase_version": "v2.1",
+  "fps": 25,
+  "actual_fields": {
+    "18": {
+      "parquet_rows": 519,
+      "first_timestamp": 0.0,
+      "state_length": 14,
+      "velocity_length": 14
+    },
+    "19": {
+      "parquet_rows": 420,
+      "first_timestamp": 0.0,
+      "state_length": 14,
+      "velocity_length": 14
+    },
+    "0": {
+      "parquet_rows": 300,
+      "first_timestamp": 0.0,
+      "state_length": 14,
+      "velocity_length": 14
+    },
+    "2": {
+      "parquet_rows": 289,
+      "first_timestamp": 0.0,
+      "state_length": 14,
+      "velocity_length": 14
+    },
+    "8": {
+      "parquet_rows": 233,
+      "first_timestamp": 0.0,
+      "state_length": 14,
+      "velocity_length": 14
+    },
+    "29": {
+      "parquet_rows": 237,
+      "first_timestamp": 0.0,
+      "state_length": 14,
+      "velocity_length": 14
+    }
+  },
+  "relationship": "qpos and gripper share observation.state; qvel measured, action/target EEF unused",
+  "units": "source raw qpos/qvel/gripper units; physical calibration unavailable",
+  "frames": {
+    "native_rows": 1998,
+    "decoded_images": 3996,
+    "decisions": 82,
+    "confirmed_failure_episodes": 4,
+    "joint_localization_decisions": 2,
+    "directional_action_decisions": 0,
+    "reviewed_directional_checkpoints": 0,
+    "verified_conditional_real_directions": 2
+  },
+  "frozen_split_sha256": "0cbc7eb3d349c5d5b4476f367376a36d9a322f8e5c1de9da3f05730cada06c09"
+}

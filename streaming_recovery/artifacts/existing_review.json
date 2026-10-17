@@ -1,0 +1,267 @@
+{
+  "sampling_depends_on_total_length": {
+    "frame_index": 7,
+    "length8": true,
+    "length100": false
+  },
+  "format_validator_accepts_semantically_inconsistent_advice": true,
+  "retry_observation_boundary": {
+    "note": "旧 tracker 没有尝试编号/夹爪重新打开输入；未恢复期间的同类失败仍归入原 incident。此探针不冒充实际新重试已执行。",
+    "timeline": [
+      {
+        "frame": 0,
+        "result": {
+          "tracked_stage": "grasping",
+          "observed_stage": "grasping",
+          "stage_confirmed": true,
+          "stage_stale": false,
+          "stage_candidate": "grasping",
+          "stage_candidate_count": 1,
+          "observed_key_states": {
+            "grasp": "not_held",
+            "target_relation": "unknown",
+            "task_goal": "unknown"
+          },
+          "tracked_key_states": {
+            "grasp": "not_held",
+            "target_relation": "unknown",
+            "task_goal": "unknown"
+          },
+          "key_state_stale": {
+            "grasp": false,
+            "target_relation": true,
+            "task_goal": true
+          },
+          "key_state_confirmed": {
+            "grasp": true,
+            "target_relation": false,
+            "task_goal": false
+          },
+          "key_state_candidates": {
+            "grasp": "not_held",
+            "target_relation": null,
+            "task_goal": null
+          },
+          "key_state_candidate_counts": {
+            "grasp": 1,
+            "target_relation": 0,
+            "task_goal": 0
+          },
+          "failure_state": "confirmed",
+          "active_failure_type": "grasp_miss",
+          "candidate_failure_type": "grasp_miss",
+          "candidate_count": 1,
+          "alert": true,
+          "incident_id": 1,
+          "suppression_reason": null,
+          "current_evidence_present": true,
+          "failure_evidence_supported": true,
+          "recovery_action_supported": false,
+          "recovery_key_state_matches": {},
+          "recovery_evidence_supported": false,
+          "recovery_policy": "uncalibrated_key_state_heuristic",
+          "recovery_count": 0,
+          "recovery_confirmed": false,
+          "recovered_incident_ids": [],
+          "unresolved_failure_types": [
+            "grasp_miss"
+          ],
+          "cooldown_remaining_s": 0.0,
+          "policy_calibrated": false
+        }
+      },
+      {
+        "frame": 1,
+        "result": {
+          "tracked_stage": "grasping",
+          "observed_stage": "grasping",
+          "stage_confirmed": true,
+          "stage_stale": false,
+          "stage_candidate": "grasping",
+          "stage_candidate_count": 1,
+          "observed_key_states": {
+            "grasp": "not_held",
+            "target_relation": "unknown",
+            "task_goal": "unknown"
+          },
+          "tracked_key_states": {
+            "grasp": "not_held",
+            "target_relation": "unknown",
+            "task_goal": "unknown"
+          },
+          "key_state_stale": {
+            "grasp": false,
+            "target_relation": true,
+            "task_goal": true
+          },
+          "key_state_confirmed": {
+            "grasp": true,
+            "target_relation": false,
+            "task_goal": false
+          },
+          "key_state_candidates": {
+            "grasp": "not_held",
+            "target_relation": null,
+            "task_goal": null
+          },
+          "key_state_candidate_counts": {
+            "grasp": 1,
+            "target_relation": 0,
+            "task_goal": 0
+          },
+          "failure_state": "confirmed",
+          "active_failure_type": "grasp_miss",
+          "candidate_failure_type": null,
+          "candidate_count": 0,
+          "alert": false,
+          "incident_id": 1,
+          "suppression_reason": "awaiting_recovery_evidence",
+          "current_evidence_present": true,
+          "failure_evidence_supported": false,
+          "recovery_action_supported": false,
+          "recovery_key_state_matches": {
+            "grasp_miss": false
+          },
+          "recovery_evidence_supported": false,
+          "recovery_policy": "uncalibrated_key_state_heuristic",
+          "recovery_count": 0,
+          "recovery_confirmed": false,
+          "recovered_incident_ids": [],
+          "unresolved_failure_types": [
+            "grasp_miss"
+          ],
+          "cooldown_remaining_s": 0.0,
+          "policy_calibrated": false
+        }
+      },
+      {
+        "frame": 2,
+        "result": {
+          "tracked_stage": "grasping",
+          "observed_stage": "grasping",
+          "stage_confirmed": true,
+          "stage_stale": false,
+          "stage_candidate": "grasping",
+          "stage_candidate_count": 1,
+          "observed_key_states": {
+            "grasp": "not_held",
+            "target_relation": "unknown",
+            "task_goal": "unknown"
+          },
+          "tracked_key_states": {
+            "grasp": "not_held",
+            "target_relation": "unknown",
+            "task_goal": "unknown"
+          },
+          "key_state_stale": {
+            "grasp": false,
+            "target_relation": true,
+            "task_goal": true
+          },
+          "key_state_confirmed": {
+            "grasp": true,
+            "target_relation": false,
+            "task_goal": false
+          },
+          "key_state_candidates": {
+            "grasp": "not_held",
+            "target_relation": null,
+            "task_goal": null
+          },
+          "key_state_candidate_counts": {
+            "grasp": 1,
+            "target_relation": 0,
+            "task_goal": 0
+          },
+          "failure_state": "confirmed",
+          "active_failure_type": "grasp_miss",
+          "candidate_failure_type": null,
+          "candidate_count": 0,
+          "alert": false,
+          "incident_id": 1,
+          "suppression_reason": "awaiting_recovery_evidence",
+          "current_evidence_present": true,
+          "failure_evidence_supported": false,
+          "recovery_action_supported": false,
+          "recovery_key_state_matches": {
+            "grasp_miss": false
+          },
+          "recovery_evidence_supported": false,
+          "recovery_policy": "uncalibrated_key_state_heuristic",
+          "recovery_count": 0,
+          "recovery_confirmed": false,
+          "recovered_incident_ids": [],
+          "unresolved_failure_types": [
+            "grasp_miss"
+          ],
+          "cooldown_remaining_s": 0.0,
+          "policy_calibrated": false
+        }
+      },
+      {
+        "frame": 3,
+        "result": {
+          "tracked_stage": "grasping",
+          "observed_stage": "grasping",
+          "stage_confirmed": true,
+          "stage_stale": false,
+          "stage_candidate": "grasping",
+          "stage_candidate_count": 1,
+          "observed_key_states": {
+            "grasp": "not_held",
+            "target_relation": "unknown",
+            "task_goal": "unknown"
+          },
+          "tracked_key_states": {
+            "grasp": "not_held",
+            "target_relation": "unknown",
+            "task_goal": "unknown"
+          },
+          "key_state_stale": {
+            "grasp": false,
+            "target_relation": true,
+            "task_goal": true
+          },
+          "key_state_confirmed": {
+            "grasp": true,
+            "target_relation": false,
+            "task_goal": false
+          },
+          "key_state_candidates": {
+            "grasp": "not_held",
+            "target_relation": null,
+            "task_goal": null
+          },
+          "key_state_candidate_counts": {
+            "grasp": 1,
+            "target_relation": 0,
+            "task_goal": 0
+          },
+          "failure_state": "confirmed",
+          "active_failure_type": "grasp_miss",
+          "candidate_failure_type": "grasp_miss",
+          "candidate_count": 1,
+          "alert": false,
+          "incident_id": 1,
+          "suppression_reason": "duplicate_unresolved_incident",
+          "current_evidence_present": true,
+          "failure_evidence_supported": true,
+          "recovery_action_supported": false,
+          "recovery_key_state_matches": {
+            "grasp_miss": false
+          },
+          "recovery_evidence_supported": false,
+          "recovery_policy": "uncalibrated_key_state_heuristic",
+          "recovery_count": 0,
+          "recovery_confirmed": false,
+          "recovered_incident_ids": [],
+          "unresolved_failure_types": [
+            "grasp_miss"
+          ],
+          "cooldown_remaining_s": 0.0,
+          "policy_calibrated": false
+        }
+      }
+    ]
+  }
+}

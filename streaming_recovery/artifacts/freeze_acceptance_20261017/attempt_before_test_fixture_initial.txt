@@ -1,0 +1,100 @@
+test_close_away_from_target_consumes_latch (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_close_away_from_target_consumes_latch) ... FAIL
+test_close_gripper_suggestion_does_not_increment_attempt (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_close_gripper_suggestion_does_not_increment_attempt) ... FAIL
+test_large_close_is_one_attempt (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_large_close_is_one_attempt) ... ok
+test_long_closed_hold_does_not_add_attempts (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_long_closed_hold_does_not_add_attempts) ... ok
+test_long_gap_invalidates_open_history (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_long_gap_invalidates_open_history) ... ok
+test_no_observed_open_history_is_not_an_attempt (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_no_observed_open_history_is_not_an_attempt) ... ok
+test_occlusion_requires_fresh_open_history (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_occlusion_requires_fresh_open_history) ... ERROR
+test_real_reopen_then_smooth_close_creates_second_attempt (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_real_reopen_then_smooth_close_creates_second_attempt) ... FAIL
+test_reset_removes_open_history (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_reset_removes_open_history) ... ok
+test_smooth_close_after_lost_grasp_creates_new_attempt_and_event (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_smooth_close_after_lost_grasp_creates_new_attempt_and_event) ... FAIL
+test_stale_or_missing_raw_cannot_keep_derived_open_latch (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_stale_or_missing_raw_cannot_keep_derived_open_latch) ... 
+  test_stale_or_missing_raw_cannot_keep_derived_open_latch (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_stale_or_missing_raw_cannot_keep_derived_open_latch) (status='stale') ... FAIL
+  test_stale_or_missing_raw_cannot_keep_derived_open_latch (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_stale_or_missing_raw_cannot_keep_derived_open_latch) (status='missing') ... FAIL
+test_threshold_jitter_does_not_rearm (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_threshold_jitter_does_not_rearm) ... ok
+
+======================================================================
+ERROR: test_occlusion_requires_fresh_open_history (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_occlusion_requires_fresh_open_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_smooth_attempt.py", line 90, in test_occlusion_requires_fresh_open_history
+    self.feed(2,.03,valid=False,visibility="occluded")
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_smooth_attempt.py", line 25, in feed
+    self.vision.current=facts(t,valid=valid,**fields)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_system.py", line 30, in facts
+    return VisualFacts(float(t),f"obs-{int(t*25):06d}",visibility="clear",knife_location=location,gripper=gripper,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: streaming_recovery.contracts.VisualFacts() got multiple values for keyword argument 'visibility'
+
+======================================================================
+FAIL: test_close_away_from_target_consumes_latch (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_close_away_from_target_consumes_latch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_smooth_attempt.py", line 109, in test_close_away_from_target_consumes_latch
+    self.assertFalse(near['state']['new_attempt_observed'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_close_gripper_suggestion_does_not_increment_attempt (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_close_gripper_suggestion_does_not_increment_attempt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_smooth_attempt.py", line 123, in test_close_gripper_suggestion_does_not_increment_attempt
+    self.assertEqual(r['correction']['low_level']['action_type'],'close_gripper')
+AssertionError: 'hold_and_observe' != 'close_gripper'
+- hold_and_observe
++ close_gripper
+
+
+======================================================================
+FAIL: test_real_reopen_then_smooth_close_creates_second_attempt (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_real_reopen_then_smooth_close_creates_second_attempt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_smooth_attempt.py", line 76, in test_real_reopen_then_smooth_close_creates_second_attempt
+    self.assertEqual([r['timestamp']for r in rows if r['state']['new_attempt_observed']],[1.,6.])
+AssertionError: Lists differ: [1.0] != [1.0, 6.0]
+
+Second list contains 1 additional elements.
+First extra element 1:
+6.0
+
+- [1.0]
++ [1.0, 6.0]
+
+======================================================================
+FAIL: test_smooth_close_after_lost_grasp_creates_new_attempt_and_event (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_smooth_close_after_lost_grasp_creates_new_attempt_and_event)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_smooth_attempt.py", line 47, in test_smooth_close_after_lost_grasp_creates_new_attempt_and_event
+    self.assertEqual([r['timestamp']for r in rows if r['state']['new_attempt_observed']],[7.])
+AssertionError: Lists differ: [] != [7.0]
+
+Second list contains 1 additional elements.
+First extra element 0:
+7.0
+
+- []
++ [7.0]
+
+======================================================================
+FAIL: test_stale_or_missing_raw_cannot_keep_derived_open_latch (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_stale_or_missing_raw_cannot_keep_derived_open_latch) (status='stale')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_smooth_attempt.py", line 102, in test_stale_or_missing_raw_cannot_keep_derived_open_latch
+    self.assertFalse(r['state']['new_attempt_observed']);self.assertEqual(r['state']['attempt'],0)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_stale_or_missing_raw_cannot_keep_derived_open_latch (streaming_recovery.tests.test_smooth_attempt.SmoothAttemptTests.test_stale_or_missing_raw_cannot_keep_derived_open_latch) (status='missing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_smooth_attempt.py", line 102, in test_stale_or_missing_raw_cannot_keep_derived_open_latch
+    self.assertFalse(r['state']['new_attempt_observed']);self.assertEqual(r['state']['attempt'],0)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.103s
+
+FAILED (failures=6, errors=1)

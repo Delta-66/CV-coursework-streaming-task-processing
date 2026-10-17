@@ -1,0 +1,14 @@
+test_E_completion_does_not_freeze_current_return (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_E_completion_does_not_freeze_current_return) ... FAIL
+
+======================================================================
+FAIL: test_E_completion_does_not_freeze_current_return (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_E_completion_does_not_freeze_current_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 77, in test_E_completion_does_not_freeze_current_return
+    self.assertIsNone(r["state"]["candidate"],"已明确释放的历史连接不能继续作为失抓前件")
+AssertionError: 'lost_grasp' is not None : 已明确释放的历史连接不能继续作为失抓前件
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)

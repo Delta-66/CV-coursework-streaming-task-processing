@@ -1,0 +1,380 @@
+{
+  "schema_version": "1.0",
+  "timestamp": 10.0,
+  "observation_ref": "obs-000250",
+  "method": "bounded_visual_state_tracker",
+  "instruction": "Use the right arm to pick up the knife from the knife holder, cut a small piece of sausage and put it back on the knife holder.",
+  "scope": "刀具获取、转移与后续操作前置条件；真实视觉基线不确认切割完成/刀具归位",
+  "state": {
+    "stage": "verify_grasp",
+    "stage_zh": "抓取效果确认",
+    "subtask": "抓取效果确认",
+    "confirmed_subgoals": [],
+    "preconditions": {
+      "reliable_grasp": false,
+      "cut_effect_confirmed": false,
+      "tool_returned": false
+    },
+    "known_facts": [
+      "右夹爪观测原始值 0.00000（数据集原始单位；不代表夹持成功）",
+      "视觉模型观察：刀架参考区域变化比例=0.030；砧板浅色刀具比例=0.000；机器人遮挡比例=0.142；共同运动=False"
+    ],
+    "unknowns": [
+      "切割产生独立小段的效果尚未确认",
+      "完成任务后的刀具归位与释放尚未确认"
+    ],
+    "evidence": [
+      {
+        "timestamp": 10.0,
+        "ref": "obs-000250",
+        "claim": "knife_location=holder; contact=separate; motion=at_board",
+        "source": "real_rgb_calibrated_geometry",
+        "images": [
+          {
+            "ref": "obs-000250",
+            "camera": "cam_high",
+            "timestamp": 10.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          }
+        ]
+      }
+    ],
+    "expected_effect": "刀应离开刀架并与夹爪保持连接；闭合状态不足以证明成功",
+    "candidate": "grasp_not_established",
+    "recovered": false,
+    "observable": true,
+    "modality_conflict": false,
+    "new_attempt_observed": false,
+    "attempt": 1,
+    "task_completed": false,
+    "anchors": {
+      "attempt": {
+        "timestamp": 7.0,
+        "ref": "obs-000175",
+        "claim": "观测到刀架附近夹爪从打开转为闭合；仅证明抓取尝试",
+        "source": "real_rgb_calibrated_geometry",
+        "images": [
+          {
+            "ref": "obs-000175",
+            "camera": "cam_high",
+            "timestamp": 7.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          }
+        ]
+      }
+    }
+  },
+  "execution_status": "confirmed_failure",
+  "visual_facts": {
+    "timestamp": 10.0,
+    "ref": "obs-000250",
+    "visibility": "clear",
+    "knife_location": "holder",
+    "gripper": "closed",
+    "motion": "at_board",
+    "contact": "separate",
+    "co_motion": "unknown",
+    "cut_piece": "unknown",
+    "released": "yes",
+    "knife_handle_xy": null,
+    "gripper_xy": null,
+    "description": "刀架参考区域变化比例=0.030；砧板浅色刀具比例=0.000；机器人遮挡比例=0.142；共同运动=False",
+    "valid": true,
+    "error": null,
+    "provenance": "real_rgb_calibrated_geometry",
+    "evidence_refs": [
+      {
+        "ref": "obs-000250",
+        "camera": "cam_high",
+        "timestamp": 10.0
+      },
+      {
+        "ref": "obs-000000",
+        "camera": "cam_high",
+        "timestamp": 0.0
+      }
+    ],
+    "measurements": {
+      "source_changed_fraction": 0.03027,
+      "source_dark_fraction": 0.01271,
+      "tool_board_fraction": 0.0,
+      "robot_board_fraction": 0.14157,
+      "source_unchanged": true,
+      "source_occluded": false,
+      "tool_on_board": false,
+      "robot_at_board": true,
+      "common_motion": false,
+      "motion": null,
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        325,
+        198,
+        46,
+        126
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    },
+    "effect_usable": true
+  },
+  "failure_event": {
+    "event_id": "event-0001",
+    "kind": "grasp_not_established",
+    "attempt": 1,
+    "opened_at": 9.0,
+    "updated_at": 10.0,
+    "state": "confirmed",
+    "support_count": 2,
+    "evidence": [
+      {
+        "timestamp": 9.0,
+        "ref": "obs-000225",
+        "claim": "当前支持 grasp_not_established",
+        "source": "real_rgb_calibrated_geometry",
+        "images": [
+          {
+            "ref": "obs-000225",
+            "camera": "cam_high",
+            "timestamp": 9.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          }
+        ]
+      },
+      {
+        "timestamp": 10.0,
+        "ref": "obs-000250",
+        "claim": "当前支持 grasp_not_established",
+        "source": "real_rgb_calibrated_geometry",
+        "images": [
+          {
+            "ref": "obs-000250",
+            "camera": "cam_high",
+            "timestamp": 10.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          }
+        ]
+      }
+    ],
+    "last_support_at": 10.0,
+    "support_started_at": 9.0,
+    "observation_status": "supported",
+    "closure_reason": null
+  },
+  "notify": true,
+  "notification_reason": "evidence_confirmed",
+  "diagnosis": {
+    "event_id": "event-0001",
+    "type": "grasp_not_established",
+    "problem": "抓取尝试后机器人已进入工作区，但刀仍留在刀架",
+    "expected_effect": "刀应离开刀架并与夹爪保持连接；闭合状态不足以证明成功",
+    "observed_deviation": "刀具未建立可靠夹持，携刀进入切割区的预期效果未实现",
+    "observed_facts": [
+      {
+        "timestamp": 9.0,
+        "ref": "obs-000225",
+        "claim": "当前支持 grasp_not_established",
+        "source": "real_rgb_calibrated_geometry",
+        "images": [
+          {
+            "ref": "obs-000225",
+            "camera": "cam_high",
+            "timestamp": 9.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          }
+        ]
+      },
+      {
+        "timestamp": 10.0,
+        "ref": "obs-000250",
+        "claim": "当前支持 grasp_not_established",
+        "source": "real_rgb_calibrated_geometry",
+        "images": [
+          {
+            "ref": "obs-000250",
+            "camera": "cam_high",
+            "timestamp": 10.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          }
+        ]
+      }
+    ],
+    "current_evidence_status": "supported",
+    "established_facts": [
+      "本诊断依据已到达图像的物体位置/运动与夹爪观测；不使用控制意图或轨迹结果标签"
+    ],
+    "cause_hypotheses": [
+      {
+        "hypothesis": "刀柄对齐或接触条件可能未建立",
+        "certainty": "unconfirmed",
+        "missing_evidence": "清晰的刀柄—两指接触图像；实测接触/夹持反馈"
+      }
+    ],
+    "uncertainty": "证据支持当前效果偏差，不能据此确定摩擦、夹持力或三维姿态原因；经典视觉模型受固定场景假设限制",
+    "need_more_observation": true,
+    "requested_evidence": [
+      "当前刀架与刀具位置",
+      "刀柄与夹爪两指关系",
+      "下一次尝试后刀是否随夹爪离架运动"
+    ],
+    "confidence": null,
+    "confidence_explanation": "未输出概率；疑似/确认来自配置的连续观测条数和时间跨度"
+  },
+  "correction": {
+    "high_level": {
+      "event_id": "event-0001",
+      "recovery_goal_id": "event-0001:restore_reliable_grasp",
+      "object": "knife",
+      "blocked_subtask": "携刀进入工作区并执行切割",
+      "failed_precondition": "reliable_grasp",
+      "impact": "继续移动空夹爪不能完成切割；必须先恢复刀具夹持条件",
+      "strategy": "return_to_grasp_preparation",
+      "next_recovery_subgoal": "重新建立刀柄定位、两指对齐及可靠夹持条件",
+      "reason": "刀具未建立可靠夹持，携刀进入切割区的预期效果未实现",
+      "resume_when": "连续新观测支持刀离开刀架且随夹爪运动，再恢复携刀转移"
+    },
+    "low_level": {
+      "event_id": "event-0001",
+      "recovery_goal_id": "event-0001:restore_reliable_grasp",
+      "object": "knife",
+      "actuator": "right_gripper",
+      "action_type": "open_gripper",
+      "instruction": "确认夹爪内无刀且当前位姿可安全保持后，保持末端位姿并打开右夹爪，为重新对齐刀柄建立条件；本次不同时发出移动或再次闭合动作。",
+      "coordinate_frame": "right_gripper_actuator_no_translation",
+      "target_mode": "qualitative",
+      "translation": null,
+      "rotation": null,
+      "numeric_command": null,
+      "units": null,
+      "numeric_source": null,
+      "preconditions": [
+        {
+          "condition": "刀仍在刀架且与右夹爪分离",
+          "status": "supported_by_current_observation"
+        },
+        {
+          "condition": "夹爪内无其他物体且可安全打开",
+          "status": "requires_executor_check"
+        }
+      ],
+      "stop_condition": "夹爪反馈与图像均表明已经打开；出现接触异常则停止并交回执行器",
+      "post_checks": [
+        "右夹爪确实打开",
+        "刀仍在刀架且未被拖动",
+        "重新观测刀柄与两指的相对位置，再决定下一动作"
+      ],
+      "directly_executable": false,
+      "handoff_requirements": [
+        "接入经过验证的执行器接口",
+        "由执行器检查碰撞与动作可行性"
+      ],
+      "missing_information": [
+        "相机到机器人坐标变换",
+        "深度与机器人运动接口"
+      ]
+    },
+    "execution": {
+      "mode": "advisory_replay",
+      "suggestion_generated": true,
+      "actually_executed": false,
+      "execution_receipt": null,
+      "outcome_attributed_to_suggestion": false,
+      "post_check_result": "pending_no_execution_receipt"
+    }
+  },
+  "modalities": {
+    "observation.state": {
+      "status": "available",
+      "timestamp": 10.0,
+      "age_s": 0.0,
+      "reason": null
+    },
+    "cam_high": {
+      "status": "available",
+      "timestamp": 10.0,
+      "age_s": 0.0,
+      "reason": null
+    },
+    "cam_right_wrist": {
+      "status": "available",
+      "timestamp": 10.0,
+      "age_s": 0.0,
+      "reason": null
+    }
+  },
+  "modalities_used": [
+    "cam_high",
+    "observation.state[13]"
+  ],
+  "modalities_for_audit_only": [
+    "cam_right_wrist"
+  ],
+  "memory_usage": {
+    "observations": 4,
+    "images": 8,
+    "image_bytes": 4718592,
+    "features": 5,
+    "anchors": 1,
+    "feature_text_chars": 280,
+    "conversation_turns": 0,
+    "persistent_model_kv_tokens": 0,
+    "log_reads": 0,
+    "events": 1,
+    "event_evidence": 2,
+    "active_events": 1,
+    "visual_reference_images": 1,
+    "visual_reference_bytes": 589824,
+    "visual_masks": 3,
+    "visual_mask_bytes": 589824,
+    "visual_tracks": 0,
+    "visual_calibration_entries": 2,
+    "task_state_slots": 12,
+    "object_states": 3,
+    "aligner_latest_samples": 3,
+    "task_instruction_chars": 127,
+    "model_last_response_chars": 0,
+    "anchor_image_refs": 2,
+    "model_request_queue_capacity": 1,
+    "model_response_queue_capacity": 1,
+    "model_input_images": 1,
+    "model_input_tokens": 0
+  },
+  "memory_limits": {
+    "frames": 4,
+    "window_s": 4.0,
+    "features": 6,
+    "events": 4,
+    "event_evidence": 4,
+    "anchors": 8,
+    "objects": 3
+  },
+  "execution": {
+    "mode": "advisory_replay",
+    "actually_executed": false,
+    "execution_receipt": null,
+    "outcome_attributed_to_suggestion": false
+  }
+}

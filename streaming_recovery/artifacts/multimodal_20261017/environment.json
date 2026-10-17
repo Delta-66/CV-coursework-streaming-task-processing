@@ -1,0 +1,12 @@
+{
+  "python": "3.11.17",
+  "interpreter": "C:\\Users\\lenovo\\.conda\\envs\\cv-streaming\\python.exe",
+  "libraries": {
+    "numpy": "2.4.6",
+    "opencv-python": "5.0.0.93",
+    "Pillow": "12.3.0",
+    "pyarrow": "26.0.0",
+    "av": "18.1.0"
+  },
+  "backend": "existing CPU classical scene-specific vision; no LLM or GPU invocation"
+}

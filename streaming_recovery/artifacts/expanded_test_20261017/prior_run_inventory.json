@@ -1,0 +1,23 @@
+{
+  "searched": "existing summary.json episode lists in streaming_recovery/artifacts and output; not proof of no external exposure",
+  "matches": [
+    {
+      "path": "streaming_recovery\\artifacts\\incremental_20261017\\delivery_run\\summary.json",
+      "episodes": [
+        6
+      ]
+    },
+    {
+      "path": "streaming_recovery\\artifacts\\incremental_20261017\\release_run\\summary.json",
+      "episodes": [
+        6
+      ]
+    },
+    {
+      "path": "streaming_recovery\\artifacts\\incremental_20261017\\unseen_v2_run\\summary.json",
+      "episodes": [
+        6
+      ]
+    }
+  ]
+}

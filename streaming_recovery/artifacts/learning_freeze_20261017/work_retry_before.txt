@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_actual_regrasp_starts_new_work_cycle_without_old_negative_effect (streaming_recovery.tests.test_frozen_learning.FrozenLearningTests.test_actual_regrasp_starts_new_work_cycle_without_old_negative_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_frozen_learning.py", line 77, in test_actual_regrasp_starts_new_work_cycle_without_old_negative_effect
+    self.assertIsNone(r['state']['work_cycle'])
+AssertionError: {'work_at': 1.0, 'work_ref': 'obs-000025', 'exit_at': 2.0, 'exit_ref': 'obs-000050'} is not None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)

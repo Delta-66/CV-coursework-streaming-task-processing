@@ -1,0 +1,504 @@
+{
+  "review_kind": "助手目视复核20张新样例图；正常8点沿用已核同字节图；非独立人工时序标注",
+  "source_run": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\expanded_test_20261017\\run",
+  "checkpoints": [
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 0.0,
+      "observed": "顶视初始只有长条香肠，刀在架；未出现新分离小段。",
+      "expected_fields": {
+        "state.task_completed": false
+      },
+      "image_refs": [
+        "trajectory_000018/frames/obs-000000_cam_high.jpg",
+        "trajectory_000018/frames/obs-000000_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000018/frames/obs-000000_cam_high.jpg": "306f84866c4661b01ef86c47481dfa79cfaa74d0cd8264913e8d3803ccb91ab5",
+        "trajectory_000018/frames/obs-000000_cam_right_wrist.jpg": "972f0886beb35d46426f757ea70e348e0d08a369454c9def9598ca1a7d76b21c"
+      },
+      "observation_ref": "obs-000000",
+      "row_sha256": "256aed03bb1f0d83e9622e4931436326c0a604b51a9e9a664e87f8b041a96393",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 9.0,
+      "observed": "腕图刀与两指连接，刀刃位于香肠端部；顶视机械手在砧板。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": true,
+        "visual_facts.measurements.cut_operation": "yes"
+      },
+      "image_refs": [
+        "trajectory_000018/frames/obs-000225_cam_high.jpg",
+        "trajectory_000018/frames/obs-000225_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000018/frames/obs-000225_cam_high.jpg": "257b629275e1a40c0e05113f605d941eb89c2b38ecb3ba1df747ac68e22383a7",
+        "trajectory_000018/frames/obs-000225_cam_right_wrist.jpg": "15004707b7f44cd82fd168fe10786c6b8528220a2f59ba364f5369e596b211a8"
+      },
+      "expected_stages": [
+        "cut_operation"
+      ],
+      "observation_ref": "obs-000225",
+      "row_sha256": "5254ec71fefc25e8cf8722e89dac818d0df58845441d4220c708cc02b129f6d6",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 20.0,
+      "observed": "与初始相比新增独立圆片；刀已回架且机械手退出。",
+      "expected_fields": {
+        "state.task_completed": true
+      },
+      "image_refs": [
+        "trajectory_000018/frames/obs-000500_cam_high.jpg",
+        "trajectory_000018/frames/obs-000500_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000018/frames/obs-000500_cam_high.jpg": "47cade25c5d10da5f902d355d0e37ae9e18ba4074c6fcb342b5675012ec32b96",
+        "trajectory_000018/frames/obs-000500_cam_right_wrist.jpg": "3b0cc2d93b843bb50e5167ee55c1b4c1f3c30910d93dfd4fb638fd084cf2fd25"
+      },
+      "expected_stages": [
+        "completed"
+      ],
+      "observation_ref": "obs-000500",
+      "row_sha256": "962b6a4c30f31e487abb2d067fe30af26d6a391e86cf9bd72810d6a06d14d8bd",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 8.0,
+      "observed": "连续5至8秒腕图显示刀刃在两指之间、与香肠端部相对位置变化。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": true,
+        "visual_facts.measurements.cut_operation": "yes"
+      },
+      "image_refs": [
+        "trajectory_000019/frames/obs-000200_cam_high.jpg",
+        "trajectory_000019/frames/obs-000200_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000019/frames/obs-000200_cam_high.jpg": "7674c320156a6cfd288853f60740d9a7c7351f030b8197cfafd06b2e7a1ddae3",
+        "trajectory_000019/frames/obs-000200_cam_right_wrist.jpg": "529e1f5c503a8ddfeeff7b60a092848a2f10a46ffc7ceb916e65f3e640d2d0bc"
+      },
+      "expected_stages": [
+        "cut_operation"
+      ],
+      "observation_ref": "obs-000200",
+      "row_sha256": "cf55b45469d203a17275e4e14cb93d9d02f7cd64855c92ce1297e250b10573b9",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 10.0,
+      "observed": "与0秒相比新增明显圆片；仍持刀开始回架。单帧新增物需后续稳定确认。",
+      "expected_fields": {
+        "visual_facts.measurements.new_cut_effect": "yes"
+      },
+      "image_refs": [
+        "trajectory_000019/frames/obs-000250_cam_high.jpg",
+        "trajectory_000019/frames/obs-000250_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000019/frames/obs-000250_cam_high.jpg": "10aebf672009d3ba3bd3afa097c4c4ffbf195a71322a516e1de93d5f0306a82f",
+        "trajectory_000019/frames/obs-000250_cam_right_wrist.jpg": "3c7da02f077e0bff807dc0a0b1d08d80079a1e9e68f72672908f0e81423ffb1e"
+      },
+      "expected_stages": [
+        "return_tool"
+      ],
+      "observation_ref": "obs-000250",
+      "row_sha256": "5381353ff48156bf14d8c39dc961f7c9479d3030c7033f657d46d0e75640f0b9",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 16.0,
+      "observed": "新圆片仍在砧板，刀回架且右手退出；切割参考、作用和效果链可核查。",
+      "expected_fields": {
+        "state.task_completed": true
+      },
+      "image_refs": [
+        "trajectory_000019/frames/obs-000400_cam_high.jpg",
+        "trajectory_000019/frames/obs-000400_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000019/frames/obs-000400_cam_high.jpg": "335f4f3c3a450e0cf1082b893a85991bd2854d5ac3212835dade9ecf8f47e593",
+        "trajectory_000019/frames/obs-000400_cam_right_wrist.jpg": "c33ee781df892f7476c68f0c892b9580008b332a190ba45123bcbbaffa511423"
+      },
+      "expected_stages": [
+        "completed"
+      ],
+      "observation_ref": "obs-000400",
+      "row_sha256": "22120be1e2653ec3257ba3b89725b17da5a87f498970aa3419d4b7825ac4a509",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 18.0,
+      "observed": "归位接触交接被右臂与刀架遮挡，允许当前关系未知；后续清楚释放才能确认完成。",
+      "expected_fields": {
+        "execution_status": "information_insufficient",
+        "failure_event": null
+      },
+      "image_refs": [
+        "trajectory_000018/frames/obs-000450_cam_high.jpg",
+        "trajectory_000018/frames/obs-000450_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000018/frames/obs-000450_cam_high.jpg": "a1d3247a6b964d79f55500967b65159d92f46623c9a441617c091cf91c50b1d7",
+        "trajectory_000018/frames/obs-000450_cam_right_wrist.jpg": "ac33ce8cb67265d8885a7396ea3c910b16763c13d22869fb0c1e0b3e96885e89"
+      },
+      "expected_stages": [
+        "unknown"
+      ],
+      "observation_ref": "obs-000450",
+      "row_sha256": "8413ca1e7b12200e766d7890f5259e96cafcbee56c271013525dd7d8d74b09e0",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 14.0,
+      "observed": "回架时手指/刀架投影混叠，当前连接或释放尚不可靠；保留未知并继续观察。",
+      "expected_fields": {
+        "execution_status": "information_insufficient",
+        "failure_event": null
+      },
+      "image_refs": [
+        "trajectory_000019/frames/obs-000350_cam_high.jpg",
+        "trajectory_000019/frames/obs-000350_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000019/frames/obs-000350_cam_high.jpg": "4cc6148b97aa887fc4d248f06db7b7b217c4888c06eeda85f7077ce0e01847b1",
+        "trajectory_000019/frames/obs-000350_cam_right_wrist.jpg": "ca93d9ee2f75e8031a3a805e86373a9abd5fdde7b8a20ae64861245c0f9b4acc"
+      },
+      "expected_stages": [
+        "unknown"
+      ],
+      "observation_ref": "obs-000350",
+      "row_sha256": "5974339a38cdad8cfb1c6c8dd4816cba667e66719a3d5360a221fb0c6a5ac5d7",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 1,
+      "timestamp": 0,
+      "observation_ref": "obs-000000",
+      "row_sha256": "451a2e762b0a64a5bff7d53c7271d393315091ba82ebcf295a429ac7fc238462",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000001/frames/obs-000000_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000001/frames/obs-000000_cam_high.jpg": "65db43486124f816dfb5ac57a1af547d19da06dd4e71d272dcf68d971116650e"
+      },
+      "observed": "刀在右侧刀架，香肠完整，机械手尚未取刀。",
+      "expected_fields": {
+        "state.task_completed": false,
+        "visual_facts.knife_location": "holder"
+      }
+    },
+    {
+      "episode_for_audit_only": 6,
+      "timestamp": 0,
+      "observation_ref": "obs-000000",
+      "row_sha256": "39bfde1a2955e0255aab88faf2b21ce73de0d70512d3dd79717545d38b2ac471",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000006/frames/obs-000000_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000006/frames/obs-000000_cam_high.jpg": "dbe96ed7981231dd2d014bd7c3dfc66a25bdd588c8658a51447324d951b81582"
+      },
+      "observed": "刀在刀架，砧板上只有完整长条香肠。",
+      "expected_fields": {
+        "state.task_completed": false,
+        "visual_facts.knife_location": "holder"
+      }
+    },
+    {
+      "episode_for_audit_only": 11,
+      "timestamp": 0,
+      "observation_ref": "obs-000000",
+      "row_sha256": "54a4221e1faa8a2152d47a852e742e3cc923ce72c2192d89e2a91faccab1fcfe",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000011/frames/obs-000000_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000011/frames/obs-000000_cam_high.jpg": "cf837599bdb7d688ae8b6e638744a08a34650d68874529669cea8bb0630c4be7"
+      },
+      "observed": "刀在刀架，砧板香肠为一整根。",
+      "expected_fields": {
+        "state.task_completed": false,
+        "visual_facts.knife_location": "holder"
+      }
+    },
+    {
+      "episode_for_audit_only": 14,
+      "timestamp": 0,
+      "observation_ref": "obs-000000",
+      "row_sha256": "78b993e62d4fe2c0e22d309af07eb25d4369ea92693c87e896e628fa2dbbf30c",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000014/frames/obs-000000_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000014/frames/obs-000000_cam_high.jpg": "2c1a158be1e8df7ea55b8c7be3937522042966a340639aa783cc3e69710e32c3"
+      },
+      "observed": "刀在刀架，未见分离小段。",
+      "expected_fields": {
+        "state.task_completed": false,
+        "visual_facts.knife_location": "holder"
+      }
+    },
+    {
+      "episode_for_audit_only": 1,
+      "timestamp": 14,
+      "observation_ref": "obs-000350",
+      "row_sha256": "3e41325553d34d21b812a3818e731441590cd1be1abc78f2ddbfd56f72e5d5da",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000001/frames/obs-000350_cam_high.jpg",
+        "trajectory_000001/frames/obs-000350_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000001/frames/obs-000350_cam_high.jpg": "2b48c0a3bcaaddc89f0d3a35d283b1baff12380c018bc8ebba74cdc20e1ef189",
+        "trajectory_000001/frames/obs-000350_cam_right_wrist.jpg": "9ec0495ecec097b49580e90e8d88a05ec32eff68a080972b333288ea0dcfeb4e"
+      },
+      "observed": "刀仍在刀架而末端已到砧板；腕图闭合两指前未见刀，支持抓取未建立。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "state.candidate": "grasp_not_established",
+        "execution_status": "confirmed_failure"
+      }
+    },
+    {
+      "episode_for_audit_only": 6,
+      "timestamp": 10,
+      "observation_ref": "obs-000250",
+      "row_sha256": "7a2b45aeb8790dabb451b3267436a266449bada7719cacead14621170724a41a",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000006/frames/obs-000250_cam_high.jpg",
+        "trajectory_000006/frames/obs-000250_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000006/frames/obs-000250_cam_high.jpg": "a58817e00a31e4156c02fde3e24dce065d904e136543b894b16c2722a3e6540a",
+        "trajectory_000006/frames/obs-000250_cam_right_wrist.jpg": "25c9341828613cf55ae92294b76a8e163cb25fc9d37753231116a996575d310e"
+      },
+      "observed": "刀仍在架，末端已到香肠处；腕图两指前未见刀，支持抓取失败。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "state.candidate": "grasp_not_established",
+        "execution_status": "confirmed_failure"
+      }
+    },
+    {
+      "episode_for_audit_only": 11,
+      "timestamp": 7,
+      "observation_ref": "obs-000175",
+      "row_sha256": "711d6b664f33e38d62e83d94c94df308c17229bb53ab67a31d438bb786f3fc3a",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000011/frames/obs-000175_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000011/frames/obs-000175_cam_right_wrist.jpg": "3552ae25fbbc8301d0e9311062514ea7196e9a4184bcc14089f6c4155baaec85"
+      },
+      "observed": "刀刃可见且连接两指前方；刀与香肠的二维投影相交，但这不证明切开或真实接触。",
+      "expected_fields": {
+        "visual_facts.knife_location": "gripper",
+        "state.preconditions.cut_effect_confirmed": false
+      }
+    },
+    {
+      "episode_for_audit_only": 11,
+      "timestamp": 14,
+      "observation_ref": "obs-000350",
+      "row_sha256": "64025870d18def965904a68e243b12085ade968fe5aa5d32a6d2715e7657bf5c",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000011/frames/obs-000350_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000011/frames/obs-000350_cam_high.jpg": "0e52ff2e14867d3a2c30727405e39ee5d34451d8470beb4980e05bf4dc6272f8"
+      },
+      "observed": "机械手携刀回到刀架附近，香肠仍为长条，没有可见新增分离小段。",
+      "expected_fields": {
+        "visual_facts.cut_piece": "no",
+        "state.task_completed": false
+      }
+    },
+    {
+      "episode_for_audit_only": 14,
+      "timestamp": 8,
+      "observation_ref": "obs-000200",
+      "row_sha256": "9534f76611fdb4720e18c5fad4992d699beb05504ea417cbdab31df804270dc6",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000014/frames/obs-000200_cam_high.jpg",
+        "trajectory_000014/frames/obs-000200_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000014/frames/obs-000200_cam_high.jpg": "33f3c8bebd4285ab8291f303ac31fce54f883a86c087ad02de53526b0b135884",
+        "trajectory_000014/frames/obs-000200_cam_right_wrist.jpg": "322719363bdd51eeafd66b047e79796248f85d5cdbd59d251a108b4981158870"
+      },
+      "observed": "当前刀在末端，腕图刀刃与两指连接，香肠位于刀右侧。模型未查询此腕图却称刀在架/分离，这是明确图像判断错误。",
+      "expected_fields": {
+        "visual_facts.knife_location": "gripper",
+        "visual_facts.contact": "between_fingers",
+        "state.preconditions.reliable_grasp": true,
+        "state.candidate": null
+      }
+    },
+    {
+      "episode_for_audit_only": 14,
+      "timestamp": 16,
+      "observation_ref": "obs-000400",
+      "row_sha256": "194d503ce29559e5b17e3596ba6297a70b06446c371e5b997f813510d97cb510",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000014/frames/obs-000400_cam_right_wrist.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000014/frames/obs-000400_cam_right_wrist.jpg": "b0eea001468007cd081452f15750af49672854331c876823fa7440c93b813ebd"
+      },
+      "observed": "刀刃仍在两指前，香肠在图像右下，未见分离小段；不能仅凭刀和香肠都在砧板区域认定切割成功。",
+      "expected_fields": {
+        "visual_facts.knife_location": "gripper",
+        "state.preconditions.cut_effect_confirmed": false
+      }
+    },
+    {
+      "episode_for_audit_only": 14,
+      "timestamp": 24,
+      "observation_ref": "obs-000600",
+      "row_sha256": "143ab6d90c382715e0ad9ce64653879c76285746d0121fcfb56a8777e5ca665a",
+      "row_fingerprint_version": "canonical-json-full-row-v1",
+      "image_refs": [
+        "trajectory_000014/frames/obs-000600_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_000014/frames/obs-000600_cam_high.jpg": "fd96217e7e84190bd718eb316488134fb14e74b54a2849cf1bb618209f2753e9"
+      },
+      "observed": "刀已在右侧刀架，机械手退出顶视范围，香肠仍完整；模型将刀位置标未知，归位感知不足。",
+      "expected_fields": {
+        "visual_facts.knife_location": "holder",
+        "state.task_completed": false
+      }
+    }
+  ],
+  "conditional_directions": [],
+  "scope": "六条已见回归；少量关键时刻约束，不要求每帧确定，也不证明全部时刻正确。",
+  "remaining_gaps": [
+    "2:0/1秒初始化等待、9秒遮挡",
+    "8精确柄/两指对齐仍拒识",
+    "18:18秒与19:14秒回架交接未知",
+    "没有独立深度/姿态/接触准备",
+    "六条中没有自然失败后重新打开/重抓恢复过程"
+  ],
+  "binding_version": 2,
+  "row_fingerprint_version": "canonical-json-full-row-v1",
+  "row_fingerprint_definition": {
+    "algorithm": "sha256",
+    "encoding": "utf-8",
+    "sort_keys": true,
+    "separators": [
+      ",",
+      ":"
+    ],
+    "ensure_ascii": false,
+    "allow_nan": false,
+    "scope": "entire_decision_row_including_processing; reruns require explicit rebinding"
+  },
+  "source_run_summary_sha256": "29ff4e34479f58f529e2dd2a9f3c18c5dd52b0c2aff6b153d92287c7bf107c2e",
+  "binding_migration": {
+    "from_version": "unversioned_legacy",
+    "existing_images_and_hashes_verified": true,
+    "existing_row_fingerprints_verified_when_present": true,
+    "inference_repeated": false,
+    "semantic_expectations_changed": false
+  },
+  "binding_rebind": {
+    "old_source_run": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\freeze_acceptance_20261017\\final_run",
+    "reviewer": "root assistant",
+    "note": "正常18/19复跑；同图SHA核验后重绑定，原预期不变。追加样例只作离线目视核查。",
+    "same_reviewed_image_bytes": true,
+    "semantic_expectations_changed": false,
+    "inference_repeated": false,
+    "changed_rows": [
+      {
+        "episode_for_audit_only": 18,
+        "timestamp": 0.0,
+        "old_row_sha256": "beb11ca338ecab02fbd965858d090c4dca9eee5f4127616489a69584f34c7bd1",
+        "new_row_sha256": "256aed03bb1f0d83e9622e4931436326c0a604b51a9e9a664e87f8b041a96393",
+        "changed_top_level_fields": [
+          "processing"
+        ]
+      },
+      {
+        "episode_for_audit_only": 18,
+        "timestamp": 9.0,
+        "old_row_sha256": "c4e5f38e017a48dd931e47f12393645dc52e15042561e9b18e74fc621c1cf35b",
+        "new_row_sha256": "5254ec71fefc25e8cf8722e89dac818d0df58845441d4220c708cc02b129f6d6",
+        "changed_top_level_fields": [
+          "processing"
+        ]
+      },
+      {
+        "episode_for_audit_only": 18,
+        "timestamp": 20.0,
+        "old_row_sha256": "cd0cf3cd03d4593eb8ec3e4aa2253e6872e9b8af5ac497abdcb8be23acaaf817",
+        "new_row_sha256": "962b6a4c30f31e487abb2d067fe30af26d6a391e86cf9bd72810d6a06d14d8bd",
+        "changed_top_level_fields": [
+          "processing"
+        ]
+      },
+      {
+        "episode_for_audit_only": 19,
+        "timestamp": 8.0,
+        "old_row_sha256": "4bf78c0fae99504a7c1583f3dc2a986ea3753f0d8b51504d75d70bcc81009e62",
+        "new_row_sha256": "cf55b45469d203a17275e4e14cb93d9d02f7cd64855c92ce1297e250b10573b9",
+        "changed_top_level_fields": [
+          "processing"
+        ]
+      },
+      {
+        "episode_for_audit_only": 19,
+        "timestamp": 10.0,
+        "old_row_sha256": "6d99ce91834d8f5e0fc8ba1027a15cbd5e7382a1ddd00abf6075bce12ec209ed",
+        "new_row_sha256": "5381353ff48156bf14d8c39dc961f7c9479d3030c7033f657d46d0e75640f0b9",
+        "changed_top_level_fields": [
+          "processing"
+        ]
+      },
+      {
+        "episode_for_audit_only": 19,
+        "timestamp": 16.0,
+        "old_row_sha256": "1069a6aeb81ff7545818eaf820ef83fde0ac939e56d47492dba14236e0158517",
+        "new_row_sha256": "22120be1e2653ec3257ba3b89725b17da5a87f498970aa3419d4b7825ac4a509",
+        "changed_top_level_fields": [
+          "processing"
+        ]
+      },
+      {
+        "episode_for_audit_only": 18,
+        "timestamp": 18.0,
+        "old_row_sha256": "060b4d32e4f4773861622787d08b43d1e608085018292954e5de598a93e8be39",
+        "new_row_sha256": "8413ca1e7b12200e766d7890f5259e96cafcbee56c271013525dd7d8d74b09e0",
+        "changed_top_level_fields": [
+          "processing"
+        ]
+      },
+      {
+        "episode_for_audit_only": 19,
+        "timestamp": 14.0,
+        "old_row_sha256": "e81606a781e2fdc39cbcfed441bf14546e3f01be22648d2a26d73af19332d550",
+        "new_row_sha256": "5974339a38cdad8cfb1c6c8dd4816cba667e66719a3d5360a221fb0c6a5ac5d7",
+        "changed_top_level_fields": [
+          "processing"
+        ]
+      }
+    ]
+  }
+}

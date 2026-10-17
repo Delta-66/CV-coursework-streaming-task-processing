@@ -1,6 +1,7 @@
 """Tests for current-only input isolation, result validity, and inference budgets."""
 import importlib.util
 import json
+import subprocess
 from contextlib import nullcontext
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -11,7 +12,7 @@ from unittest.mock import patch
 import numpy as np
 import yaml
 
-from current_observation import CurrentObservation, QwenCurrentObservation, make_request, output_schema, parse_result, wait_for_cuda_memory
+from current_observation import CurrentObservation, QwenCurrentObservation, make_request, output_schema, parse_result, read_cuda_memory, wait_for_cuda_memory
 from run_current_observation import load_config, run
 
 
@@ -65,19 +66,103 @@ class FakeBackend:
 
 
 class BaselineTests(unittest.TestCase):
+    def test_windows_memory_uses_lower_cuda_or_physical_free_value(self):
+        device_uuid = "b54bcf49-7ee9-1a96-9695-21e4d58abb4a"
+        for cuda_free, expected in ((6650, 1787), (1200, 1200)):
+            with self.subTest(cuda_free=cuda_free):
+                torch = SimpleNamespace(cuda=SimpleNamespace(
+                    mem_get_info=lambda device: (cuda_free * 1024**2, 8192 * 1024**2),
+                    get_device_properties=lambda device: SimpleNamespace(uuid=device_uuid)))
+                with patch("current_observation.sys.platform", "win32"), \
+                     patch("current_observation.subprocess.run", return_value=SimpleNamespace(
+                         stdout=f"GPU-{device_uuid}, 1787, 8188\n")) as command:
+                    self.assertEqual(read_cuda_memory(torch, "cuda:0"), (expected * 1024**2, 8188 * 1024**2))
+                self.assertEqual(command.call_args.args[0], ["nvidia-smi", "--query-gpu=uuid,memory.free,memory.total",
+                                                            "--format=csv,noheader,nounits"])
+                self.assertTrue(command.call_args.kwargs["capture_output"])
+                self.assertTrue(command.call_args.kwargs["text"])
+                self.assertTrue(command.call_args.kwargs["check"])
+                self.assertLessEqual(command.call_args.kwargs["timeout"], 5)
+
+    def test_windows_memory_matches_uuid_instead_of_logical_gpu_index(self):
+        selected = "b54bcf49-7ee9-1a96-9695-21e4d58abb4a"
+        other = "63c601bd-290b-4e5c-b775-f4f8145ae718"
+        torch = SimpleNamespace(cuda=SimpleNamespace(
+            mem_get_info=lambda device: (7000 * 1024**2, 8192 * 1024**2),
+            get_device_properties=lambda device: SimpleNamespace(uuid="GPU-" + selected.upper())))
+        report = f"GPU-{other}, 7500, 8192\nGPU-{selected}, 400, 8192\n"
+        with patch("current_observation.sys.platform", "win32"), \
+             patch("current_observation.subprocess.run", return_value=SimpleNamespace(stdout=report)):
+            self.assertEqual(read_cuda_memory(torch, "cuda:0"), (400 * 1024**2, 8192 * 1024**2))
+
+    def test_windows_missing_or_invalid_physical_report_stops_inference(self):
+        selected = "b54bcf49-7ee9-1a96-9695-21e4d58abb4a"
+        torch = SimpleNamespace(cuda=SimpleNamespace(
+            mem_get_info=lambda device: (7000 * 1024**2, 8192 * 1024**2),
+            get_device_properties=lambda device: SimpleNamespace(uuid=selected)))
+        errors = [FileNotFoundError("nvidia-smi unavailable"), subprocess.CalledProcessError(1, "nvidia-smi"),
+                  subprocess.TimeoutExpired("nvidia-smi", 5)]
+        for error in errors:
+            with self.subTest(error=type(error).__name__), patch("current_observation.sys.platform", "win32"), \
+                 patch("current_observation.subprocess.run", side_effect=error), \
+                 self.assertRaisesRegex(RuntimeError, "refusing CUDA inference"):
+                read_cuda_memory(torch, "cuda:0")
+        reports = ["", "GPU-other, 7000, 8192\n", f"GPU-{selected}, N/A, 8192\n",
+                   f"GPU-{selected}, nan, 8192\n", f"GPU-{selected}, 0, 0\n",
+                   f"GPU-{selected}, -1, 8192\n", f"GPU-{selected}, 9000, 8192\n",
+                   f"GPU-{selected}, 7000\n", f"GPU-{selected}, 7000, 8192\n" * 2]
+        for report in reports:
+            with self.subTest(report=report), patch("current_observation.sys.platform", "win32"), \
+                 patch("current_observation.subprocess.run", return_value=SimpleNamespace(stdout=report)), \
+                 self.assertRaisesRegex(RuntimeError, "refusing CUDA inference"):
+                read_cuda_memory(torch, "cuda:0")
+
+    def test_nonwindows_uses_cuda_api_and_rejects_invalid_memory(self):
+        torch = SimpleNamespace(cuda=SimpleNamespace(mem_get_info=lambda device: (4096, 8192)))
+        with patch("current_observation.sys.platform", "linux"), patch("current_observation.subprocess.run") as command:
+            self.assertEqual(read_cuda_memory(torch, "cuda:0"), (4096, 8192))
+        command.assert_not_called()
+        for free, total in ((-1, 8192), (8193, 8192), (0, 0), (float("nan"), 8192), (1, float("inf"))):
+            torch.cuda.mem_get_info = lambda device: (free, total)
+            with self.subTest(free=free, total=total), patch("current_observation.sys.platform", "linux"), \
+                 self.assertRaisesRegex(RuntimeError, "Invalid CUDA"):
+                read_cuda_memory(torch, "cuda:0")
+
+    def test_windows_physical_headroom_releases_weights_and_waits_for_gpu(self):
+        selected = "b54bcf49-7ee9-1a96-9695-21e4d58abb4a"
+        reports = [SimpleNamespace(stdout=f"GPU-{selected}, {free}, 8192\n") for free in (200, 3000, 7000)]
+        destinations = []
+        backend = QwenCurrentObservation.__new__(QwenCurrentObservation)
+        backend.device = "cuda:0"
+        backend.min_free_cuda_mib = 6500
+        backend.min_inference_free_cuda_mib = 1024
+        backend.gpu_poll_interval_s = 10
+        backend.model = SimpleNamespace(to=destinations.append)
+        backend.torch = SimpleNamespace(cuda=SimpleNamespace(
+            mem_get_info=lambda device: (7000 * 1024**2, 8192 * 1024**2),
+            get_device_properties=lambda device: SimpleNamespace(uuid=selected),
+            empty_cache=lambda: None, synchronize=lambda device: None, OutOfMemoryError=MemoryError))
+        with patch("current_observation.sys.platform", "win32"), \
+             patch("current_observation.subprocess.run", side_effect=reports), \
+             patch("current_observation.time.sleep") as sleep, patch("builtins.print"):
+            backend._ensure_cuda_ready()
+        self.assertEqual(destinations, ["cpu", "cuda:0"])
+        self.assertEqual(backend.model.hf_device_map, {"": "cuda:0"})
+        sleep.assert_called_once_with(10)
+
     def test_gpu_memory_waits_until_available_without_busy_polling(self):
         available = iter([200, 4500, 6000])
         clock = [0.0]
         def sleep(seconds):
             clock[0] += seconds
         torch = SimpleNamespace(cuda=SimpleNamespace(mem_get_info=lambda device: (next(available)*1024**2, 8192*1024**2)))
-        with patch("current_observation.time.sleep", side_effect=sleep), \
+        with patch("current_observation.sys.platform", "linux"), patch("current_observation.time.sleep", side_effect=sleep), \
              patch("current_observation.time.perf_counter", side_effect=lambda: clock[0]), patch("builtins.print"):
             self.assertEqual(wait_for_cuda_memory(torch, "cuda:0", 5000, 10), 20.0)
 
     def test_impossible_gpu_memory_requirement_is_rejected(self):
         torch = SimpleNamespace(cuda=SimpleNamespace(mem_get_info=lambda device: (4096*1024**2, 4096*1024**2)))
-        with self.assertRaisesRegex(ValueError, "total capacity"):
+        with patch("current_observation.sys.platform", "linux"), self.assertRaisesRegex(ValueError, "total capacity"):
             wait_for_cuda_memory(torch, "cuda:0", 5000)
 
     def test_low_headroom_releases_weights_and_resumes_only_on_gpu(self):
@@ -92,7 +177,7 @@ class BaselineTests(unittest.TestCase):
         backend.torch = SimpleNamespace(cuda=SimpleNamespace(
             mem_get_info=lambda device: (next(available)*1024**2, 8192*1024**2),
             empty_cache=lambda: None, synchronize=lambda device: None, OutOfMemoryError=MemoryError))
-        with patch("current_observation.time.sleep") as sleep, patch("builtins.print"):
+        with patch("current_observation.sys.platform", "linux"), patch("current_observation.time.sleep") as sleep, patch("builtins.print"):
             backend._ensure_cuda_ready()
         self.assertEqual(destinations, ["cpu", "cuda:0"])
         self.assertEqual(backend.model.hf_device_map, {"": "cuda:0"})
@@ -112,7 +197,7 @@ class BaselineTests(unittest.TestCase):
         backend.torch = SimpleNamespace(cuda=SimpleNamespace(
             mem_get_info=lambda device: (6000*1024**2, 8192*1024**2),
             empty_cache=lambda: None, synchronize=lambda device: None, OutOfMemoryError=MemoryError))
-        with patch("current_observation.time.sleep") as sleep, patch("builtins.print"):
+        with patch("current_observation.sys.platform", "linux"), patch("current_observation.time.sleep") as sleep, patch("builtins.print"):
             backend._acquire_cuda()
         self.assertEqual(destinations, ["cuda:0", "cpu", "cuda:0"])
         sleep.assert_called_once_with(10)

@@ -1,0 +1,60 @@
+{
+  "kind": "real_log_offline_binding_fault_injection",
+  "no_inference_repeated": true,
+  "checks": [
+    {
+      "injection": "wrong_run",
+      "engineering_status": "failed",
+      "evidence_status": "invalid",
+      "semantic_status": "not_assessable",
+      "overall_status": "invalid",
+      "ordinary_invalid": 19,
+      "direction_invalid": 2
+    },
+    {
+      "injection": "ordinary_wrong_sha",
+      "engineering_status": "failed",
+      "evidence_status": "invalid",
+      "semantic_status": "not_assessable",
+      "overall_status": "invalid",
+      "ordinary_invalid": 1,
+      "direction_invalid": 0
+    },
+    {
+      "injection": "ordinary_missing_image",
+      "engineering_status": "failed",
+      "evidence_status": "invalid",
+      "semantic_status": "not_assessable",
+      "overall_status": "invalid",
+      "ordinary_invalid": 1,
+      "direction_invalid": 0
+    },
+    {
+      "injection": "ordinary_wrong_row_hash",
+      "engineering_status": "failed",
+      "evidence_status": "invalid",
+      "semantic_status": "not_assessable",
+      "overall_status": "invalid",
+      "ordinary_invalid": 1,
+      "direction_invalid": 0
+    },
+    {
+      "injection": "ordinary_missing_row_hash",
+      "engineering_status": "failed",
+      "evidence_status": "invalid",
+      "semantic_status": "not_assessable",
+      "overall_status": "invalid",
+      "ordinary_invalid": 1,
+      "direction_invalid": 0
+    },
+    {
+      "injection": "ordinary_path_escape",
+      "engineering_status": "failed",
+      "evidence_status": "invalid",
+      "semantic_status": "not_assessable",
+      "overall_status": "invalid",
+      "ordinary_invalid": 1,
+      "direction_invalid": 0
+    }
+  ]
+}

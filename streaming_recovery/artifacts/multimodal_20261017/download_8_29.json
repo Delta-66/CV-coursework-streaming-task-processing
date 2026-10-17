@@ -1,0 +1,42 @@
+{
+  "repo": "sii-rhos-ai/vifailback-dataset-lerobot",
+  "revision": "619791b94f61667333fe179d471051e0bca0e06f",
+  "files": [
+    {
+      "path": "data/chunk-000/episode_000008.parquet",
+      "size": 36040,
+      "sha256": "f98a4682acb307aec395163035cc8428c3b4dd85697df9b15e614bfd7c958581",
+      "remote_sha256": "f98a4682acb307aec395163035cc8428c3b4dd85697df9b15e614bfd7c958581"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000008.mp4",
+      "size": 2472267,
+      "sha256": "48d03572afd790c4373f40520be6847627f6b5934d91e5856b012071a921f5b5",
+      "remote_sha256": "48d03572afd790c4373f40520be6847627f6b5934d91e5856b012071a921f5b5"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000008.mp4",
+      "size": 1575847,
+      "sha256": "015849fbba3cfed89bac80144358a57aa296caf33c03c09cb8ec1240fcfa78d7",
+      "remote_sha256": "015849fbba3cfed89bac80144358a57aa296caf33c03c09cb8ec1240fcfa78d7"
+    },
+    {
+      "path": "data/chunk-000/episode_000029.parquet",
+      "size": 35990,
+      "sha256": "13cd255f9e70ba27aad9ecf2ee632adc591a170b2b0dbf8aed4ffd40096b2e23",
+      "remote_sha256": "13cd255f9e70ba27aad9ecf2ee632adc591a170b2b0dbf8aed4ffd40096b2e23"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000029.mp4",
+      "size": 2593210,
+      "sha256": "b5a64e762cde980b21be1935b4cc56d9b48c6954fdf176681c4965c316320680",
+      "remote_sha256": "b5a64e762cde980b21be1935b4cc56d9b48c6954fdf176681c4965c316320680"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000029.mp4",
+      "size": 1644353,
+      "sha256": "f582051ec6c1ede1d805a47f675922645fc78df2a685835aec8a09522c39944c",
+      "remote_sha256": "f582051ec6c1ede1d805a47f675922645fc78df2a685835aec8a09522c39944c"
+    }
+  ]
+}

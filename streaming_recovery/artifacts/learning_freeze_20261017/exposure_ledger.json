@@ -1,0 +1,59 @@
+{
+  "protocol_sha256": "5c35480a4dd413e492cc3403278a114ec8dc61da13950e75993df5f078b33baa",
+  "fit_groups": [
+    3,
+    10,
+    12,
+    17,
+    19
+  ],
+  "fit_effective_groups": [
+    3,
+    10,
+    17,
+    19
+  ],
+  "selection_groups": [
+    2,
+    6,
+    8,
+    11,
+    14,
+    29
+  ],
+  "seen_normal_controls": [
+    18,
+    19
+  ],
+  "fit_overlap_normal_control": [
+    19
+  ],
+  "previously_exposed_regression": [
+    0,
+    1,
+    2,
+    6,
+    8,
+    11,
+    14,
+    18,
+    19,
+    29
+  ],
+  "reserved_groups_after_selection": [
+    13,
+    16
+  ],
+  "original_membership_of_reserved_groups": "train",
+  "frozen_test_used": false,
+  "split_sha256_unchanged": {
+    "train": "bcbdbbf28ad3ee39e486983edbf523e47ac382764de5e75902e82f554eb1b915",
+    "validation": "457b1011fd91f3c53db61d2962e523bd44b66027f0d30b7f0a7c2c4dbf07293d",
+    "dev_seen": "110ab1d847746eaaafdba8afdcaa488cf117ea35d61ab330984d044578d31a8e",
+    "test": "0cbc7eb3d349c5d5b4476f367376a36d9a322f8e5c1de9da3f05730cada06c09"
+  },
+  "reserved_outcomes_cannot_trigger_further_tuning": true,
+  "feedback_rounds": 2,
+  "all_original_ten_previously_seen": true,
+  "independent_success_trajectories": 0
+}

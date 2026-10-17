@@ -1,0 +1,1021 @@
+--- a/README.md
++++ b/README.md
+@@ -1,19 +1,19 @@
+ # CV大作业—流式任务处理
+ 
+-目前有两条独立路线，不能混用运行次数或效果结论。2026-10-17 对现有 `streaming_recovery/` 完成增量修复：真实双视角图像支持右臂取刀、切下新小段和刀具归位；两条正常、三条失败轨迹完成了功能回放。真实刀柄/两指联合定位、接触准备与完整重试纠错仍有缺口，不能称为通用机器人操作系统。
++目前有两条独立路线，不能混用运行次数或效果结论。2026-10-17 最新在现有 `streaming_recovery/` 上完成 **6 条真实轨迹的 1 Hz 多模态测试**：RGB、实测右臂关节位置/速度、夹爪开度均参与判断。位置与夹爪来自同一个状态向量，不是三个独立传感器。同任务仅有两条成功数据，因此采用 2 正常＋4 失败；8/29 是首次规则冻结后的新增验证样例，冻结测试集未使用。
+ 
+ | 路线 | 目标 1—3 当前证据 | 尚未验证 |
+ |---|---|---|
+-| `streaming_recovery`，CPU 双视角经典视觉＋有限状态 | 5 条真实轨迹、180 次判断；正常 18/19 有完整任务效果证据；失败 0/2/6 主动提醒；真实恢复建议可检查 | 可靠联合定位、实际深度/接触准备、自然滑落/重试和物理执行；完整建议推进仅合成验证 |
++| `streaming_recovery`，CPU 条件双视角经典视觉＋关节运动＋有限状态 | 6 条完整真实轨迹、82 次判断、24.50 s；4 条失败正确提醒，正常无失败误报；18 确认完成，19 在 1 Hz 下漏确认成功；实际查看 27 个关键时刻 | 19 的切割作用识别、部分对齐/尝试阶段；可靠联合定位、深度/接触准备、自然滑落/重试和物理执行 |
+ | 根目录 Qwen 当前观测/时序路线 | 保留历史输入、启动、资源与工程测试记录 | 500 条正式基准仍为 0 条完成；未获该路线完整诊断/分层纠错效果结论 |
+ 
+ 本次主入口（项目根目录 PowerShell）：
+ 
+ ```powershell
+-& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run --config streaming_recovery/config_multimodal.json
+ ```
+ 
+-详见 [运行说明](streaming_recovery/README.md)、[增量修复与验收](streaming_recovery/docs/增量修复与验收_20261017.md) 和 [真实逐时刻查看页](streaming_recovery/artifacts/incremental_20261017/delivery_run/index.html)。episode 19 首次冻结检查漏检，修复后归入本轮开发；保留首轮输出，未把它作为未调参成绩。冻结划分和保留测试集均未改动。
++详见 [运行说明](streaming_recovery/README.md)、[六条多模态测试汇总](streaming_recovery/docs/六条多模态测试_20261017.md) 和 [真实逐时刻查看页](streaming_recovery/artifacts/multimodal_20261017/final_run/index.html)。旧的 2.5 Hz 五条实验保存在 [上一轮增量验收](streaming_recovery/docs/增量修复与验收_20261017.md)，其结果不能替代本次 1 Hz 测试。新增验证样例首次输出完整保留，不宣称小样本泛化成绩。
+ 
+ 以下保留根目录 Qwen 路线的历史进展与原入口。原“第2步尚未完成、第3步暂缓”的判断适用于该路线及当时版本，不代表上面的 CPU 增量实现。
+ 
+--- a/streaming_recovery/README.md
++++ b/streaming_recovery/README.md
+@@ -1,8 +1,8 @@
+ # 机器人操作的流式理解、失败诊断与分层纠错
+ 
+-这是对现有 `streaming_recovery/` 的增量修复，范围为课题目标 1—3。当前主方法是 **`bounded_visual_state_tracker`＋`multiview_effect_geometry`**：真实顶视/右腕图像、夹爪原始状态、有限记忆与透明规则。没有训练新模型，没有接入真机。
++这是对现有 `streaming_recovery/` 的增量实现，范围为课题目标 1—3。当前主方法是 **`bounded_visual_state_tracker`＋`multiview_effect_geometry`**：真实顶视图、需要时的当前右腕图、实测右臂关节位置/速度和夹爪状态、有限记忆与透明规则。没有训练新模型，没有接入真机。
+ 
+-已实际回放 5 条取刀—切香肠—归位轨迹，共 1,790 个原生时刻、3,580 张解码图、180 次判断。正常 episode 18、19 分别在 19.6 s、15.6 s 获得完整任务效果证据；失败 episode 0、2、6 分别在 9.6 s、10.4 s、9.6 s 确认异常。**这些是功能演示，不是识别准确率或泛化成绩。** episode 19 首次冻结验证漏掉切割操作，修复后已归入本轮开发，原始漏检记录保留。
++最新实际回放 **6 条完整取刀—切香肠—归位轨迹**：18、19 正常，0、2、8、29 失败；同任务只有两条成功数据，故不能凑成 3＋3。1 Hz 采样，共 1,998 个原生时刻、3,996 张解码图、82 次判断，CPU 处理 24.50 s。4 条失败均确认、正常无失败误报；18 确认完整成功，19 的切割作用及成功仍漏确认。8、29 首次运行前未参与调参；首次输出和后续阶段逻辑修复记录均保留。**这些是功能验证，不是泛化准确率或检测延迟。**
+ 
+ 真实刀柄/两指联合定位、独立接触准备、完整真实重试建议过程仍未验证。当前实际纠错演示为“恢复夹持前置条件→条件允许时打开空夹爪”；二维对齐、准备检查、闭合建议和效果确认的推进链已用明确标记的合成输入验证。不会把这两类结果混写。
+ 
+@@ -11,15 +11,15 @@
+ 在项目根目录的 PowerShell 中：
+ 
+ ```powershell
+-& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run --config streaming_recovery/config_multimodal.json
+ ```
+ 
+-默认完整回放 episode 0、18，每 10 个原生帧判断一次（数据时间 2.5 Hz），输出 82 次判断。CPU 运行，不需要 GPU、模型权重或 API 凭据；每次新建输出目录，不覆盖旧记录。
++此命令完整回放六条轨迹，每 25 个原生帧判断一次（数据时间 1 Hz）。每次新建 `artifacts/multimodal_runs/时间戳/`，不覆盖已有结果。省略 `--config` 时仍是 0、18 的小演示，采样也已改为 1 Hz（33 次判断）。CPU 运行，不需要 GPU、模型权重或 API 凭据。
+ 
+-复现本次五条完整回放：
++补齐新增两条数据（已在本机下载并校验，无需重复下载）：
+ 
+ ```powershell
+-& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run --config streaming_recovery/artifacts/incremental_20261017/release_config.json
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery.fetch_functional_data --episodes 8 29
+ ```
+ 
+ 功能验收与合成逻辑回归：
+@@ -32,6 +32,11 @@
+ 依赖版本见 [requirements.txt](requirements.txt)。本轮沿用 `cv-streaming`，没有重装环境。迁移时使用 Python 3.11，并修改 `config.json` 中的数据位置；配置相对路径以配置文件所在目录为基准。
+ 
+ ## 可核查结果
++
++- [本次六条多模态测试](docs/六条多模态测试_20261017.md)：字段核实、逐条判断、未知阶段、耗时与目视抽查。
++- [六条完整查看页](artifacts/multimodal_20261017/final_run/index.html)、[独立离线核查](artifacts/multimodal_20261017/review_summary.json)、[40 项回归与 5 组验收](artifacts/multimodal_20261017/final_validation/validation.json)。
++
++以下是上一轮 2.5 Hz 实现的历史证据（原代码快照和结果保留，不能作为本次 1 Hz 成绩）：
+ 
+ - [本轮交付与修复说明](docs/增量修复与验收_20261017.md)：问题、补丁、验证等级和未完成项。
+ - [真实正常/失败查看页](artifacts/incremental_20261017/delivery_run/index.html)：每个时刻的双视角、阶段、依据、事件与两层建议。
+@@ -47,11 +52,11 @@
+ 
+ 只绑定规格 `right_knife_cut_sausage_return_v1`：右臂取刀、携刀到砧板、产生本次新小段、刀回架、释放。支持规范英文指令及一个明确中文表述，允许大小写、空白与末尾句号规范化；否定、不同对象/顺序或其他任务明确拒绝，不用关键词凑流程。
+ 
+-`source.py → contracts.py → memory.py → multiview.py → tracking.py → events.py → recovery.py → engine.py` 构成完整链路；`__main__.py` 是入口；`report.py` 仅离线读取输出生成查看页。旧 `geometry.py` 后端保留，可把配置 `backend` 设为 `calibrated_rgb_geometry` 运行其受限对照；它不具备新双视角后端的切割/归位能力。
++`source.py → contracts.py → memory.py → multiview.py / dynamics.py → tracking.py → events.py → recovery.py → engine.py` 构成完整链路；`__main__.py` 是入口；`report.py` 仅离线读取输出生成查看页。旧 `geometry.py` 后端保留，可把配置 `backend` 设为 `calibrated_rgb_geometry` 运行其受限对照；它不具备新双视角后端的切割/归位能力。
+ 
+-数据为官方固定版本 LeRobot v2.1、25 FPS、640×480 AV1，推理图像长边缩至 512。保留源变量名，只读取 `timestamp`、`frame_index`、`observation.state`；指令由控制面查任务表。状态第 13 项是右夹爪原始值，单位未被解释为米或力。`action`、目标 EEF、最终标签、样本目录名称与总长度不进入推理。
++数据为官方固定版本 LeRobot v2.1、25 FPS、640×480 AV1，推理图像长边缩至 512。保留源变量名，只读取 `timestamp`、`frame_index`、`observation.state`、`observation.velocity`；指令由控制面查任务表。状态的 `7:13` 是右臂六关节，第 13 项是右夹爪开度，二者共享向量；速度取实测 qvel 的 `7:13`，排除夹爪维。单位保留为原始单位。`action`、目标 EEF、最终标签、样本目录名称与总长度不进入推理。
+ 
+-顶视图用于刀架刃区、砧板和香肠布局；腕部图像实际参与刀刃与两指连接、刀刃与香肠端部的相对运动判断，贡献与引用写入 `measurements.wrist`。开闭值来自同一原始状态，`gripper_source` 明确标识它不是独立视觉互证。
++顶视图用于刀架刃区、砧板和香肠布局；顶视抓取关系不清楚时查询当前腕部图，判断刀刃与两指连接和刀—香肠相对运动。每次最多当前两图＋初始顶视参考，共 3 图；旧腕图仅留最多 3 条几何特征，不增加图像输入。实际使用与仅审阅分别记入 `modalities_used` / `modalities_for_audit_only`。右臂实测运动参与接近/停留阶段、空手进入工作区的前置条件诊断，以及可疑视觉切割运动的复核；它不能代替物体夹持证据。开闭值来自同一原始状态，`gripper_source` 明确标识它不是独立视觉互证。
+ 
+ ## 方法边界与记忆
+ 
+--- a/streaming_recovery/__main__.py
++++ b/streaming_recovery/__main__.py
+@@ -71,6 +71,7 @@
+     start=time.monotonic()
+     try:
+         for episode in config["source"]["episodes"]:
++            episode_start=time.monotonic()
+             monitor.reset()
+             instruction=instruction_for_episode(root,episode)
+             directory=run_dir/f"trajectory_{episode:06d}"
+@@ -85,6 +86,7 @@
+                     tick=time.monotonic()
+                     result=monitor.step(observation)
+                     elapsed=time.monotonic()-tick
++                    result["processing"]={"decision_wall_s":elapsed,"includes_decode_or_image_save":False}
+                     for camera,im in observation.images.items():
+                         im.save(directory/"frames"/f"{observation.ref}_{camera}.jpg",quality=90)
+                     out.write(json.dumps(result,ensure_ascii=False,allow_nan=False)+"\n");out.flush()
+@@ -104,6 +106,9 @@
+             chunk=episode//1000
+             files=[root/f'data/chunk-{chunk:03d}/episode_{episode:06d}.parquet']+[root/f'videos/chunk-{chunk:03d}/observation.images.{c}/episode_{episode:06d}.mp4' for c in config["source"]["cameras"]]
+             summary["episodes"].append({"episode_for_audit_only":episode,"output_subdir":directory.name,"counts":counts,
++                "elapsed_wall_s":time.monotonic()-episode_start,
++                "decision_wall_total_s":sum(m["decision_latency_s"] for m in milestones),
++                "decision_wall_max_s":max((m["decision_latency_s"] for m in milestones),default=0),
+                 "source_audit":stream.audit,"memory_maxima":maxima,"timeline":milestones,"end":end,
+                 "source_files":[{"path":str(p),"sha256":sha256(p)} for p in files if p.exists()]})
+         summary["elapsed_wall_s"]=time.monotonic()-start
+--- a/streaming_recovery/config.json
++++ b/streaming_recovery/config.json
+@@ -1,10 +1,10 @@
+ {
+   "method": "bounded_visual_state_tracker",
+   "backend": "multiview_effect_geometry",
+-  "source": {"root": "../data/vifailback_lerobot", "episodes": [0, 18], "sample_every": 10, "cameras": ["cam_high", "cam_right_wrist"], "max_age_s": 0.12},
++  "source": {"root": "../data/vifailback_lerobot", "episodes": [0, 18], "sample_every": 25, "cameras": ["cam_high", "cam_right_wrist"], "max_age_s": 0.12},
+   "memory": {"frames": 4, "window_s": 4.0, "features": 6, "events": 4, "event_evidence": 4, "anchors": 8, "objects": 3},
+   "model": {"path": "../models/Qwen3-VL-2B-Instruct", "device": "cuda:0", "image_edge": 512, "max_input_tokens": 4096, "max_new_tokens": 384, "max_images": 3, "max_text_chars": 6000, "timeout_s": 90, "load_timeout_s": 180, "min_free_mib": 5000, "seed": 0},
+-  "rules": {"confirm_samples": 2, "confirm_span_s": 0.8, "max_evidence_gap_s": 2.1, "close_delta_raw": 0.012, "gripper_closed_raw": 0.025, "gripper_open_raw": 0.04, "require_visual_gripper_agreement": true, "direction_deadband_normalized": 50},
++  "rules": {"confirm_samples": 2, "confirm_span_s": 0.8, "max_evidence_gap_s": 2.1, "close_delta_raw": 0.012, "gripper_closed_raw": 0.025, "gripper_open_raw": 0.04, "require_visual_gripper_agreement": true, "direction_deadband_normalized": 50, "joint_velocity_moving_raw": 0.20, "joint_position_change_raw": 0.02},
+   "geometry": {"source_unchanged_fraction": 0.15, "source_occluded_fraction": 0.20, "robot_board_fraction": 0.035, "tool_board_fraction": 0.035, "pixel_difference": 30, "min_motion_normalized": 8, "max_relative_motion_normalized": 80, "max_reference_images": 1, "max_masks": 4, "max_tracks": 2, "rack_blade_present_fraction": 0.60, "cut_stroke_min_pixels": 2},
+   "output": "artifacts/runs"
+ }
+--- /dev/null
++++ b/streaming_recovery/config_multimodal.json
+@@ -0,0 +1,70 @@
++{
++  "method": "bounded_visual_state_tracker",
++  "backend": "multiview_effect_geometry",
++  "source": {
++    "root": "../data/vifailback_lerobot",
++    "episodes": [
++      18,
++      19,
++      0,
++      2,
++      8,
++      29
++    ],
++    "sample_every": 25,
++    "cameras": [
++      "cam_high",
++      "cam_right_wrist"
++    ],
++    "max_age_s": 0.12
++  },
++  "memory": {
++    "frames": 4,
++    "window_s": 4.0,
++    "features": 6,
++    "events": 4,
++    "event_evidence": 4,
++    "anchors": 8,
++    "objects": 3
++  },
++  "model": {
++    "path": "../models/Qwen3-VL-2B-Instruct",
++    "device": "cuda:0",
++    "image_edge": 512,
++    "max_input_tokens": 4096,
++    "max_new_tokens": 384,
++    "max_images": 3,
++    "max_text_chars": 6000,
++    "timeout_s": 90,
++    "load_timeout_s": 180,
++    "min_free_mib": 5000,
++    "seed": 0
++  },
++  "rules": {
++    "confirm_samples": 2,
++    "confirm_span_s": 0.8,
++    "max_evidence_gap_s": 2.1,
++    "close_delta_raw": 0.012,
++    "gripper_closed_raw": 0.025,
++    "gripper_open_raw": 0.04,
++    "require_visual_gripper_agreement": true,
++    "direction_deadband_normalized": 50,
++    "joint_velocity_moving_raw": 0.2,
++    "joint_position_change_raw": 0.02
++  },
++  "geometry": {
++    "source_unchanged_fraction": 0.15,
++    "source_occluded_fraction": 0.2,
++    "robot_board_fraction": 0.035,
++    "tool_board_fraction": 0.035,
++    "pixel_difference": 30,
++    "min_motion_normalized": 8,
++    "max_relative_motion_normalized": 80,
++    "max_reference_images": 1,
++    "max_masks": 4,
++    "max_tracks": 2,
++    "rack_blade_present_fraction": 0.6,
++    "cut_stroke_min_pixels": 2
++  },
++  "output": "artifacts/multimodal_runs"
++}--- a/streaming_recovery/contracts.py
++++ b/streaming_recovery/contracts.py
+@@ -26,6 +26,8 @@
+     ref: str
+     # 可选实测接触/深度准备信息；旧调用无需新增参数。回放适配器不伪造此字段。
+     grasp_readiness: dict | None = None
++    # 与 observation_state 同时刻的实测 qvel；兼容原有位置参数，不以 action 补值。
++    observation_velocity: list[float] | None = None
+ 
+ 
+ ENUMS = {
+--- /dev/null
++++ b/streaming_recovery/docs/六条多模态测试_20261017.md
+@@ -0,0 +1,147 @@
++# 六条 ViFailback 真实轨迹多模态测试
++
++2026-10-17，在原有 `streaming_recovery/` 上增量修改并实际运行。沿用 `cv-streaming`，保留原变量名、旧结果和根目录对照实现，没有训练新模型、调用 Qwen、搭建平台或运行 500 条基准。
++
++**结果：6 条完整真实轨迹、1,998 个原生时刻、3,996 张顺序解码图、82 次判断。4 条失败均确认，2 条正常均没有失败误报；其中 episode 18 确认完整成功，19 的成功仍漏确认。** 逐条阶段仍有缺口，不能把程序运行通过写成全部判断正确。
++
++## 入口与文件
++
++在 `C:\Users\lenovo\Desktop\CV` 的 PowerShell 中运行：
++
++```powershell
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run --config streaming_recovery/config_multimodal.json
++```
++
++该命令按配置 `[18,19,0,2,8,29]` 运行，每次自动新建结果目录。此次实际保存命令为：
++
++```powershell
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run --config streaming_recovery/config_multimodal.json --output streaming_recovery/artifacts/multimodal_20261017/final_run
++```
++
++`final_run` 已存在，入口会拒绝覆盖；重跑请省略 `--output` 或指定新的目录。
++
++- [配置](../config_multimodal.json)、[实际配置快照](../artifacts/multimodal_20261017/final_run/config_snapshot.json)。
++- [逐时刻查看页](../artifacts/multimodal_20261017/final_run/index.html)、[运行摘要及耗时](../artifacts/multimodal_20261017/final_run/summary.json)。
++- [逐条核查与 56 项审计](../artifacts/multimodal_20261017/review_summary.json)、[事实核查](../artifacts/multimodal_20261017/data_facts.json)、[环境版本](../artifacts/multimodal_20261017/environment.json)。
++- 每条 `trajectory_XXXXXX/` 下有 `decisions.jsonl`、`end.json`、`frames/`。结果保存实际输入、时间戳、关节原始值、阶段、事实/未知、证据引用、事件、提醒、两层建议与处理耗时。
++- `source_snapshot/` 保存实际运行源码，`summary.json` 保存代码、测试和输入文件 SHA256。`before/` 保存本次修改前的文件，原有结果未覆盖。
++
++## 核实的数据、选择与边界
++
++官方数据为 `sii-rhos-ai/vifailback-dataset-lerobot`，版本固定为 `619791b94f61667333fe179d471051e0bca0e06f`。本地 [官方 README](../../data/vifailback_lerobot/README.md) 的 Features 表、`meta/info.json` 和六条实际 Parquet schema 相互核对；新增 8/29 从该固定版本下载并校验大小/SHA。没有按数据集名称猜测内容。
++
++目录实际为 `data/chunk-000/episode_XXXXXX.parquet`，视频为 `videos/chunk-000/observation.images.cam_high/episode_XXXXXX.mp4` 和对应 `cam_right_wrist/`。RGB 为 640×480、AV1、25 FPS，输入长边缩至 512。
++
++| 实际字段 | 含义与本次用法 | 不作何种推断 |
++|---|---|---|
++| `observation.state`，float32[14] | 当前实测 qpos；`7:13` 右臂六关节参与运动判断，`[13]` 右夹爪参与开闭/尝试识别 | 关节与夹爪共享同一向量，不是两个独立传感器 |
++| `observation.velocity`，float32[14] | 当前实测 qvel；取 `7:13`，不把夹爪速度计入手臂运动 | 没有拿目标 action 代替实测速度 |
++| `cam_high` | 主视觉，刀架、工作区、刀和香肠布局 | 无深度时不生成三维位置 |
++| `cam_right_wrist` | 当前顶视抓取关系不清楚时，补看刀—两指连接及刀—香肠相对运动 | 未查询的腕图仅用于审阅，不能称为推理输入 |
++| `action`、`complementary_info.action_eef` | 目标关节/目标 EEF | **均未进入推理** |
++| `observation.effort`、左臂状态 | 本次未用于判断 | 不宣称力/力矩融合 |
++
++功能上使用 RGB、关节位置/速度、夹爪开度三组信息；来源是 RGB 与机器人本体状态，**不是三个独立传感模态**。物理单位、相机到机器人基座变换、独立接触/深度准备仍未确认。只使用原始值和明确的图像坐标，不输出伪造的物理运动量。
++
++所有采样时刻的 state、velocity 和两视频均实际可用；读取器也支持缺列、无效值、缺视频、解码故障和过期样本，显式标记，不补造。逐原生时刻检查 `timestamp≈frame_index/25` 和视频 PTS；这证明保存格式的时间一致性，不代表独立验证了硬件同步触发。
++
++选择同一条指令：右臂从刀架取刀，切下一小段香肠并归位。固定划分中该任务共 33 条，**只有 18、19 两条成功，其余 31 条失败**，因此采用 2 正常＋4 失败，未用别的任务凑第三条正常。
++
++| Episode | 冻结划分 | 结果标签，仅供离线核查 | 本次之前的暴露 |
++|---|---|---|---|
++| 18 | dev_seen | 正常 | 参与过开发 |
++| 19 | train | 正常 | 上一轮检查后参与过修复 |
++| 0 | dev_seen | 失败 | 参与过开发 |
++| 2 | validation | 失败 | 已运行查看过，本次也用于开发检查 |
++| 8 | validation | 失败 | 本次首次冻结运行前未看像素、未调参 |
++| 29 | validation | 失败 | 本次首次冻结运行前未看像素、未调参；包含不同的官方失败原因标签 |
++
++选择和划分哈希在 [selection.json](../artifacts/multimodal_20261017/selection.json)。未读取冻结测试集轨迹作推理，也未改动划分文件。标签只用于选择和运行后的独立核查，不输入诊断器；目录、编号、总长度也不进入推理。
++
++先在 0/18/19/2 和合成逻辑回归上修改，之后冻结 [首次规则](../artifacts/multimodal_20261017/rule_freeze.json)，运行 [首次六条结果](../artifacts/multimodal_20261017/run/index.html)。目视核查发现 19 的回架/释放阶段映射问题后，仅对两处状态分支补回归并修复，没有调整视觉/运动阈值。最终记录见 [rule_freeze_final.json](../artifacts/multimodal_20261017/rule_freeze_final.json)。8/29 首次与最终的全部语义输出完全相同（仅排除墙钟处理耗时）。最终版本不能另外算一次新的未见样例成绩。
++
++## 真正参与推理的方式
++
++`source.py` 的输入白名单增加实测 velocity，`Observation` 末尾增加默认值字段，兼容旧调用。`dynamics.py` 使用当前 qvel 与有限窗口里前一个 qpos，只计算右臂六关节，排除夹爪维。
++
++配置门槛为 `joint_velocity_moving_raw=0.20`、`joint_position_change_raw=0.02`。它们是参考已有开发观测量级设定的透明工程阈值，未标定为物理速度、严格静止判据或概率，不使用整段轨迹统计做归一化，也未依据 8/29 调整。
++
++- 当前最大绝对 qvel 越阈：`moving`。
++- 当前速度较低，但相邻 qpos 最大绝对变化越阈：`recent_motion`，仅说明过去间隔移动过，不宣称当前瞬间仍在运动。
++- 两者均存在且均低：`stationary`。缺失或时间间隔超过 2.1 s，不能把缺省零当静止。
++- 运动支持接近阶段；明确静止时，持刀停留不写成正在搬运；关节静止会阻止仅凭腕部像素变化确认切割作用。刀仍留架、夹爪与刀分离并进入工作区时，运动可辅助前置条件诊断。单独移动或静止均不等于失败。
++- 夹爪仍按已有门槛分开/闭/中间未知，实际开→闭且目标邻近才记一次尝试；不能仅凭闭爪和手臂移动确认抓取。29 的约 0.0188 原始开度被粗门槛归入 `closed`，腕图仍见指间空隙：该名称不意味着完全闭合、接触到刀或夹持成功。
++
++抓取成功仍需连续物体连接/随动证据；切割需要“前参考→有效操作→新增分离效果”；回架和释放依据当前位置更新。已实际进入过工作区后，切割效果没确认时不重启“初次搬运”阶段；观察到回架/释放，也不要求先确认切割才允许表达该阶段。**阶段可以推进，而整任务成功仍保持未知。**
++
++先处理顶视图。刀架被遮挡或刀已离架、顶视关系不清楚时才查当前腕部；此次 40/82 次查询。每次最多当前顶视、固定初始顶视参考、当前腕部，共 3 张。腕部历史只留几何特征，不把带历史引用的图像当成第四张输入。
++
++限制：若顶视初始校准本身失败，当前后端不能单靠腕图建立完整场景参考，会输出未知，腕图只保留供审阅；例如 2 的 0/1s、29 的 0s。不能把这类未融合的腕图计入实际使用。
++
++采样为 0、1、2…s；全部 1,998 行及两路对应视频帧顺序消费。末尾不足 1 s 的部分继续读取，不追加事后推理；只在该尾部发生的变化可能未被判断，这是抽样限制。数据流结束不会自动变成功。回放同步背压，不宣称实时机器人控制。
++
++## 逐条结果与目视核查
++
++以下“正确”限于此次失败现象/完成条件及抽查画面，不是逐帧阶段准确率。目视核查由本次助手实际打开并查看 27 个时刻、52 张真实输入图完成，记录不是由标签自动生成；没有独立人工标注员给出的完整阶段或首次可检测失败时间。
++
++| Episode | 实际判断与核查结论 | 疑似/确认视频时间 | 仍未知、漏识别或误标 | 处理墙钟 |
++|---|---|---|---|---:|
++| 18 | 正常，无失败误报；20s 确认完整成功，与新小片和刀回架一致 | 无 | 4/5s 夹持待确认，14/18s 当前阶段未知 | 6.532 s |
++| 19 | 正常，无失败误报；**成功漏确认**，最终 null | 无 | 3–7s 夹持等待；切割作用没形成有效证据；11s 效果待确认，14s 阶段未知。15/16s 已识别归位释放，仍未补成成功 | 5.015 s |
++| 0 | 正确提醒抓取未建立；空夹爪进入工作区，刀仍在架 | 9 / 10 s | 7s 抓取效果未知；精确对齐未识别 | 3.578 s |
++| 2 | 正确提醒缺少持刀前置条件；不虚构尝试次数 | 10 / 11 s | 0/1s 初始化、9s 视觉不可用；接近/对齐多次仍是 locate_tool，attempt=0 | 3.750 s |
++| 8 | 首次未见样例正确提醒前置条件异常 | 7 / 8 s | 4/5s 对齐/闭合仍是 locate_tool，attempt=0；虽无 information_insufficient 状态，也不能认为全阶段正确 | 2.781 s |
++| 29 | 首次未见样例正确提醒抓取未建立 | 8 / 9 s | 0s 初始化、6s 抓取未知；开闭是粗区间，没有精确诊断官方原因标签 | 2.828 s |
++
++4 条失败都只有一个事件，各有疑似、确认两次提醒；持续帧不重复提醒。抽查中未发现失败误报，按整轨迹结果没有失败漏报；细粒度阶段漏识别和正常 19 的成功漏确认如实保留。没有把事件发生时间当成检测延迟。
++
++整次回放 **24.50 s**，包括顺序解码和结果保存，HTML 报告生成前计时。82 次决策处理时间合计约 **1.232 s**，单次最大 **0.032 s**，不包含解码/保存；这些是本机 CPU 程序耗时，不是机器人检测延迟或实时性保证。
++
++目视材料：[18 抓取/切割/完成](../artifacts/multimodal_20261017/manual_frames/18a.jpg)、[18 阶段转换](../artifacts/multimodal_20261017/manual_frames/18b.jpg)、[19 缺证据](../artifacts/multimodal_20261017/manual_frames/19a.jpg)、[19 回架](../artifacts/multimodal_20261017/manual_frames/19b.jpg)、[0](../artifacts/multimodal_20261017/manual_frames/0.jpg)、[2](../artifacts/multimodal_20261017/manual_frames/2.jpg)、[8](../artifacts/multimodal_20261017/manual_frames/8.jpg)、[29](../artifacts/multimodal_20261017/manual_frames/29.jpg)。这些图来自首次运行，已逐文件确认和最终运行图片完全一致。初始 18/19 顶视也实际查看过，用于核对新增小块。
++
++19 的具体限制：1 Hz 时 5s 腕部识别到刀/食物框，但 6–8s 刀刃轮廓规则失效，不能形成连续刀—香肠相对运动；之后虽见新小片及归位，严格的操作前提仍未满足。因此是**采样与视觉规则下的漏确认**，不是视频没有切割，更不能用成功标签补结论。
++
++## 两层建议实例
++
++真实 episode 0，10s，`event-0001` 确认 `grasp_not_established`，当前可靠夹持为 false。实测右臂速度最大绝对值约 0.253，过去 1 s 的关节位置最大变化约 0.233（均为源原始单位）；顶视刀仍在架、夹爪在砧板上方。后两项视觉效果才是未抓住的关键证据。
++
++高层：携刀转移与切割被夹持前置条件阻断；在刀架重新定位刀柄，建立接触准备并确认可靠夹持；新观测连续支持刀离架并随右夹爪运动后才能恢复转移。
++
++低层：当前刀与夹爪分离；执行器先确认夹爪内没有其他物体且可打开，保持末端位姿，单独打开右夹爪。停止条件是收到实际打开反馈；之后检查夹爪已开、刀仍在架、刀柄与两指能重新定位。高低层共享 `event-0001:restore_reliable_grasp`。无平移/旋转数值，坐标标识 `right_gripper_actuator_no_translation`，`directly_executable=false`。
++
++完整字段见 [correction_example.json](../artifacts/multimodal_20261017/correction_example.json)。所有 82 次输出都为建议模式、未执行、无回执、不归因原始后续轨迹。真实二维对齐到闭合的全恢复链没有在这六条视频中发生，不能宣称已完成真实闭环。
++
++## 必要验证与修复记录
++
++实际运行命令：
++
++```powershell
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m unittest discover -s streaming_recovery/tests -v
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery validate --output streaming_recovery/artifacts/multimodal_20261017/final_validation
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' streaming_recovery/artifacts/multimodal_20261017/build_review.py
++```
++
++验收目录同样拒绝覆盖，重跑请改目录。`build_review.py` 是离线审计，读取标签与日志，监测器不导入它。
++
++| 验证 | 实际结果与边界 |
++|---|---|
++| 40 项逻辑回归 | 通过。保留旧异常门控、重复事件、真实新尝试、历史/当前区分、初始已有小块、两层一致性；新增位置/速度实际影响、排除夹爪运动、缺失/无效/过期/未来值、持刀停留、回架释放阶段等。合成语义不能证明视觉正确率 |
++| 完整输入链因果性 | 两种后端均通过；275 个原生公共前缀帧，1 Hz 下各 11 次语义判断完全相同。改动未来 RGB、qpos/qvel、标签、目标 action、路径/编号；每次 yield 检查源未消费未来行/帧 |
++| 10,000 步逻辑长流 | 合成状态验证容量、事件与恢复逻辑；通过 |
++| 2,000 步实际视觉后端动态压力 | 循环真实失败像素构造，非天然长轨迹；67 次观测尝试，事件缓存达到 4、证据 16、传感引用 48，全部受限；无日志回读 |
++| 缺失/遮挡/初始化/跨轨迹重置 | 真实图像及工程故障注入验证通过；重置后的结果与新监测器一致 |
++| 六条真实运行与审计 | 输入数据 SHA、源/测试快照、冻结划分、完整视频消费、字段实际使用、图数≤3、建议未执行等 56 项审计通过；另外保留实际目视判断，不以自动检查替代 |
++
++最终 [validation.json](../artifacts/multimodal_20261017/final_validation/validation.json)、[unit_tests.txt](../artifacts/multimodal_20261017/final_validation/unit_tests.txt) 可检查。此前第一轮 38 项、加入“已进入工作区”的回归后 39 项、补回架释放分支后 40 项，原记录均保留。
++
++有限记忆：4 条观测/4 s、8 张历史当前图像、6 条特征/4 s、8 个任务锚点、4 个事件×4 条证据；另有初始参考 1 张、4 个掩码、2 个区域运动代理、3 条腕部几何、5 个食物参考条目、1 个恢复上下文。实测状态/速度最多 112 个数，特征传感引用≤18、事件传感引用≤48、恢复传感引用≤12。动态压力测试实际达到 112/15/48/12；全部容量每步检查，累计审计日志不回读。
++
++本次修复重点是实测关节真正参与、条件腕图和实际输入审计、缺失字段退化、1 Hz 下阶段映射；以前已修复的未知时错误开爪、旧成功屏蔽新尝试、短缺口遗忘夹持、旧小片误当新效果、历史归位与当前状态混用等 29 项回归全部保留通过。
++
++## 交付状态
++
++**已实现并完成真实运行验证：** 目标1的完整因果回放、实测多模态输入、有限记忆、复位；目标2的当前夹持/工作区/部分切割和归位状态、4 条失败提醒与去重；目标3的同一事件关联两层建议、执行后检查及未执行语义。证据是上述六条逐时刻输出、源快照和核查材料。
++
++**已实现但缺少相应真实场景验证：** 关节静止抑制可疑切割运动、持刀静止阶段、自然重试/失抓及完整恢复建议推进，主要由合成或工程修改输入验证；六条自然轨迹不覆盖这些全部分支。
++
++**尚未完成及阻碍：** 1 Hz 下 19 的切割作用与完整成功确认；2/8 等接近/对齐与尝试定位不足；真实刀柄/两指精确联合定位、独立深度/接触准备缺少可靠实现或实测标定；没有真正执行纠错动作。未运行新模型补这些缺口，也不以测试替身声称真实能力。该同任务没有第三条成功样例；没有完整人工阶段时间标注，故不计算逐帧阶段准确率或检测延迟。样本规模不足以支持泛化结论。
+--- /dev/null
++++ b/streaming_recovery/dynamics.py
+@@ -0,0 +1,49 @@
++"""仅用当前实测 qvel 和有限窗口中的前一个 qpos；不读取 action/EEF/轨迹统计量。
++
++位置与夹爪来自同一向量。右臂任务只使用右侧六关节，排除夹爪维，避免把闭爪当作手臂移动。
++阈值是显式原始单位工程阈值，不是校准后的物理速度或成功概率。
++"""
++from math import isfinite
++
++
++def valid_vector(value):
++    return (isinstance(value, list) and len(value) == 14 and
++            all(not isinstance(v, bool) and isinstance(v, (float, int)) and isfinite(v) for v in value))
++
++
++def joint_motion(observation, previous, rules):
++    qpos = observation.observation_state
++    qvel = observation.observation_velocity
++    qpos = qpos if valid_vector(qpos) else None
++    qvel = qvel if valid_vector(qvel) else None
++    speed = max(abs(v) for v in qvel[7:13]) if qvel is not None else None
++    delta = None
++    refs = []
++    if qpos is not None:
++        refs.append({"ref": observation.ref, "timestamp": observation.timestamp, "field": "observation.state[7:13]"})
++    if qvel is not None:
++        refs.append({"ref": observation.ref, "timestamp": observation.timestamp, "field": "observation.velocity[7:13]"})
++    dt = observation.timestamp - previous.timestamp if previous is not None else None
++    if (qpos is not None and previous is not None and valid_vector(previous.observation_state) and
++            0 < dt <= rules["max_evidence_gap_s"]):
++        delta = max(abs(a-b) for a, b in zip(qpos[7:13], previous.observation_state[7:13]))
++        refs.append({"ref": previous.ref, "timestamp": previous.timestamp, "field": "observation.state[7:13]"})
++    velocity_threshold = rules.get("joint_velocity_moving_raw", .20)
++    position_threshold = rules.get("joint_position_change_raw", .02)
++    instantaneous = "unknown" if speed is None else ("moving" if speed >= velocity_threshold else "below_motion_threshold")
++    interval = "unknown" if delta is None else ("moved" if delta >= position_threshold else "no_resolved_change")
++    if instantaneous == "moving":
++        status = "moving"
++    elif interval == "moved":
++        status = "recent_motion"  # 过去采样间隔发生移动，不宣称当前瞬间仍在运动。
++    elif speed is not None and delta is not None:
++        status = "stationary"
++    else:
++        status = "unknown"
++    return {"status": status, "instantaneous": instantaneous, "interval": interval,
++            "arm": "right", "joint_indices": [7, 8, 9, 10, 11, 12],
++            "max_abs_velocity_raw": speed, "max_abs_position_change_raw": delta, "interval_s": dt,
++            "position_threshold_raw": position_threshold, "velocity_threshold_raw": velocity_threshold,
++            "units": "source qpos/qvel units; physical units not verified",
++            "position_available": qpos is not None, "velocity_available": qvel is not None,
++            "evidence_refs": refs, "source": "measured_joint_state; gripper excluded; no action or EEF"}
+--- a/streaming_recovery/engine.py
++++ b/streaming_recovery/engine.py
+@@ -8,6 +8,7 @@
+ from .tracking import TaskTracker
+ from .recovery import diagnose, propose, validate_consistency, RecoveryContext
+ from .contracts import VisualFacts, evidence
++from .dynamics import joint_motion, valid_vector
+ 
+ 
+ class Monitor:
+@@ -43,13 +44,26 @@
+             m=observation.modalities.get(name,{})
+             t=m.get("timestamp")
+             return m.get("status")=="available" and t is not None and 0<=observation.timestamp-t<=.12
++        modalities={k:dict(v) for k,v in observation.modalities.items()}
++        for name,value in (("observation.state",observation.observation_state),("observation.velocity",observation.observation_velocity)):
++            if fresh(name) and not valid_vector(value):
++                modalities[name].update(status="invalid",reason="invalid_14d_measurement")
++        observation=replace(observation,modalities=modalities)
+         observation=replace(observation,images={k:v for k,v in observation.images.items() if fresh(k)},
+-                            observation_state=observation.observation_state if fresh("observation.state") else None)
++                            observation_state=observation.observation_state if fresh("observation.state") else None,
++                            observation_velocity=observation.observation_velocity if fresh("observation.velocity") else None)
+         if len(observation.images)>2 or any(max(im.size)>self.config["model"]["image_edge"] for im in observation.images.values()):
+             raise ValueError("image memory capacity exceeded")
+         self.memory.expire(observation.timestamp)
+         previous = self.memory.frames[-1] if self.memory.frames else None
+         facts = self.vision.observe(observation,previous)
++        facts.measurements["joint_motion"] = joint_motion(observation,previous,self.config["rules"])
++        # 腕部像素相对运动可能来自抖动。实测关节在本间隔内无可分辨运动时，不确认刀在作用。
++        if facts.measurements.get("cut_operation")=="yes" and facts.measurements["joint_motion"]["status"]=="stationary":
++            facts.measurements["cut_operation"]="unknown"
++            facts.measurements["cut_motion_check"]="joint_stationary_visual_motion_unconfirmed"
++        else:
++            facts.measurements["cut_motion_check"]="moving_supported" if facts.measurements["joint_motion"]["status"] in ("moving","recent_motion") else "joint_evidence_unknown"
+         if not fresh("cam_high"):
+             facts.effect_usable=False
+         if observation.grasp_readiness is not None:
+@@ -64,6 +78,8 @@
+         self.memory.add(observation,facts)
+         state = self.tracker.update(observation,facts)
+         item = evidence(facts,"当前支持 " + state["candidate"] if state["candidate"] else "当前夹持恢复证据")
++        item["joint_motion"] = facts.measurements["joint_motion"]["status"]
++        item["sensor_refs"] = facts.measurements["joint_motion"]["evidence_refs"]
+         event,notify,notify_reason = self.events.update(state["candidate"],state["attempt"],observation.timestamp,item,
+                                                        state["recovered"],state["observable"] and not state["modality_conflict"])
+         if not state["observable"] or state["modality_conflict"]:
+@@ -76,7 +92,7 @@
+             status = "suspicious" if event["observation_status"]=="supported" else "information_insufficient"
+         elif state["task_completed"]:
+             status = "completed"
+-        elif state["stage"] == "unknown" or (state["stage"] in ("verify_grasp","transport_tool") and state["preconditions"]["reliable_grasp"] is None):
++        elif state["stage"] in ("unknown","verify_cut") or (state["stage"] in ("verify_grasp","transport_tool") and state["preconditions"]["reliable_grasp"] is None):
+             status = "information_insufficient"
+         else:
+             status = "executing"
+@@ -95,7 +111,13 @@
+                       "model_request_queue_capacity":1,"model_response_queue_capacity":1,
+                       "model_input_images":getattr(self.vision,"last_metrics",{}).get("input_images",0),
+                       "model_input_tokens":getattr(self.vision,"last_metrics",{}).get("input_tokens",0)})
+-        result = {"schema_version":"1.1","timestamp":observation.timestamp,"observation_ref":observation.ref,
++        images_used = getattr(self.vision,"last_metrics",{}).get("images_used",list(observation.images))
++        modalities_used = list(images_used)
++        if observation.observation_state is not None:
++            modalities_used += ["observation.state[7:13]","observation.state[13]"]
++        if observation.observation_velocity is not None:
++            modalities_used += ["observation.velocity[7:13]"]
++        result = {"schema_version":"1.2","timestamp":observation.timestamp,"observation_ref":observation.ref,
+                   "method":self.config["method"],"instruction":observation.instruction,
+                   "scope":("右臂取刀、切下新小段并归位；固定场景双视角视觉，空间/接触准备须独立验证" if self.config["backend"]=="multiview_effect_geometry"
+                            else "经典单视角对照：只支持取刀效果，切割完成/归位未获该后端支持"),
+@@ -103,8 +125,12 @@
+                   "failure_event":event,"recovery_event":recovery_event,"notify":notify,"notification_reason":notify_reason,
+                   "decision_rules":{"direction_deadband_normalized":self.config["rules"]["direction_deadband_normalized"]},
+                   "diagnosis":diagnosis,"correction":correction,"modalities":observation.modalities,
+-                  "modalities_used":["cam_high","observation.state[13]"] if self.config["backend"]=="calibrated_rgb_geometry" else list(observation.images)+(["observation.state[13]"] if observation.observation_state else []),
+-                  "modalities_for_audit_only":["cam_right_wrist"] if self.config["backend"]=="calibrated_rgb_geometry" else [],
++                  "modalities_used":modalities_used,
++                  "modalities_for_audit_only":[k for k in observation.images if k not in images_used],
++                  "observation_inputs":{"observation.state":observation.observation_state,
++                      "observation.velocity":observation.observation_velocity,
++                      "sensor_relationship":"joint positions and gripper share observation.state; velocity is measured qvel; not three independent sensors",
++                      "unused_state_indices":[0,1,2,3,4,5,6],"target_action_used":False,"target_eef_used":False},
+                   "memory_usage":usage,"memory_limits":self.config["memory"],
+                   "execution":{"mode":"advisory_replay","actually_executed":False,"execution_receipt":None,
+                                "outcome_attributed_to_suggestion":False}}
+@@ -124,6 +150,9 @@
+         limits.update(task_state_slots=18,task_reference_entries=1,recovery_contexts=1,recovery_event_evidence=m["event_evidence"],recovery_state_slots=3)
+         limits.update(wrist_track_entries=3,food_reference_entries=5,visual_scalar_states=1)
+         limits.update(feature_payload_chars=12000*m["features"])
++        limits.update(aligner_latest_samples=4)
++        limits.update(joint_vector_values=28*m["frames"],joint_feature_refs=3*m["features"],
++                      event_sensor_refs=3*m["events"]*m["event_evidence"],recovery_sensor_refs=3*m["event_evidence"])
+         for key,limit in limits.items():
+             if u.get(key,0)>limit:
+                 raise ValueError(f"memory_capacity_exceeded:{key}")
+--- a/streaming_recovery/events.py
++++ b/streaming_recovery/events.py
+@@ -80,4 +80,5 @@
+ 
+     def usage(self):
+         return {"events": len(self.events), "event_evidence": sum(len(e.evidence) for e in self.events),
++                "event_sensor_refs":sum(len(item.get("sensor_refs",[])) for e in self.events for item in e.evidence),
+                 "active_events": int(self.active is not None)}
+--- a/streaming_recovery/fetch_functional_data.py
++++ b/streaming_recovery/fetch_functional_data.py
+@@ -1,4 +1,4 @@
+-"""只获取两条非测试补充轨迹；冻结划分不变，不运行推理。"""
++"""小规模非测试轨迹下载；冻结划分不变，不运行推理。"""
+ import json
+ import argparse
+ from pathlib import Path
+@@ -7,8 +7,10 @@
+ def main():
+     root=Path(__file__).resolve().parents[1]
+     parser=argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument("--episodes",type=int,nargs="+",choices=[2,6,19],default=[2,19])
+-    episodes=parser.parse_args().episodes
++    parser.add_argument("--episodes",type=int,nargs="+",choices=[2,6,8,19,29],default=[2,19])
++    parser.add_argument("--manifest-dir",default="streaming_recovery/artifacts/multimodal_20261017")
++    args=parser.parse_args()
++    episodes=args.episodes
+     selected=[("train" if ep==19 else "validation",ep) for ep in episodes]
+     test={json.loads(s)["episode_index"] for s in (root/"configs/splits/test.jsonl").read_text(encoding="utf-8").splitlines()}
+     for split,episode in selected:
+@@ -23,7 +25,11 @@
+         for path in paths:
+             hub.download(path)
+     hub.save_manifest(episodes)
+-    output=root/("streaming_recovery/artifacts/incremental_20261017/download_"+"_".join(map(str,episodes))+".json")
++    directory=(root/args.manifest_dir).resolve()
++    if not directory.is_relative_to(root.resolve()):
++        raise ValueError("manifest directory must stay inside workspace")
++    directory.mkdir(parents=True,exist_ok=True)
++    output=directory/("download_"+"_".join(map(str,episodes))+".json")
+     output.write_text(json.dumps({"repo":LEROBOT_REPO,"revision":revision,"files":hub.files},indent=2),encoding="utf-8")
+     print("Downloaded and hash-verified non-test episodes:",episodes)
+ 
+--- a/streaming_recovery/geometry.py
++++ b/streaming_recovery/geometry.py
+@@ -67,6 +67,10 @@
+ 
+     def observe(self, observation, previous=None):
+         self.calls += 1
++        # 失败返回也刷新输入审计，不能沿用上一时刻的成功调用记录。
++        self.last_metrics = {"calls": self.calls, "input_images": int("cam_high" in observation.images),
++                             "images_used": ["cam_high"] if "cam_high" in observation.images else [],
++                             "input_tokens": 0, "raw": ""}
+         refs = [{"ref": observation.ref,"camera":"cam_high","timestamp":observation.timestamp}]
+         if "cam_high" not in observation.images:
+             self.previous_tracks = None
+@@ -86,6 +90,7 @@
+             return VisualFacts(observation.timestamp, observation.ref, error="camera_shape_changed", provenance=self.provenance,evidence_refs=refs)
+         hsv = cv2.cvtColor(image,cv2.COLOR_RGB2HSV)
+         initial = cv2.cvtColor(self.reference,cv2.COLOR_RGB2HSV)
++        self.last_metrics["input_images"] = 2
+         difference = np.max(np.abs(image.astype("int16") - self.reference.astype("int16")),axis=2)
+         watch_change = float((difference[self.watch_mask] > 45).mean())
+         if watch_change > .35 or image.std() < 8:
+@@ -143,7 +148,7 @@
+             "common_motion":bool(common_motion),"motion":motion_metrics,"reference_origin":"first_arrived_frame",
+             "point_unit":"normalized_image_0_1000","reference_rack_bbox_pixels":list(self.rack_box),
+             "scene_assumptions":"fixed_camera_brown_board_black_rack_white_knife_only"}
+-        self.last_metrics = {"calls":self.calls,"input_images":1,"input_tokens":0,"output_tokens":0,
++        self.last_metrics = {"calls":self.calls,"input_images":2,"images_used":["cam_high"],"input_tokens":0,"output_tokens":0,
+                              "raw":"","provenance":self.provenance,"measurements":measurements}
+         description = (f"刀架参考区域变化比例={changed:.3f}；砧板浅色刀具比例={white_fraction:.3f}；"
+                        f"机器人遮挡比例={robot_fraction:.3f}；共同运动={bool(common_motion)}")
+--- a/streaming_recovery/memory.py
++++ b/streaming_recovery/memory.py
+@@ -30,6 +30,8 @@
+         return {"observations": len(self.frames), "images": sum(len(o.images) for o in self.frames),
+                 "image_bytes": sum(im.width * im.height * 3 for o in self.frames for im in o.images.values()),
+                 "features": len(self.features), "anchors": len(self.anchors),
++                "joint_vector_values": sum(len(o.observation_state or [])+len(o.observation_velocity or []) for o in self.frames),
++                "joint_feature_refs": sum(len(f.measurements.get("joint_motion",{}).get("evidence_refs",[])) for f in self.features),
+                 "feature_text_chars": sum(len(f.description) + len(f.error or "") for f in self.features),
+                 "feature_payload_chars":sum(len(json.dumps(asdict(f),ensure_ascii=False)) for f in self.features),
+                 "conversation_turns": 0, "persistent_model_kv_tokens": 0, "log_reads": 0}
+--- a/streaming_recovery/multiview.py
++++ b/streaming_recovery/multiview.py
+@@ -112,13 +112,23 @@
+         image=np.asarray(observation.images["cam_high"].convert("RGB"))
+         hsv=cv2.cvtColor(image,cv2.COLOR_RGB2HSV)
+         m=facts.measurements
+-        wrist=self.wrist_observation(observation)
+-        m["wrist"]=wrist
+         m["gripper_evidence_source"]="observation.state[13] only; not independent visual corroboration"
+         bright=float((hsv[:,:,2][self.rack_blade_mask]>90).mean())
+         dark=float((hsv[:,:,2][self.rack_blade_mask]<60).mean())
+         rack_clear=not m["source_occluded"]
+         rack_present=bright>=self.config.get("rack_blade_present_fraction",.60) and dark<.35
++        # 先看当前顶视；刀架被遮挡/刀已离架时，才补看当前腕部确认刀—两指关系。
++        # 不读未来腕部，不将未查询的腕部写作实际使用；旧腕部只保留有界几何特征。
++        need_wrist = not (rack_present and rack_clear)
++        if need_wrist:
++            wrist=self.wrist_observation(observation)
++            wrist["consulted"]="cam_right_wrist" in observation.images
++            wrist["selection_reason"]="top_view_grasp_relation_ambiguous"
++        else:
++            self.wrist_tracks.clear()
++            wrist={"available":False,"consulted":False,"blade":None,"cut_operation":False,
++                   "reason":"top_view_tool_still_on_holder_and_separate"}
++        m["wrist"]=wrist
+         raw=observation.observation_state[13] if observation.observation_state else None
+         closed=raw is not None and raw<=self.rules["gripper_closed_raw"]
+         # 腕部刀刃在两指之间，同时原刀架刃区已改变。两个视角均进入判定。
+@@ -166,7 +176,7 @@
+                  cut_operation="yes" if wrist.get("cut_operation") and connected and m["robot_at_board"] else "unknown")
+         # 此数据无经校准深度/接触反馈，绝不把腕部投影或区域质心当接触准备。
+         facts.grasp_readiness={}
+-        facts.description=(f"刀架刃区亮像素比例={bright:.3f}；腕部刀刃—两指连接={bool(wrist.get('joined'))}；"
++        facts.description=(f"刀架刃区亮像素比例={bright:.3f}；腕部刀刃—两指连接={wrist.get('joined', '未观测')}；"
+                            f"刀架/腕部联合夹持证据={connected}；新分离小段={m['new_cut_effect']}；"
+                            f"腕部刀—香肠相对作用={m['cut_operation']}")
+         facts.evidence_refs=[{"ref":observation.ref,"timestamp":observation.timestamp,"camera":"cam_high"},
+@@ -175,7 +185,9 @@
+         if wrist.get("previous_ref"):
+             facts.evidence_refs.append({"ref":wrist["previous_ref"],"timestamp":wrist["previous_timestamp"],"camera":"cam_right_wrist"})
+         facts.evidence_refs=facts.evidence_refs[-4:]
+-        self.last_metrics={"calls":self.calls,"input_images":1+int(wrist["available"]),"input_tokens":0,"output_tokens":0,
++        self.last_metrics={"calls":self.calls,"input_images":2+int(wrist["consulted"]),
++                           "images_used":["cam_high"]+(["cam_right_wrist"] if wrist["consulted"] else []),
++                           "input_tokens":0,"output_tokens":0,
+                            "raw":"","provenance":self.provenance,"measurements":m}
+         return facts
+ 
+--- a/streaming_recovery/recovery.py
++++ b/streaming_recovery/recovery.py
+@@ -38,6 +38,7 @@
+ 
+     def usage(self):
+         return {"recovery_contexts":int(self.event is not None),
++                "recovery_sensor_refs":sum(len(item.get("sensor_refs",[])) for item in self.event["evidence"]) if self.event else 0,
+                 "recovery_event_evidence":len(self.event["evidence"]) if self.event else 0,
+                 "recovery_state_slots":3}
+ 
+--- a/streaming_recovery/report.py
++++ b/streaming_recovery/report.py
+@@ -21,6 +21,9 @@
+             failure=r["failure_event"]
+             badge=f'{failure["event_id"]} / {failure["state"]}' if failure else '无失败事件'
+             advice+=f'<p><b>当前条件：</b>{html.escape(json.dumps(state["preconditions"],ensure_ascii=False))} · 历史完成={state.get("historical_completion",False)}</p>'
++            advice+=f'<p><b>实际输入：</b>{html.escape("；".join(r["modalities_used"]))}</p>'
++            advice+=f'<p><b>仅供审阅图像：</b>{html.escape("；".join(r["modalities_for_audit_only"]) or "无")} · 右臂运动={html.escape(state.get("arm_activity","unknown"))}</p>'
++            advice+='<p>关节位置与夹爪开度来自同一实测状态向量；腕图仅在顶视抓取关系不清楚时参与。初始参考也计入最多3图。</p>'
+             if r["diagnosis"]:
+                 advice+=f'<p><b>诊断：</b>{html.escape(r["diagnosis"]["observed_deviation"])}（原因仍不确定）</p>'
+             refs=[]
+--- a/streaming_recovery/source.py
++++ b/streaming_recovery/source.py
+@@ -48,7 +48,7 @@
+ 
+ class LeRobotStream:
+     # 不读取 task_index/episode_index/index/flags/actions；任务指令由调用者提供。
+-    COLUMNS = ["timestamp", "frame_index", "observation.state"]
++    COLUMNS = ["timestamp", "frame_index", "observation.state", "observation.velocity"]
+ 
+     def __init__(self, root: Path, episode: int, cameras: list[str], sample_every: int = 25,
+                  max_age_s: float = .12, image_edge: int = 512, instruction: str = ""):
+@@ -61,7 +61,7 @@
+             raise ValueError("only verified LeRobot v2.1 is supported")
+         self.fps = float(info["fps"])
+         self.chunk = episode // int(info["chunks_size"])
+-        self.aligner = CausalAligner(["observation.state"] + cameras, max_age_s)
++        self.aligner = CausalAligner(["observation.state", "observation.velocity"] + cameras, max_age_s)
+         self.audit = {"rows_read": 0, "frames_decoded": {c: 0 for c in cameras},
+                       "columns_read": self.COLUMNS, "future_frames_exposed": 0,
+                       "invalid_video_timestamps": 0, "source_mode": "frame_order_backpressure"}
+@@ -72,6 +72,11 @@
+         self.aligner.reset()
+         path = self.root / f"data/chunk-{self.chunk:03d}/episode_{self.episode:06d}.parquet"
+         table = pq.ParquetFile(path)
++        columns = [c for c in self.COLUMNS if c in table.schema_arrow.names]
++        if not {"timestamp", "frame_index"}.issubset(columns):
++            raise ValueError("source clock fields missing")
++        self.audit["columns_read"] = columns
++        self.audit["missing_columns"] = [c for c in self.COLUMNS if c not in columns]
+         videos, decoders, errors = {}, {}, {}
+         for camera in self.cameras:
+             p = self.root / f"videos/chunk-{self.chunk:03d}/observation.images.{camera}/episode_{self.episode:06d}.mp4"
+@@ -85,7 +90,7 @@
+                 errors[camera] = "video_file_missing"
+         try:
+             # Arrow 内部压缩页/AV1 解码器是运输缓冲，不暴露给推理；每次最多返回一行/一帧。
+-            for expected, batch in enumerate(table.iter_batches(batch_size=1, columns=self.COLUMNS, use_threads=False)):
++            for expected, batch in enumerate(table.iter_batches(batch_size=1, columns=columns, use_threads=False)):
+                 row = batch.to_pylist()[0]
+                 if row["frame_index"] != expected:
+                     raise ValueError("non-contiguous frame index; cannot assume synchronized cameras")
+@@ -93,10 +98,14 @@
+                 if not math.isfinite(row["timestamp"]) or abs(row["timestamp"] - now) > 1e-5:
+                     raise ValueError("table timestamp is not aligned to the declared frame clock")
+                 self.audit["rows_read"] += 1
+-                state = row["observation.state"]
+-                valid = isinstance(state, list) and len(state) == 14 and all(isinstance(v, (float, int)) and math.isfinite(v) for v in state)
+-                self.aligner.push(Sample("observation.state", now, now, state if valid else None,
+-                                         valid, None if valid else "invalid_14d_state"), now)
++                self.audit["last_source_timestamp"] = now
++                for name in ("observation.state", "observation.velocity"):
++                    if name not in columns:
++                        continue  # snapshot 显式输出 missing，绝不以目标 action 补值。
++                    state = row.get(name)
++                    valid = isinstance(state, list) and len(state) == 14 and all(not isinstance(v, bool) and isinstance(v, (float, int)) and math.isfinite(v) for v in state)
++                    self.aligner.push(Sample(name, now, now, state if valid else None,
++                                             valid, None if valid else "invalid_14d_measurement"), now)
+                 for camera in self.cameras:
+                     if camera not in decoders:
+                         self.aligner.push(Sample(camera, now, now, None, False, errors.get(camera, "video_exhausted")), now)
+@@ -129,7 +138,7 @@
+                     values, status = self.aligner.snapshot(now)
+                     yield Observation(now, self.instruction,
+                         {c: values[c] for c in self.cameras if c in values}, values.get("observation.state"),
+-                        status, f"obs-{expected:06d}")
++                        status, f"obs-{expected:06d}", observation_velocity=values.get("observation.velocity"))
+         finally:
+             for video in videos.values():
+                 video.close()
+--- /dev/null
++++ b/streaming_recovery/tests/test_multimodal.py
+@@ -0,0 +1,149 @@
++"""合成输入的多模态因果/功能回归；不代表真实视觉识别结果。"""
++from dataclasses import replace
++from copy import deepcopy
++import json
++from pathlib import Path
++import tempfile
++import unittest
++
++from streaming_recovery.__main__ import load_config
++from streaming_recovery.dynamics import joint_motion
++from streaming_recovery.engine import Monitor
++from streaming_recovery.source import LeRobotStream
++from streaming_recovery.tests.test_system import observation, facts, SyntheticVision, INSTRUCTION
++
++
++def measured(t, velocity=0., position=0., gripper=.005):
++    obs=observation(t,gripper)
++    obs.observation_state[7]=position
++    obs.observation_velocity=[0.]*14
++    obs.observation_velocity[7]=velocity
++    obs.modalities["observation.velocity"]={"status":"available","timestamp":float(t),"age_s":0.,"reason":None}
++    return obs
++
++
++class MultimodalTests(unittest.TestCase):
++    def sequence(self,velocity=0.,position_step=0.,**kw):
++        vision=SyntheticVision()
++        monitor=Monitor(load_config(),vision)
++        rows=[]
++        for t in (0,1,2):
++            raw=.06 if kw.get("gripper")=="open" else .005
++            vision.current=facts(t,**deepcopy(kw))
++            rows.append(monitor.step(measured(t,velocity,t*position_step,raw)))
++        return rows,monitor
++
++    def test_measured_motion_changes_stage_without_changing_grasp_evidence(self):
++        kw={"location":"gripper","gripper":"closed","motion":"to_board","contact":"between_fingers"}
++        stopped,_=self.sequence(**kw)
++        moving,_=self.sequence(velocity=.4,**kw)
++        self.assertEqual(stopped[-1]["state"]["stage"],"holding_tool")
++        self.assertEqual(moving[-1]["state"]["stage"],"transport_tool")
++        self.assertTrue(stopped[-1]["state"]["preconditions"]["reliable_grasp"])
++        self.assertTrue(moving[-1]["state"]["preconditions"]["reliable_grasp"])
++
++    def test_position_change_counts_as_recent_not_instantaneous_motion(self):
++        result=joint_motion(measured(1,0.,.1),measured(0),load_config()["rules"])
++        self.assertEqual(result["status"],"recent_motion")
++        self.assertEqual(result["instantaneous"],"below_motion_threshold")
++        self.assertEqual(len(result["evidence_refs"]),3)
++
++    def test_gripper_motion_is_excluded_from_joint_motion(self):
++        a,b=measured(0,gripper=.06),measured(1,gripper=0.)
++        b.observation_velocity[13]=5.
++        result=joint_motion(b,a,load_config()["rules"])
++        self.assertEqual(result["status"],"stationary")
++
++    def test_open_empty_arm_moving_over_work_area_supports_missing_precondition(self):
++        kw={"location":"holder","gripper":"open","motion":"at_board","contact":"separate"}
++        moving,_=self.sequence(velocity=.4,**kw)
++        stopped,_=self.sequence(**kw)
++        self.assertEqual(moving[-1]["diagnosis"]["type"],"prerequisite_unmet")
++        self.assertEqual(moving[-1]["execution_status"],"confirmed_failure")
++        self.assertIsNone(stopped[-1]["failure_event"])
++        self.assertEqual(moving[-1]["state"]["attempt"],0)
++
++    def test_moving_closed_gripper_does_not_establish_grasp(self):
++        rows,_=self.sequence(velocity=.4,location="unknown",gripper="closed",motion="to_board",contact="unknown")
++        self.assertTrue(all(r["state"]["preconditions"]["reliable_grasp"] is not True for r in rows))
++        self.assertTrue(all(r["failure_event"] is None for r in rows))
++
++    def test_stationary_joint_evidence_vetoes_visual_cut_motion(self):
++        kw={"location":"gripper","gripper":"closed","motion":"at_board","contact":"between_fingers",
++            "measurements":{"cut_operation":"yes"},"cut_piece":"no"}
++        # 独立字典避免测试替身在前一个引擎内被修改。
++        stopped,monitor=self.sequence(**kw)
++        self.assertIsNone(monitor.tracker.operation_at)
++        self.assertEqual(stopped[-1]["visual_facts"]["measurements"]["cut_motion_check"],"joint_stationary_visual_motion_unconfirmed")
++        kw["measurements"]={"cut_operation":"yes"}
++        moving,monitor=self.sequence(velocity=.4,**kw)
++        self.assertIsNotNone(monitor.tracker.operation_at)
++        self.assertFalse(moving[-1]["state"]["task_completed"])
++
++    def test_stale_and_invalid_velocity_not_used_and_missing_does_not_fake_zero(self):
++        for value,status,timestamp in (([4.]*14,"stale",0.),([float('nan')]*14,"available",1.)):
++            vision=SyntheticVision();monitor=Monitor(load_config(),vision)
++            obs=measured(1)
++            obs.observation_velocity=value
++            obs.modalities["observation.velocity"].update(status=status,timestamp=timestamp)
++            vision.current=facts(1,gripper="closed")
++            result=monitor.step(obs)
++            self.assertNotIn("observation.velocity[7:13]",result["modalities_used"])
++            self.assertEqual(result["state"]["arm_activity"],"unknown")
++            self.assertIsNone(result["observation_inputs"]["observation.velocity"])
++
++    def test_future_velocity_rejected_and_old_position_not_used_across_gap(self):
++        vision=SyntheticVision();monitor=Monitor(load_config(),vision)
++        obs=measured(0);obs.modalities["observation.velocity"]["timestamp"]=1.
++        vision.current=facts(0)
++        with self.assertRaisesRegex(ValueError,"future modality"):
++            monitor.step(obs)
++        result=joint_motion(measured(10,0.,3.),measured(0),load_config()["rules"])
++        self.assertIsNone(result["max_abs_position_change_raw"])
++        self.assertEqual(result["status"],"unknown")
++
++    def test_departed_work_area_without_cut_effect_does_not_restart_transport(self):
++        vision=SyntheticVision();monitor=Monitor(load_config(),vision)
++        for t in (0,1,2):
++            vision.current=facts(t,location="gripper",gripper="closed",contact="between_fingers",
++                                 motion="at_board" if t<2 else "to_board")
++            result=monitor.step(measured(t,.4))
++        self.assertEqual(result["state"]["stage"],"verify_cut")
++        self.assertEqual(result["execution_status"],"information_insufficient")
++        self.assertIsNone(result["failure_event"])
++
++    def test_observed_return_and_release_do_not_require_confirmed_cut(self):
++        vision=SyntheticVision();monitor=Monitor(load_config(),vision)
++        for t in (0,1):
++            vision.current=facts(t,location="gripper",gripper="closed",contact="between_fingers",motion="at_board")
++            monitor.step(measured(t,.4))
++        vision.current=facts(2,location="gripper",gripper="closed",contact="between_fingers",motion="returning_holder")
++        result=monitor.step(measured(2,.4))
++        self.assertEqual(result["state"]["stage"],"return_tool")
++        vision.current=facts(3,location="holder",gripper="open",contact="separate",motion="away",released="yes")
++        result=monitor.step(measured(3,.4,gripper=.06))
++        self.assertEqual(result["state"]["stage"],"verify_completion")
++        self.assertFalse(result["state"]["task_completed"])
++
++    def test_optional_missing_columns_and_invalid_velocity_in_actual_reader(self):
++        import pyarrow as pa
++        import pyarrow.parquet as pq
++        base=Path(__file__).resolve().parents[1]/"artifacts/test_tmp"
++        base.mkdir(exist_ok=True)
++        for include in (False,True):
++            with tempfile.TemporaryDirectory(dir=base) as tmp:
++                root=Path(tmp);(root/"meta").mkdir();(root/"data/chunk-000").mkdir(parents=True)
++                (root/"meta/info.json").write_text(json.dumps({"codebase_version":"v2.1","fps":25,"chunks_size":1000}))
++                row={"timestamp":0.,"frame_index":0,"observation.state":[0.]*14,"action":[999.]*14}
++                if include:
++                    row["observation.velocity"]=[float('nan')]*14
++                pq.write_table(pa.Table.from_pylist([row]),root/"data/chunk-000/episode_000000.parquet")
++                stream=LeRobotStream(root,0,["cam_high"],instruction=INSTRUCTION)
++                obs=list(stream)[0]
++                self.assertEqual(obs.modalities["observation.velocity"]["status"],"invalid" if include else "missing")
++                self.assertIsNone(obs.observation_velocity)
++                self.assertNotIn("action",stream.audit["columns_read"])
++
++
++if __name__=="__main__":
++    unittest.main()
+--- a/streaming_recovery/tracking.py
++++ b/streaming_recovery/tracking.py
+@@ -11,6 +11,8 @@
+     "verify_completion": "释放与完成确认", "completed": "当前完成条件满足",
+     "unknown": "当前阶段暂不可判断",
+     "blocked_precondition": "后续操作被夹持前置条件阻断",
++    "approach_tool": "右臂移动接近刀具，抓取准备尚在进行",
++    "holding_tool": "持刀停留，等待后续移动或效果确认",
+ }
+ 
+ class TaskTracker:
+@@ -80,6 +82,15 @@
+         self.last_gripper, self.last_visual_gripper = raw if good else None, facts.gripper if good else "unknown"
+         self.last_time, self.previous_holder = now, near_object
+         known, unknown, current_evidence = [], [], []
++        joint = facts.measurements.get("joint_motion", {"status":"unknown", "evidence_refs":[]})
++        active = joint["status"] in ("moving", "recent_motion")
++        if joint["status"] == "unknown":
++            unknown.append("右臂运动状态信息不足；需要相邻实测关节位置和当前速度")
++        else:
++            known.append("实测右臂六关节（排除夹爪维）运动状态=" + joint["status"])
++            current_evidence.append({"timestamp":now,"ref":observation.ref,
++                "claim":"right_arm_motion="+joint["status"],"source":"measured_qpos_qvel",
++                "images":[],"sensor_refs":joint["evidence_refs"]})
+         if raw is not None:
+             known.append(f"右夹爪观测原始值 {raw:.5f}（数据集原始单位；不代表夹持成功）")
+         else:
+@@ -123,6 +134,8 @@
+             if self.operation_at is None:
+                 self.operation_at = now
+                 self.memory.anchor("cut_operation", evidence(facts, "观察到持刀在香肠位置作用；尚不等于切开"))
++        if self.held is True and facts.motion == "at_board":
++            self.memory.anchor("work_area", evidence(facts, "已观察到持刀进入砧板工作区；不等于完成切割"))
+         def new_effect(f):
+             reference = f.measurements.get("cut_reference_timestamp")
+             explicit = (f.measurements.get("new_cut_effect") == "yes" and isinstance(reference, (int, float)) and
+@@ -149,7 +162,8 @@
+             self.memory.anchor("completion", evidence(facts, "历史首次同时满足新切割效果、归位与释放"))
+         candidate = None
+         departed_empty = (facts.knife_location == "holder" and facts.contact == "separate" and
+-                          facts.motion in ("at_board", "to_board", "away") and (self.attempt > 0 or visually_closed))
++                          facts.motion in ("at_board", "to_board", "away") and
++                          (self.attempt > 0 or visually_closed or (facts.motion=="at_board" and active)))
+         if not current_complete and departed_empty and not self.attempt_held:
+             candidate = "grasp_not_established" if self.attempt > 0 else "prerequisite_unmet"
+         detached = facts.knife_location in ("board", "elsewhere") and facts.contact == "separate"
+@@ -163,15 +177,16 @@
+         elif candidate == "prerequisite_unmet":
+             self.stage = "blocked_precondition"
+         elif facts.knife_location == "gripper" and facts.motion == "to_board":
+-            self.stage = "transport_tool"
++            self.stage = ("return_tool" if self.cut_confirmed else
++                          "verify_cut" if "work_area" in self.memory.anchors else "transport_tool")
+         elif self.held is True:
+-            if self.cut_confirmed:
++            if self.cut_confirmed or facts.motion == "returning_holder":
+                 self.stage = "return_tool"
+             elif facts.measurements.get("cut_operation") == "yes":
+                 self.stage = "cut_operation"
+             else:
+                 self.stage = "cutting" if facts.motion == "at_board" else "transport_tool"
+-        elif self.returned or (self.cut_confirmed and facts.knife_location == "holder" and facts.released == "yes"):
++        elif self.returned or (self.ever_held and facts.knife_location == "holder" and facts.released == "yes" and facts.contact == "separate"):
+             self.stage = "verify_completion"
+         elif self.cut_confirmed and facts.motion == "returning_holder":
+             self.stage = "return_tool"
+@@ -181,6 +196,11 @@
+             self.stage = "align_grasp" if near_object and (visually_open or raw_open) else "verify_grasp"
+         else:
+             self.stage = "align_grasp" if near_object else "locate_tool"
++        # 关节只限定动作是否正在发生，绝不据此建立物体夹持或切开事实。
++        if self.stage == "transport_tool" and joint["status"] == "stationary":
++            self.stage = "holding_tool" if self.held is True else "verify_grasp"
++        elif self.stage == "align_grasp" and active and not new_attempt:
++            self.stage = "approach_tool"
+         if not self.cut_confirmed:
+             unknown.append("本次新切割效果尚未确认；已有小块不能补齐")
+         if self.returned is not True:
+@@ -196,6 +216,8 @@
+         if self.returned:
+             goals.append("当前刀具已归位且释放")
+         expectations = {
++            "approach_tool": "右臂在移动；观察刀柄与两指关系，等待实际抓取尝试",
++            "holding_tool": "当前关节低于运动阈值；继续观察连接，不把停留判成失败或搬运进展",
+             "locate_tool": "定位刀柄和两指，不要求刀已离架",
+             "align_grasp": "确认二维对齐、深度、姿态与接触准备，然后尝试闭合",
+             "verify_grasp": "刀应与夹爪连接并离开支撑位置；闭爪不等于成功",
+@@ -218,6 +240,7 @@
+                 "attempt": self.attempt, "attempt_held": self.attempt_held,
+                 "task_completed": self.cut_confirmed and self.returned is True,
+                 "historical_completion": self.completed, "cut_reference": self.cut_reference,
++                "arm_activity": (self.memory.features[-1].measurements.get("joint_motion",{}).get("status","unknown") if self.memory.features else "unknown"),
+                 "anchors": dict(self.memory.anchors)}
+ 
+     def usage(self):
+--- a/streaming_recovery/validation.py
++++ b/streaming_recovery/validation.py
+@@ -55,6 +55,7 @@
+         if suffix_black and i>=prefix_frames:
+             state=[0.0]*14
+         generated.append({"timestamp":i/25,"frame_index":i,"task_index":0,"observation.state":state,
++            "observation.velocity":([3.0]*14 if suffix_black and i>=prefix_frames else row["observation.velocity"]),
+             "episode_index":episode,"complementary_info.vifailback_flags":[suffix_black]*3,
+             "action":[999.0 if suffix_black else -999.0]*14,
+             "complementary_info.action_eef":[float("nan")]*16})
+@@ -101,7 +102,8 @@
+ 
+     def logic():
+         suite=unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(name) for name in
+-            ("streaming_recovery.tests.test_system","streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions"))
++            ("streaming_recovery.tests.test_system","streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions",
++             "streaming_recovery.tests.test_multimodal"))
+         stream=io.StringIO()
+         result=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)
+         (directory/"unit_tests.txt").write_text(stream.getvalue(),encoding="utf-8")
+--- a/streaming_recovery/docs/数据契约.md
++++ b/streaming_recovery/docs/数据契约.md
+@@ -1,4 +1,18 @@
+-# 当前契约 1.1 增量说明
++# 当前契约 1.2：实测关节与条件腕部输入
++
++旧变量和位置参数不变；`Observation` 末尾新增带默认值的 `observation_velocity`。源字段仍叫 `observation.velocity`，不改数据集字段名。缺失/无效/过期向量为 null，模态状态明确标记；不以目标 action/EEF 补值。
++
++- 默认 25 Hz 顺序读完整轨迹，25 帧一次判断，即 1 Hz；采样末尾不足 1 s 仍顺序消费，不增加事后分析。源审计包含最后原生时间戳与实际读取列。
++- `observation_inputs` 保存当前可用的 14 维 state / velocity 和共享传感来源声明；只有右臂六关节及 state[13] 用于本任务，左臂仅在原始向量中保留。
++- `visual_facts.measurements.joint_motion` 包含当前速度、与窗口前一时刻位置的最大绝对变化、阈值、原始单位、至多 3 条传感引用。`moving` 表示当前速度越阈；`recent_motion` 只表示过去相邻间隔发生位置变化；两项均低才是 `stationary`；证据不足为 `unknown`。不是成功置信度。
++- `state.arm_activity` 和阶段/诊断使用上述证据；新增 `approach_tool` / `holding_tool`。空手移动到工作区可以支持缺少前置条件，但运动/闭爪不能确认抓住。持刀回架、释放阶段不再以切割确认作为门槛，整任务完成仍严格要求本次切割效果。
++- 实际当前图像按 `last_metrics.images_used` 记录；只有顶视刀架/抓取关系不清楚时咨询当前腕部。`model_input_images` 保守计入初始参考（当前顶视＋初始参考＋可选当前腕部≤3）。旧腕图引用用于审计，其像素不作为第四张图输入。
++- 观测最多 4 条，state＋velocity 共最多 112 个数；关节特征引用最多 18 条、事件传感引用最多 48 条、恢复上下文传感引用最多 12 条，对齐器最新样本 4 个。其余 1.1 容量保留；每步检查全部容量。
++- `processing.decision_wall_s` 是入口保存的程序处理耗时，不参与推理，不是视频检测延迟。`modalities_for_audit_only` 的腕图可在网页查看，但没有被查询的图不宣称参与判断。
++
++本次数据、阈值和验证详见 [六条多模态测试](六条多模态测试_20261017.md)。以下为 1.1 历史说明；冲突处以 1.2 为准。
++
++# 契约 1.1 历史增量说明
+ 
+ 保留原字段及程序变量名。`Observation.grasp_readiness` 是末尾带默认值的可选字段，旧调用无需修改；默认回放源不提供，也不伪造。`VisualFacts` 增加 `gripper_source`、`grasp_readiness`、`localization_frame`。旧模型 JSON 严格解析仍沿用原字段集合，不能随意追加模型生成的接触回执。
+ 

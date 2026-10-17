@@ -1,0 +1,211 @@
+{
+  "dataset_repo": "sii-rhos-ai/vifailback-dataset-lerobot",
+  "revision": "619791b94f61667333fe179d471051e0bca0e06f",
+  "official_readme_local": "data/vifailback_lerobot/README.md",
+  "readme_sha256": "de08034ac777fba348224619d2d5f4f10e9d83888fa138841aad8f1d11dee3fb",
+  "fps": 25,
+  "state_names": [
+    [
+      "left_waist",
+      "left_shoulder",
+      "left_elbow",
+      "left_forearm_roll",
+      "left_wrist_angle",
+      "left_wrist_rotate",
+      "left_gripper",
+      "right_waist",
+      "right_shoulder",
+      "right_elbow",
+      "right_forearm_roll",
+      "right_wrist_angle",
+      "right_wrist_rotate",
+      "right_gripper"
+    ]
+  ],
+  "velocity_names": [
+    [
+      "left_waist",
+      "left_shoulder",
+      "left_elbow",
+      "left_forearm_roll",
+      "left_wrist_angle",
+      "left_wrist_rotate",
+      "left_gripper",
+      "right_waist",
+      "right_shoulder",
+      "right_elbow",
+      "right_forearm_roll",
+      "right_wrist_angle",
+      "right_wrist_rotate",
+      "right_gripper"
+    ]
+  ],
+  "sensor_relationship": "qpos[7:13] right arm joint positions; qpos[13] right gripper; same state vector. qvel[7:13] measured joint velocities. RGB and proprioception, not three independent sensors.",
+  "alignment": "stored frame_index/fps and Parquet timestamp plus decoded video PTS validated online; hardware trigger synchrony not independently verified",
+  "units": "physical qpos/qvel/gripper units and camera-to-base calibration not established by the local metadata; raw values only",
+  "excluded": [
+    "action (next-step target qpos)",
+    "complementary_info.action_eef (target, not measured EEF)",
+    "observation.effort (not used)",
+    "complementary_info.vifailback_flags (offline annotation only)"
+  ],
+  "annotations": "episode success/failure and avoid/correct keyframes; no manual task phase timestamps or first detectable failure times",
+  "episodes": [
+    {
+      "episode_index_for_audit_only": 18,
+      "num_rows": 519,
+      "fields": [
+        "observation.state",
+        "action",
+        "complementary_info.vifailback_flags",
+        "observation.velocity",
+        "observation.effort",
+        "complementary_info.action_eef",
+        "complementary_info.base_action",
+        "timestamp",
+        "frame_index",
+        "episode_index",
+        "index",
+        "task_index"
+      ],
+      "measured_fields_present": {
+        "observation.state": true,
+        "observation.velocity": true
+      },
+      "cameras_present": {
+        "cam_high": true,
+        "cam_right_wrist": true
+      }
+    },
+    {
+      "episode_index_for_audit_only": 19,
+      "num_rows": 420,
+      "fields": [
+        "observation.state",
+        "action",
+        "complementary_info.vifailback_flags",
+        "observation.velocity",
+        "observation.effort",
+        "complementary_info.action_eef",
+        "complementary_info.base_action",
+        "timestamp",
+        "frame_index",
+        "episode_index",
+        "index",
+        "task_index"
+      ],
+      "measured_fields_present": {
+        "observation.state": true,
+        "observation.velocity": true
+      },
+      "cameras_present": {
+        "cam_high": true,
+        "cam_right_wrist": true
+      }
+    },
+    {
+      "episode_index_for_audit_only": 0,
+      "num_rows": 300,
+      "fields": [
+        "observation.state",
+        "action",
+        "complementary_info.vifailback_flags",
+        "observation.velocity",
+        "observation.effort",
+        "complementary_info.action_eef",
+        "complementary_info.base_action",
+        "timestamp",
+        "frame_index",
+        "episode_index",
+        "index",
+        "task_index"
+      ],
+      "measured_fields_present": {
+        "observation.state": true,
+        "observation.velocity": true
+      },
+      "cameras_present": {
+        "cam_high": true,
+        "cam_right_wrist": true
+      }
+    },
+    {
+      "episode_index_for_audit_only": 2,
+      "num_rows": 289,
+      "fields": [
+        "observation.state",
+        "action",
+        "complementary_info.vifailback_flags",
+        "observation.velocity",
+        "observation.effort",
+        "complementary_info.action_eef",
+        "complementary_info.base_action",
+        "timestamp",
+        "frame_index",
+        "episode_index",
+        "index",
+        "task_index"
+      ],
+      "measured_fields_present": {
+        "observation.state": true,
+        "observation.velocity": true
+      },
+      "cameras_present": {
+        "cam_high": true,
+        "cam_right_wrist": true
+      }
+    },
+    {
+      "episode_index_for_audit_only": 8,
+      "num_rows": 233,
+      "fields": [
+        "observation.state",
+        "action",
+        "complementary_info.vifailback_flags",
+        "observation.velocity",
+        "observation.effort",
+        "complementary_info.action_eef",
+        "complementary_info.base_action",
+        "timestamp",
+        "frame_index",
+        "episode_index",
+        "index",
+        "task_index"
+      ],
+      "measured_fields_present": {
+        "observation.state": true,
+        "observation.velocity": true
+      },
+      "cameras_present": {
+        "cam_high": true,
+        "cam_right_wrist": true
+      }
+    },
+    {
+      "episode_index_for_audit_only": 29,
+      "num_rows": 237,
+      "fields": [
+        "observation.state",
+        "action",
+        "complementary_info.vifailback_flags",
+        "observation.velocity",
+        "observation.effort",
+        "complementary_info.action_eef",
+        "complementary_info.base_action",
+        "timestamp",
+        "frame_index",
+        "episode_index",
+        "index",
+        "task_index"
+      ],
+      "measured_fields_present": {
+        "observation.state": true,
+        "observation.velocity": true
+      },
+      "cameras_present": {
+        "cam_high": true,
+        "cam_right_wrist": true
+      }
+    }
+  ]
+}

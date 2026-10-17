@@ -1,0 +1,132 @@
+{
+  "repo": "sii-rhos-ai/vifailback-dataset-lerobot",
+  "revision": "619791b94f61667333fe179d471051e0bca0e06f",
+  "files": [
+    {
+      "path": "data/chunk-000/episode_000003.parquet",
+      "size": 48120,
+      "sha256": "494443267ea65e5025c9ab971fab3540d438466e05197855f1729f37b7407088",
+      "remote_sha256": "494443267ea65e5025c9ab971fab3540d438466e05197855f1729f37b7407088"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000003.mp4",
+      "size": 3751263,
+      "sha256": "2fdc06435fd95cfe35628c5be09ac387b28669837dce2dc0f0e40c17645ff69d",
+      "remote_sha256": "2fdc06435fd95cfe35628c5be09ac387b28669837dce2dc0f0e40c17645ff69d"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000003.mp4",
+      "size": 2152499,
+      "sha256": "897b247ad6221be63a1f37fb55b3499659c7af9c4aafbc23d33dd4d05ad005fc",
+      "remote_sha256": "897b247ad6221be63a1f37fb55b3499659c7af9c4aafbc23d33dd4d05ad005fc"
+    },
+    {
+      "path": "data/chunk-000/episode_000010.parquet",
+      "size": 50427,
+      "sha256": "73c81574132b92f900169b8bd5c42852ac6a16a62dd6a98b4a3f9ec6fd32074a",
+      "remote_sha256": "73c81574132b92f900169b8bd5c42852ac6a16a62dd6a98b4a3f9ec6fd32074a"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000010.mp4",
+      "size": 4463254,
+      "sha256": "bf7213eb6c39841432aec46bb157d8468df0a70dfa040e65199c3566f3321e24",
+      "remote_sha256": "bf7213eb6c39841432aec46bb157d8468df0a70dfa040e65199c3566f3321e24"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000010.mp4",
+      "size": 3210778,
+      "sha256": "1ee4def2bcd2b79169fe9abcbbc464e4aad6cbcb614dac7677605d8b90241ba7",
+      "remote_sha256": "1ee4def2bcd2b79169fe9abcbbc464e4aad6cbcb614dac7677605d8b90241ba7"
+    },
+    {
+      "path": "data/chunk-000/episode_000012.parquet",
+      "size": 52874,
+      "sha256": "22d4ce1440317fe91a326c8b174c365776205fb12f553598dd80ce5b6f0ae61f",
+      "remote_sha256": "22d4ce1440317fe91a326c8b174c365776205fb12f553598dd80ce5b6f0ae61f"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000012.mp4",
+      "size": 3978307,
+      "sha256": "ec65d51689e31ed6a11070f60c456e19e8e5ee9040f67c9d054717b26b82e93e",
+      "remote_sha256": "ec65d51689e31ed6a11070f60c456e19e8e5ee9040f67c9d054717b26b82e93e"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000012.mp4",
+      "size": 3191733,
+      "sha256": "6cf81104ad1abe34ab0ba8a4fe6cb2ab9e5a0c555cba104eba7ef36b348a40aa",
+      "remote_sha256": "6cf81104ad1abe34ab0ba8a4fe6cb2ab9e5a0c555cba104eba7ef36b348a40aa"
+    },
+    {
+      "path": "data/chunk-000/episode_000017.parquet",
+      "size": 47372,
+      "sha256": "60ade5088653e3efc0c4635ce76c98e25240c1723f52ff6a777307fa13d80ac1",
+      "remote_sha256": "60ade5088653e3efc0c4635ce76c98e25240c1723f52ff6a777307fa13d80ac1"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000017.mp4",
+      "size": 3539140,
+      "sha256": "a35b9fc5c0d9892b4acb1d58203681e9aa5b440082ca3663ca22be5611e41867",
+      "remote_sha256": "a35b9fc5c0d9892b4acb1d58203681e9aa5b440082ca3663ca22be5611e41867"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000017.mp4",
+      "size": 2408399,
+      "sha256": "e7e5f703046d41826a97a7a0183392aa4fb20867dab7b002d5b92e6ce4f72556",
+      "remote_sha256": "e7e5f703046d41826a97a7a0183392aa4fb20867dab7b002d5b92e6ce4f72556"
+    },
+    {
+      "path": "data/chunk-000/episode_000019.parquet",
+      "size": 61584,
+      "sha256": "af0cd65a1946aaa4f774ce5a6bcee0c4c6977ac0c8c353f0f153cdbcd636ee71",
+      "remote_sha256": "af0cd65a1946aaa4f774ce5a6bcee0c4c6977ac0c8c353f0f153cdbcd636ee71"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000019.mp4",
+      "size": 4447840,
+      "sha256": "b1bac6d2e1419317ba93014af41f7b7339c7ba01e0ac134d4eff33e94fc10deb",
+      "remote_sha256": "b1bac6d2e1419317ba93014af41f7b7339c7ba01e0ac134d4eff33e94fc10deb"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000019.mp4",
+      "size": 3095000,
+      "sha256": "739ee209189780e38c74e7ca981c23a255ddac368c92072eecf1f67769f6927b",
+      "remote_sha256": "739ee209189780e38c74e7ca981c23a255ddac368c92072eecf1f67769f6927b"
+    },
+    {
+      "path": "data/chunk-000/episode_000013.parquet",
+      "size": 48834,
+      "sha256": "812196d8a9fe810a8751504a20b2eb4d156add084a95494514d5ae745614e8f2",
+      "remote_sha256": "812196d8a9fe810a8751504a20b2eb4d156add084a95494514d5ae745614e8f2"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000013.mp4",
+      "size": 3424063,
+      "sha256": "7f15f7a17b3dc541a0a2402d0e2039d02aba809285b1f9e8aada9b471d033ec4",
+      "remote_sha256": "7f15f7a17b3dc541a0a2402d0e2039d02aba809285b1f9e8aada9b471d033ec4"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000013.mp4",
+      "size": 2689847,
+      "sha256": "8c6a96799a12828837cf68531df9087d2920cc3c05ddbc81260c3230c24ad6a2",
+      "remote_sha256": "8c6a96799a12828837cf68531df9087d2920cc3c05ddbc81260c3230c24ad6a2"
+    },
+    {
+      "path": "data/chunk-000/episode_000016.parquet",
+      "size": 53439,
+      "sha256": "2e69c300379baabf3957d3cff1b96910b8d6d37ff0bf5ddde7f4bc369fcdd9d1",
+      "remote_sha256": "2e69c300379baabf3957d3cff1b96910b8d6d37ff0bf5ddde7f4bc369fcdd9d1"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000016.mp4",
+      "size": 4000059,
+      "sha256": "0413aa831deba25c868388080cbdae45e560766492ccbaa711663d22212964ae",
+      "remote_sha256": "0413aa831deba25c868388080cbdae45e560766492ccbaa711663d22212964ae"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000016.mp4",
+      "size": 2225239,
+      "sha256": "9f0b63cbf92ff31a48d63c2f5dcc2a451dff6c320e606e8424d59dda9661f5b2",
+      "remote_sha256": "9f0b63cbf92ff31a48d63c2f5dcc2a451dff6c320e606e8424d59dda9661f5b2"
+    }
+  ]
+}

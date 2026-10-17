@@ -1,0 +1,944 @@
+{
+  "run_id": "20261017_124737_889406",
+  "date_timezone": "Asia/Shanghai",
+  "python": "3.11.17 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:16:54) [MSC v.1942 64 bit (AMD64)]",
+  "backend": "multiview_effect_geometry",
+  "actual_data": true,
+  "synthetic": false,
+  "execution_mode": "advisory_replay",
+  "clock_policy": "25 FPS source; configured sampling; synchronous backpressure, not wall-clock real-time guarantee",
+  "episodes": [
+    {
+      "episode_for_audit_only": 0,
+      "output_subdir": "trajectory_000000",
+      "counts": {
+        "decisions": 30,
+        "notifications": 2,
+        "confirmed_failure_decisions": 4,
+        "uncertain_decisions": 6,
+        "model_invalid": 0
+      },
+      "source_audit": {
+        "rows_read": 300,
+        "frames_decoded": {
+          "cam_high": 300,
+          "cam_right_wrist": 300
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure"
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 6,
+        "anchors": 2,
+        "feature_text_chars": 492,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 4,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 16,
+        "task_reference_entries": 1,
+        "recovery_contexts": 1,
+        "recovery_event_evidence": 4,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 3,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 6,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 2,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.046999999998661224
+        },
+        {
+          "timestamp": 0.4,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 0.8,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 1.2,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 1.6,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 2.4,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 2.8,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 3.2,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 3.6,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 4.4,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 4.8,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 5.2,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 5.6,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 6.4,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 6.8,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 7.2,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 7.6,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 8.4,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 8.8,
+          "stage": "verify_grasp",
+          "status": "suspicious",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 9.2,
+          "stage": "verify_grasp",
+          "status": "suspicious",
+          "held": false,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 9.6,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 10.4,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 10.8,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 11.2,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 11.6,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 11.6,
+        "task_success": null,
+        "historical_completion": false,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000000.parquet",
+          "sha256": "ea0f895485816baff3ad5ddd86b6e2d6053a684d61d8e9b9c3ac29d31b188867"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000000.mp4",
+          "sha256": "332f1dc1ea2d49e38d0281143a60d193d3ec6e8297bd210aee5ad04b920b3b9e"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000000.mp4",
+          "sha256": "106ee31d07d240d09f58887eeff948c4cfdae1db89c61e76c97c91e0d6570dfd"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 18,
+      "output_subdir": "trajectory_000018",
+      "counts": {
+        "decisions": 52,
+        "notifications": 0,
+        "confirmed_failure_decisions": 0,
+        "uncertain_decisions": 12,
+        "model_invalid": 0
+      },
+      "source_audit": {
+        "rows_read": 519,
+        "frames_decoded": {
+          "cam_high": 519,
+          "cam_right_wrist": 519
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure"
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 6,
+        "anchors": 7,
+        "feature_text_chars": 492,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 0,
+        "event_evidence": 0,
+        "active_events": 0,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 2,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 16,
+        "task_reference_entries": 1,
+        "recovery_contexts": 0,
+        "recovery_event_evidence": 0,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 3,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 21,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 2,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 0.4,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 0.8,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 1.2,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 1.6,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 2.4,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 2.8,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 3.2,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 3.6,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 4.4,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 4.8,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 5.2,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 5.6,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 6.4,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 6.8,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 7.2,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 7.6,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 8.4,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 8.8,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 9.2,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 9.6,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 10.4,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 10.8,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 11.2,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 11.6,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 12.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 12.4,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 12.8,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 13.2,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 13.6,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 14.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 14.4,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 14.8,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 15.2,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 15.6,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 16.0,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 16.4,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 16.8,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 17.2,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 17.6,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 18.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 18.4,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 18.8,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 19.2,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 19.6,
+          "stage": "completed",
+          "status": "completed",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 20.0,
+          "stage": "completed",
+          "status": "completed",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 20.4,
+          "stage": "completed",
+          "status": "completed",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 20.4,
+        "task_success": true,
+        "historical_completion": true,
+        "reason": "task_completion_evidence",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000018.parquet",
+          "sha256": "1d5dd20ab081934ccf6b4b92de36337799590e4384189577c6e654bf48b63a68"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000018.mp4",
+          "sha256": "b2a114f654e449b6cee3338711923b7f8d0d1156e2a695e39ff3ae9ee7655246"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000018.mp4",
+          "sha256": "27ce268231a7da9adcaa45142ec0d2d88e6bb19229ee9ab7d9278457c6bce5e3"
+        }
+      ]
+    }
+  ],
+  "code_sha256": {
+    "contracts.py": "442402cf4330e96ffa04787aec682d1e4c6f82de39e51e2dd99982be47c4ee28",
+    "engine.py": "0ec09586a1498b870c0868aa24bd9e02049f68d3b3535cf51804888243ab0563",
+    "events.py": "1c0550d6b2a3cb6ae28a6cadec22cab014007f418e0a1e2df88ea4a5e58b74f4",
+    "geometry.py": "44fa7b9d08c17a7874d8493dd2a32603d7274f7da2d8fa6de68a81a711b9d4a0",
+    "memory.py": "6866b9dd07cfa4443b3b67b6efdef1b73594b6a64d8a87d22f4978c61140a132",
+    "multiview.py": "bbdc2158ee383e1faacbece82a6c51196f149162507587e207bb37b37ca5b9f4",
+    "probe.py": "b91dd5b5ba3e0280439f7a0f7a191e39b38f46eb81c6aefc423f5edf6b1a165e",
+    "recovery.py": "32559cdaa43d57828ef55e5a83514f48e72e35241f137ac856d9b4a8534c7ace",
+    "report.py": "8f1e34d4b6754136e890353f93c19db1c4ea36a408bd19e80516a9eb776d3dec",
+    "review_existing.py": "a29602aeba8afd2be5c6aa96d0e15595d5f5459b759ad1a2ff6f7fb10f5bc30c",
+    "source.py": "c5bf8e181f34907638926a68c0b3c128d61c4f3e81e8c69f97159d2f28c96bd1",
+    "task_spec.py": "d24532e9880f9337c51b4216ab1009a543964dc591e886c99fbd3d85a708780b",
+    "tracking.py": "3da4dd357ca569f203691025b76d2a595a3b1069661e81c135872c9bf23cac8d",
+    "validation.py": "7f9142991d2153d236fbdfabcb423819f56718074408122aade8440f4850d29f",
+    "vision.py": "f923409301f72d844c828e59cd9dc3c529fb188e7e4a7c23378e97aa8bbd7f97",
+    "__init__.py": "da8cc91889ca48ac6f50024508a5001c62749b687777232e418522bc934bdab8",
+    "__main__.py": "78fd0f0f280941857bcf1a518a332956f8e611826e9582643d042c0973639bcd"
+  },
+  "elapsed_wall_s": 10.546999999998661
+}

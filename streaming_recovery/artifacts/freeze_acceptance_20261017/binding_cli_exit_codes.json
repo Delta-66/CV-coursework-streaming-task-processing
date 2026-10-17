@@ -1,0 +1,20 @@
+{
+  "actual_commands_executed": true,
+  "inference_repeated": false,
+  "valid_rebound_followup3": {
+    "entry": "python -m streaming_recovery.evaluation --require-complete",
+    "output": "followup3_binding_v3.json",
+    "exit_code": 0,
+    "engineering_status": "passed",
+    "semantic_status": "passed"
+  },
+  "wrong_source_run_injection": {
+    "entry": "python -m streaming_recovery.evaluation --require-complete",
+    "input": "bad_binding_review.json",
+    "output": "bad_binding_report.json",
+    "exit_code": 1,
+    "engineering_status": "failed",
+    "evidence_status": "invalid",
+    "semantic_status": "not_assessable"
+  }
+}

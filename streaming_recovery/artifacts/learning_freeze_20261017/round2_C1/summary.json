@@ -1,0 +1,2143 @@
+{
+  "run_id": "20261017_184433_374761",
+  "date_timezone": "Asia/Shanghai",
+  "python": "3.11.17 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:16:54) [MSC v.1942 64 bit (AMD64)]",
+  "backend": "fixed_supervised_fusion",
+  "actual_data": true,
+  "synthetic": false,
+  "execution_mode": "advisory_replay",
+  "clock_policy": "25 FPS source; configured sampling; synchronous backpressure, not wall-clock real-time guarantee",
+  "episodes": [
+    {
+      "episode_for_audit_only": 2,
+      "output_subdir": "trajectory_000002",
+      "counts": {
+        "decisions": 12,
+        "notifications": 2,
+        "confirmed_failure_decisions": 1,
+        "uncertain_decisions": 3,
+        "model_invalid": 3
+      },
+      "elapsed_wall_s": 3.4060000000026776,
+      "decision_wall_total_s": 0.2189999999900465,
+      "decision_wall_max_s": 0.0319999999992433,
+      "source_audit": {
+        "rows_read": 289,
+        "frames_decoded": {
+          "cam_high": 289,
+          "cam_right_wrist": 289
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state",
+          "observation.velocity"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure",
+        "missing_columns": [],
+        "last_source_timestamp": 11.52,
+        "joint_interval_capacity": {
+          "native_joint_previous_values": 6,
+          "native_joint_path_values": 6,
+          "native_joint_scalar_slots": 10,
+          "native_joint_history_samples": 0
+        }
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 2,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1564,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 410,
+        "feature_payload_chars": 26118,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 2,
+        "event_sensor_refs": 6,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "student_parameter_values": 78,
+        "student_history_items": 0,
+        "student_mutable_state_slots": 1,
+        "training_updates": 0,
+        "suggestion_history_items": 0,
+        "task_state_slots": 19,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "work_cycle_entries": 0,
+        "work_cycle_fields": 0,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 216,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 6,
+        "recovery_event_evidence": 2,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 7,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0319999999992433
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "align_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "verify_grasp",
+          "status": "suspicious",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.0319999999992433
+        },
+        {
+          "timestamp": 11.0,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.014999999999417923
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 11.0,
+        "task_success": null,
+        "historical_completion": false,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000002.parquet",
+          "sha256": "35c041349811ea9680e875710466a6dda8d4618215f4f8ad53969d7783e35b26"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000002.mp4",
+          "sha256": "4733826c1886b1128fd7c2d74a8ae70a96dcbdd71bd2a265487e8ce651276d90"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000002.mp4",
+          "sha256": "3054a5e3adfaa91f90c7384d3fc93fff576753d713a767b28d8586777b77c67e"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 6,
+      "output_subdir": "trajectory_000006",
+      "counts": {
+        "decisions": 11,
+        "notifications": 2,
+        "confirmed_failure_decisions": 1,
+        "uncertain_decisions": 0,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 2.7659999999959837,
+      "decision_wall_total_s": 0.23200000000360887,
+      "decision_wall_max_s": 0.031000000002677552,
+      "source_audit": {
+        "rows_read": 262,
+        "frames_decoded": {
+          "cam_high": 262,
+          "cam_right_wrist": 262
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state",
+          "observation.velocity"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure",
+        "missing_columns": [],
+        "last_source_timestamp": 10.44,
+        "joint_interval_capacity": {
+          "native_joint_previous_values": 6,
+          "native_joint_path_values": 6,
+          "native_joint_scalar_slots": 10,
+          "native_joint_history_samples": 0
+        }
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 2,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1562,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 410,
+        "feature_payload_chars": 25567,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 2,
+        "event_sensor_refs": 6,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "student_parameter_values": 78,
+        "student_history_items": 0,
+        "student_mutable_state_slots": 1,
+        "training_updates": 0,
+        "suggestion_history_items": 0,
+        "task_state_slots": 19,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "work_cycle_entries": 0,
+        "work_cycle_fields": 0,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 218,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 6,
+        "recovery_event_evidence": 2,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 7,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.030999999995401595
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "verify_grasp",
+          "status": "suspicious",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.01600000000325963
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 10.0,
+        "task_success": null,
+        "historical_completion": false,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000006.parquet",
+          "sha256": "fb7c33dbb6c77f0bfa6586bca6ade64c5434091a2a0e6db1e0485cb0e4009a5b"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000006.mp4",
+          "sha256": "62dc15c1c69d01cf902dcd005ca833afe19e547b7e89e3108901900b7b3eb8bc"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000006.mp4",
+          "sha256": "6dc86ef2790f67bcde1fac8f636d8ae27d3ce3d591900f0e174127255ac2e951"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "output_subdir": "trajectory_000008",
+      "counts": {
+        "decisions": 10,
+        "notifications": 2,
+        "confirmed_failure_decisions": 2,
+        "uncertain_decisions": 0,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 2.4219999999986612,
+      "decision_wall_total_s": 0.15700000000651926,
+      "decision_wall_max_s": 0.01600000000325963,
+      "source_audit": {
+        "rows_read": 233,
+        "frames_decoded": {
+          "cam_high": 233,
+          "cam_right_wrist": 233
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state",
+          "observation.velocity"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure",
+        "missing_columns": [],
+        "last_source_timestamp": 9.28,
+        "joint_interval_capacity": {
+          "native_joint_previous_values": 6,
+          "native_joint_path_values": 6,
+          "native_joint_scalar_slots": 10,
+          "native_joint_history_samples": 0
+        }
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 2,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1565,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 410,
+        "feature_payload_chars": 25194,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 3,
+        "event_sensor_refs": 9,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "student_parameter_values": 78,
+        "student_history_items": 0,
+        "student_mutable_state_slots": 1,
+        "training_updates": 0,
+        "suggestion_history_items": 0,
+        "task_state_slots": 19,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "work_cycle_entries": 0,
+        "work_cycle_fields": 0,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 217,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 9,
+        "recovery_event_evidence": 3,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 7,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "verify_grasp",
+          "status": "suspicious",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 9.0,
+        "task_success": null,
+        "historical_completion": false,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000008.parquet",
+          "sha256": "f98a4682acb307aec395163035cc8428c3b4dd85697df9b15e614bfd7c958581"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000008.mp4",
+          "sha256": "48d03572afd790c4373f40520be6847627f6b5934d91e5856b012071a921f5b5"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000008.mp4",
+          "sha256": "015849fbba3cfed89bac80144358a57aa296caf33c03c09cb8ec1240fcfa78d7"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 11,
+      "output_subdir": "trajectory_000011",
+      "counts": {
+        "decisions": 16,
+        "notifications": 2,
+        "confirmed_failure_decisions": 1,
+        "uncertain_decisions": 2,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 4.109000000004016,
+      "decision_wall_total_s": 0.2690000000075088,
+      "decision_wall_max_s": 0.0319999999992433,
+      "source_audit": {
+        "rows_read": 399,
+        "frames_decoded": {
+          "cam_high": 399,
+          "cam_right_wrist": 399
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state",
+          "observation.velocity"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure",
+        "missing_columns": [],
+        "last_source_timestamp": 15.92,
+        "joint_interval_capacity": {
+          "native_joint_previous_values": 6,
+          "native_joint_path_values": 6,
+          "native_joint_scalar_slots": 10,
+          "native_joint_history_samples": 0
+        }
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 4,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1578,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 408,
+        "feature_payload_chars": 26289,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 2,
+        "event_sensor_refs": 6,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 2,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "student_parameter_values": 78,
+        "student_history_items": 0,
+        "student_mutable_state_slots": 1,
+        "training_updates": 0,
+        "suggestion_history_items": 0,
+        "task_state_slots": 19,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 0,
+        "work_cycle_entries": 1,
+        "work_cycle_fields": 4,
+        "attempt_context_fields": 0,
+        "effect_state_slots": 5,
+        "effect_layout_records": 2,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 1,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 5,
+        "effect_state_chars": 393,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 6,
+        "recovery_event_evidence": 2,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 15,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0319999999992433
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 11.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 12.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 13.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 14.0,
+          "stage": "blocked_cut_effect",
+          "status": "suspicious",
+          "held": true,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 15.0,
+          "stage": "blocked_cut_effect",
+          "status": "confirmed_failure",
+          "held": null,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.01599999999598367
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 15.0,
+        "task_success": null,
+        "historical_completion": false,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000011.parquet",
+          "sha256": "198b08286db1e56ccdda60509a2b4b24bbdf6590829d84ebcf6d7396060fc186"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000011.mp4",
+          "sha256": "83dd33b96d6b6d47061e46d2444aaec70397daa810ee643ba9df8d28ceafaac9"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000011.mp4",
+          "sha256": "4fa43895c06493c8d93a803c97d475b4da88f085a7ab4a052e508a19e0abe97e"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 14,
+      "output_subdir": "trajectory_000014",
+      "counts": {
+        "decisions": 25,
+        "notifications": 2,
+        "confirmed_failure_decisions": 7,
+        "uncertain_decisions": 8,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 6.172000000005937,
+      "decision_wall_total_s": 0.4560000000128639,
+      "decision_wall_max_s": 0.031000000002677552,
+      "source_audit": {
+        "rows_read": 607,
+        "frames_decoded": {
+          "cam_high": 607,
+          "cam_right_wrist": 607
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state",
+          "observation.velocity"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure",
+        "missing_columns": [],
+        "last_source_timestamp": 24.24,
+        "joint_interval_capacity": {
+          "native_joint_previous_values": 6,
+          "native_joint_path_values": 6,
+          "native_joint_scalar_slots": 10,
+          "native_joint_history_samples": 0
+        }
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 3,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1575,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 408,
+        "feature_payload_chars": 24794,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 4,
+        "event_sensor_refs": 12,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 2,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "student_parameter_values": 78,
+        "student_history_items": 0,
+        "student_mutable_state_slots": 1,
+        "training_updates": 0,
+        "suggestion_history_items": 0,
+        "task_state_slots": 19,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 0,
+        "work_cycle_entries": 1,
+        "work_cycle_fields": 4,
+        "attempt_context_fields": 0,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 219,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 12,
+        "recovery_event_evidence": 4,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 11,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "transport_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.030999999995401595
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.030999999995401595
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 11.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 12.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 13.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 14.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 15.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 16.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 17.0,
+          "stage": "blocked_cut_effect",
+          "status": "suspicious",
+          "held": null,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 18.0,
+          "stage": "blocked_cut_effect",
+          "status": "confirmed_failure",
+          "held": null,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 19.0,
+          "stage": "blocked_cut_effect",
+          "status": "confirmed_failure",
+          "held": null,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 20.0,
+          "stage": "blocked_cut_effect",
+          "status": "confirmed_failure",
+          "held": null,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 21.0,
+          "stage": "blocked_cut_effect",
+          "status": "confirmed_failure",
+          "held": null,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 22.0,
+          "stage": "blocked_cut_effect",
+          "status": "confirmed_failure",
+          "held": null,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 23.0,
+          "stage": "blocked_cut_effect",
+          "status": "confirmed_failure",
+          "held": null,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 24.0,
+          "stage": "blocked_cut_effect",
+          "status": "confirmed_failure",
+          "held": null,
+          "event": "event-0001",
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 24.0,
+        "task_success": null,
+        "historical_completion": false,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000014.parquet",
+          "sha256": "a835a3be5aaf0ace704926e17f56163dc061b16866fb74606b1b712de8aa165a"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000014.mp4",
+          "sha256": "ce48035992be4b2ec734676f6edb2174422b9942cd00c6108ea8232dbac26654"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000014.mp4",
+          "sha256": "d7c0f95ea2c8000adde75e46626f80a694d787ac07b74197222a46ad04392bf0"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 29,
+      "output_subdir": "trajectory_000029",
+      "counts": {
+        "decisions": 10,
+        "notifications": 2,
+        "confirmed_failure_decisions": 1,
+        "uncertain_decisions": 2,
+        "model_invalid": 1
+      },
+      "elapsed_wall_s": 2.436999999998079,
+      "decision_wall_total_s": 0.13899999998830026,
+      "decision_wall_max_s": 0.01600000000325963,
+      "source_audit": {
+        "rows_read": 237,
+        "frames_decoded": {
+          "cam_high": 237,
+          "cam_right_wrist": 237
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state",
+          "observation.velocity"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure",
+        "missing_columns": [],
+        "last_source_timestamp": 9.44,
+        "joint_interval_capacity": {
+          "native_joint_previous_values": 6,
+          "native_joint_path_values": 6,
+          "native_joint_scalar_slots": 10,
+          "native_joint_history_samples": 0
+        }
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 2,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1566,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 410,
+        "feature_payload_chars": 25335,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 2,
+        "event_sensor_refs": 6,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "student_parameter_values": 78,
+        "student_history_items": 0,
+        "student_mutable_state_slots": 1,
+        "training_updates": 0,
+        "suggestion_history_items": 0,
+        "task_state_slots": 19,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "work_cycle_entries": 0,
+        "work_cycle_fields": 0,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 216,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 6,
+        "recovery_event_evidence": 2,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 7,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "verify_grasp",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "verify_grasp",
+          "status": "suspicious",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "verify_grasp",
+          "status": "confirmed_failure",
+          "held": false,
+          "event": "event-0001",
+          "notify": true,
+          "decision_latency_s": 0.01599999999598367
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 9.0,
+        "task_success": null,
+        "historical_completion": false,
+        "reason": "stream_end_is_not_success",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000029.parquet",
+          "sha256": "13cd255f9e70ba27aad9ecf2ee632adc591a170b2b0dbf8aed4ffd40096b2e23"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000029.mp4",
+          "sha256": "b5a64e762cde980b21be1935b4cc56d9b48c6954fdf176681c4965c316320680"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000029.mp4",
+          "sha256": "f582051ec6c1ede1d805a47f675922645fc78df2a685835aec8a09522c39944c"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 18,
+      "output_subdir": "trajectory_000018",
+      "counts": {
+        "decisions": 21,
+        "notifications": 0,
+        "confirmed_failure_decisions": 0,
+        "uncertain_decisions": 5,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 5.422000000005937,
+      "decision_wall_total_s": 0.31200000001263106,
+      "decision_wall_max_s": 0.01600000000325963,
+      "source_audit": {
+        "rows_read": 519,
+        "frames_decoded": {
+          "cam_high": 519,
+          "cam_right_wrist": 519
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state",
+          "observation.velocity"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure",
+        "missing_columns": [],
+        "last_source_timestamp": 20.72,
+        "joint_interval_capacity": {
+          "native_joint_previous_values": 6,
+          "native_joint_path_values": 6,
+          "native_joint_scalar_slots": 10,
+          "native_joint_history_samples": 0
+        }
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 7,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1572,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 410,
+        "feature_payload_chars": 26188,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 0,
+        "event_evidence": 0,
+        "event_sensor_refs": 0,
+        "active_events": 0,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 2,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "student_parameter_values": 78,
+        "student_history_items": 0,
+        "student_mutable_state_slots": 1,
+        "training_updates": 0,
+        "suggestion_history_items": 0,
+        "task_state_slots": 19,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "work_cycle_entries": 1,
+        "work_cycle_fields": 4,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 2,
+        "effect_layout_boxes": 1,
+        "effect_operation_records": 1,
+        "effect_change_records": 1,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 6,
+        "effect_state_chars": 532,
+        "recovery_contexts": 0,
+        "recovery_sensor_refs": 0,
+        "recovery_event_evidence": 0,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 27,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "transport_tool",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 11.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 12.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 13.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 14.0,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.0
+        },
+        {
+          "timestamp": 15.0,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 16.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 17.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 18.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 19.0,
+          "stage": "verify_completion",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 20.0,
+          "stage": "completed",
+          "status": "completed",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 20.0,
+        "task_success": true,
+        "historical_completion": true,
+        "reason": "task_completion_evidence",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000018.parquet",
+          "sha256": "1d5dd20ab081934ccf6b4b92de36337799590e4384189577c6e654bf48b63a68"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000018.mp4",
+          "sha256": "b2a114f654e449b6cee3338711923b7f8d0d1156e2a695e39ff3ae9ee7655246"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000018.mp4",
+          "sha256": "27ce268231a7da9adcaa45142ec0d2d88e6bb19229ee9ab7d9278457c6bce5e3"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "output_subdir": "trajectory_000019",
+      "counts": {
+        "decisions": 17,
+        "notifications": 0,
+        "confirmed_failure_decisions": 0,
+        "uncertain_decisions": 7,
+        "model_invalid": 0
+      },
+      "elapsed_wall_s": 4.25,
+      "decision_wall_total_s": 0.3099999999831198,
+      "decision_wall_max_s": 0.031000000002677552,
+      "source_audit": {
+        "rows_read": 420,
+        "frames_decoded": {
+          "cam_high": 420,
+          "cam_right_wrist": 420
+        },
+        "columns_read": [
+          "timestamp",
+          "frame_index",
+          "observation.state",
+          "observation.velocity"
+        ],
+        "future_frames_exposed": 0,
+        "invalid_video_timestamps": 0,
+        "source_mode": "frame_order_backpressure",
+        "missing_columns": [],
+        "last_source_timestamp": 16.76,
+        "joint_interval_capacity": {
+          "native_joint_previous_values": 6,
+          "native_joint_path_values": 6,
+          "native_joint_scalar_slots": 10,
+          "native_joint_history_samples": 0
+        }
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 7,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1574,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 410,
+        "feature_payload_chars": 26114,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 0,
+        "event_evidence": 0,
+        "event_sensor_refs": 0,
+        "active_events": 0,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 2,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "student_parameter_values": 78,
+        "student_history_items": 0,
+        "student_mutable_state_slots": 1,
+        "training_updates": 0,
+        "suggestion_history_items": 0,
+        "task_state_slots": 19,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "work_cycle_entries": 1,
+        "work_cycle_fields": 4,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 2,
+        "effect_layout_boxes": 1,
+        "effect_operation_records": 1,
+        "effect_change_records": 1,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 6,
+        "effect_state_chars": 532,
+        "recovery_contexts": 0,
+        "recovery_sensor_refs": 0,
+        "recovery_event_evidence": 0,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 27,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      },
+      "timeline": [
+        {
+          "timestamp": 0.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.031000000002677552
+        },
+        {
+          "timestamp": 1.0,
+          "stage": "locate_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 2.0,
+          "stage": "approach_tool",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 3.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01600000000325963
+        },
+        {
+          "timestamp": 4.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 5.0,
+          "stage": "verify_grasp",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 6.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.030999999995401595
+        },
+        {
+          "timestamp": 7.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 8.0,
+          "stage": "cut_operation",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 9.0,
+          "stage": "cutting",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 10.0,
+          "stage": "return_tool",
+          "status": "executing",
+          "held": true,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.030999999995401595
+        },
+        {
+          "timestamp": 11.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 12.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 13.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 14.0,
+          "stage": "unknown",
+          "status": "information_insufficient",
+          "held": null,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.014999999999417923
+        },
+        {
+          "timestamp": 15.0,
+          "stage": "verify_completion",
+          "status": "executing",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        },
+        {
+          "timestamp": 16.0,
+          "stage": "completed",
+          "status": "completed",
+          "held": false,
+          "event": null,
+          "notify": false,
+          "decision_latency_s": 0.01599999999598367
+        }
+      ],
+      "end": {
+        "stream_ended": true,
+        "last_decision_timestamp": 16.0,
+        "task_success": true,
+        "historical_completion": true,
+        "reason": "task_completion_evidence",
+        "actually_executed": false
+      },
+      "source_files": [
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000019.parquet",
+          "sha256": "af0cd65a1946aaa4f774ce5a6bcee0c4c6977ac0c8c353f0f153cdbcd636ee71"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000019.mp4",
+          "sha256": "b1bac6d2e1419317ba93014af41f7b7339c7ba01e0ac134d4eff33e94fc10deb"
+        },
+        {
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000019.mp4",
+          "sha256": "739ee209189780e38c74e7ca981c23a255ddac368c92072eecf1f67769f6927b"
+        }
+      ]
+    }
+  ],
+  "code_sha256": {
+    "attempts.py": "d05cac7ddf568fdbb600b06c04b262bccf2bbe5efb52f9ba5c3f40acef58473a",
+    "contracts.py": "a83c5f03918ce154981281f225ee3ae59e320e9419d76e2b2a5caa9b35cde642",
+    "dynamics.py": "e6c58490a1d2fb2eba0e6f12db375814b331ebca539246f36837e626f4a210fc",
+    "effects.py": "f277ab7df07516d8358bec88f57b14dff2e0fde34bde76d5e5452491be66c3a3",
+    "engine.py": "66d5b55bbf6d4b5b7c1c5b67960a53c090f14855f8d3954836e8b97fc15f11de",
+    "evaluation.py": "6e61234784c8ac21580e98fe6cabb49d1dace24c0579e528076a351e8b1ee4b8",
+    "events.py": "ecdf0718a3c183cf5c7d148160cc4376a0aca0b5c34a6bbdc2c057999bde671f",
+    "fetch_functional_data.py": "0905cb6da9e52529e419a32ab5c333236582713e092dce2cc115f429dc902dbc",
+    "fusion.py": "4941155024777f6b744ffcaa807e3e2dcbeb12bd52359e8daf8d22fcd9872481",
+    "geometry.py": "81f6a8bd06d6836f847a0d8c97fbad1868216611e846265a3b8c7fa889028138",
+    "localization.py": "1204f22e2ee76ae57851287d4668fbf847c86f2c1198df5b8b77aaecca96583d",
+    "memory.py": "79bfefe9e848815e51cac2b05f89f666e90a3c5c9c6c23a002d8582f73c97c9e",
+    "multiview.py": "a3c0fcb15dc948865d9226afd4b84541f136885f1f5838e496bfb89eb75b6e41",
+    "probe.py": "b91dd5b5ba3e0280439f7a0f7a191e39b38f46eb81c6aefc423f5edf6b1a165e",
+    "recovery.py": "067e5e485fdd22555ed7bb6059c8cdf3165b610191a023e4f4cb8541109b84db",
+    "report.py": "a387dcbed65704166afd45b6fe5f134bb8ba9ed11fe214a6b66b30eb08317028",
+    "review_binding.py": "5640195f9c8a153833ec0f06c41e3c5a15277cb665f661c35fe21ca4ca6184ce",
+    "review_existing.py": "a29602aeba8afd2be5c6aa96d0e15595d5f5459b759ad1a2ff6f7fb10f5bc30c",
+    "source.py": "0572b42d63595a4385681efb4807e333b120b1bd9aea6b5ca65d67498df10fbf",
+    "task_spec.py": "d24532e9880f9337c51b4216ab1009a543964dc591e886c99fbd3d85a708780b",
+    "tracking.py": "9ef44c4ffb873b6af5aeaabe3c772089f94b8b2d82af152f1016af7841e9cd4f",
+    "validation.py": "4a0955601503fd2e50875936860ffadb35059b21c2fb3ec1919f0dd597130de3",
+    "vision.py": "f923409301f72d844c828e59cd9dc3c529fb188e7e4a7c23378e97aa8bbd7f97",
+    "__init__.py": "da8cc91889ca48ac6f50024508a5001c62749b687777232e418522bc934bdab8",
+    "__main__.py": "7a092cc215d4faa373eee76f38cf1aebb402872383b532d9ee688ed4b4f97b61"
+  },
+  "test_sha256": {
+    "test_effect_order.py": "3c3bba793a2543a6fd989a9dc7145118b769de15917cabe267cd16792de16b4c",
+    "test_evaluation.py": "5d90391567a7f609dbf7dcc8be72ef4718784fb94da309cbf3a8e3b4e924f9b8",
+    "test_incremental_regressions.py": "160e51bbb2de50b0442fe309032953b09be856ec66ff0342562ba01f1757ab1b",
+    "test_interval_review.py": "d4715b323c1a3aaf17b2d28e8f5630473b8a5b2bfa7ca6c836ba2638b3ff06cb",
+    "test_joint_interval.py": "f031a77f78f1dd0ccb1057e584aeb4ac35d7fc0354c1eaddd31a9d8bebbee361",
+    "test_localization.py": "cb0fb877ecebc996cd7b3722d7836f578e5d4b57fed61956d14eda3ac0fdca54",
+    "test_multimodal.py": "111583d18b9c5fd5157e0d793a5f4f7c27b7daea3cb6a62223c678be10c520c2",
+    "test_repair_state.py": "09cc41a2abcbd0f240e519af80fe8545db1b47aca27323c0b6a89079747f411e",
+    "test_review_binding.py": "1f37b409cf025ab15cde990f46afa8b4814b01935fdc6ed9b430ee4b80580092",
+    "test_smooth_attempt.py": "2bb1d520401315255f8e8fcfee9db73b1f9637f7413b1b6983db75085fe0598b",
+    "test_system.py": "014b10eab60ab0b933d08c2453cb2a52865754b3fbb42bac3d619c039768586c"
+  },
+  "elapsed_wall_s": 31.046000000002095
+}

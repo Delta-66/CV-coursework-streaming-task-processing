@@ -1,0 +1,14 @@
+test_explicit_label_enums (streaming_recovery.tests.test_evaluation.EvaluationTests.test_explicit_label_enums) ... ok
+test_full_native_read_does_not_imply_decision_coverage (streaming_recovery.tests.test_evaluation.EvaluationTests.test_full_native_read_does_not_imply_decision_coverage) ... ok
+test_invalid_label_is_rejected_before_counting (streaming_recovery.tests.test_evaluation.EvaluationTests.test_invalid_label_is_rejected_before_counting) ... ok
+test_metadata_short_read_and_camera_truncation_fail (streaming_recovery.tests.test_evaluation.EvaluationTests.test_metadata_short_read_and_camera_truncation_fail) ... ok
+test_phase_checks_use_timestamp_and_predicates (streaming_recovery.tests.test_evaluation.EvaluationTests.test_phase_checks_use_timestamp_and_predicates) ... ok
+test_phase_window_does_not_hide_failed_all_or_invalid_expectations (streaming_recovery.tests.test_evaluation.EvaluationTests.test_phase_window_does_not_hide_failed_all_or_invalid_expectations) ... ok
+test_recovery_retry_and_silent_persistence (streaming_recovery.tests.test_evaluation.EvaluationTests.test_recovery_retry_and_silent_persistence) ... ok
+test_result_combinations_are_not_string_truthiness (streaming_recovery.tests.test_evaluation.EvaluationTests.test_result_combinations_are_not_string_truthiness) ... ok
+test_suspicion_does_not_count_as_confirmation (streaming_recovery.tests.test_evaluation.EvaluationTests.test_suspicion_does_not_count_as_confirmation) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.001s
+
+OK

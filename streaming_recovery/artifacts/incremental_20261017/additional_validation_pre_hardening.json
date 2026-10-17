@@ -1,0 +1,260 @@
+{
+  "checks_passed": true,
+  "kind": "functional_checks_not_accuracy",
+  "records": [
+    {
+      "episode": 0,
+      "split": "dev_seen",
+      "role": "development_recheck",
+      "decisions": 30,
+      "notifications": 2,
+      "current_completion": false,
+      "first_grasp_s": null,
+      "first_new_cut_s": null,
+      "first_completion_s": null,
+      "first_suspicion_s": 8.8,
+      "first_confirmation_s": 9.6,
+      "uncertain_times": [
+        6.4,
+        6.8,
+        7.2,
+        7.6,
+        10.4,
+        10.8
+      ],
+      "stages": [
+        "align_grasp",
+        "locate_tool",
+        "verify_grasp"
+      ],
+      "source_rows": 300,
+      "camera_frames": {
+        "cam_high": 300,
+        "cam_right_wrist": 300
+      },
+      "output": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\incremental_20261017\\final_run\\trajectory_000000"
+    },
+    {
+      "episode": 18,
+      "split": "dev_seen",
+      "role": "development_recheck",
+      "decisions": 52,
+      "notifications": 0,
+      "current_completion": true,
+      "first_grasp_s": 5.6,
+      "first_new_cut_s": 14.8,
+      "first_completion_s": 19.6,
+      "first_suspicion_s": null,
+      "first_confirmation_s": null,
+      "uncertain_times": [
+        3.6,
+        4.0,
+        4.4,
+        4.8,
+        5.2,
+        14.0,
+        14.4,
+        16.8,
+        17.2,
+        18.0,
+        18.4
+      ],
+      "stages": [
+        "align_grasp",
+        "completed",
+        "cut_operation",
+        "cutting",
+        "locate_tool",
+        "return_tool",
+        "transport_tool",
+        "unknown",
+        "verify_completion",
+        "verify_grasp"
+      ],
+      "source_rows": 519,
+      "camera_frames": {
+        "cam_high": 519,
+        "cam_right_wrist": 519
+      },
+      "output": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\incremental_20261017\\final_run\\trajectory_000018"
+    },
+    {
+      "episode": 2,
+      "split": "validation",
+      "role": "additional_failure_recheck",
+      "decisions": 29,
+      "notifications": 2,
+      "current_completion": false,
+      "first_grasp_s": null,
+      "first_new_cut_s": null,
+      "first_completion_s": null,
+      "first_suspicion_s": 9.6,
+      "first_confirmation_s": 10.4,
+      "uncertain_times": [
+        0.0,
+        0.4,
+        8.8,
+        9.2
+      ],
+      "stages": [
+        "blocked_precondition",
+        "locate_tool",
+        "unknown"
+      ],
+      "source_rows": 289,
+      "camera_frames": {
+        "cam_high": 289,
+        "cam_right_wrist": 289
+      },
+      "output": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\incremental_20261017\\final_run\\trajectory_000002"
+    },
+    {
+      "episode": 19,
+      "split": "train",
+      "role": "development_recheck",
+      "decisions": 42,
+      "notifications": 0,
+      "current_completion": true,
+      "first_grasp_s": 5.2,
+      "first_new_cut_s": 10.8,
+      "first_completion_s": 15.6,
+      "first_suspicion_s": null,
+      "first_confirmation_s": null,
+      "uncertain_times": [
+        10.4,
+        13.2,
+        13.6,
+        14.0,
+        14.4
+      ],
+      "stages": [
+        "align_grasp",
+        "completed",
+        "cut_operation",
+        "cutting",
+        "locate_tool",
+        "return_tool",
+        "transport_tool",
+        "unknown",
+        "verify_completion"
+      ],
+      "source_rows": 420,
+      "camera_frames": {
+        "cam_high": 420,
+        "cam_right_wrist": 420
+      },
+      "output": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\incremental_20261017\\final_run\\trajectory_000019"
+    },
+    {
+      "episode": 6,
+      "split": "validation",
+      "role": "prospective_after_second_freeze",
+      "decisions": 27,
+      "notifications": 2,
+      "current_completion": false,
+      "first_grasp_s": null,
+      "first_new_cut_s": null,
+      "first_completion_s": null,
+      "first_suspicion_s": 8.8,
+      "first_confirmation_s": 9.6,
+      "uncertain_times": [],
+      "stages": [
+        "blocked_precondition",
+        "locate_tool"
+      ],
+      "source_rows": 262,
+      "camera_frames": {
+        "cam_high": 262,
+        "cam_right_wrist": 262
+      },
+      "output": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\incremental_20261017\\unseen_v2_run\\trajectory_000006"
+    }
+  ],
+  "independent_labels_read_after_inference": {
+    "0": {
+      "episode_success": "failure",
+      "num_frames": 300
+    },
+    "2": {
+      "episode_success": "failure",
+      "num_frames": 289
+    },
+    "6": {
+      "episode_success": "failure",
+      "num_frames": 262
+    },
+    "18": {
+      "episode_success": "success",
+      "num_frames": 519
+    },
+    "19": {
+      "episode_success": "success",
+      "num_frames": 420
+    }
+  },
+  "first_frozen_check": {
+    "path": "additional_run",
+    "episode_2": "failure confirmed",
+    "episode_19": "cut operation missed, full success unknown; retained as evidence"
+  },
+  "exposure_update": {
+    "episode_19": "used to repair bilateral adjacency after first check; no longer an untouched positive verification sample",
+    "frozen_split_files_modified": false
+  },
+  "second_frozen_check": {
+    "episode": 6,
+    "split": "validation",
+    "thresholds_tuned_on_this_episode": false
+  },
+  "split_hashes_unchanged": true,
+  "frozen_inference_matches_current": true,
+  "not_claimed": [
+    "accuracy",
+    "generalization",
+    "detection_delay",
+    "actual_correction_execution"
+  ],
+  "visual_review": [
+    {
+      "episode": 18,
+      "times": [
+        0.0,
+        6.8,
+        14.8,
+        19.6
+      ],
+      "observation": "initial intact sausage; wrist blade adjacent to sausage; new separate piece; knife on rack and gripper withdrawn",
+      "kind": "assistant visual inspection of selected frames, not independent human phase labels"
+    },
+    {
+      "episode": 2,
+      "times": [
+        0.0,
+        4.0,
+        7.6,
+        10.4
+      ],
+      "observation": "knife remains on rack; gripper closes above/away from handle; empty gripper enters board; recorded as missing prerequisite, not fabricated successful grasp",
+      "kind": "assistant visual inspection of selected frames"
+    },
+    {
+      "episode": 19,
+      "times": [
+        0.0,
+        5.2,
+        8.4,
+        16.4
+      ],
+      "observation": "knife approaches opposite end of sausage; new piece and returned knife visible; first frozen implementation missed operation",
+      "kind": "assistant visual inspection; used for repair development"
+    },
+    {
+      "episode": 6,
+      "times": [
+        9.6
+      ],
+      "observation": "robot over board while knife remains on rack; no grasp evidence",
+      "kind": "assistant visual inspection after frozen inference"
+    }
+  ]
+}

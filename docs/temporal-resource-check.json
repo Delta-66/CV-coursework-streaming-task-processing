@@ -1,0 +1,72 @@
+{
+  "checked_at": "2026-10-16T02:02:15.027758+08:00",
+  "decision": "do_not_start_full_benchmark",
+  "requested_conditions": {
+    "gpu_budget_gib": 5,
+    "max_estimated_hours": 5
+  },
+  "reason": "Original configuration fails the 5 GiB allocator test; efficient development probe succeeds but estimated full inference time exceeds 5 hours.",
+  "full_test_completed_episodes": 0,
+  "full_test_total_episodes": 500,
+  "full_test_expected_model_calls": 5850,
+  "old_waiting_benchmark_stopped": true,
+  "training_performed": false,
+  "data_used": {
+    "split": "already_seen_development",
+    "episodes": [
+      0,
+      18
+    ],
+    "frames_read": 819,
+    "model_calls": 35,
+    "window_image_references_verified": 99
+  },
+  "input_verification": "All scheduled frames including both tails; saved images, raw state values, timestamps and output validators rechecked against real sources.",
+  "original_configuration": {
+    "summary_path": "output/memory_probes/20261016_015102_default_5120mib/summary.json",
+    "summary_sha256": "6de1ad45afebaf137f0107fbd06b2fd159f932f27559729b22c402f7e6f25dae",
+    "allocator_limit_mib": 5120,
+    "status": "cuda_out_of_memory",
+    "successful_inferences": 1,
+    "failed_input": {
+      "episode_index": 0,
+      "frame_index": 25,
+      "images": 2
+    }
+  },
+  "efficient_development_probe": {
+    "summary_path": "output/memory_probes/20261016_015449_efficient_5120mib/summary.json",
+    "summary_sha256": "b36543a30ca09a0008e20fa30d90b41251eb2c84401f4f5348630b3feacb20ba",
+    "allocator_limit_mib": 5120,
+    "status": "completed",
+    "successful_inferences": 35,
+    "valid_outputs": 35,
+    "mean_inference_s": 10.902848991435686,
+    "elapsed_s": 404.711952200043,
+    "sampled_peak_process_dedicated_mib": 5004.8359375,
+    "sampled_peak_process_shared_mib": 78.0,
+    "process_memory_samples": 394,
+    "estimated_benchmark_inference_hours": 17.564544482672627,
+    "estimated_hours_with_20_percent_margin": 21.077453379207153,
+    "benchmark_call_counts_by_images": {
+      "1": 500,
+      "2": 500,
+      "3": 4850
+    },
+    "mean_inference_s_by_images": {
+      "1": 9.736988499993458,
+      "2": 9.13276115001645,
+      "3": 11.09226501291062
+    },
+    "estimate_caveat": "Two seen trajectories only; excludes downloads, GPU waiting, and task-dependent output length",
+    "max_cuda_allocated_mib": 4627.1279296875,
+    "max_cuda_reserved_mib": 4882.0,
+    "formal_benchmark_uses_this_backend": false
+  },
+  "limitations": [
+    "Allocator cap excludes CUDA context and non-PyTorch allocations; sampled WDDM counters can miss transient peaks.",
+    "Resource checks are not a guarantee that all 500 trajectories fit in 5 GiB, or a model accuracy evaluation.",
+    "Two early prototype runs with a tensor-retaining Mock were excluded; measurement_review.json marks their logs invalid.",
+    "Changing attention kernels can change numerical outputs; original frozen benchmark remains unchanged."
+  ]
+}

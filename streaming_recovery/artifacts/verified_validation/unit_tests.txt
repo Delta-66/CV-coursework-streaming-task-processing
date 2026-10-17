@@ -1,0 +1,22 @@
+test_aligner_future_stale_invalid_and_out_of_order (streaming_recovery.tests.test_system.SystemTests.test_aligner_future_stale_invalid_and_out_of_order) ... ok
+test_closed_gripper_not_success_then_evidence_failure (streaming_recovery.tests.test_system.SystemTests.test_closed_gripper_not_success_then_evidence_failure) ... ok
+test_completion_requires_effect_evidence_not_initial_layout (streaming_recovery.tests.test_system.SystemTests.test_completion_requires_effect_evidence_not_initial_layout) ... ok
+test_duplicate_timestamps_and_unsupported_task_rejected (streaming_recovery.tests.test_system.SystemTests.test_duplicate_timestamps_and_unsupported_task_rejected) ... ok
+test_event_dedup_and_actual_retry (streaming_recovery.tests.test_system.SystemTests.test_event_dedup_and_actual_retry) ... ok
+test_large_time_gap_cannot_make_new_attempt (streaming_recovery.tests.test_system.SystemTests.test_large_time_gap_cannot_make_new_attempt) ... ok
+test_leaving_visible_work_area_does_not_invent_a_retry_stage (streaming_recovery.tests.test_system.SystemTests.test_leaving_visible_work_area_does_not_invent_a_retry_stage) ... ok
+test_long_stream_every_history_bound (streaming_recovery.tests.test_system.SystemTests.test_long_stream_every_history_bound) ... ok
+test_loss_of_grasp_has_repeated_evidence (streaming_recovery.tests.test_system.SystemTests.test_loss_of_grasp_has_repeated_evidence) ... ok
+test_missing_breaks_suspicion_continuity (streaming_recovery.tests.test_system.SystemTests.test_missing_breaks_suspicion_continuity) ... ok
+test_missing_conflict_and_recovery_not_execution (streaming_recovery.tests.test_system.SystemTests.test_missing_conflict_and_recovery_not_execution) ... ok
+test_model_invalid_output_and_timeout_degrade_explicitly (streaming_recovery.tests.test_system.SystemTests.test_model_invalid_output_and_timeout_degrade_explicitly) ... ok
+test_model_request_has_only_bounded_past_images (streaming_recovery.tests.test_system.SystemTests.test_model_request_has_only_bounded_past_images) ... ok
+test_normal_incomplete_is_not_failure (streaming_recovery.tests.test_system.SystemTests.test_normal_incomplete_is_not_failure) ... ok
+test_reset_matches_fresh_monitor (streaming_recovery.tests.test_system.SystemTests.test_reset_matches_fresh_monitor) ... ok
+test_two_layer_consistency_coordinates_and_next_action (streaming_recovery.tests.test_system.SystemTests.test_two_layer_consistency_coordinates_and_next_action) ... ok
+test_visual_schema_rejects_hallucinated_coordinates_and_conflict (streaming_recovery.tests.test_system.SystemTests.test_visual_schema_rejects_hallucinated_coordinates_and_conflict) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.625s
+
+OK

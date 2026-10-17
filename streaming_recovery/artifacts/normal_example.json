@@ -1,0 +1,246 @@
+{
+  "schema_version": "1.0",
+  "timestamp": 11.0,
+  "observation_ref": "obs-000275",
+  "method": "bounded_visual_state_tracker",
+  "instruction": "Use the right arm to pick up the knife from the knife holder, cut a small piece of sausage and put it back on the knife holder.",
+  "scope": "刀具获取、转移与后续操作前置条件；真实视觉基线不确认切割完成/刀具归位",
+  "state": {
+    "stage": "cutting",
+    "stage_zh": "已携刀进入工作区，切割效果待确认",
+    "subtask": "已携刀进入工作区，切割效果待确认",
+    "confirmed_subgoals": [
+      "曾建立刀具夹持"
+    ],
+    "preconditions": {
+      "reliable_grasp": true,
+      "cut_effect_confirmed": false,
+      "tool_returned": false
+    },
+    "known_facts": [
+      "右夹爪观测原始值 0.00720（数据集原始单位；不代表夹持成功）",
+      "视觉模型观察：刀架参考区域变化比例=0.275；砧板浅色刀具比例=0.132；机器人遮挡比例=0.282；共同运动=True",
+      "刀具夹持已获连续视觉证据支持（未测量夹持力）"
+    ],
+    "unknowns": [
+      "切割产生独立小段的效果尚未确认",
+      "完成任务后的刀具归位与释放尚未确认"
+    ],
+    "evidence": [
+      {
+        "timestamp": 11.0,
+        "ref": "obs-000275",
+        "claim": "knife_location=gripper; contact=co_moving; motion=at_board",
+        "source": "real_rgb_calibrated_geometry",
+        "images": [
+          {
+            "ref": "obs-000275",
+            "camera": "cam_high",
+            "timestamp": 11.0
+          },
+          {
+            "ref": "obs-000250",
+            "camera": "cam_high",
+            "timestamp": 10.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          }
+        ]
+      }
+    ],
+    "expected_effect": "刀作用后出现与主体分离的小段香肠",
+    "candidate": null,
+    "recovered": true,
+    "observable": true,
+    "modality_conflict": false,
+    "new_attempt_observed": false,
+    "attempt": 1,
+    "task_completed": false,
+    "anchors": {
+      "attempt": {
+        "timestamp": 4.0,
+        "ref": "obs-000100",
+        "claim": "观测到刀架附近夹爪从打开转为闭合；仅证明抓取尝试",
+        "source": "real_rgb_calibrated_geometry",
+        "images": [
+          {
+            "ref": "obs-000100",
+            "camera": "cam_high",
+            "timestamp": 4.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          }
+        ]
+      },
+      "grasp": {
+        "timestamp": 11.0,
+        "ref": "obs-000275",
+        "claim": "连续图像支持刀已离架，并通过两指内接触或刀/机器人共同运动确认夹持",
+        "source": "real_rgb_calibrated_geometry",
+        "images": [
+          {
+            "ref": "obs-000275",
+            "camera": "cam_high",
+            "timestamp": 11.0
+          },
+          {
+            "ref": "obs-000250",
+            "camera": "cam_high",
+            "timestamp": 10.0
+          },
+          {
+            "ref": "obs-000000",
+            "camera": "cam_high",
+            "timestamp": 0.0
+          }
+        ]
+      }
+    }
+  },
+  "execution_status": "executing",
+  "visual_facts": {
+    "timestamp": 11.0,
+    "ref": "obs-000275",
+    "visibility": "partial",
+    "knife_location": "gripper",
+    "gripper": "closed",
+    "motion": "at_board",
+    "contact": "co_moving",
+    "co_motion": "yes",
+    "cut_piece": "unknown",
+    "released": "no",
+    "knife_handle_xy": null,
+    "gripper_xy": null,
+    "description": "刀架参考区域变化比例=0.275；砧板浅色刀具比例=0.132；机器人遮挡比例=0.282；共同运动=True",
+    "valid": true,
+    "error": null,
+    "provenance": "real_rgb_calibrated_geometry",
+    "evidence_refs": [
+      {
+        "ref": "obs-000275",
+        "camera": "cam_high",
+        "timestamp": 11.0
+      },
+      {
+        "ref": "obs-000250",
+        "camera": "cam_high",
+        "timestamp": 10.0
+      },
+      {
+        "ref": "obs-000000",
+        "camera": "cam_high",
+        "timestamp": 0.0
+      }
+    ],
+    "measurements": {
+      "source_changed_fraction": 0.27526,
+      "source_dark_fraction": 0.20325,
+      "tool_board_fraction": 0.1319,
+      "robot_board_fraction": 0.2821,
+      "source_unchanged": false,
+      "source_occluded": true,
+      "tool_on_board": true,
+      "robot_at_board": true,
+      "common_motion": true,
+      "motion": {
+        "tool_motion_norm": 22.959386943834975,
+        "robot_motion_norm": 17.77544981974651,
+        "relative_motion_norm": 7.634681939541029,
+        "dot": 392.405848406556
+      },
+      "reference_origin": "first_arrived_frame",
+      "point_unit": "normalized_image_0_1000",
+      "reference_rack_bbox_pixels": [
+        384,
+        185,
+        60,
+        117
+      ],
+      "scene_assumptions": "fixed_camera_brown_board_black_rack_white_knife_only"
+    },
+    "effect_usable": true
+  },
+  "failure_event": null,
+  "notify": false,
+  "notification_reason": null,
+  "diagnosis": null,
+  "correction": null,
+  "modalities": {
+    "observation.state": {
+      "status": "available",
+      "timestamp": 11.0,
+      "age_s": 0.0,
+      "reason": null
+    },
+    "cam_high": {
+      "status": "available",
+      "timestamp": 11.0,
+      "age_s": 0.0,
+      "reason": null
+    },
+    "cam_right_wrist": {
+      "status": "available",
+      "timestamp": 11.0,
+      "age_s": 0.0,
+      "reason": null
+    }
+  },
+  "modalities_used": [
+    "cam_high",
+    "observation.state[13]"
+  ],
+  "modalities_for_audit_only": [
+    "cam_right_wrist"
+  ],
+  "memory_usage": {
+    "observations": 4,
+    "images": 8,
+    "image_bytes": 4718592,
+    "features": 5,
+    "anchors": 2,
+    "feature_text_chars": 278,
+    "conversation_turns": 0,
+    "persistent_model_kv_tokens": 0,
+    "log_reads": 0,
+    "events": 0,
+    "event_evidence": 0,
+    "active_events": 0,
+    "visual_reference_images": 1,
+    "visual_reference_bytes": 589824,
+    "visual_masks": 3,
+    "visual_mask_bytes": 589824,
+    "visual_tracks": 2,
+    "visual_calibration_entries": 2,
+    "task_state_slots": 12,
+    "object_states": 3,
+    "aligner_latest_samples": 3,
+    "task_instruction_chars": 127,
+    "model_last_response_chars": 0,
+    "anchor_image_refs": 5,
+    "model_request_queue_capacity": 1,
+    "model_response_queue_capacity": 1,
+    "model_input_images": 1,
+    "model_input_tokens": 0
+  },
+  "memory_limits": {
+    "frames": 4,
+    "window_s": 4.0,
+    "features": 6,
+    "events": 4,
+    "event_evidence": 4,
+    "anchors": 8,
+    "objects": 3
+  },
+  "execution": {
+    "mode": "advisory_replay",
+    "actually_executed": false,
+    "execution_receipt": null,
+    "outcome_attributed_to_suggestion": false
+  }
+}

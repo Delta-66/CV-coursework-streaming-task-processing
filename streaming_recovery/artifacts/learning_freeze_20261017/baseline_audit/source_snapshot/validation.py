@@ -1,0 +1,281 @@
+"""功能验收，不计算识别精度或泛化指标；合成与真实像素测试明确分开。"""
+from __future__ import annotations
+
+from copy import deepcopy
+from dataclasses import replace
+from datetime import datetime, timezone, timedelta
+import io
+import json
+from pathlib import Path
+import time
+import unittest
+from PIL import Image
+from .__main__ import BASE, make_vision, sha256
+from .engine import Monitor
+from .geometry import GeometryVision
+from .source import LeRobotStream, instruction_for_episode
+
+
+def real_decisions(config, root, episode):
+    vision=make_vision(config)
+    monitor=Monitor(config,vision)
+    stream=LeRobotStream(Path(root),episode,config["source"]["cameras"],config["source"]["sample_every"],
+                        config["source"]["max_age_s"],config["model"]["image_edge"],instruction_for_episode(Path(root),episode))
+    results=[]
+    for obs in stream:
+        expected=round(obs.timestamp*stream.fps)+1
+        assert stream.audit["rows_read"]==expected,"reader consumed future rows before yielding"
+        assert all(n<=expected for n in stream.audit["frames_decoded"].values()),"decoder exposed future transport steps"
+        native=stream.audit["joint_interval_capacity"]
+        assert native["native_joint_previous_values"]<=6 and native["native_joint_path_values"]==6
+        assert native["native_joint_scalar_slots"]<=10 and native["native_joint_history_samples"]==0
+        results.append(monitor.step(obs))
+    return results,stream.audit,monitor
+
+
+def build_prefix_fixture(config, directory, suffix_black=False, source_episode=0, prefix_frames=275):
+    """离线测试数据制作者：真实像素公共前缀＋显式修改的测试后缀，不是新增真实轨迹。"""
+    import av
+    import numpy as np
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    from fractions import Fraction
+    root=Path(config["source"]["root"])
+    directory=Path(directory)
+    (directory/"meta").mkdir(parents=True)
+    (directory/"data/chunk-000").mkdir(parents=True)
+    info={"codebase_version":"v2.1","fps":25,"chunks_size":1000}
+    (directory/"meta/info.json").write_text(json.dumps(info),encoding="utf-8")
+    instruction=instruction_for_episode(root,source_episode)
+    (directory/"meta/tasks.jsonl").write_text(json.dumps({"task_index":0,"task":instruction})+"\n",encoding="utf-8")
+    # 故意改变路径编号和全部事后标签，公共前缀诊断不能随之变化。
+    episode=901 if suffix_black else 101
+    rows=pq.read_table(root/f"data/chunk-000/episode_{source_episode:06d}.parquet").to_pylist()
+    generated=[]
+    for i,row in enumerate(rows):
+        state=row["observation.state"]
+        if suffix_black and i>=prefix_frames:
+            state=[0.0]*14
+        generated.append({"timestamp":i/25,"frame_index":i,"task_index":0,"observation.state":state,
+            "observation.velocity":([3.0]*14 if suffix_black and i>=prefix_frames else row["observation.velocity"]),
+            "episode_index":episode,"complementary_info.vifailback_flags":[suffix_black]*3,
+            "action":[999.0 if suffix_black else -999.0]*14,
+            "complementary_info.action_eef":[float("nan")]*16})
+    pq.write_table(pa.Table.from_pylist(generated),directory/f"data/chunk-000/episode_{episode:06d}.parquet")
+    for camera in config["source"]["cameras"]:
+        folder=directory/f"videos/chunk-000/observation.images.{camera}"
+        folder.mkdir(parents=True)
+        source=av.open(str(root/f"videos/chunk-000/observation.images.{camera}/episode_{source_episode:06d}.mp4"))
+        # FFV1 帧内无损容器，避免压缩器的未来参考改变公共前缀像素。扩展名沿用适配器布局。
+        target=av.open(str(folder/f"episode_{episode:06d}.mp4"),mode="w",format="matroska")
+        stream=target.add_stream("ffv1",rate=25)
+        stream.width,stream.height,stream.pix_fmt=512,384,"bgr0"
+        for i,frame in enumerate(source.decode(video=0)):
+            im=frame.to_image();im.thumbnail((512,512))
+            rgb=np.asarray(im)
+            if suffix_black and i>=prefix_frames:
+                rgb=np.zeros_like(rgb)
+            out=av.VideoFrame.from_ndarray(rgb,format="rgb24")
+            out.pts=i;out.time_base=Fraction(1,25)
+            for packet in stream.encode(out):
+                target.mux(packet)
+        for packet in stream.encode():
+            target.mux(packet)
+        source.close();target.close()
+    return episode,prefix_frames/25
+
+
+def validate(config,output=None,run_dir=None,manual_review=None,require_complete=False):
+    name=datetime.now(timezone(timedelta(hours=8))).strftime("validation_%Y%m%d_%H%M%S_%f")
+    directory=Path(output) if output else BASE/"artifacts"/name
+    directory.mkdir(parents=True,exist_ok=False)
+    checks=[]
+
+    def record(name,fn,kind):
+        start=time.monotonic()
+        try:
+            detail=fn()
+            checks.append({"name":name,"status":"passed","kind":kind,"detail":detail,"elapsed_s":time.monotonic()-start})
+        except Exception as e:
+            import traceback
+            checks.append({"name":name,"status":"failed","kind":kind,"error":f"{type(e).__name__}: {e}",
+                           "traceback":traceback.format_exc(),"elapsed_s":time.monotonic()-start})
+        print(name+": "+checks[-1]["status"],flush=True)
+
+    def logic():
+        suite=unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(name) for name in
+            ("streaming_recovery.tests.test_system","streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions",
+             "streaming_recovery.tests.test_multimodal","streaming_recovery.tests.test_joint_interval",
+             "streaming_recovery.tests.test_interval_review","streaming_recovery.tests.test_repair_state",
+             "streaming_recovery.tests.test_evaluation","streaming_recovery.tests.test_localization",
+             "streaming_recovery.tests.test_effect_order","streaming_recovery.tests.test_smooth_attempt",
+             "streaming_recovery.tests.test_review_binding"))
+        stream=io.StringIO()
+        result=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)
+        (directory/"unit_tests.txt").write_text(stream.getvalue(),encoding="utf-8")
+        assert result.wasSuccessful(),stream.getvalue()
+        return {"tests_run":result.testsRun,"failures":len(result.failures),"errors":len(result.errors),
+                "long_synthetic_decisions":10000,"warning":"合成语义替身；不证明真实视觉准确率"}
+    record("状态/报告/区间回归、10000步合成容量与少量真实像素定位",logic,"mixed_regressions_with_explicit_real_pixel_checks")
+
+    real_cache={}
+    real_report={}
+    def real_runs():
+        from .__main__ import run
+        from .evaluation import evaluate_run
+        path=Path(run_dir) if run_dir else run(config,directory/"real_run")
+        review=json.loads(Path(manual_review).read_text(encoding="utf-8")) if manual_review else None
+        report=evaluate_run(config,path,review)
+        real_report.update(report)
+        (directory/"real_acceptance.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+        for episode in config["source"]["episodes"]:
+            rows=[json.loads(line) for line in (path/f"trajectory_{episode:06d}/decisions.jsonl").read_text(encoding="utf-8").splitlines()]
+            # 处理耗时是运行审计，不属于语义；reset复核排除此字段。
+            real_cache[episode]=[{key:value for key,value in row.items() if key!="processing"} for row in rows]
+        assert report["engineering_status"]=="passed",report["checks"]
+        return {"engineering_status":report["engineering_status"],"semantic_status":report["semantic_status"],
+                "capability_gaps":report["capability_gaps"],"totals":report["totals"],
+                "episodes":config["source"]["episodes"],"reused_run":str(path),
+                "scope":"六条已见开发/验证回归；目视约束独立于推理，不报告无偏精度或检测延迟"}
+    record("参数化真实完整回放与语义关键时刻验收",real_runs,"real_robot_pixels_and_proprioception")
+
+    def causal():
+        compared={}
+        for seed,prefix_frames,backends in ((0,275,("calibrated_rgb_geometry","multiview_effect_geometry")),
+                                           (2,175,("multiview_effect_geometry",)),
+                                           (18,400,("multiview_effect_geometry",))):
+            a,b=directory/f"prefix_{seed}_A",directory/f"prefix_{seed}_B"
+            ep_a,cut=build_prefix_fixture(config,a,False,seed,prefix_frames)
+            ep_b,_=build_prefix_fixture(config,b,True,seed,prefix_frames)
+            for backend in backends:
+                cfg=deepcopy(config);cfg["backend"]=backend
+                ra,aa,_=real_decisions(cfg,a,ep_a)
+                rb,ab,_=real_decisions(cfg,b,ep_b)
+                pa=[r for r in ra if r["timestamp"]<cut]
+                pb=[r for r in rb if r["timestamp"]<cut]
+                assert pa==pb,"公共前缀受到后缀/标签/路径改变影响:"+backend
+                assert ra[-1]!=rb[-1],"后缀没有真正改变"
+                localized=sum(r["visual_facts"]["knife_handle_xy"] is not None for r in pa)
+                if seed==2:
+                    assert localized>=2,"新联合定位路径必须真正进入因果性测试"
+                if seed==18:
+                    assert any(r["state"]["preconditions"]["cut_effect_confirmed"] for r in pa),"操作和新增效果关联必须进入公共前缀测试"
+                key=f"{seed}_{backend}"
+                compared[key]={"identical_decisions":len(pa),"localized_decisions":localized,
+                               "native_joint_aggregates":sum(r["observation_inputs"]["joint_interval"] is not None for r in pa),
+                               "prefix_end_exclusive_s":cut}
+                for label,rows in (("A",ra),("B",rb)):
+                    (directory/f"prefix_{label}_{key}.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False)+"\n" for r in rows),encoding="utf-8")
+        return {"backends_and_prefixes":compared,"suffix_path_labels_actions_modified":True,
+                "reader_progress_checked_at_every_yield":True,
+                "coverage":"逐行读取/原生关节聚合/逐帧解码/因果对齐/视觉候选/联合定位/有限记忆/阶段/事件/两层建议",
+                "fixture_kind":"真实像素公共前缀＋人工修改后缀；不是新增真实轨迹"}
+    record("包含新增联合定位和原生区间聚合的全链公共前缀因果性",causal,"real_pixels_counterfactual_suffix_fixture")
+
+    def long_vision():
+        root=Path(config["source"]["root"])
+        source=LeRobotStream(root,0,["cam_high","cam_right_wrist"],10,.12,512,instruction_for_episode(root,0))
+        cycle=list(source)
+        model=make_vision(config)
+        monitor=Monitor(config,model)
+        maxima={}
+        for i in range(2000):
+            obs=cycle[i%len(cycle)]
+            interval=deepcopy(obs.joint_interval)
+            if interval is not None:
+                offset=float(i)-obs.timestamp
+                interval["start_timestamp"]+=offset
+                interval["end_timestamp"]+=offset
+                interval["start_ref"]=f"stress-start-{i}"
+                interval["end_ref"]=f"stress-end-{i}"
+            current=replace(obs,timestamp=float(i),ref=f"obs-{i:06d}",joint_interval=interval,
+                            modalities={k:dict(v,timestamp=float(i)) for k,v in obs.modalities.items()})
+            r=monitor.step(current)
+            for k,v in r["memory_usage"].items():
+                maxima[k]=max(maxima.get(k,0),v)
+        assert maxima["visual_reference_images"]==1 and maxima["visual_masks"]<=config["geometry"]["max_masks"]
+        assert maxima["visual_tracks"]<=2 and maxima["log_reads"]==0
+        assert monitor.tracker.attempt>50 and maxima["events"]==config["memory"]["events"]
+        return {"decisions":2000,"maxima":maxima,"observed_attempts":monitor.tracker.attempt,
+                "kind":"循环真实失败片段制造动态长流，含位置/遮挡/打开闭合变化；非真实连续2000步轨迹"}
+    record("实际双视角后端 2000 步动态全缓存容量",long_vision,"real_pixels_dynamic_engineering_stress")
+
+    def missing_and_reset():
+        import av
+        from unittest.mock import patch
+        root=Path(config["source"]["root"])
+        vision=make_vision(config)
+        monitor=Monitor(config,vision)
+        source=lambda episode:LeRobotStream(root,episode,["cam_high","cam_right_wrist"],config["source"]["sample_every"],.12,512,instruction_for_episode(root,episode))
+        for obs in source(0):
+            monitor.step(obs)
+        monitor.reset()
+        reset_rows=[monitor.step(obs) for obs in source(18)]
+        fresh=real_cache.get(18)
+        if fresh is None:
+            fresh,_,_=real_decisions(config,root,18)
+        assert reset_rows==fresh,"跨轨迹状态泄漏"
+        monitor.reset()
+        initial=next(iter(source(0)))
+        monitor.step(initial)
+        missing=replace(initial,timestamp=1.,ref="missing",images={},modalities={k:dict(v,status="missing",timestamp=None) for k,v in initial.modalities.items()})
+        result=monitor.step(missing)
+        assert result["execution_status"]=="information_insufficient"
+        assert result["visual_facts"]["error"]=="current_high_image_missing"
+        black=replace(initial,timestamp=2.,ref="black",images={"cam_high":Image.new("RGB",initial.images["cam_high"].size)},
+                      modalities={k:dict(v,timestamp=2.) for k,v in initial.modalities.items()})
+        result=monitor.step(black)
+        assert result["execution_status"]=="information_insufficient"
+        resumed=replace(initial,timestamp=3.,ref="resumed",modalities={k:dict(v,timestamp=3.) for k,v in initial.modalities.items()})
+        assert monitor.step(resumed)["execution_status"]=="executing"
+        monitor.reset()
+        with patch("av.open",side_effect=ValueError("injected_open_failure")):
+            failed_open=[monitor.step(obs) for obs in source(0)]
+        assert len(failed_open)==len(real_cache[0]) and all(r["execution_status"]=="information_insufficient" for r in failed_open)
+        assert failed_open[0]["modalities"]["cam_high"]["reason"].startswith("video_open_error:")
+        original_open=av.open
+        class BrokenDecoder:
+            def __init__(self,path):
+                self.container=original_open(path)
+            def decode(self,video=0):
+                yield next(self.container.decode(video=video))
+                raise ValueError("injected_corrupt_packet_after_first_frame")
+            def close(self):
+                self.container.close()
+        monitor.reset()
+        with patch("av.open",side_effect=BrokenDecoder):
+            failed_decode=[monitor.step(obs) for obs in source(0)]
+        assert failed_decode[0]["execution_status"]=="executing"
+        assert all(r["execution_status"]=="information_insufficient" for r in failed_decode[1:])
+        assert failed_decode[1]["modalities"]["cam_high"]["reason"].startswith("video_decode_error:")
+        monitor.reset()
+        monitor.step(replace(missing,timestamp=0.,ref="initial-missing"))
+        delayed=replace(initial,timestamp=1.,ref="delayed-clear",modalities={k:dict(v,timestamp=1.) for k,v in initial.modalities.items()})
+        result=monitor.step(delayed)
+        assert result["visual_facts"]["valid"],"缺失首帧后不能恢复校准"
+        assert vision.reference_time==1.,"校准不得倒填到未看到的t=0"
+        stale=replace(initial,timestamp=2.,ref="stale",modalities={k:dict(v,status="stale") for k,v in initial.modalities.items()})
+        assert monitor.step(stale)["execution_status"]=="information_insufficient"
+        return {"normal_after_failed_equals_fresh":True,"missing_high_continued":True,"black_frame_continued":True,
+                "new_clear_frame_resumed":True,"video_open_failure_continued":True,"video_decode_failure_continued":True,
+                "missing_initial_then_causal_calibration":True,"stale_images_filtered":True,
+                "occlusion_kind":"人工缺帧/黑帧/解码故障注入，不是真实遮挡标注集"}
+    record("真实后端缺失/遮挡恢复与跨轨迹重置",missing_and_reset,"real_pipeline_with_injected_faults")
+
+    engineering_passed=all(c["status"]=="passed" for c in checks)
+    semantic_passed=real_report.get("semantic_status")=="passed"
+    report={"checks":checks,"passed":engineering_passed and semantic_passed,
+            "engineering_status":"passed" if engineering_passed else "failed",
+            "semantic_status":real_report.get("semantic_status","not_verified"),
+            "overall_status":"failed" if not engineering_passed else "passed" if semantic_passed else "partial",
+            "code_sha256":{p.name:sha256(p) for p in BASE.glob("*.py")},"config":config,
+            "not_validated":["识别精度与跨场景泛化", "真实机器人重试和滑落样本", "真实坐标变换和物理动作执行",
+                             "闭爪/无刀架支撑面真实重抓定位：当前主后端只在开爪且独立刀架可见时定位",
+                             "独立深度/姿态/接触准备", "Qwen可靠结构化诊断", "目标4完整实验"],
+            "semantic_capability_gaps":real_report.get("capability_gaps",["real acceptance did not finish"]),
+            "no_execution_claim":True,"synthetic_not_used_as_visual_accuracy":True}
+    (directory/"validation.json").write_text(json.dumps(report,ensure_ascii=False,indent=2,allow_nan=False),encoding="utf-8")
+    print("验证记录："+str(directory),flush=True)
+    if not engineering_passed or require_complete and not report["passed"]:
+        raise RuntimeError("engineering failure or requested semantic acceptance incomplete; inspect validation.json")
+    return directory

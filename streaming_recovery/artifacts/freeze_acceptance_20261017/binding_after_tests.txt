@@ -1,0 +1,14 @@
+test_bad_sha_missing_image_and_wrong_current_image_rejected (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_bad_sha_missing_image_and_wrong_current_image_rejected) ... ok
+test_duplicate_or_changed_row_rejected_including_processing (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_duplicate_or_changed_row_rejected_including_processing) ... ok
+test_explicit_causal_history_reference_only (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_explicit_causal_history_reference_only) ... ok
+test_explicit_rebind_same_pixels_preserves_expectations_and_records_new_row (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_explicit_rebind_same_pixels_preserves_expectations_and_records_new_row) ... ok
+test_migration_refuses_bad_existing_bindings_instead_of_overwriting (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_migration_refuses_bad_existing_bindings_instead_of_overwriting) ... ok
+test_missing_fields_do_not_auto_pass_and_window_is_not_unique_point (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_missing_fields_do_not_auto_pass_and_window_is_not_unique_point) ... ok
+test_path_escape_rejected_even_with_existing_file_and_correct_hash (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_path_escape_rejected_even_with_existing_file_and_correct_hash) ... ok
+test_valid_legacy_migration_adds_versioned_entire_row_binding (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_valid_legacy_migration_adds_versioned_entire_row_binding) ... ok
+test_wrong_source_invalidates_ordinary_and_direction (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_wrong_source_invalidates_ordinary_and_direction) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.304s
+
+OK

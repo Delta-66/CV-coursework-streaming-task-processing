@@ -1,0 +1,199 @@
+{
+  "training_calls": 0,
+  "forbidden_imports": [],
+  "forbidden_file_attempts": [],
+  "parquet_columns": [
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ],
+    [
+      "task_index"
+    ],
+    [
+      "timestamp",
+      "frame_index",
+      "observation.state",
+      "observation.velocity"
+    ]
+  ],
+  "input_files": [
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000000.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000000.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000000.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000000.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000001.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000001.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000001.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000001.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000002.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000002.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000002.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000002.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000006.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000006.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000006.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000006.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000008.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000008.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000008.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000008.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000011.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000011.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000011.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000011.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000014.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000014.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000014.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000014.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000018.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000018.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000018.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000018.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000019.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000019.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000019.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000019.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000029.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000029.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000029.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000029.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000013.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000013.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000013.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000013.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000016.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\data\\chunk-000\\episode_000016.parquet",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_high\\episode_000016.mp4",
+    "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot\\videos\\chunk-000\\observation.images.cam_right_wrist\\episode_000016.mp4"
+  ],
+  "guard": "python_audit_plus_native_decoder_and_parquet_wrappers",
+  "teacher_feedback_training_labels_old_suggestions_allowed": false,
+  "isolation_flag": 1,
+  "note": "application input audit, not an operating-system security sandbox",
+  "before_sha256": {
+    "config.json": "51577893f74c5e51347ff9aa2e4526dac784ade289323fe7c42c9007b0a86272",
+    "fusion.json": "f653456722ac3fb317e59817dc105c2145f1c942d6b47a97c507f03dd1d37905"
+  },
+  "after_sha256": {
+    "config.json": "51577893f74c5e51347ff9aa2e4526dac784ade289323fe7c42c9007b0a86272",
+    "fusion.json": "f653456722ac3fb317e59817dc105c2145f1c942d6b47a97c507f03dd1d37905"
+  },
+  "parameters_and_config_unchanged": true,
+  "imported_project_modules": [
+    "streaming_recovery",
+    "streaming_recovery.__main__",
+    "streaming_recovery.attempts",
+    "streaming_recovery.contracts",
+    "streaming_recovery.dynamics",
+    "streaming_recovery.effects",
+    "streaming_recovery.engine",
+    "streaming_recovery.events",
+    "streaming_recovery.fusion",
+    "streaming_recovery.geometry",
+    "streaming_recovery.localization",
+    "streaming_recovery.memory",
+    "streaming_recovery.multiview",
+    "streaming_recovery.recovery",
+    "streaming_recovery.report",
+    "streaming_recovery.source",
+    "streaming_recovery.task_spec",
+    "streaming_recovery.tracking"
+  ],
+  "imported_training_libraries": []
+}

@@ -1,0 +1,785 @@
+{
+  "review_kind": "本轮助手逐图目视核查；非独立人工阶段标注，无首次可检测时刻标注",
+  "source_run": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\freeze_acceptance_20261017\\nonexistent_final_run",
+  "checkpoints": [
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 0.0,
+      "observed": "顶视初始只有长条香肠，刀在架；未出现新分离小段。",
+      "expected_fields": {
+        "state.task_completed": false
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "observation_ref": "obs-000000",
+      "row_sha256": "beb11ca338ecab02fbd965858d090c4dca9eee5f4127616489a69584f34c7bd1",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 9.0,
+      "observed": "腕图刀与两指连接，刀刃位于香肠端部；顶视机械手在砧板。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": true,
+        "visual_facts.measurements.cut_operation": "yes"
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "cut_operation"
+      ],
+      "observation_ref": "obs-000225",
+      "row_sha256": "c4e5f38e017a48dd931e47f12393645dc52e15042561e9b18e74fc621c1cf35b",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 20.0,
+      "observed": "与初始相比新增独立圆片；刀已回架且机械手退出。",
+      "expected_fields": {
+        "state.task_completed": true
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "completed"
+      ],
+      "observation_ref": "obs-000500",
+      "row_sha256": "cd0cf3cd03d4593eb8ec3e4aa2253e6872e9b8af5ac497abdcb8be23acaaf817",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 8.0,
+      "observed": "连续5至8秒腕图显示刀刃在两指之间、与香肠端部相对位置变化。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": true,
+        "visual_facts.measurements.cut_operation": "yes"
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "cut_operation"
+      ],
+      "observation_ref": "obs-000200",
+      "row_sha256": "4bf78c0fae99504a7c1583f3dc2a986ea3753f0d8b51504d75d70bcc81009e62",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 10.0,
+      "observed": "与0秒相比新增明显圆片；仍持刀开始回架。单帧新增物需后续稳定确认。",
+      "expected_fields": {
+        "visual_facts.measurements.new_cut_effect": "yes"
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "return_tool"
+      ],
+      "observation_ref": "obs-000250",
+      "row_sha256": "6d99ce91834d8f5e0fc8ba1027a15cbd5e7382a1ddd00abf6075bce12ec209ed",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 16.0,
+      "observed": "新圆片仍在砧板，刀回架且右手退出；切割参考、作用和效果链可核查。",
+      "expected_fields": {
+        "state.task_completed": true
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "completed"
+      ],
+      "observation_ref": "obs-000400",
+      "row_sha256": "1069a6aeb81ff7545818eaf820ef83fde0ac939e56d47492dba14236e0158517",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 0,
+      "timestamp": 7.0,
+      "observed": "腕图两指已收拢但刀柄在侧旁/原架，接触关系仍不清；不应由闭爪报告成功。",
+      "expected_fields": {
+        "failure_event": null
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ],
+      "observation_ref": "obs-000175",
+      "row_sha256": "4a2858149c00c7d533917cdd30340794b51d1e239c418355fe59334dbc990b9b",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 0,
+      "timestamp": 10.0,
+      "observed": "顶视刀留架，腕图空夹爪在香肠上方，支持抓取未建立。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "state.candidate": "grasp_not_established",
+        "execution_status": "confirmed_failure"
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ],
+      "observation_ref": "obs-000250",
+      "row_sha256": "593a3b3fe60d928e0f384b41eeef48f6e02c013d202c0d10379790df5538bb55",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 2.0,
+      "observed": "腕图可见独立刀柄颈部和两指内缘；两指张开，正在准备对齐。",
+      "expected_fields": {
+        "visual_facts.gripper": "open",
+        "visual_facts.measurements.localization.status": "localized",
+        "visual_facts.grasp_readiness": {}
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "align_grasp"
+      ],
+      "observation_ref": "obs-000050",
+      "row_sha256": "ba09f9d07f106150079c568812bf74655a8907595da1229410d21a97213257e4",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 3.0,
+      "observed": "刀柄颈部移至两指中点下方，仍为准备对齐，不表示已经接触。",
+      "expected_fields": {
+        "visual_facts.measurements.localization.status": "localized"
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "align_grasp"
+      ],
+      "observation_ref": "obs-000075",
+      "row_sha256": "bce4c228955f331e0f0d5340148cb71a288233abfd2bc1fe3be6fe106d9a852b",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 7.0,
+      "observed": "相对6秒可见两指明显收拢，刀仍未带离架；实际闭合应建立一次尝试而非成功。",
+      "expected_fields": {
+        "state.attempt": 1
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ],
+      "observation_ref": "obs-000175",
+      "row_sha256": "7c343e4e24d604bd6e86dcbfb795ca3d211f835e6ead9eb36d034a8c0866256b",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 11.0,
+      "observed": "刀留架而空夹爪已进入工作区；有前面的实际闭合，诊断该次抓取未建立。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "execution_status": "confirmed_failure",
+        "state.candidate": "grasp_not_established"
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ],
+      "observation_ref": "obs-000275",
+      "row_sha256": "983aca961d98691e7b62c07037410e51f3db92526ca1b949b17c5fe4a393166d",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 8,
+      "timestamp": 4.0,
+      "observed": "两指在刀架旁，刀架和手指混连；应识别接近但不能伪造精确对齐坐标。",
+      "expected_fields": {
+        "visual_facts.knife_handle_xy": null,
+        "visual_facts.gripper_xy": null
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "approach_tool"
+      ],
+      "observation_ref": "obs-000100",
+      "row_sha256": "686707b6ad87584418cda2d5bcd709482d2a94e025ca2cc0cdcfe86c3c2385d9",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 8,
+      "timestamp": 5.0,
+      "observed": "相对4秒两指收拢，刀仍在原架；进入抓取效果检查。",
+      "expected_fields": {
+        "state.attempt": 1
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ],
+      "observation_ref": "obs-000125",
+      "row_sha256": "7846823e3e0b648157d40af2f5fc39d643e231c117336f4ecbf729c6cd9e5c9b",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 8,
+      "timestamp": 8.0,
+      "observed": "空夹爪处于砧板上，刀仍留在架；支持当前抓取失败。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "execution_status": "confirmed_failure",
+        "state.candidate": "grasp_not_established"
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ],
+      "observation_ref": "obs-000200",
+      "row_sha256": "6a3e303c364ad720b9ac54dab2216b09d50f1a6216a67741f71db3c06f154bdd",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 29,
+      "timestamp": 6.0,
+      "observed": "两指已收拢但仍有可见间隙，刀在架旁；closed只表示原始开度阈值，效果仍需检查。",
+      "expected_fields": {
+        "state.attempt": 1
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ],
+      "observation_ref": "obs-000150",
+      "row_sha256": "a81e27cfe2fba34223db9b49a9d8ab1b20009af818442b7226f14081b074131a",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 29,
+      "timestamp": 9.0,
+      "observed": "夹爪为空、刀在架，未带走刀便进入工作区；不推断夹持力或摩擦原因。",
+      "expected_fields": {
+        "state.preconditions.reliable_grasp": false,
+        "execution_status": "confirmed_failure"
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "verify_grasp"
+      ],
+      "observation_ref": "obs-000225",
+      "row_sha256": "b57ed59e20f99484dba36218707ee611d35f0e8937867d275b5257659c7a1d88",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 18,
+      "timestamp": 18.0,
+      "observed": "归位接触交接被右臂与刀架遮挡，允许当前关系未知；后续清楚释放才能确认完成。",
+      "expected_fields": {
+        "execution_status": "information_insufficient",
+        "failure_event": null
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "unknown"
+      ],
+      "observation_ref": "obs-000450",
+      "row_sha256": "060b4d32e4f4773861622787d08b43d1e608085018292954e5de598a93e8be39",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 14.0,
+      "observed": "回架时手指/刀架投影混叠，当前连接或释放尚不可靠；保留未知并继续观察。",
+      "expected_fields": {
+        "execution_status": "information_insufficient",
+        "failure_event": null
+      },
+      "image_refs": [
+        "trajectory_999999/frames/missing_cam_high.jpg"
+      ],
+      "image_sha256": {
+        "trajectory_999999/frames/missing_cam_high.jpg": "wrong_sha256"
+      },
+      "expected_stages": [
+        "unknown"
+      ],
+      "observation_ref": "obs-000350",
+      "row_sha256": "e81606a781e2fdc39cbcfed441bf14546e3f01be22648d2a26d73af19332d550",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    }
+  ],
+  "conditional_directions": [
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 2.0,
+      "observation_ref": "obs-000050",
+      "row_sha256": "ba09f9d07f106150079c568812bf74655a8907595da1229410d21a97213257e4",
+      "image_path": "trajectory_000002/frames/obs-000050_cam_right_wrist.jpg",
+      "image_sha256": "c449b81cc33d51ceb1009e2d1a1411d425cda647ac3711a931dbc5bee6515cb3",
+      "camera": "cam_right_wrist",
+      "localization_frame": "cam_right_wrist_image_x_right_y_down",
+      "knife_handle_xy": [
+        417.773,
+        700.521
+      ],
+      "gripper_xy": [
+        513.672,
+        694.01
+      ],
+      "localization_method": "white_blade_to_wider_handle_neck_and_two_finger_inner_edges",
+      "expected_directions": [
+        "图像左侧"
+      ],
+      "reviewer": "root assistant visual inspection",
+      "observed_features": "可见刀柄颈部宽度过渡在两指内缘中点左侧，纵向在死区内。",
+      "reviewed_handle_neck": true,
+      "reviewed_two_finger_edges": true,
+      "coordinate_claim": "image_plane_only_no_robot_mapping",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 3.0,
+      "observation_ref": "obs-000075",
+      "row_sha256": "bce4c228955f331e0f0d5340148cb71a288233abfd2bc1fe3be6fe106d9a852b",
+      "image_path": "trajectory_000002/frames/obs-000075_cam_right_wrist.jpg",
+      "image_sha256": "9e9cb067028d7496b2daf4e729d813517d26b0d9372a4af9751a8c189efeb2a8",
+      "camera": "cam_right_wrist",
+      "localization_frame": "cam_right_wrist_image_x_right_y_down",
+      "knife_handle_xy": [
+        467.188,
+        880.208
+      ],
+      "gripper_xy": [
+        513.672,
+        683.594
+      ],
+      "localization_method": "white_blade_to_wider_handle_neck_and_two_finger_inner_edges",
+      "expected_directions": [
+        "图像下方"
+      ],
+      "reviewer": "root assistant visual inspection",
+      "observed_features": "可见刀柄颈部位于两指内缘中点下方，横向差未超过50/1000死区。",
+      "reviewed_handle_neck": true,
+      "reviewed_two_finger_edges": true,
+      "coordinate_claim": "image_plane_only_no_robot_mapping",
+      "row_fingerprint_version": "canonical-json-full-row-v1"
+    }
+  ],
+  "scope": "六条已见回归；少量关键时刻约束，不要求每帧确定，也不证明全部时刻正确。",
+  "remaining_gaps": [
+    "2:0/1秒初始化等待、9秒遮挡",
+    "8精确柄/两指对齐仍拒识",
+    "18:18秒与19:14秒回架交接未知",
+    "没有独立深度/姿态/接触准备",
+    "六条中没有自然失败后重新打开/重抓恢复过程"
+  ],
+  "binding_version": 2,
+  "row_fingerprint_version": "canonical-json-full-row-v1",
+  "row_fingerprint_definition": {
+    "algorithm": "sha256",
+    "encoding": "utf-8",
+    "sort_keys": true,
+    "separators": [
+      ",",
+      ":"
+    ],
+    "ensure_ascii": false,
+    "allow_nan": false,
+    "scope": "entire_decision_row_including_processing; reruns require explicit rebinding"
+  },
+  "source_run_summary_sha256": "10e1f11c7f8920c8eae87efe4120841af767e1adaaa3d3126a2f5c0d6840b942",
+  "binding_migration": {
+    "from_version": "unversioned_legacy",
+    "existing_images_and_hashes_verified": true,
+    "existing_row_fingerprints_verified_when_present": true,
+    "inference_repeated": false,
+    "semantic_expectations_changed": false
+  },
+  "binding_rebind": {
+    "old_source_run": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\accepted_run",
+    "reviewer": "root assistant review",
+    "note": "逐项复核同图像SHA及新增效果关联、容量、行版本和耗时差异；核心阶段事件建议未变化，保持原目视预期；本次另核正常切割链与失败关键图。",
+    "same_reviewed_image_bytes": true,
+    "semantic_expectations_changed": false,
+    "inference_repeated": false,
+    "changed_rows": [
+      {
+        "episode_for_audit_only": 18,
+        "timestamp": 0.0,
+        "old_row_sha256": "f740780f3e9a2885b104feb8549a3f19d5379a68222d1569e16f5259c09a076f",
+        "new_row_sha256": "beb11ca338ecab02fbd965858d090c4dca9eee5f4127616489a69584f34c7bd1",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 18,
+        "timestamp": 9.0,
+        "old_row_sha256": "58bbcba27e47ce8bd8cfba7ac83d6e01c13d30415ca8c19bdf03753480af21bb",
+        "new_row_sha256": "c4e5f38e017a48dd931e47f12393645dc52e15042561e9b18e74fc621c1cf35b",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 18,
+        "timestamp": 20.0,
+        "old_row_sha256": "74641de77349f41fc2dbfebce234455e6e0346015ef3d4f866ab53849878a07e",
+        "new_row_sha256": "cd0cf3cd03d4593eb8ec3e4aa2253e6872e9b8af5ac497abdcb8be23acaaf817",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 19,
+        "timestamp": 8.0,
+        "old_row_sha256": "6e53c43a31b2175bf3ea3bd424cb4d5ffedd2eacee35cbf46ba561344aa51d7e",
+        "new_row_sha256": "4bf78c0fae99504a7c1583f3dc2a986ea3753f0d8b51504d75d70bcc81009e62",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 19,
+        "timestamp": 10.0,
+        "old_row_sha256": "ddf772f5dc3adee594d59985fd4f99a7987924e380db198732e0b29429d65b77",
+        "new_row_sha256": "6d99ce91834d8f5e0fc8ba1027a15cbd5e7382a1ddd00abf6075bce12ec209ed",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 19,
+        "timestamp": 16.0,
+        "old_row_sha256": "b2139100f1cb6697913705d3af50b3293aef529c6772ff3f89010e9fd13b4820",
+        "new_row_sha256": "1069a6aeb81ff7545818eaf820ef83fde0ac939e56d47492dba14236e0158517",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 0,
+        "timestamp": 7.0,
+        "old_row_sha256": "3ba1be5fe44f19eb64ac9a567889b10d5e949862df498c90461ecfdf6d9d2c8c",
+        "new_row_sha256": "4a2858149c00c7d533917cdd30340794b51d1e239c418355fe59334dbc990b9b",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 0,
+        "timestamp": 10.0,
+        "old_row_sha256": "a4fd7c7aa76e73af2245d3ed1fd55669428e58a6dcf7ffc3ceee20b09ab3e42d",
+        "new_row_sha256": "593a3b3fe60d928e0f384b41eeef48f6e02c013d202c0d10379790df5538bb55",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 2,
+        "timestamp": 2.0,
+        "old_row_sha256": "5377bf4755dccc31dd6b015c283c5864dcaeddeb831e1731f8db39e115ca370e",
+        "new_row_sha256": "ba09f9d07f106150079c568812bf74655a8907595da1229410d21a97213257e4",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 2,
+        "timestamp": 3.0,
+        "old_row_sha256": "adf6c06b142ff3193d59e2d5f99e9d0c7a70b1ce2b63ad4f4d4238e11bfbc1b3",
+        "new_row_sha256": "bce4c228955f331e0f0d5340148cb71a288233abfd2bc1fe3be6fe106d9a852b",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 2,
+        "timestamp": 7.0,
+        "old_row_sha256": "994033df5a63b68c71b5393fa1f1cb0b1dd504db2ef7bcd4d0a68695912c077b",
+        "new_row_sha256": "7c343e4e24d604bd6e86dcbfb795ca3d211f835e6ead9eb36d034a8c0866256b",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 2,
+        "timestamp": 11.0,
+        "old_row_sha256": "a82b5be17b2225d1dbea96f0533c28edafdc6dd331cefccaa27ce14abb8deb74",
+        "new_row_sha256": "983aca961d98691e7b62c07037410e51f3db92526ca1b949b17c5fe4a393166d",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 8,
+        "timestamp": 4.0,
+        "old_row_sha256": "04ff6e089cbfa63d09e487570c575ff1db37386a3a32948a7bcdc57f4ddc784a",
+        "new_row_sha256": "686707b6ad87584418cda2d5bcd709482d2a94e025ca2cc0cdcfe86c3c2385d9",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 8,
+        "timestamp": 5.0,
+        "old_row_sha256": "dc9e3fa74fe8238e805fb547dba10e3059ed2dbc03adc43e8454e4f265441557",
+        "new_row_sha256": "7846823e3e0b648157d40af2f5fc39d643e231c117336f4ecbf729c6cd9e5c9b",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 8,
+        "timestamp": 8.0,
+        "old_row_sha256": "e63486491646cd9634e14d149c3062b8ce8d41c3052160a198c6def1c1da9025",
+        "new_row_sha256": "6a3e303c364ad720b9ac54dab2216b09d50f1a6216a67741f71db3c06f154bdd",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 29,
+        "timestamp": 6.0,
+        "old_row_sha256": "07511fe9316da3926f6bbbefdc2b2be9c42762ff91380c4597c0b06518df65a1",
+        "new_row_sha256": "a81e27cfe2fba34223db9b49a9d8ab1b20009af818442b7226f14081b074131a",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 29,
+        "timestamp": 9.0,
+        "old_row_sha256": "7d7eeef9072ca6938e494853ccfd8759b8b399ddeb343a79c97eea5b32569e0e",
+        "new_row_sha256": "b57ed59e20f99484dba36218707ee611d35f0e8937867d275b5257659c7a1d88",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 18,
+        "timestamp": 18.0,
+        "old_row_sha256": "2385def595e2ffddb6e294a6a03b198c3fd4596bb0c1ca131f118b19885be8a9",
+        "new_row_sha256": "060b4d32e4f4773861622787d08b43d1e608085018292954e5de598a93e8be39",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 19,
+        "timestamp": 14.0,
+        "old_row_sha256": "f8449a658876d6d5a1ea043df6b1a0e278da3fb21048af22d980caf31a24d4c9",
+        "new_row_sha256": "e81606a781e2fdc39cbcfed441bf14546e3f01be22648d2a26d73af19332d550",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 2,
+        "timestamp": 2.0,
+        "old_row_sha256": "5377bf4755dccc31dd6b015c283c5864dcaeddeb831e1731f8db39e115ca370e",
+        "new_row_sha256": "ba09f9d07f106150079c568812bf74655a8907595da1229410d21a97213257e4",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      },
+      {
+        "episode_for_audit_only": 2,
+        "timestamp": 3.0,
+        "old_row_sha256": "adf6c06b142ff3193d59e2d5f99e9d0c7a70b1ce2b63ad4f4d4238e11bfbc1b3",
+        "new_row_sha256": "bce4c228955f331e0f0d5340148cb71a288233abfd2bc1fe3be6fe106d9a852b",
+        "changed_top_level_fields": [
+          "memory_limit_extensions",
+          "memory_usage",
+          "processing",
+          "schema_version",
+          "state",
+          "visual_facts"
+        ]
+      }
+    ]
+  }
+}

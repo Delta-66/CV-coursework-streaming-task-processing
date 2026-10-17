@@ -1,0 +1,52 @@
+Traceback (most recent call last):
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\urllib\request.py", line 1361, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\http\client.py", line 1351, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\http\client.py", line 1397, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\http\client.py", line 1346, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\http\client.py", line 1106, in _send_output
+    self.send(msg)
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\http\client.py", line 1044, in send
+    self.connect()
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\http\client.py", line 1516, in connect
+    super().connect()
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\http\client.py", line 1010, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\socket.py", line 863, in create_connection
+    raise exceptions[0]
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\socket.py", line 848, in create_connection
+    sock.connect(sa)
+PermissionError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\artifacts\expanded_test_20261017\prepare_and_download.py", line 74, in <module>
+    main()
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\artifacts\expanded_test_20261017\prepare_and_download.py", line 68, in main
+    hub.download(path)
+  File "C:\Users\lenovo\Desktop\CV\download_vifailback.py", line 47, in download
+    info = self.json(f"https://huggingface.co/api/datasets/{self.repo_id}/paths-info/{self.revision}",
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lenovo\Desktop\CV\download_vifailback.py", line 39, in json
+    with self.opener.open(request, timeout=60) as response:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\urllib\request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\urllib\request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\urllib\request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\urllib\request.py", line 1404, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lenovo\.conda\envs\cv-streaming\Lib\urllib\request.py", line 1364, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>

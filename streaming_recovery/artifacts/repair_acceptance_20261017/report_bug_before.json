@@ -1,0 +1,53 @@
+{
+  "kind": "offline_report_regression_before_fix",
+  "old_report_sha256": "0ba6c9667eb4c98a9a68e6c798ba5e6aecd1bd6634b40f7a53967ae5a91e44f5",
+  "old_script_sha256": "8e2ee7977770e058564d8506a48bf3afc639ba99c5ff42cb8c0fb6ec024a4f74",
+  "strings_are_nonempty": {
+    "success": true,
+    "failure": true
+  },
+  "per_episode": [
+    {
+      "episode": 18,
+      "actual_label": "success",
+      "old_official_outcome": "success",
+      "old_failure_missed": null,
+      "old_false_alarm": false
+    },
+    {
+      "episode": 19,
+      "actual_label": "success",
+      "old_official_outcome": "success",
+      "old_failure_missed": null,
+      "old_false_alarm": false
+    },
+    {
+      "episode": 0,
+      "actual_label": "failure",
+      "old_official_outcome": "success",
+      "old_failure_missed": null,
+      "old_false_alarm": true
+    },
+    {
+      "episode": 2,
+      "actual_label": "failure",
+      "old_official_outcome": "success",
+      "old_failure_missed": null,
+      "old_false_alarm": true
+    },
+    {
+      "episode": 8,
+      "actual_label": "failure",
+      "old_official_outcome": "success",
+      "old_failure_missed": null,
+      "old_false_alarm": true
+    },
+    {
+      "episode": 29,
+      "actual_label": "failure",
+      "old_official_outcome": "success",
+      "old_failure_missed": null,
+      "old_false_alarm": true
+    }
+  ]
+}

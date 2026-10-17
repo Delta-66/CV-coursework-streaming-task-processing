@@ -1,0 +1,19 @@
+{
+  "kind": "offline_real_log_binding_fault_injection_not_broken_original_evidence",
+  "original_report": {
+    "engineering": "passed",
+    "semantic": "passed"
+  },
+  "mutated_fields": [
+    "source_run",
+    "all ordinary image_refs",
+    "all ordinary image_sha256"
+  ],
+  "mutated_report": {
+    "engineering": "passed",
+    "semantic": "passed",
+    "overall": "passed",
+    "ordinary_passed": 19
+  },
+  "directions_untouched": true
+}

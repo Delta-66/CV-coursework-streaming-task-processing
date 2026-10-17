@@ -1,7 +1,10 @@
 """Image-only current-observation baseline; no history, targets or offline labels."""
 from dataclasses import dataclass
 import json
+import math
 from pathlib import Path
+import subprocess
+import sys
 import time
 
 import cv2
@@ -138,11 +141,57 @@ def parse_result(raw_text):
     return validate_result(result)
 
 
+def read_cuda_memory(torch, device):
+    """Return conservative free/total bytes for the selected physical GPU.
+
+    On Windows, CUDA may include memory that WDDM can page to system RAM. Match
+    NVIDIA's physical-memory report by UUID, never by a possibly remapped index.
+    An unavailable physical report must not silently permit GPU inference.
+    """
+    free_bytes, total_bytes = torch.cuda.mem_get_info(device)
+
+    def validate(free, total, source):
+        if (any(isinstance(value, bool) or not isinstance(value, (int, float))
+                or not math.isfinite(value) for value in (free, total))
+                or total <= 0 or free < 0 or free > total):
+            raise RuntimeError(f"Invalid {source} GPU memory report")
+
+    validate(free_bytes, total_bytes, "CUDA")
+    if sys.platform != "win32":
+        return free_bytes, total_bytes
+    try:
+        device_uuid = str(torch.cuda.get_device_properties(device).uuid).strip().lower().removeprefix("gpu-")
+        if not device_uuid or device_uuid == "none":
+            raise ValueError("CUDA did not report the selected GPU UUID")
+        report = subprocess.run(
+            ["nvidia-smi", "--query-gpu=uuid,memory.free,memory.total", "--format=csv,noheader,nounits"],
+            capture_output=True, text=True, timeout=5, check=True,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+        matches = []
+        for line in report.stdout.splitlines():
+            if not line.strip():
+                continue
+            fields = [value.strip() for value in line.split(",")]
+            if len(fields) != 3:
+                raise ValueError("Malformed nvidia-smi memory report")
+            if fields[0].lower().removeprefix("gpu-") == device_uuid:
+                physical_free_bytes = float(fields[1]) * 1024**2
+                physical_total_bytes = float(fields[2]) * 1024**2
+                validate(physical_free_bytes, physical_total_bytes, "physical")
+                matches.append((int(physical_free_bytes), int(physical_total_bytes)))
+        if len(matches) != 1:
+            raise ValueError("Expected exactly one nvidia-smi report matching the selected GPU UUID")
+        physical_free_bytes, physical_total_bytes = matches[0]
+    except (OSError, subprocess.SubprocessError, AttributeError, ValueError, RuntimeError) as error:
+        raise RuntimeError("Cannot verify physical GPU memory on Windows; refusing CUDA inference: " + str(error)) from error
+    return min(free_bytes, physical_free_bytes), min(total_bytes, physical_total_bytes)
+
+
 def wait_for_cuda_memory(torch, device, min_free_cuda_mib, gpu_poll_interval_s=10):
     """Pause until enough VRAM is free; never change the inference device."""
     started = None
     while True:
-        free_bytes, total_bytes = torch.cuda.mem_get_info(device)
+        free_bytes, total_bytes = read_cuda_memory(torch, device)
         if min_free_cuda_mib > total_bytes/1024**2:
             raise ValueError("Required free CUDA memory exceeds this GPU's total capacity")
         if free_bytes/1024**2 >= min_free_cuda_mib:
@@ -228,7 +277,7 @@ class QwenCurrentObservation:
             waited += time.perf_counter()-started
 
     def _ensure_cuda_ready(self):
-        free_bytes, _ = self.torch.cuda.mem_get_info(self.device)
+        free_bytes, _ = read_cuda_memory(self.torch, self.device)
         if free_bytes/1024**2 >= self.min_inference_free_cuda_mib:
             return 0.0, 0.0
         print("GPU headroom is low; releasing baseline weights and pausing this same input.", flush=True)
@@ -240,9 +289,6 @@ class QwenCurrentObservation:
 
     def predict(self, request):
         from PIL import Image
-        from lmformatenforcer import JsonSchemaParser
-        from lmformatenforcer.integrations.transformers import build_transformers_prefix_allowed_tokens_fn
-        torch = self.torch
         messages = [
             {"role": "system", "content": [{"type": "text", "text": SYSTEM_PROMPT}]},
             {"role": "user", "content": [
@@ -251,6 +297,13 @@ class QwenCurrentObservation:
                  "\nCamera reference frame: image (" + request.camera + "). Analyze this current image."},
             ]},
         ]
+        return self.predict_messages(messages, output_schema())
+
+    def predict_messages(self, messages, schema):
+        """Shared decoding/VRAM policy; each caller supplies a fresh bounded request."""
+        from lmformatenforcer import JsonSchemaParser
+        from lmformatenforcer.integrations.transformers import build_transformers_prefix_allowed_tokens_fn
+        torch = self.torch
         gpu_wait_time_s = 0.0
         gpu_resume_time_s = 0.0
         oom_retry_time_s = 0.0
@@ -269,7 +322,7 @@ class QwenCurrentObservation:
                 inputs = self.processor.apply_chat_template(messages, tokenize=True, add_generation_prompt=True,
                                                            return_dict=True, return_tensors="pt").to(self.device)
                 prefix_allowed_tokens_fn = build_transformers_prefix_allowed_tokens_fn(self.tokenizer_data,
-                                                                                        JsonSchemaParser(output_schema()))
+                                                                                        JsonSchemaParser(schema))
                 with torch.inference_mode():
                     generated = self.model.generate(**inputs, max_new_tokens=self.max_new_tokens,
                                                     do_sample=False, use_cache=True,

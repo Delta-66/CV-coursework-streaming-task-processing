@@ -1,0 +1,1238 @@
+{
+  "status": "passed",
+  "run_dir": "output/monitor_runs/20261015_230519_925005",
+  "validation_purpose": "gpu_monitor_smoke_check",
+  "compute_devices": [
+    "cuda:0"
+  ],
+  "model_calls": 9,
+  "valid_outputs": 9,
+  "invalid_outputs": 0,
+  "failure_alerts": 0,
+  "source_images_verified": 9,
+  "window_image_references_verified": 21,
+  "sampled_sequence_verified": true,
+  "recorded_program_prompt_and_schema_verified": true,
+  "causal_windows_verified": true,
+  "state_vectors_and_gripper_values_verified": true,
+  "raw_responses_verified": true,
+  "tracking_and_alert_deduplication_verified": true,
+  "mean_inference_s": 11.46490492219002,
+  "gpu_wait_time_s": 0.0,
+  "summary": {
+    "status": "monitor_run_complete",
+    "started_at": "2026-10-15T23:05:19.925005+08:00",
+    "model_calls": 9,
+    "valid_outputs": 9,
+    "invalid_outputs": 0,
+    "failure_alerts": 0,
+    "episodes": [
+      {
+        "episode_index": 0,
+        "frames_seen": 300,
+        "model_calls": 3,
+        "source_frames": 300,
+        "full_episode_read": true
+      },
+      {
+        "episode_index": 18,
+        "frames_seen": 519,
+        "model_calls": 6,
+        "source_frames": 519,
+        "full_episode_read": true
+      }
+    ],
+    "max_frames_per_call": 3,
+    "wall_time_s": 131.56055970001034,
+    "evaluation_status": "pipeline and temporal alert rules only; model accuracy, missed failures and detection delay require labeled evaluation"
+  },
+  "provenance": {
+    "mode": "causal_window_task_progress_and_failure_diagnosis",
+    "model": {
+      "repo_id": "Qwen/Qwen3-VL-2B-Instruct",
+      "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+      "files": [
+        {
+          "path": "README.md",
+          "size": 7136,
+          "sha256": "5fc5be1ca9a3910399bd6239ee5086ab5d82a2a59c5d2b00e887a8835cc110e4",
+          "remote_sha256": null
+        },
+        {
+          "path": "chat_template.json",
+          "size": 5502,
+          "sha256": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4",
+          "remote_sha256": null
+        },
+        {
+          "path": "config.json",
+          "size": 1505,
+          "sha256": "bec4b3d446efa05807365c9e1cec03ac590836879d02f3a6da879971154bdd3b",
+          "remote_sha256": null
+        },
+        {
+          "path": "generation_config.json",
+          "size": 269,
+          "sha256": "1e241830b48b397cb0900101421df5450baddc7adf01e5fc86b5615865f3bae4",
+          "remote_sha256": null
+        },
+        {
+          "path": "merges.txt",
+          "size": 1671839,
+          "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+          "remote_sha256": null
+        },
+        {
+          "path": "model.safetensors",
+          "size": 4255140312,
+          "sha256": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+          "remote_sha256": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "size": 390,
+          "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+          "remote_sha256": null
+        },
+        {
+          "path": "tokenizer.json",
+          "size": 7032403,
+          "sha256": "a5d85b6dcc535e6b93115a9ef287e6132fdbf30270da6218194ba742261173c7",
+          "remote_sha256": null
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size": 10868,
+          "sha256": "c2da771801886ad9ae98181793ffd3dfb7f1af30f6f7c6a4e15d7dbba52e2399",
+          "remote_sha256": null
+        },
+        {
+          "path": "video_preprocessor_config.json",
+          "size": 385,
+          "sha256": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+          "remote_sha256": null
+        },
+        {
+          "path": "vocab.json",
+          "size": 2776833,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "remote_sha256": null
+        }
+      ]
+    },
+    "model_load_time_s": 5.730508599895984,
+    "startup_gpu_wait_time_s": 0.0,
+    "compute_device": "cuda:0",
+    "gpu_memory_policy": "pause_release_weights_wait_and_resume_same_input_on_gpu",
+    "cpu_fallback": false,
+    "versions": {
+      "torch": "2.11.0+cu128",
+      "transformers": "4.57.6",
+      "accelerate": "1.12.0",
+      "tokenizers": "0.22.2",
+      "lm-format-enforcer": "0.11.3",
+      "numpy": "2.4.6",
+      "av": "18.1.0",
+      "pyarrow": "26.0.0"
+    },
+    "datasets": [
+      {
+        "episode_index": 0,
+        "repo_id": "sii-rhos-ai/vifailback-dataset-lerobot",
+        "revision": "619791b94f61667333fe179d471051e0bca0e06f"
+      },
+      {
+        "episode_index": 18,
+        "repo_id": "sii-rhos-ai/vifailback-dataset-lerobot",
+        "revision": "619791b94f61667333fe179d471051e0bca0e06f"
+      }
+    ],
+    "prompt_sha256": "fb55517a1cc54c22544190a947389b81c314efa4b3289e3a8dec6c040e3b4dab",
+    "program_sha256": {
+      "run_task_monitor.py": "b3e2847110a530a62ca2b6bb6f36f2e52b95f2480bbc49049486c04591e9c687",
+      "temporal_diagnosis.py": "aa7a6690a718d9eba83d8d2101a9f4a4d84787bdaa477b92a3fb2171d794a490",
+      "diagnostic_tracking.py": "3d3592bc9e43026d7e94308dda9439e1a34aa53c3d82f31f87ab6e879bc37165",
+      "current_observation.py": "0e25812105168b4e0f020952f0a5528afe0882398d9d3405f63c428dc419de26",
+      "dataset_inputs.py": "aa98cf73a134ce490900c9e0102acd863e957ed1a95c5d225841d6056778dfce",
+      "stream_dataset.py": "eec6ed7c508108f83b69c4d0dbb8fc47500e1b7cf6800b39a4becac4910b2b31"
+    },
+    "history_size": 2,
+    "max_frames_per_call": 3,
+    "max_history_s": 8,
+    "offline_annotations_used": false,
+    "recorded_targets_used": false,
+    "state_vectors_used": true,
+    "state_policy": "whitelisted measured observations only; original field names and raw units retained",
+    "previous_model_outputs_used_as_input": false,
+    "tracking": {
+      "stage_confirmation": 2,
+      "failure_confirmation": 2,
+      "recovery_confirmation": 2,
+      "cooldown_s": 8.0
+    }
+  },
+  "predictions": [
+    {
+      "episode_index": 0,
+      "frame_index": 0,
+      "timestamp": 0.0,
+      "history_frames": 0,
+      "result_valid": true,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "the knife is in a knife holder on the right side of the table",
+          "the sausage is on a wooden cutting board on the left side of the table",
+          "the right arm is positioned to pick up the knife from the holder"
+        ],
+        "evidence_frame_indices": [
+          0
+        ],
+        "key_states": {
+          "grasp": "not_held",
+          "target_relation": "away_from_target",
+          "task_goal": "not_met"
+        },
+        "expected_effect": "pick up the knife from the knife holder",
+        "observed_effect": "the right arm is moving towards the knife holder to pick up the knife",
+        "action_outcome": "achieved",
+        "failure_type": "none",
+        "low_level_advice": null,
+        "high_level_advice": null
+      },
+      "monitor": {
+        "tracked_stage": "unknown",
+        "observed_stage": "approaching",
+        "stage_confirmed": false,
+        "stage_stale": true,
+        "stage_candidate": "approaching",
+        "stage_candidate_count": 1,
+        "observed_key_states": {
+          "grasp": "not_held",
+          "target_relation": "away_from_target",
+          "task_goal": "not_met"
+        },
+        "tracked_key_states": {
+          "grasp": "unknown",
+          "target_relation": "unknown",
+          "task_goal": "unknown"
+        },
+        "key_state_stale": {
+          "grasp": true,
+          "target_relation": true,
+          "task_goal": true
+        },
+        "key_state_confirmed": {
+          "grasp": false,
+          "target_relation": false,
+          "task_goal": false
+        },
+        "key_state_candidates": {
+          "grasp": "not_held",
+          "target_relation": "away_from_target",
+          "task_goal": "not_met"
+        },
+        "key_state_candidate_counts": {
+          "grasp": 1,
+          "target_relation": 1,
+          "task_goal": 1
+        },
+        "failure_state": "clear",
+        "active_failure_type": null,
+        "candidate_failure_type": null,
+        "candidate_count": 0,
+        "alert": false,
+        "incident_id": null,
+        "suppression_reason": "no_failure",
+        "current_evidence_present": true,
+        "failure_evidence_supported": false,
+        "recovery_action_supported": true,
+        "recovery_key_state_matches": {},
+        "recovery_evidence_supported": false,
+        "recovery_policy": "uncalibrated_key_state_heuristic",
+        "recovery_count": 0,
+        "recovery_confirmed": false,
+        "recovered_incident_ids": [],
+        "unresolved_failure_types": [],
+        "cooldown_remaining_s": 0.0,
+        "policy_calibrated": false
+      },
+      "metrics": {
+        "inference_ms": 9103.356199921109,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cuda:0",
+        "gpu_wait_time_s": 0.0,
+        "gpu_resume_time_s": 0.0,
+        "oom_retries": 0,
+        "oom_retry_time_s": 0.0,
+        "input_tokens": 1607,
+        "generated_tokens": 184,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            16,
+            22
+          ]
+        ],
+        "peak_cuda_allocated_mib": 4702.81884765625,
+        "peak_cuda_reserved_mib": 4778.0
+      }
+    },
+    {
+      "episode_index": 0,
+      "frame_index": 100,
+      "timestamp": 4.0,
+      "history_frames": 1,
+      "result_valid": true,
+      "result": {
+        "stage": "grasping",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "the right arm is reaching for the knife",
+          "the knife is in the knife holder",
+          "the knife is being grasped by the right gripper"
+        ],
+        "key_states": {
+          "grasp": "held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "expected_effect": "pick up the knife from the knife holder",
+        "observed_effect": "the right arm is grasping the knife from the knife holder",
+        "action_outcome": "achieved",
+        "failure_type": "none",
+        "low_level_advice": null,
+        "high_level_advice": null,
+        "evidence_frame_indices": [
+          0,
+          100
+        ]
+      },
+      "monitor": {
+        "tracked_stage": "unknown",
+        "observed_stage": "grasping",
+        "stage_confirmed": false,
+        "stage_stale": true,
+        "stage_candidate": "grasping",
+        "stage_candidate_count": 1,
+        "observed_key_states": {
+          "grasp": "held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "tracked_key_states": {
+          "grasp": "unknown",
+          "target_relation": "unknown",
+          "task_goal": "not_met"
+        },
+        "key_state_stale": {
+          "grasp": true,
+          "target_relation": true,
+          "task_goal": false
+        },
+        "key_state_confirmed": {
+          "grasp": false,
+          "target_relation": false,
+          "task_goal": true
+        },
+        "key_state_candidates": {
+          "grasp": "held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "key_state_candidate_counts": {
+          "grasp": 1,
+          "target_relation": 1,
+          "task_goal": 2
+        },
+        "failure_state": "clear",
+        "active_failure_type": null,
+        "candidate_failure_type": null,
+        "candidate_count": 0,
+        "alert": false,
+        "incident_id": null,
+        "suppression_reason": "no_failure",
+        "current_evidence_present": true,
+        "failure_evidence_supported": false,
+        "recovery_action_supported": true,
+        "recovery_key_state_matches": {},
+        "recovery_evidence_supported": false,
+        "recovery_policy": "uncalibrated_key_state_heuristic",
+        "recovery_count": 0,
+        "recovery_confirmed": false,
+        "recovered_incident_ids": [],
+        "unresolved_failure_types": [],
+        "cooldown_remaining_s": 0.0,
+        "policy_calibrated": false
+      },
+      "metrics": {
+        "inference_ms": 10330.558600020595,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cuda:0",
+        "gpu_wait_time_s": 0.0,
+        "gpu_resume_time_s": 0.0,
+        "oom_retries": 0,
+        "oom_retry_time_s": 0.0,
+        "input_tokens": 2396,
+        "generated_tokens": 182,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ]
+        ],
+        "peak_cuda_allocated_mib": 5279.6796875,
+        "peak_cuda_reserved_mib": 5482.0
+      }
+    },
+    {
+      "episode_index": 0,
+      "frame_index": 200,
+      "timestamp": 8.0,
+      "history_frames": 2,
+      "result_valid": true,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "the right arm is approaching the knife holder with the right gripper",
+          "the knife is in the knife holder"
+        ],
+        "key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "unknown"
+        },
+        "expected_effect": "the right arm should grasp the knife from the knife holder",
+        "observed_effect": "the right arm is moving towards the knife holder and the knife is still in the holder",
+        "action_outcome": "uncertain",
+        "failure_type": "none",
+        "low_level_advice": null,
+        "high_level_advice": null,
+        "evidence_frame_indices": [
+          0,
+          100,
+          200
+        ]
+      },
+      "monitor": {
+        "tracked_stage": "unknown",
+        "observed_stage": "approaching",
+        "stage_confirmed": false,
+        "stage_stale": true,
+        "stage_candidate": "approaching",
+        "stage_candidate_count": 1,
+        "observed_key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "unknown"
+        },
+        "tracked_key_states": {
+          "grasp": "unknown",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "key_state_stale": {
+          "grasp": true,
+          "target_relation": false,
+          "task_goal": true
+        },
+        "key_state_confirmed": {
+          "grasp": false,
+          "target_relation": true,
+          "task_goal": false
+        },
+        "key_state_candidates": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": null
+        },
+        "key_state_candidate_counts": {
+          "grasp": 1,
+          "target_relation": 2,
+          "task_goal": 0
+        },
+        "failure_state": "clear",
+        "active_failure_type": null,
+        "candidate_failure_type": null,
+        "candidate_count": 0,
+        "alert": false,
+        "incident_id": null,
+        "suppression_reason": "no_failure",
+        "current_evidence_present": true,
+        "failure_evidence_supported": false,
+        "recovery_action_supported": false,
+        "recovery_key_state_matches": {},
+        "recovery_evidence_supported": false,
+        "recovery_policy": "uncalibrated_key_state_heuristic",
+        "recovery_count": 0,
+        "recovery_confirmed": false,
+        "recovered_incident_ids": [],
+        "unresolved_failure_types": [],
+        "cooldown_remaining_s": 0.0,
+        "policy_calibrated": false
+      },
+      "metrics": {
+        "inference_ms": 12706.53940003831,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cuda:0",
+        "gpu_wait_time_s": 0.0,
+        "gpu_resume_time_s": 0.0,
+        "oom_retries": 0,
+        "oom_retry_time_s": 0.0,
+        "input_tokens": 3166,
+        "generated_tokens": 187,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ]
+        ],
+        "peak_cuda_allocated_mib": 6016.88134765625,
+        "peak_cuda_reserved_mib": 6706.0
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 0,
+      "timestamp": 0.0,
+      "history_frames": 0,
+      "result_valid": true,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "the right arm is moving towards the knife holder",
+          "the knife is in the knife holder"
+        ],
+        "evidence_frame_indices": [
+          0
+        ],
+        "key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "expected_effect": "the right arm should grasp the knife from the holder",
+        "observed_effect": "the right arm is approaching the knife holder and the knife is in the holder",
+        "action_outcome": "uncertain",
+        "failure_type": "none",
+        "low_level_advice": null,
+        "high_level_advice": null
+      },
+      "monitor": {
+        "tracked_stage": "unknown",
+        "observed_stage": "approaching",
+        "stage_confirmed": false,
+        "stage_stale": true,
+        "stage_candidate": "approaching",
+        "stage_candidate_count": 1,
+        "observed_key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "tracked_key_states": {
+          "grasp": "unknown",
+          "target_relation": "unknown",
+          "task_goal": "unknown"
+        },
+        "key_state_stale": {
+          "grasp": true,
+          "target_relation": true,
+          "task_goal": true
+        },
+        "key_state_confirmed": {
+          "grasp": false,
+          "target_relation": false,
+          "task_goal": false
+        },
+        "key_state_candidates": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "key_state_candidate_counts": {
+          "grasp": 1,
+          "target_relation": 1,
+          "task_goal": 1
+        },
+        "failure_state": "clear",
+        "active_failure_type": null,
+        "candidate_failure_type": null,
+        "candidate_count": 0,
+        "alert": false,
+        "incident_id": null,
+        "suppression_reason": "no_failure",
+        "current_evidence_present": true,
+        "failure_evidence_supported": false,
+        "recovery_action_supported": false,
+        "recovery_key_state_matches": {},
+        "recovery_evidence_supported": false,
+        "recovery_policy": "uncalibrated_key_state_heuristic",
+        "recovery_count": 0,
+        "recovery_confirmed": false,
+        "recovered_incident_ids": [],
+        "unresolved_failure_types": [],
+        "cooldown_remaining_s": 0.0,
+        "policy_calibrated": false
+      },
+      "metrics": {
+        "inference_ms": 7328.1038999557495,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cuda:0",
+        "gpu_wait_time_s": 0.0,
+        "gpu_resume_time_s": 1.41607150004711,
+        "oom_retries": 0,
+        "oom_retry_time_s": 0.0,
+        "input_tokens": 1635,
+        "generated_tokens": 158,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            16,
+            22
+          ]
+        ],
+        "peak_cuda_allocated_mib": 4721.37255859375,
+        "peak_cuda_reserved_mib": 4794.0
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 100,
+      "timestamp": 4.0,
+      "history_frames": 1,
+      "result_valid": true,
+      "result": {
+        "stage": "grasping",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "the right arm is holding the knife with the right gripper",
+          "the knife is positioned above the knife holder",
+          "the knife is in contact with the knife holder"
+        ],
+        "key_states": {
+          "grasp": "held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "expected_effect": "pick up the knife from the knife holder",
+        "observed_effect": "the right arm is grasping the knife from the knife holder",
+        "action_outcome": "achieved",
+        "failure_type": "none",
+        "low_level_advice": null,
+        "high_level_advice": null,
+        "evidence_frame_indices": [
+          0,
+          100
+        ]
+      },
+      "monitor": {
+        "tracked_stage": "unknown",
+        "observed_stage": "grasping",
+        "stage_confirmed": false,
+        "stage_stale": true,
+        "stage_candidate": "grasping",
+        "stage_candidate_count": 1,
+        "observed_key_states": {
+          "grasp": "held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "tracked_key_states": {
+          "grasp": "unknown",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "key_state_stale": {
+          "grasp": true,
+          "target_relation": false,
+          "task_goal": false
+        },
+        "key_state_confirmed": {
+          "grasp": false,
+          "target_relation": true,
+          "task_goal": true
+        },
+        "key_state_candidates": {
+          "grasp": "held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "key_state_candidate_counts": {
+          "grasp": 1,
+          "target_relation": 2,
+          "task_goal": 2
+        },
+        "failure_state": "clear",
+        "active_failure_type": null,
+        "candidate_failure_type": null,
+        "candidate_count": 0,
+        "alert": false,
+        "incident_id": null,
+        "suppression_reason": "no_failure",
+        "current_evidence_present": true,
+        "failure_evidence_supported": false,
+        "recovery_action_supported": true,
+        "recovery_key_state_matches": {},
+        "recovery_evidence_supported": false,
+        "recovery_policy": "uncalibrated_key_state_heuristic",
+        "recovery_count": 0,
+        "recovery_confirmed": false,
+        "recovered_incident_ids": [],
+        "unresolved_failure_types": [],
+        "cooldown_remaining_s": 0.0,
+        "policy_calibrated": false
+      },
+      "metrics": {
+        "inference_ms": 10519.709600019269,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cuda:0",
+        "gpu_wait_time_s": 0.0,
+        "gpu_resume_time_s": 0.0,
+        "oom_retries": 0,
+        "oom_retry_time_s": 0.0,
+        "input_tokens": 2438,
+        "generated_tokens": 185,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ]
+        ],
+        "peak_cuda_allocated_mib": 5315.65380859375,
+        "peak_cuda_reserved_mib": 5522.0
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 200,
+      "timestamp": 8.0,
+      "history_frames": 2,
+      "result_valid": true,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "The right arm is moving towards the knife holder",
+          "The knife is in the knife holder"
+        ],
+        "evidence_frame_indices": [
+          0,
+          100,
+          200
+        ],
+        "key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "unknown"
+        },
+        "expected_effect": "The right arm should pick up the knife from the knife holder",
+        "observed_effect": "The right arm is approaching the knife holder and the knife is in the holder",
+        "action_outcome": "uncertain",
+        "failure_type": "none",
+        "low_level_advice": null,
+        "high_level_advice": null
+      },
+      "monitor": {
+        "tracked_stage": "unknown",
+        "observed_stage": "approaching",
+        "stage_confirmed": false,
+        "stage_stale": true,
+        "stage_candidate": "approaching",
+        "stage_candidate_count": 1,
+        "observed_key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "unknown"
+        },
+        "tracked_key_states": {
+          "grasp": "unknown",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "key_state_stale": {
+          "grasp": true,
+          "target_relation": false,
+          "task_goal": true
+        },
+        "key_state_confirmed": {
+          "grasp": false,
+          "target_relation": true,
+          "task_goal": false
+        },
+        "key_state_candidates": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": null
+        },
+        "key_state_candidate_counts": {
+          "grasp": 1,
+          "target_relation": 2,
+          "task_goal": 0
+        },
+        "failure_state": "clear",
+        "active_failure_type": null,
+        "candidate_failure_type": null,
+        "candidate_count": 0,
+        "alert": false,
+        "incident_id": null,
+        "suppression_reason": "no_failure",
+        "current_evidence_present": true,
+        "failure_evidence_supported": false,
+        "recovery_action_supported": false,
+        "recovery_key_state_matches": {},
+        "recovery_evidence_supported": false,
+        "recovery_policy": "uncalibrated_key_state_heuristic",
+        "recovery_count": 0,
+        "recovery_confirmed": false,
+        "recovered_incident_ids": [],
+        "unresolved_failure_types": [],
+        "cooldown_remaining_s": 0.0,
+        "policy_calibrated": false
+      },
+      "metrics": {
+        "inference_ms": 13372.652199934237,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cuda:0",
+        "gpu_wait_time_s": 0.0,
+        "gpu_resume_time_s": 0.0,
+        "oom_retries": 0,
+        "oom_retry_time_s": 0.0,
+        "input_tokens": 3297,
+        "generated_tokens": 188,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ]
+        ],
+        "peak_cuda_allocated_mib": 6158.263671875,
+        "peak_cuda_reserved_mib": 6850.0
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 300,
+      "timestamp": 12.0,
+      "history_frames": 2,
+      "result_valid": true,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "the right arm is moving towards the knife holder",
+          "the knife is in the knife holder"
+        ],
+        "key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "unknown"
+        },
+        "expected_effect": "the right arm should pick up the knife from the knife holder",
+        "observed_effect": "the right arm is approaching the knife holder and the knife is in the holder",
+        "action_outcome": "uncertain",
+        "failure_type": "none",
+        "low_level_advice": null,
+        "high_level_advice": null,
+        "evidence_frame_indices": [
+          100,
+          200,
+          300
+        ]
+      },
+      "monitor": {
+        "tracked_stage": "approaching",
+        "observed_stage": "approaching",
+        "stage_confirmed": true,
+        "stage_stale": false,
+        "stage_candidate": "approaching",
+        "stage_candidate_count": 2,
+        "observed_key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "unknown"
+        },
+        "tracked_key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "key_state_stale": {
+          "grasp": false,
+          "target_relation": false,
+          "task_goal": true
+        },
+        "key_state_confirmed": {
+          "grasp": true,
+          "target_relation": true,
+          "task_goal": false
+        },
+        "key_state_candidates": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": null
+        },
+        "key_state_candidate_counts": {
+          "grasp": 2,
+          "target_relation": 2,
+          "task_goal": 0
+        },
+        "failure_state": "clear",
+        "active_failure_type": null,
+        "candidate_failure_type": null,
+        "candidate_count": 0,
+        "alert": false,
+        "incident_id": null,
+        "suppression_reason": "no_failure",
+        "current_evidence_present": true,
+        "failure_evidence_supported": false,
+        "recovery_action_supported": false,
+        "recovery_key_state_matches": {},
+        "recovery_evidence_supported": false,
+        "recovery_policy": "uncalibrated_key_state_heuristic",
+        "recovery_count": 0,
+        "recovery_confirmed": false,
+        "recovered_incident_ids": [],
+        "unresolved_failure_types": [],
+        "cooldown_remaining_s": 0.0,
+        "policy_calibrated": false
+      },
+      "metrics": {
+        "inference_ms": 12745.809999993071,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cuda:0",
+        "gpu_wait_time_s": 0.0,
+        "gpu_resume_time_s": 1.3714040000922978,
+        "oom_retries": 0,
+        "oom_retry_time_s": 0.0,
+        "input_tokens": 3278,
+        "generated_tokens": 184,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ]
+        ],
+        "peak_cuda_allocated_mib": 6141.00634765625,
+        "peak_cuda_reserved_mib": 6350.0
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 400,
+      "timestamp": 16.0,
+      "history_frames": 2,
+      "result_valid": true,
+      "result": {
+        "stage": "manipulating",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "The right arm is holding the knife in the right hand",
+          "The knife is positioned above the sausage on the cutting board"
+        ],
+        "evidence_frame_indices": [
+          400
+        ],
+        "key_states": {
+          "grasp": "held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "expected_effect": "Cut a small piece of sausage with the knife and place it back on the knife holder",
+        "observed_effect": "The knife is positioned above the sausage on the cutting board, ready to cut",
+        "action_outcome": "uncertain",
+        "failure_type": "none",
+        "low_level_advice": null,
+        "high_level_advice": null
+      },
+      "monitor": {
+        "tracked_stage": "approaching",
+        "observed_stage": "manipulating",
+        "stage_confirmed": false,
+        "stage_stale": true,
+        "stage_candidate": "manipulating",
+        "stage_candidate_count": 1,
+        "observed_key_states": {
+          "grasp": "held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "tracked_key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "key_state_stale": {
+          "grasp": true,
+          "target_relation": false,
+          "task_goal": true
+        },
+        "key_state_confirmed": {
+          "grasp": false,
+          "target_relation": true,
+          "task_goal": false
+        },
+        "key_state_candidates": {
+          "grasp": "held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "key_state_candidate_counts": {
+          "grasp": 1,
+          "target_relation": 2,
+          "task_goal": 1
+        },
+        "failure_state": "clear",
+        "active_failure_type": null,
+        "candidate_failure_type": null,
+        "candidate_count": 0,
+        "alert": false,
+        "incident_id": null,
+        "suppression_reason": "no_failure",
+        "current_evidence_present": true,
+        "failure_evidence_supported": false,
+        "recovery_action_supported": false,
+        "recovery_key_state_matches": {},
+        "recovery_evidence_supported": false,
+        "recovery_policy": "uncalibrated_key_state_heuristic",
+        "recovery_count": 0,
+        "recovery_confirmed": false,
+        "recovered_incident_ids": [],
+        "unresolved_failure_types": [],
+        "cooldown_remaining_s": 0.0,
+        "policy_calibrated": false
+      },
+      "metrics": {
+        "inference_ms": 13623.002899927087,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cuda:0",
+        "gpu_wait_time_s": 0.0,
+        "gpu_resume_time_s": 1.2425193000817671,
+        "oom_retries": 0,
+        "oom_retry_time_s": 0.0,
+        "input_tokens": 3301,
+        "generated_tokens": 191,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ]
+        ],
+        "peak_cuda_allocated_mib": 6166.4951171875,
+        "peak_cuda_reserved_mib": 6386.0
+      }
+    },
+    {
+      "episode_index": 18,
+      "frame_index": 500,
+      "timestamp": 20.0,
+      "history_frames": 2,
+      "result_valid": true,
+      "result": {
+        "stage": "approaching",
+        "status": "in_progress",
+        "failure": false,
+        "evidence": [
+          "The right arm is moving towards the knife holder",
+          "The knife is not yet picked up"
+        ],
+        "evidence_frame_indices": [
+          300,
+          400,
+          500
+        ],
+        "key_states": {
+          "grasp": "not_held",
+          "target_relation": "away_from_target",
+          "task_goal": "unknown"
+        },
+        "expected_effect": "The right arm should pick up the knife from the knife holder",
+        "observed_effect": "The right arm is moving towards the knife holder, but the knife is not yet grasped",
+        "action_outcome": "uncertain",
+        "failure_type": "none",
+        "low_level_advice": null,
+        "high_level_advice": null
+      },
+      "monitor": {
+        "tracked_stage": "approaching",
+        "observed_stage": "approaching",
+        "stage_confirmed": false,
+        "stage_stale": true,
+        "stage_candidate": "approaching",
+        "stage_candidate_count": 1,
+        "observed_key_states": {
+          "grasp": "not_held",
+          "target_relation": "away_from_target",
+          "task_goal": "unknown"
+        },
+        "tracked_key_states": {
+          "grasp": "not_held",
+          "target_relation": "at_target",
+          "task_goal": "not_met"
+        },
+        "key_state_stale": {
+          "grasp": true,
+          "target_relation": true,
+          "task_goal": true
+        },
+        "key_state_confirmed": {
+          "grasp": false,
+          "target_relation": false,
+          "task_goal": false
+        },
+        "key_state_candidates": {
+          "grasp": "not_held",
+          "target_relation": "away_from_target",
+          "task_goal": null
+        },
+        "key_state_candidate_counts": {
+          "grasp": 1,
+          "target_relation": 1,
+          "task_goal": 0
+        },
+        "failure_state": "clear",
+        "active_failure_type": null,
+        "candidate_failure_type": null,
+        "candidate_count": 0,
+        "alert": false,
+        "incident_id": null,
+        "suppression_reason": "no_failure",
+        "current_evidence_present": true,
+        "failure_evidence_supported": false,
+        "recovery_action_supported": false,
+        "recovery_key_state_matches": {},
+        "recovery_evidence_supported": false,
+        "recovery_policy": "uncalibrated_key_state_heuristic",
+        "recovery_count": 0,
+        "recovery_confirmed": false,
+        "recovered_incident_ids": [],
+        "unresolved_failure_types": [],
+        "cooldown_remaining_s": 0.0,
+        "policy_calibrated": false
+      },
+      "metrics": {
+        "inference_ms": 13454.411499900743,
+        "json_schema_constrained": true,
+        "max_inference_s": 120,
+        "compute_device": "cuda:0",
+        "gpu_wait_time_s": 0.0,
+        "gpu_resume_time_s": 1.0431995999533683,
+        "oom_retries": 0,
+        "oom_retry_time_s": 0.0,
+        "input_tokens": 3240,
+        "generated_tokens": 194,
+        "at_token_limit": false,
+        "image_grid_thw": [
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ],
+          [
+            1,
+            16,
+            22
+          ]
+        ],
+        "peak_cuda_allocated_mib": 6099.00390625,
+        "peak_cuda_reserved_mib": 6314.0
+      }
+    }
+  ],
+  "quality_evaluation": "not performed; independent human temporal labels are required",
+  "model_weight_integrity": "not rechecked; this verifier does not hash model weights or verify which weights generated the logs",
+  "observed_limitations": [
+    "Source/log/causality checks do not establish correctness of model evidence or task stages.",
+    "Repeated model assertions are not independent proof of a failure or recovery.",
+    "Alert thresholds are uncalibrated; no accuracy, recall, or false-alarm rate is claimed.",
+    "Recorded inference time is not online alert latency."
+  ]
+}

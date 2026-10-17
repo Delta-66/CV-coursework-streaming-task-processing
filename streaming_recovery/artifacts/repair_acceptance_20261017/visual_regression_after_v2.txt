@@ -1,0 +1,10 @@
+test_direction_uses_image_axes_and_deadband_only (streaming_recovery.tests.test_localization.LocalizationTests.test_direction_uses_image_axes_and_deadband_only) ... ok
+test_real_handle_neck_and_two_finger_edges (streaming_recovery.tests.test_localization.LocalizationTests.test_real_handle_neck_and_two_finger_edges) ... ok
+test_real_merged_finger_and_holder_rejected (streaming_recovery.tests.test_localization.LocalizationTests.test_real_merged_finger_and_holder_rejected) ... ok
+test_real_visible_blade_segment_survives_lower_reflection (streaming_recovery.tests.test_localization.LocalizationTests.test_real_visible_blade_segment_survives_lower_reflection) ... ok
+test_textureless_images_cannot_supply_positions (streaming_recovery.tests.test_localization.LocalizationTests.test_textureless_images_cannot_supply_positions) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.107s
+
+OK

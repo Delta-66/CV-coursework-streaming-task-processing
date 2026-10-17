@@ -1,0 +1,14 @@
+test_out_and_back_native_motion_is_not_stationary_from_equal_endpoints (streaming_recovery.tests.test_joint_interval.JointIntervalTests.test_out_and_back_native_motion_is_not_stationary_from_equal_endpoints) ... FAIL
+
+======================================================================
+FAIL: test_out_and_back_native_motion_is_not_stationary_from_equal_endpoints (streaming_recovery.tests.test_joint_interval.JointIntervalTests.test_out_and_back_native_motion_is_not_stationary_from_equal_endpoints)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_joint_interval.py", line 33, in test_out_and_back_native_motion_is_not_stationary_from_equal_endpoints
+    self.assertNotEqual(result["status"],"stationary", "端点相同不能否认区间内的实际往复运动")
+AssertionError: 'stationary' == 'stationary' : 端点相同不能否认区间内的实际往复运动
+
+----------------------------------------------------------------------
+Ran 1 test in 0.987s
+
+FAILED (failures=1)

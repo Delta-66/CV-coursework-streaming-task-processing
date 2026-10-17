@@ -1,0 +1,74 @@
+test_A_explicit_release_overrides_stale_positive_proxies (streaming_recovery.tests.test_repair_state.RepairStateTests.test_A_explicit_release_overrides_stale_positive_proxies) ... 
+  test_A_explicit_release_overrides_stale_positive_proxies (streaming_recovery.tests.test_repair_state.RepairStateTests.test_A_explicit_release_overrides_stale_positive_proxies) (timestamp=2) ... FAIL
+  test_A_explicit_release_overrides_stale_positive_proxies (streaming_recovery.tests.test_repair_state.RepairStateTests.test_A_explicit_release_overrides_stale_positive_proxies) (timestamp=3) ... FAIL
+test_A_explicit_release_overrides_stale_positive_proxies (streaming_recovery.tests.test_repair_state.RepairStateTests.test_A_explicit_release_overrides_stale_positive_proxies) ... FAIL
+test_B_early_release_then_empty_motion_invalidates_current_precondition (streaming_recovery.tests.test_repair_state.RepairStateTests.test_B_early_release_then_empty_motion_invalidates_current_precondition) ... FAIL
+test_B_return_without_subsequent_action_is_not_failure (streaming_recovery.tests.test_repair_state.RepairStateTests.test_B_return_without_subsequent_action_is_not_failure) ... ok
+test_C_closed_waiting_or_aligned_points_are_not_failure_evidence (streaming_recovery.tests.test_repair_state.RepairStateTests.test_C_closed_waiting_or_aligned_points_are_not_failure_evidence) ... ok
+test_C_failed_board_or_elsewhere_retry_creates_fresh_event (streaming_recovery.tests.test_repair_state.RepairStateTests.test_C_failed_board_or_elsewhere_retry_creates_fresh_event) ... 
+  test_C_failed_board_or_elsewhere_retry_creates_fresh_event (streaming_recovery.tests.test_repair_state.RepairStateTests.test_C_failed_board_or_elsewhere_retry_creates_fresh_event) (support='board') ... FAIL
+  test_C_failed_board_or_elsewhere_retry_creates_fresh_event (streaming_recovery.tests.test_repair_state.RepairStateTests.test_C_failed_board_or_elsewhere_retry_creates_fresh_event) (support='elsewhere') ... FAIL
+test_C_occluded_retry_waits_without_opening_or_false_resolution (streaming_recovery.tests.test_repair_state.RepairStateTests.test_C_occluded_retry_waits_without_opening_or_false_resolution) ... ok
+test_C_positive_retry_resolves_context_without_execution_attribution (streaming_recovery.tests.test_repair_state.RepairStateTests.test_C_positive_retry_resolves_context_without_execution_attribution) ... ok
+test_D_recovery_condition_keeps_connection_inside_gripper (streaming_recovery.tests.test_repair_state.RepairStateTests.test_D_recovery_condition_keeps_connection_inside_gripper) ... FAIL
+
+======================================================================
+FAIL: test_A_explicit_release_overrides_stale_positive_proxies (streaming_recovery.tests.test_repair_state.RepairStateTests.test_A_explicit_release_overrides_stale_positive_proxies) (timestamp=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_repair_state.py", line 52, in test_A_explicit_release_overrides_stale_positive_proxies
+    self.assertFalse(result["state"]["preconditions"]["reliable_grasp"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_A_explicit_release_overrides_stale_positive_proxies (streaming_recovery.tests.test_repair_state.RepairStateTests.test_A_explicit_release_overrides_stale_positive_proxies) (timestamp=3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_repair_state.py", line 52, in test_A_explicit_release_overrides_stale_positive_proxies
+    self.assertFalse(result["state"]["preconditions"]["reliable_grasp"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_A_explicit_release_overrides_stale_positive_proxies (streaming_recovery.tests.test_repair_state.RepairStateTests.test_A_explicit_release_overrides_stale_positive_proxies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_repair_state.py", line 58, in test_A_explicit_release_overrides_stale_positive_proxies
+    self.assertNotEqual(result["state"]["candidate"], "lost_grasp")
+AssertionError: 'lost_grasp' == 'lost_grasp'
+
+======================================================================
+FAIL: test_B_early_release_then_empty_motion_invalidates_current_precondition (streaming_recovery.tests.test_repair_state.RepairStateTests.test_B_early_release_then_empty_motion_invalidates_current_precondition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_repair_state.py", line 72, in test_B_early_release_then_empty_motion_invalidates_current_precondition
+    self.assertEqual(result["state"]["candidate"], "prerequisite_unmet")
+AssertionError: None != 'prerequisite_unmet'
+
+======================================================================
+FAIL: test_C_failed_board_or_elsewhere_retry_creates_fresh_event (streaming_recovery.tests.test_repair_state.RepairStateTests.test_C_failed_board_or_elsewhere_retry_creates_fresh_event) (support='board')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_repair_state.py", line 91, in test_C_failed_board_or_elsewhere_retry_creates_fresh_event
+    self.assertIsNotNone(result["failure_event"])
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_C_failed_board_or_elsewhere_retry_creates_fresh_event (streaming_recovery.tests.test_repair_state.RepairStateTests.test_C_failed_board_or_elsewhere_retry_creates_fresh_event) (support='elsewhere')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_repair_state.py", line 91, in test_C_failed_board_or_elsewhere_retry_creates_fresh_event
+    self.assertIsNotNone(result["failure_event"])
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_D_recovery_condition_keeps_connection_inside_gripper (streaming_recovery.tests.test_repair_state.RepairStateTests.test_D_recovery_condition_keeps_connection_inside_gripper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_repair_state.py", line 135, in test_D_recovery_condition_keeps_connection_inside_gripper
+    self.assertNotIn("离开夹爪内", resume_when)
+AssertionError: '离开夹爪内' unexpectedly found in '新观测连续支持刀离开夹爪内并随右夹爪运动，再继续携刀转移'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.099s
+
+FAILED (failures=7)

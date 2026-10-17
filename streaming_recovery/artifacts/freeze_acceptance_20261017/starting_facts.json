@@ -1,0 +1,28 @@
+{
+  "accepted_run_source_matches": {
+    "contracts.py": true,
+    "dynamics.py": true,
+    "engine.py": true,
+    "evaluation.py": true,
+    "events.py": true,
+    "fetch_functional_data.py": true,
+    "geometry.py": true,
+    "localization.py": true,
+    "memory.py": true,
+    "multiview.py": true,
+    "probe.py": true,
+    "recovery.py": true,
+    "report.py": true,
+    "review_existing.py": true,
+    "source.py": true,
+    "task_spec.py": true,
+    "tracking.py": true,
+    "validation.py": true,
+    "vision.py": true,
+    "__init__.py": true,
+    "__main__.py": true
+  },
+  "all_match": true,
+  "audit": "output/reviews/2026-10-17_followup3_audit_evidence.json",
+  "frozen_test_split_sha256": "0cbc7eb3d349c5d5b4476f367376a36d9a322f8e5c1de9da3f05730cada06c09"
+}

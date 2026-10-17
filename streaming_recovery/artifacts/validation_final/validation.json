@@ -1,0 +1,129 @@
+{
+  "checks": [
+    {
+      "name": "合成状态机、事件、坐标、回放、重置与 10000 步全历史容量",
+      "status": "passed",
+      "kind": "synthetic_semantic_inputs",
+      "detail": {
+        "tests_run": 16,
+        "failures": 0,
+        "errors": 0,
+        "long_synthetic_decisions": 10000,
+        "warning": "合成语义替身；不证明真实视觉准确率"
+      },
+      "elapsed_s": 1.015999999945052
+    },
+    {
+      "name": "真实正常/失败完整回放与两层建议",
+      "status": "passed",
+      "kind": "real_robot_pixels_and_proprioception",
+      "detail": {
+        "decisions": {
+          "0": 12,
+          "18": 21
+        },
+        "independent_labels": {
+          "0": {
+            "episode_success": "failure",
+            "avoid_keyframe_indices": [
+              141
+            ]
+          },
+          "18": {
+            "episode_success": "success",
+            "avoid_keyframe_indices": []
+          }
+        },
+        "first_suspicion_s": 9.0,
+        "first_confirmation_s": 10.0,
+        "normal_grasp_confirmed_times": [
+          11.0,
+          12.0,
+          13.0
+        ],
+        "scope": "仅演示；阈值用这两个可见场景开发，不能报告无偏识别精度或泛化性能",
+        "first_detectable_failure_time": "not_annotated; avoid keyframe is not assumed to be first-detectable"
+      },
+      "elapsed_s": 10.062000000034459
+    },
+    {
+      "name": "完整链路公共前缀因果性与标签路径隔离",
+      "status": "passed",
+      "kind": "real_pixels_counterfactual_suffix_fixture",
+      "detail": {
+        "common_prefix_native_frames": 275,
+        "identical_decisions": 11,
+        "prefix_end_exclusive_s": 11.0,
+        "suffix_modified": true,
+        "path_episode_labels_actions_modified": true,
+        "coverage": "Parquet读取、逐帧解码、对齐、初始图像校准、视觉特征、记忆、状态、事件、两层纠错、结构化输出",
+        "fixture_kind": "真实图像公共前缀＋人工修改后缀；不是新增真实机器人轨迹"
+      },
+      "elapsed_s": 14.312999999965541
+    },
+    {
+      "name": "实际视觉后端 2000 步全缓存容量",
+      "status": "passed",
+      "kind": "repeated_real_frame_engineering_stress",
+      "detail": {
+        "decisions": 2000,
+        "maxima": {
+          "observations": 4,
+          "images": 8,
+          "image_bytes": 4718592,
+          "features": 5,
+          "anchors": 0,
+          "feature_text_chars": 280,
+          "conversation_turns": 0,
+          "persistent_model_kv_tokens": 0,
+          "log_reads": 0,
+          "events": 0,
+          "event_evidence": 0,
+          "active_events": 0,
+          "visual_reference_images": 1,
+          "visual_reference_bytes": 589824,
+          "visual_masks": 3,
+          "visual_mask_bytes": 589824,
+          "visual_tracks": 0,
+          "visual_calibration_entries": 2,
+          "task_state_slots": 12,
+          "object_states": 3,
+          "aligner_latest_samples": 3,
+          "task_instruction_chars": 127,
+          "model_last_response_chars": 0,
+          "anchor_image_refs": 0,
+          "model_request_queue_capacity": 1,
+          "model_response_queue_capacity": 1,
+          "model_input_images": 1,
+          "model_input_tokens": 0
+        },
+        "kind": "重复真实首帧的人工长流；只检验实际图像处理器容量，不作识别实验"
+      },
+      "elapsed_s": 14.09299999999348
+    },
+    {
+      "name": "真实后端缺失/遮挡恢复与跨轨迹重置",
+      "status": "passed",
+      "kind": "real_pipeline_with_injected_faults",
+      "detail": {
+        "normal_after_failed_equals_fresh": true,
+        "missing_high_continued": true,
+        "black_frame_continued": true,
+        "new_clear_frame_resumed": true,
+        "occlusion_kind": "人工缺帧/黑帧，不是真实遮挡标注集"
+      },
+      "elapsed_s": 8.03200000000652
+    }
+  ],
+  "passed": true,
+  "not_validated": [
+    "独立未见轨迹的识别精度与泛化",
+    "真实机器人重试和滑落样本",
+    "真实坐标变换和物理动作执行",
+    "切割完成与归位的真实视觉效果判定",
+    "Qwen可靠结构化诊断",
+    "目标4完整实验"
+  ],
+  "no_execution_claim": true,
+  "synthetic_not_used_as_visual_accuracy": true
+}

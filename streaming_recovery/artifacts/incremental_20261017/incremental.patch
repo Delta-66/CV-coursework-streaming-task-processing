@@ -1,0 +1,1983 @@
+--- a/streaming_recovery/config.json
++++ b/streaming_recovery/config.json
+@@ -1,10 +1,10 @@
+ {
+   "method": "bounded_visual_state_tracker",
+-  "backend": "calibrated_rgb_geometry",
+-  "source": {"root": "../data/vifailback_lerobot", "episodes": [0, 18], "sample_every": 25, "cameras": ["cam_high", "cam_right_wrist"], "max_age_s": 0.12},
++  "backend": "multiview_effect_geometry",
++  "source": {"root": "../data/vifailback_lerobot", "episodes": [0, 18], "sample_every": 10, "cameras": ["cam_high", "cam_right_wrist"], "max_age_s": 0.12},
+   "memory": {"frames": 4, "window_s": 4.0, "features": 6, "events": 4, "event_evidence": 4, "anchors": 8, "objects": 3},
+   "model": {"path": "../models/Qwen3-VL-2B-Instruct", "device": "cuda:0", "image_edge": 512, "max_input_tokens": 4096, "max_new_tokens": 384, "max_images": 3, "max_text_chars": 6000, "timeout_s": 90, "load_timeout_s": 180, "min_free_mib": 5000, "seed": 0},
+   "rules": {"confirm_samples": 2, "confirm_span_s": 0.8, "max_evidence_gap_s": 2.1, "close_delta_raw": 0.012, "gripper_closed_raw": 0.025, "gripper_open_raw": 0.04, "require_visual_gripper_agreement": true, "direction_deadband_normalized": 50},
+-  "geometry": {"source_unchanged_fraction": 0.15, "source_occluded_fraction": 0.20, "robot_board_fraction": 0.035, "tool_board_fraction": 0.035, "pixel_difference": 30, "min_motion_normalized": 8, "max_relative_motion_normalized": 80, "max_reference_images": 1, "max_masks": 3, "max_tracks": 2},
++  "geometry": {"source_unchanged_fraction": 0.15, "source_occluded_fraction": 0.20, "robot_board_fraction": 0.035, "tool_board_fraction": 0.035, "pixel_difference": 30, "min_motion_normalized": 8, "max_relative_motion_normalized": 80, "max_reference_images": 1, "max_masks": 4, "max_tracks": 2, "rack_blade_present_fraction": 0.60, "cut_stroke_min_pixels": 2},
+   "output": "artifacts/runs"
+ }
+--- a/streaming_recovery/contracts.py
++++ b/streaming_recovery/contracts.py
+@@ -24,6 +24,8 @@
+     observation_state: list[float] | None
+     modalities: dict[str, dict]
+     ref: str
++    # 可选实测接触/深度准备信息；旧调用无需新增参数。回放适配器不伪造此字段。
++    grasp_readiness: dict | None = None
+ 
+ 
+ ENUMS = {
+@@ -56,10 +58,40 @@
+     valid: bool = False
+     error: str | None = None
+     provenance: str = "unknown"
+-    # 当前/历史图像引用，最多 3 个；绝不携带整个视频或路径。
++    # 双视角后端最多4个引用（当前两图、初始参考、上次腕部），Qwen输入仍最多3图。
+     evidence_refs: list[dict] = field(default_factory=list)
+     measurements: dict = field(default_factory=dict)
+     effect_usable: bool = True
++    gripper_source: str = "independent_visual"
++    grasp_readiness: dict = field(default_factory=dict)
++    localization_frame: str = "cam_high_image_x_right_y_down"
++
++    def validate_bounded_extensions(self):
++        """后端扩展也受约束；不能通过 measurements 或准备证据藏无限历史。"""
++        import json
++        for key,values in ENUMS.items():
++            if getattr(self,key) not in values:
++                raise ValueError("invalid_visual_enum:"+key)
++        for key in ("knife_handle_xy","gripper_xy"):
++            point=getattr(self,key)
++            if point is not None and (len(point)!=2 or any(isinstance(v,bool) or not isinstance(v,(int,float)) or not isfinite(v) or not 0<=v<=1000 for v in point)):
++                raise ValueError("invalid_visual_point:"+key)
++        if self.gripper_source not in ("independent_visual","observation.state[13]"):
++            raise ValueError("undeclared_gripper_source")
++        if len(self.provenance)>80 or len(self.ref)>80 or len(self.localization_frame)>80:
++            raise ValueError("visual_string_capacity")
++        if len(json.dumps(self.measurements,ensure_ascii=False,allow_nan=False))>9000:
++            raise ValueError("measurement_capacity")
++        r=self.grasp_readiness
++        if r:
++            if set(r)!={"depth","orientation","contact_region","source","timestamp","ref"}:
++                raise ValueError("readiness_schema")
++            if any(r[k] not in ("confirmed","unknown","not_ready") for k in ("depth","orientation","contact_region")):
++                raise ValueError("readiness_enum")
++            if not isinstance(r["timestamp"],(float,int)) or not isfinite(r["timestamp"]) or r["timestamp"]>self.timestamp:
++                raise ValueError("future_or_invalid_readiness")
++            if not all(isinstance(r[k],str) and 0<len(r[k])<=80 for k in ("source","ref")):
++                raise ValueError("readiness_source_capacity")
+ 
+     @classmethod
+     def parse(cls, data: dict, timestamp: float, ref: str, provenance: str, evidence_refs: list[dict]):
+--- a/streaming_recovery/engine.py
++++ b/streaming_recovery/engine.py
+@@ -1,11 +1,12 @@
+ from __future__ import annotations
+ 
+-from dataclasses import asdict
++from dataclasses import asdict, replace
+ import math
++import json
+ from .memory import BoundedMemory
+ from .events import EventManager
+ from .tracking import TaskTracker
+-from .recovery import diagnose, propose, validate_consistency
++from .recovery import diagnose, propose, validate_consistency, RecoveryContext
+ from .contracts import VisualFacts, evidence
+ 
+ 
+@@ -20,6 +21,7 @@
+         self.memory = BoundedMemory(self.config["memory"])
+         self.tracker = TaskTracker(self.config["rules"],self.memory)
+         self.events = EventManager(self.config["memory"],self.config["rules"])
++        self.recovery = RecoveryContext()
+         self.last_timestamp = -math.inf
+         self.instruction = None
+         if hasattr(self.vision,"reset"):
+@@ -37,14 +39,25 @@
+             t = modality.get("timestamp")
+             if t is not None and t > observation.timestamp+1e-6:
+                 raise ValueError("future modality exposed to inference")
++        def fresh(name):
++            m=observation.modalities.get(name,{})
++            t=m.get("timestamp")
++            return m.get("status")=="available" and t is not None and 0<=observation.timestamp-t<=.12
++        observation=replace(observation,images={k:v for k,v in observation.images.items() if fresh(k)},
++                            observation_state=observation.observation_state if fresh("observation.state") else None)
+         if len(observation.images)>2 or any(max(im.size)>self.config["model"]["image_edge"] for im in observation.images.values()):
+             raise ValueError("image memory capacity exceeded")
+         self.memory.expire(observation.timestamp)
+         previous = self.memory.frames[-1] if self.memory.frames else None
+         facts = self.vision.observe(observation,previous)
++        if not fresh("cam_high"):
++            facts.effect_usable=False
++        if observation.grasp_readiness is not None:
++            facts.grasp_readiness=dict(observation.grasp_readiness)
++        facts.validate_bounded_extensions()
+         if facts.timestamp != observation.timestamp or facts.ref != observation.ref:
+             raise ValueError("visual output clock mismatch")
+-        if len(facts.description)>400 or len(facts.error or "")>500 or len(facts.evidence_refs)>3:
++        if len(facts.description)>400 or len(facts.error or "")>500 or len(facts.evidence_refs)>4:
+             raise ValueError("visual output capacity exceeded")
+         if any(e["timestamp"]>observation.timestamp for e in facts.evidence_refs):
+             raise ValueError("future evidence")
+@@ -63,29 +76,34 @@
+             status = "suspicious" if event["observation_status"]=="supported" else "information_insufficient"
+         elif state["task_completed"]:
+             status = "completed"
+-        elif state["stage"] == "unknown" or (state["stage"] == "verify_grasp" and state["preconditions"]["reliable_grasp"] is None):
++        elif state["stage"] == "unknown" or (state["stage"] in ("verify_grasp","transport_tool") and state["preconditions"]["reliable_grasp"] is None):
+             status = "information_insufficient"
+         else:
+             status = "executing"
+-        diagnosis = diagnose(event,state,facts)
+-        correction = propose(event,diagnosis,state,facts,self.config["rules"])
++        recovery_event = self.recovery.update(event,state)
++        diagnosis = diagnose(recovery_event,state,facts)
++        correction = propose(recovery_event,diagnosis,state,facts,self.config["rules"])
++        self.recovery.observe_request(correction)
+         usage = self.memory.usage() | self.events.usage()
+         if hasattr(self.vision,"usage"):
+             usage.update(self.vision.usage())
+-        usage.update({"task_state_slots":12,"object_states":3,"aligner_latest_samples":len(observation.modalities),
++        usage.update(self.tracker.usage() | self.recovery.usage())
++        usage.update({"object_states":3,"aligner_latest_samples":len(observation.modalities),
+                       "task_instruction_chars":len(observation.instruction),
+                       "model_last_response_chars":len(getattr(self.vision,"last_metrics",{}).get("raw","")),
+                       "anchor_image_refs":sum(len(x.get("images",[])) for x in self.memory.anchors.values()),
+                       "model_request_queue_capacity":1,"model_response_queue_capacity":1,
+                       "model_input_images":getattr(self.vision,"last_metrics",{}).get("input_images",0),
+                       "model_input_tokens":getattr(self.vision,"last_metrics",{}).get("input_tokens",0)})
+-        result = {"schema_version":"1.0","timestamp":observation.timestamp,"observation_ref":observation.ref,
++        result = {"schema_version":"1.1","timestamp":observation.timestamp,"observation_ref":observation.ref,
+                   "method":self.config["method"],"instruction":observation.instruction,
+-                  "scope":"刀具获取、转移与后续操作前置条件；真实视觉基线不确认切割完成/刀具归位",
++                  "scope":("右臂取刀、切下新小段并归位；固定场景双视角视觉，空间/接触准备须独立验证" if self.config["backend"]=="multiview_effect_geometry"
++                           else "经典单视角对照：只支持取刀效果，切割完成/归位未获该后端支持"),
+                   "state":state,"execution_status":status,"visual_facts":asdict(facts),
+-                  "failure_event":event,"notify":notify,"notification_reason":notify_reason,
++                  "failure_event":event,"recovery_event":recovery_event,"notify":notify,"notification_reason":notify_reason,
++                  "decision_rules":{"direction_deadband_normalized":self.config["rules"]["direction_deadband_normalized"]},
+                   "diagnosis":diagnosis,"correction":correction,"modalities":observation.modalities,
+-                  "modalities_used":["cam_high","observation.state[13]"] if self.config["backend"]=="calibrated_rgb_geometry" else list(observation.images),
++                  "modalities_used":["cam_high","observation.state[13]"] if self.config["backend"]=="calibrated_rgb_geometry" else list(observation.images)+(["observation.state[13]"] if observation.observation_state else []),
+                   "modalities_for_audit_only":["cam_right_wrist"] if self.config["backend"]=="calibrated_rgb_geometry" else [],
+                   "memory_usage":usage,"memory_limits":self.config["memory"],
+                   "execution":{"mode":"advisory_replay","actually_executed":False,"execution_receipt":None,
+@@ -101,8 +119,11 @@
+                 "events":m["events"],"event_evidence":m["events"]*m["event_evidence"],"object_states":m["objects"],
+                 "feature_text_chars":m["features"]*900,"visual_reference_images":self.config["geometry"]["max_reference_images"],
+                 "visual_masks":self.config["geometry"]["max_masks"],"visual_tracks":self.config["geometry"]["max_tracks"],
+-                "task_instruction_chars":1000,"model_last_response_chars":6000,"anchor_image_refs":3*m["anchors"],
++                "task_instruction_chars":1000,"model_last_response_chars":6000,"anchor_image_refs":4*m["anchors"],
+                 "model_input_images":self.config["model"]["max_images"],"model_input_tokens":self.config["model"]["max_input_tokens"]}
++        limits.update(task_state_slots=18,task_reference_entries=1,recovery_contexts=1,recovery_event_evidence=m["event_evidence"],recovery_state_slots=3)
++        limits.update(wrist_track_entries=3,food_reference_entries=5,visual_scalar_states=1)
++        limits.update(feature_payload_chars=12000*m["features"])
+         for key,limit in limits.items():
+             if u.get(key,0)>limit:
+                 raise ValueError(f"memory_capacity_exceeded:{key}")
+@@ -111,6 +132,7 @@
+ 
+     def end_of_stream(self):
+         return {"stream_ended":True,"last_decision_timestamp":self.last_timestamp if math.isfinite(self.last_timestamp) else None,
+-                "task_success":True if self.tracker.completed else None,
+-                "reason":"task_completion_evidence" if self.tracker.completed else "stream_end_is_not_success",
++                "task_success":True if self.tracker.cut_confirmed and self.tracker.returned is True else None,
++                "historical_completion":self.tracker.completed,
++                "reason":"task_completion_evidence" if self.tracker.cut_confirmed and self.tracker.returned is True else "stream_end_is_not_success",
+                 "actually_executed":False}
+--- a/streaming_recovery/events.py
++++ b/streaming_recovery/events.py
+@@ -64,7 +64,7 @@
+                     event.evidence = (event.evidence + [item])[-self.evidence_limit:]
+             event.observation_status = "supported"
+             sufficient = (event.support_count >= self.rules["confirm_samples"] and
+-                          now - event.support_started_at >= self.rules["confirm_span_s"])
++                          now - event.support_started_at + 1e-6 >= self.rules["confirm_span_s"])
+             if sufficient and event.state == "suspected":
+                 event.state = "confirmed"
+                 notification, reason = True, "evidence_confirmed"
+--- /dev/null
++++ b/streaming_recovery/fetch_functional_data.py
+@@ -0,0 +1,31 @@
++"""只获取两条非测试补充轨迹；冻结划分不变，不运行推理。"""
++import json
++import argparse
++from pathlib import Path
++from download_vifailback import HubDownload, LEROBOT_REPO
++
++def main():
++    root=Path(__file__).resolve().parents[1]
++    parser=argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--episodes",type=int,nargs="+",choices=[2,6,19],default=[2,19])
++    episodes=parser.parse_args().episodes
++    selected=[("train" if ep==19 else "validation",ep) for ep in episodes]
++    test={json.loads(s)["episode_index"] for s in (root/"configs/splits/test.jsonl").read_text(encoding="utf-8").splitlines()}
++    for split,episode in selected:
++        members={json.loads(s)["episode_index"] for s in (root/f"configs/splits/{split}.jsonl").read_text(encoding="utf-8").splitlines()}
++        if episode not in members or episode in test:
++            raise ValueError("frozen non-test selection no longer matches")
++    data=root/"data/vifailback_lerobot"
++    revision=json.loads((data/"download_manifest.json").read_text(encoding="utf-8"))["revision"]
++    hub=HubDownload(LEROBOT_REPO,data,revision)
++    for _,episode in selected:
++        paths=[f"data/chunk-000/episode_{episode:06d}.parquet"]+[f"videos/chunk-000/observation.images.{c}/episode_{episode:06d}.mp4" for c in ("cam_high","cam_right_wrist")]
++        for path in paths:
++            hub.download(path)
++    hub.save_manifest(episodes)
++    output=root/("streaming_recovery/artifacts/incremental_20261017/download_"+"_".join(map(str,episodes))+".json")
++    output.write_text(json.dumps({"repo":LEROBOT_REPO,"revision":revision,"files":hub.files},indent=2),encoding="utf-8")
++    print("Downloaded and hash-verified non-test episodes:",episodes)
++
++if __name__=="__main__":
++    main()
+--- a/streaming_recovery/geometry.py
++++ b/streaming_recovery/geometry.py
+@@ -74,7 +74,7 @@
+                                provenance=self.provenance, evidence_refs=refs)
+         image = np.asarray(observation.images["cam_high"].convert("RGB"))
+         if self.reference is None:
+-            if self.calibration_error is not None or observation.timestamp != 0:
++            if observation.timestamp > self.rules.get("calibration_wait_s", 3.0):
+                 return VisualFacts(observation.timestamp,observation.ref,error="initial_calibration_failed_restart_from_clear_t0",
+                                    provenance=self.provenance,evidence_refs=refs)
+             try:
+@@ -153,7 +153,7 @@
+             released="yes" if contact=="separate" else ("no" if held_evidence else "unknown"),
+             # 不将机器人像素质心冒充夹爪中点，不把刀像素质心冒充刀柄。
+             knife_handle_xy=None,gripper_xy=None,description=description,valid=True,
+-            provenance=self.provenance,evidence_refs=refs[-3:],measurements=measurements)
++            provenance=self.provenance,evidence_refs=refs[-3:],measurements=measurements,gripper_source="observation.state[13]")
+ 
+     def usage(self):
+         return {"visual_reference_images":int(self.reference is not None),
+--- a/streaming_recovery/memory.py
++++ b/streaming_recovery/memory.py
+@@ -1,5 +1,7 @@
+ """所有跨决策的推理历史都集中于明确有界的容器。"""
+ from collections import deque
++from dataclasses import asdict
++import json
+ 
+ 
+ class BoundedMemory:
+@@ -29,5 +31,6 @@
+                 "image_bytes": sum(im.width * im.height * 3 for o in self.frames for im in o.images.values()),
+                 "features": len(self.features), "anchors": len(self.anchors),
+                 "feature_text_chars": sum(len(f.description) + len(f.error or "") for f in self.features),
++                "feature_payload_chars":sum(len(json.dumps(asdict(f),ensure_ascii=False)) for f in self.features),
+                 "conversation_turns": 0, "persistent_model_kv_tokens": 0, "log_reads": 0}
+ 
+--- /dev/null
++++ b/streaming_recovery/multiview.py
+@@ -0,0 +1,189 @@
++"""固定相机/白柄刀/橙色香肠场景的双视角经典视觉；无轨迹编号或标签输入。
++腕部刀刃连接、顶视刀架外观及新增分离区域分别给出证据。未提供深度/物理控制。
++"""
++from collections import deque
++import cv2
++import numpy as np
++from .geometry import GeometryVision
++
++class MultiViewGeometryVision(GeometryVision):
++    provenance = "real_multiview_effect_geometry"
++
++    def reset(self):
++        super().reset()
++        self.rack_blade_mask = None
++        self.food_reference = None
++        self.wrist_tracks = deque(maxlen=3)
++        self.tool_departed = False
++
++    def food_parts(self, hsv, mask):
++        food = mask & (hsv[:,:,0]>2) & (hsv[:,:,0]<20) & (hsv[:,:,1]>90) & (hsv[:,:,2]>125)
++        food = cv2.morphologyEx(food.astype("uint8"),cv2.MORPH_OPEN,np.ones((3,3),np.uint8))
++        parts=[]
++        for c in self.contours(food):
++            area=float(cv2.contourArea(c))
++            if area<15:
++                continue
++            x,y,w,h=cv2.boundingRect(c)
++            perimeter=cv2.arcLength(c,True)
++            parts.append({"bbox":[x,y,w,h],"area":area,"roundness":4*np.pi*area/max(1,perimeter**2)})
++        return sorted(parts,key=lambda p:p["area"],reverse=True)[:9]
++
++    def calibrate(self, image, observation):
++        # 允许在起始有限等待期重新尝试。缺帧期间不推断完成了什么。
++        super().calibrate(image,observation)
++        hsv=cv2.cvtColor(image,cv2.COLOR_RGB2HSV)
++        contours=[c for c in self.contours(hsv[:,:,2]<75) if cv2.boundingRect(c)==self.rack_box]
++        if len(contours)!=1:
++            self.reference=None
++            raise ValueError("rack_blade_reference_unavailable")
++        mask=np.zeros(image.shape[:2],dtype="uint8")
++        cv2.drawContours(mask,[cv2.convexHull(contours[0])],0,1,-1)
++        self.rack_blade_mask=mask.astype(bool)&(hsv[:,:,2]>90)&(hsv[:,:,1]<80)
++        if self.rack_blade_mask.sum()<40:
++            self.reference=None
++            raise ValueError("rack_blade_reference_too_small")
++        parts=self.food_parts(hsv,self.board_mask)
++        main=next((p for p in parts if max(p["bbox"][2:])/min(p["bbox"][2:])>3 and p["area"]>150),None)
++        if main is None:
++            self.reference=None
++            raise ValueError("initial_single_sausage_not_localized")
++        small=[p for p in parts if p is not main and .06*main["area"]<p["area"]<.5*main["area"] and p["roundness"]>.45]
++        self.food_reference={"timestamp":observation.timestamp,"ref":observation.ref,"main":main,"small":small[:4]}
++        self.calibration_error=None
++
++    def wrist_observation(self, observation):
++        if "cam_right_wrist" not in observation.images:
++            self.wrist_tracks.clear()
++            return {"available":False,"blade":None,"cut_operation":False,"reason":"wrist_missing"}
++        im=np.asarray(observation.images["cam_right_wrist"].convert("RGB"))
++        h,w=im.shape[:2]
++        if im.std()<8:
++            self.wrist_tracks.clear()
++            return {"available":False,"blade":None,"cut_operation":False,"reason":"wrist_black_or_occluded"}
++        hsv=cv2.cvtColor(im,cv2.COLOR_RGB2HSV)
++        candidates=[]
++        for threshold in (120,160,180,200):
++            white=(hsv[:,:,1]<75)&(hsv[:,:,2]>threshold)
++            for c in self.contours(white):
++                x,y,bw,bh=cv2.boundingRect(c)
++                if (.42*w < x+bw/2 < .62*w and bh>.28*h and bw<.13*w and bh/max(bw,1)>5 and
++                    .60*h<y+bh<.79*h and cv2.contourArea(c)>h*w*.002):
++                    candidates.append((x,y,bw,bh))
++        blade=max(candidates,key=lambda b:b[3]) if candidates else None
++        # 腕部条形白刃必须止于可见两指的尖端区域；与单纯闭爪原始值分离。
++        joined=False
++        if blade:
++            x,y,bw,bh=blade
++            edge_y=int(h*.68)  # 已声明腕部相机安装下的两指尖端带；不输出机器人坐标。
++            x0,x1=int(x+bw/2-w*.06),int(x+bw/2+w*.06)
++            left=hsv[edge_y:min(h,edge_y+15),max(0,x0-12):max(1,x0),2]
++            right=hsv[edge_y:min(h,edge_y+15),x1:min(w,x1+12),2]
++            joined=bool(left.size and right.size and np.mean(left<85)>.5 and np.mean(right<85)>.5)
++        food=(hsv[:,:,0]>2)&(hsv[:,:,0]<25)&(hsv[:,:,1]>65)&(hsv[:,:,2]>140)
++        band=np.zeros((h,w),bool);band[:int(h*.70),:]=True
++        food_parts=self.contours(food & band)
++        sausage=[]
++        if blade:
++            x,y,bw,bh=blade
++            for c in food_parts:
++                xx,yy,ww,hh=cv2.boundingRect(c)
++                adjacent=min(abs(xx-(x+bw)),abs(xx+ww-x))<w*.07
++                if ww>hh*2 and ww>w*.15 and hh>h*.025 and cv2.contourArea(c)>w*h*.004 and adjacent:
++                    sausage.append((xx,yy,ww,hh))
++        food_box=max(sausage,key=lambda b:b[2]) if sausage else None
++        operation=False
++        old=self.wrist_tracks[-1] if self.wrist_tracks else None
++        if joined and food_box and old and old["food"] and observation.timestamp-old["timestamp"]<=self.rules["max_evidence_gap_s"]:
++            # 刀刃邻接香肠端部，端部在刀刃参考系发生相对运动：操作证据，仍非切开效果。
++            operation=abs(food_box[1]-old["food"][1])>=self.config.get("cut_stroke_min_pixels",2)
++        row={"timestamp":observation.timestamp,"ref":observation.ref,"blade":list(blade) if blade else None,
++             "joined":joined,"food":list(food_box) if food_box else None}
++        self.wrist_tracks.append(row)
++        return {"available":True,"blade":row["blade"],"joined":joined,"food":row["food"],
++                "cut_operation":bool(operation),"previous_ref":old["ref"] if old else None,
++                "previous_timestamp":old["timestamp"] if old else None}
++
++    def observe(self, observation, previous=None):
++        facts=super().observe(observation,previous)
++        if not facts.valid:
++            self.wrist_tracks.clear()
++            return facts
++        image=np.asarray(observation.images["cam_high"].convert("RGB"))
++        hsv=cv2.cvtColor(image,cv2.COLOR_RGB2HSV)
++        m=facts.measurements
++        wrist=self.wrist_observation(observation)
++        m["wrist"]=wrist
++        m["gripper_evidence_source"]="observation.state[13] only; not independent visual corroboration"
++        bright=float((hsv[:,:,2][self.rack_blade_mask]>90).mean())
++        dark=float((hsv[:,:,2][self.rack_blade_mask]<60).mean())
++        rack_clear=not m["source_occluded"]
++        rack_present=bright>=self.config.get("rack_blade_present_fraction",.60) and dark<.35
++        raw=observation.observation_state[13] if observation.observation_state else None
++        closed=raw is not None and raw<=self.rules["gripper_closed_raw"]
++        # 腕部刀刃在两指之间，同时原刀架刃区已改变。两个视角均进入判定。
++        connected=bool(wrist.get("joined") and closed and bright<.6)
++        if connected:
++            self.tool_departed=True
++            facts.knife_location="gripper"
++            facts.contact="between_fingers"
++            facts.released="no"
++            facts.motion="at_board" if m["robot_at_board"] else ("returning_holder" if m["source_occluded"] else "to_board")
++            # 离架、接触由腕部解释；不虚构全局三维轨迹。
++        elif rack_present and rack_clear:
++            facts.knife_location="holder"
++            facts.contact="separate"
++            facts.released="yes"
++            facts.motion="at_board" if m["robot_at_board"] else ("away" if self.tool_departed else "unknown")
++        elif m["tool_on_board"] and not m["robot_at_board"] and wrist.get("available") and not wrist.get("blade"):
++            facts.knife_location="board"
++            facts.contact="separate"
++            facts.released="yes"
++            facts.motion="unknown"
++        elif facts.knife_location=="holder" and not rack_present:
++            facts.knife_location="unknown"
++            facts.contact="unknown"
++            facts.released="unknown"
++        facts.visibility="clear" if rack_clear else "partial"
++        # 切割前只保存一个主物体及最多4个已有小块的几何参考。
++        parts=self.food_parts(hsv,self.board_mask)
++        ref=self.food_reference
++        main=next((p for p in parts if p["area"]>.35*ref["main"]["area"] and max(p["bbox"][2:])/min(p["bbox"][2:])>3),None)
++        small=[p for p in parts if p is not main and .06*ref["main"]["area"]<p["area"]<.5*ref["main"]["area"] and p["roundness"]>.45]
++        rx,ry,rw,rh=ref["main"]["bbox"]
++        def novel(p):
++            x,y,w,h=p["bbox"];cx,cy=x+w/2,y+h/2
++            outside=not (rx-3<=cx<=rx+rw+3 and ry-3<=cy<=ry+rh+3)
++            old=any(abs(cx-(q["bbox"][0]+q["bbox"][2]/2))<12 and abs(cy-(q["bbox"][1]+q["bbox"][3]/2))<12 for q in ref["small"])
++            return outside and not old
++        clear_food = main is not None and not m["robot_at_board"] and len(parts)<=8
++        facts.cut_piece=("yes" if small else "no") if clear_food else "unknown"
++        m.update(rack_blade_bright_fraction=round(bright,5),rack_blade_dark_fraction=round(dark,5),
++                 rack_present=bool(rack_present),wrist_contributes_connection=connected,
++                 food_components=parts[:8],initial_food_reference=ref,
++                 new_cut_effect="yes" if clear_food and any(novel(p) for p in small) else "unknown",
++                 cut_reference_timestamp=ref["timestamp"],
++                 cut_operation="yes" if wrist.get("cut_operation") and connected and m["robot_at_board"] else "unknown")
++        # 此数据无经校准深度/接触反馈，绝不把腕部投影或区域质心当接触准备。
++        facts.grasp_readiness={}
++        facts.description=(f"刀架刃区亮像素比例={bright:.3f}；腕部刀刃—两指连接={bool(wrist.get('joined'))}；"
++                           f"刀架/腕部联合夹持证据={connected}；新分离小段={m['new_cut_effect']}；"
++                           f"腕部刀—香肠相对作用={m['cut_operation']}")
++        facts.evidence_refs=[{"ref":observation.ref,"timestamp":observation.timestamp,"camera":"cam_high"},
++                             {"ref":observation.ref,"timestamp":observation.timestamp,"camera":"cam_right_wrist"}] if wrist["available"] else facts.evidence_refs
++        facts.evidence_refs.append({"ref":self.reference_ref,"timestamp":self.reference_time,"camera":"cam_high"})
++        if wrist.get("previous_ref"):
++            facts.evidence_refs.append({"ref":wrist["previous_ref"],"timestamp":wrist["previous_timestamp"],"camera":"cam_right_wrist"})
++        facts.evidence_refs=facts.evidence_refs[-4:]
++        self.last_metrics={"calls":self.calls,"input_images":1+int(wrist["available"]),"input_tokens":0,"output_tokens":0,
++                           "raw":"","provenance":self.provenance,"measurements":m}
++        return facts
++
++    def usage(self):
++        u=super().usage()
++        u["visual_masks"]+=int(self.rack_blade_mask is not None)
++        u["visual_mask_bytes"]+=self.rack_blade_mask.nbytes if self.rack_blade_mask is not None else 0
++        u.update(wrist_track_entries=len(self.wrist_tracks),
++                 food_reference_entries=1+len(self.food_reference["small"]) if self.food_reference else 0,
++                 visual_scalar_states=1)
++        return u
+--- a/streaming_recovery/README.md
++++ b/streaming_recovery/README.md
+@@ -1,117 +1,75 @@
+-# 流式任务理解、失败诊断与分层纠错：独立可运行实现
++# 机器人操作的流式理解、失败诊断与分层纠错
+ 
+-本目录实现目标 1—3 在**固定场景的右臂取刀、携刀转移及夹持前置条件监测**上的完整链路。采用真实像素驱动的经典视觉模型和有界状态机，不训练模型，不接入真机，不把建议视为执行。原项目代码、变量名和未提交成果均保留。
++这是对现有 `streaming_recovery/` 的增量修复，范围为课题目标 1—3。当前主方法是 **`bounded_visual_state_tracker`＋`multiview_effect_geometry`**：真实顶视/右腕图像、夹爪原始状态、有限记忆与透明规则。没有训练新模型，没有接入真机。
+ 
+-两个真实开发样例已跑通：失败轨迹在 9 s 疑似、10 s 确认；正常轨迹无失败提醒，11 s 开始获得持刀证据。**这不代表整项切割任务已验收，也不是泛化准确率**。切割完成、刀具归位、真实重试和滑落还缺少相应视觉验证。详细结果及证据见 `docs/验证与交付.md`。
++已实际回放 5 条取刀—切香肠—归位轨迹，共 1,790 个原生时刻、3,580 张解码图、180 次判断。正常 episode 18、19 分别在 19.6 s、15.6 s 获得完整任务效果证据；失败 episode 0、2、6 分别在 9.6 s、10.4 s、9.6 s 确认异常。**这些是功能演示，不是识别准确率或泛化成绩。** episode 19 首次冻结验证漏掉切割操作，修复后已归入本轮开发，原始漏检记录保留。
++
++真实刀柄/两指联合定位、独立接触准备、完整真实重试建议过程仍未验证。当前实际纠错演示为“恢复夹持前置条件→条件允许时打开空夹爪”；二维对齐、准备检查、闭合建议和效果确认的推进链已用明确标记的合成输入验证。不会把这两类结果混写。
+ 
+ ## 运行
+ 
+-在项目根目录 `C:\Users\lenovo\Desktop\CV` 的 PowerShell 中：
++在项目根目录的 PowerShell 中：
+ 
+ ```powershell
+ & 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run
+ ```
+ 
+-这会读取现有真实数据，逐帧解码，输出 33 个在线决策和可离线查看的 `index.html`。主方法在 CPU 上运行，无需 GPU 或 API 凭据。每次新建时间目录，不覆盖旧结果。
++默认完整回放 episode 0、18，每 10 个原生帧判断一次（数据时间 2.5 Hz），输出 82 次判断。CPU 运行，不需要 GPU、模型权重或 API 凭据；每次新建输出目录，不覆盖旧记录。
+ 
+-完整功能验证：
++复现本次五条完整回放：
++
++```powershell
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run --config streaming_recovery/artifacts/incremental_20261017/release_config.json
++```
++
++功能验收与合成逻辑回归：
+ 
+ ```powershell
+ & 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery validate
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m unittest discover -s streaming_recovery/tests -v
+ ```
+ 
+-只运行合成逻辑测试：
++依赖版本见 [requirements.txt](requirements.txt)。本轮沿用 `cv-streaming`，没有重装环境。迁移时使用 Python 3.11，并修改 `config.json` 中的数据位置；配置相对路径以配置文件所在目录为基准。
+ 
+-```powershell
+-& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m unittest streaming_recovery.tests.test_system -v
+-```
++## 可核查结果
+ 
+-可用 `--config 路径` 和 `--output 新目录` 指定配置、输出；已存在的输出目录会拒绝覆盖。配置中的相对路径相对于配置文件。迁移机器时安装本目录 `requirements.txt`，用 Python 3.11，然后修改 `source.root`。原有 `cv-streaming` 已具备全部依赖，本次未安装或修改环境。
++- [本轮交付与修复说明](docs/增量修复与验收_20261017.md)：问题、补丁、验证等级和未完成项。
++- [真实正常/失败查看页](artifacts/incremental_20261017/delivery_run/index.html)：每个时刻的双视角、阶段、依据、事件与两层建议。
++- [冻结后新增 episode 6](artifacts/incremental_20261017/unseen_v2_run/index.html)。
++- [功能验收](artifacts/incremental_20261017/delivery_validation/validation.json)、[补充验证与暴露记录](artifacts/incremental_20261017/additional_validation.json)。
++- [修改前失败回归](artifacts/incremental_20261017/before/regressions.txt)、[修改后 29 项回归](artifacts/incremental_20261017/delivery_validation/unit_tests.txt)。
++- [真实输出示例](artifacts/incremental_20261017/real_examples.json)、[合成恢复推进序列](artifacts/incremental_20261017/synthetic_recovery_trace.jsonl)。
++- [关键帧对照](artifacts/incremental_20261017/真实运行关键帧.png)、[首次冻结运行，含 episode 19 漏检](artifacts/incremental_20261017/additional_run/index.html)。
+ 
+-## 目录
++每个新运行保存配置、源码副本、代码与输入文件 SHA256、完整 JSONL 和结束状态。根目录 Qwen 路线及其 500 条基准是另一条路线，本轮未运行或混用其指标。
+ 
+-```text
+-streaming_recovery/
+-  config.json                  # 采样、容量、规则和视觉阈值
+-  __main__.py                  # run / validate 入口
+-  source.py                    # LeRobot 逐帧读取、因果对齐
+-  contracts.py                 # Observation / VisualFacts 契约与严格解析
+-  geometry.py                  # 主视觉模型：首帧参考、分割、差分、运动关联
+-  memory.py                    # 有界图像/特征/证据锚点
+-  tracking.py                  # 阶段、前置条件、尝试与效果判断
+-  events.py                    # 疑似/确认/持续/解除/新尝试
+-  recovery.py                  # 高低层建议、动作契约与一致性校验
+-  engine.py                    # 完整在线决策链；不读取累计日志
+-  report.py                    # 仅离线生成审计查看页
+-  validation.py               # 真实像素因果性、长流、缺失和重置验收
+-  tests/test_system.py         # 明确标记的合成语义测试
+-  vision.py / probe.py         # 实际运行过的 Qwen 试验；不作为主验收方法
+-  docs/                        # 需求、项目审视、数据契约、验证与限制
+-  artifacts/                   # 原始输出、实图、测试结果及测试夹具
+-```
++## 数据、任务与模块
+ 
+-## 输入与已验证的数据边界
++只绑定规格 `right_knife_cut_sausage_return_v1`：右臂取刀、携刀到砧板、产生本次新小段、刀回架、释放。支持规范英文指令及一个明确中文表述，允许大小写、空白与末尾句号规范化；否定、不同对象/顺序或其他任务明确拒绝，不用关键词凑流程。
+ 
+-本地 `data/vifailback_lerobot` 的 LeRobot v2.1、25 FPS、640×480 AV1；episode 0 和 18 分别 300、519 帧。指令经第一行 `task_index` 查 `meta/tasks.jsonl` 得到。在线读取只允许 `timestamp`、`frame_index`、`observation.state`；源字段未重命名，Python 契约用 `observation_state` 搬运其中的值。
++`source.py → contracts.py → memory.py → multiview.py → tracking.py → events.py → recovery.py → engine.py` 构成完整链路；`__main__.py` 是入口；`report.py` 仅离线读取输出生成查看页。旧 `geometry.py` 后端保留，可把配置 `backend` 设为 `calibrated_rgb_geometry` 运行其受限对照；它不具备新双视角后端的切割/归位能力。
+ 
+-主方法使用 **cam_high 图像＋`observation.state[13]` 右夹爪原始值**。`cam_right_wrist` 同步读取并保存供人工核查，未用于主判定；不会将“可用”与“实际使用”混写。左右腕部视频、关节速度/effort 和目标 EEF 虽存在，主方案没有使用。
++数据为官方固定版本 LeRobot v2.1、25 FPS、640×480 AV1，推理图像长边缩至 512。保留源变量名，只读取 `timestamp`、`frame_index`、`observation.state`；指令由控制面查任务表。状态第 13 项是右夹爪原始值，单位未被解释为米或力。`action`、目标 EEF、最终标签、样本目录名称与总长度不进入推理。
+ 
+-`action` 是下一步 qpos，`complementary_info.action_eef` 是目标 EEF，均不输入诊断。没有核实的机器人坐标、物理单位和标定不能从这些字段推定。完整数据事实、一手来源及缺失信息见 `docs/需求与事实.md`。最终标签和 avoid/correct 标注只在独立验证器完成推理后读取。
++顶视图用于刀架刃区、砧板和香肠布局；腕部图像实际参与刀刃与两指连接、刀刃与香肠端部的相对运动判断，贡献与引用写入 `measurements.wrist`。开闭值来自同一原始状态，`gripper_source` 明确标识它不是独立视觉互证。
+ 
+-## 方法与因果性
++## 方法边界与记忆
+ 
+-方法名是 `bounded_visual_state_tracker`，不是纯滑动窗口或纯当前观测基线。图像工作区只从 `t=0` 已到达图像初始化；保留一个固定参考图像、三个掩码和两个短时目标轨迹。后续分割与差分都针对当前图像；不会看完整视频选帧、按全段统计归一化、用未来平滑或按总时长推测阶段。
++这是固定相机、棕色砧板、黑刀架、白柄刀、橙色香肠的经典视觉方法，没有训练或通用识别保证。所有参考只来自已到达图像。首帧无效时允许在起始 3 s 内等待可校准观测；记录实际参考时间，不倒填历史；超过该范围明确要求从可验证初始状态重启。颜色、遮挡和镜头变化可造成未知或误识别。
+ 
+-视觉模型的显式场景假设是：顶视相机固定、初始砧板/刀架可见，棕色砧板右侧有狭长黑刀架，白柄刀是进入板面的唯一大块浅色细长工具。HSV 颜色和形状先验、首帧差分、机器人与刀像素的运动关联共同产生证据。这是**未经训练的场景专用经典视觉基线**，不是通用语义检测器；相近颜色干扰物、手部介入、照明变化和相机移动会影响判断。
++历史容量同时约束：观测 4 条/4 s、图像至多 8 张、特征 6 条/4 s、任务锚点 8 条、事件 4 个且每事件 4 条证据。双视角后端额外保留 1 张参考、4 个掩码、2 个区域运动点、3 条腕部几何记录、最多 5 个初始食物几何条目。恢复上下文至多 1 个事件和 3 个状态槽。特征扩展字典单条最多 9,000 字符，整体 payload 也受检查；没有无限对话、模型 KV 或日志回读。详细容量见交付说明和每个输出的 `memory_usage`。
+ 
+-首帧校准失败或从中途开始时明确报告未知并要求从有效初始帧重启，不能悄悄用后来的任意状态替换初始条件。大幅背景改变/黑屏会降级为信息不足。原始测量、参考帧和阈值均在结果中可核查；像素质心不会冒充夹爪中点或刀柄定位。
++同步背压只保证因果次序，不承诺真机墙钟实时控制。两后端均通过完整输入链公共前缀对照；对齐只取已到达且未过期的样本，默认 0.12 s，无未来插值。流结束不触发成功。
+ 
+-原生帧按 25 FPS 顺序到达；默认每 25 帧决策一次，即数据时间 1 Hz。适配器逐帧检查视频 PTS 和表格时钟，浮点舍入只容许 `1e-5 s`，决策时间用经验证的帧时钟。错位、缺帧和非有限值显式标记。异步对齐器仅接受时间戳不晚于到达时间、且已经到达的样本；过期阈值默认 0.12 s，无未来插值。
++## 状态与纠错
+ 
+-回放用同步背压：本次处理完成后才推进输入。它保证因果次序，不承诺真机 25 Hz 实时吞吐。末帧不会因提前知道总长度而额外触发一次判断；流结束也不触发成功。编解码器/Arrow 有内部运输缓冲，但没有接口将未到时刻的像素/行交给推理；已对整个处理链进行公共前缀测试。
++历史 `ever_held`、`completed` 与当前 `held`、`returned` 分开；每次实际在目标附近开→闭才建立新尝试。短暂未知不抹去最近 4 s 的夹持证据，也不凭未知宣称失抓。切割确认需要切割前参考、持刀操作与新增分离效果的时间关系；初始已有小块不能完成本次任务。完成后继续输入会更新当前谓词，同时保留历史完成事实。
+ 
+-## 所有推理历史的容量
++事件经过疑似、确认、持续与结束；确认需不同观测、至少 0.8 s 连续支持，同一持续事件不逐帧提醒。阈值为工程门槛，不是校准概率。
+ 
+-| 项目 | 默认上限与规则 |
+-|---|---|
+-| 近期观测 | 4 条，且不超过 4 s；每条至多两张、长边 512 的图像 |
+-| 近期视觉事实 | 6 条，且不超过 4 s；每条描述 ≤400 字符、错误 ≤500 字符 |
+-| 长期任务证据锚点 | 8 条，固定语义键更新；每个至多 3 个图像引用，不保留图像副本 |
+-| 事件 | 4 条（含当前）；每事件 4 条证据，满容量淘汰最旧事件 |
+-| 固定任务/对象状态 | 12 个状态槽、3 个语义对象，不追加对象清单 |
+-| 视觉后端 | 1 张首帧参考、3 个固定尺寸布尔掩码、2 个点轨迹；每轨迹只保存上一时刻 |
+-| 对齐器 | 当前 state 和两相机各一个最新样本；不存异步无限队列 |
+-| 指令与模型文本 | 指令 ≤1000 字符；主方法无模型提示/对话历史 |
+-| Qwen 实验接口 | 单请求/响应队列；≤3 张图、4096 输入 token、384 输出 token；原始回答 ≤6000 字符；无跨调用 KV 缓存 |
++高低层共享事件、对象和恢复子目标，失抓后的支撑位置会改变恢复策略。下一动作由当前可用、可见、无冲突、未过期的证据门控，不能靠历史失败建议开爪。二维对齐之后必须另有新鲜独立深度/姿态/接触准备，才允许生成闭合建议；闭合之后仍等待抓取效果。反复缺证据会具体列出补观测要求并交接操作者，不会假定建议已执行。
+ 
+-所有决策输出 `memory_usage`。参考图像可以早于滑窗，但明确属于额外声明的一张有限记忆，不能把本方法称为纯滑窗。磁盘审计日志可以累计；`engine.py`、`tracking.py`、`geometry.py` 不读取它。离线报告和验证器可以读日志，不把结果回灌推理。解码器与当前算子的固定临时数组不算历史，且不随轨迹长度增长。
++所有建议 `directly_executable=false`、`actually_executed=false`、`execution_receipt=null`。图像方向不映射为机器人基座方向；不开具无依据的位移、旋转、速度或夹持力数值。
+ 
+-## 阶段、诊断与阈值
++旧版说明及第一次交付记录保留在 [修改前快照](artifacts/incremental_20261017/before/README.md) 和 [历史交付文档](docs/验证与交付.md)。
+ 
+-阶段由实际证据支持：寻找/接近、对齐、抓取尝试、抓取确认、携刀进入工作区、效果待检查；允许回退、未知及实际重试，不输出虚构百分比。全任务切割/归位/完成规则存在，真实主视觉后端对这些证据保留 `unknown`，因此不会宣称整任务完成。
+-
+-右夹爪 `0.04`/`0.025` 是明确配置的原始值开/闭门槛，`0.012` 是闭合变化量门槛；是根据本地样例图像和原始状态的对应关系选择的工程阈值，不是米、弧度、夹持力或概率。只有刀架附近实际观测到打开→闭合，才登记新尝试。闭合本身不能确认持刀。
+-
+-失败主类：`grasp_not_established`，必须看到尝试后机器人进入板面工作区，刀具源区域仍保持原样，且未出现工具随同进入工作区。只有任务暂未完成、夹爪未动、接近耗时或刀架被遮挡均不足以确认失败。正常持刀则要求刀具离架的视觉关联、浅色工具进入板面、机器人与刀像素共同运动，以及夹爪观测闭合，连续支持后才确认。运动关联是场景假设下的像素代理，不是已标定的 EEF 轨迹。
+-
+-确认默认需要两个不同决策时刻、跨度 ≥0.8 s、相邻间隔 ≤2.1 s；缺失/冲突会打断候选证据连续性。首个证据触发疑似，第二个充足证据触发确认，之后同一事件持续更新而不逐帧提醒。只有实际新尝试才生成新的失败事件；建议中的“重试”不会改变尝试计数。
+-
+-`prerequisite_unmet` 与 `lost_grasp` 规则有合成测试，未以相应真实轨迹证明识别能力。失败事实与原因假设分开：不能从“刀仍在架上”断言摩擦不足、夹持力过小。没有输出未经校准的置信概率。
+-
+-## 分层纠错
+-
+-高层和低层共享 `event_id`、`recovery_goal_id`、`object`。低层只发出下一动作，不一次承诺一串尚未检查的动作。疑似时保持/重新观察；真实确认失败样例中，刀仍在架上且空夹爪已闭合，因此建议在执行器确认安全条件后先打开右夹爪，为重新对齐建立条件。
+-
+-图像对齐建议接口只接受当前图像中可靠的刀柄/两指位置，方向限定 `cam_high_image_x_right_y_down`，没有物理位移、角度、速度或夹持力数值。主经典视觉模型不把区域质心充作刀柄/夹爪定位，因此该分支目前仅合成验证；补齐可靠局部定位与标定之后才能升级精确动作。打开夹爪和保持/重观测不要求虚构三维坐标。
+-
+-每条建议包含动作前置条件、停止条件、执行后检查，以及明确的 `directly_executable: false`。回放始终 `actually_executed: false`、`execution_receipt: null`；原视频后续即使恢复，也只记录观察变化，不归因于建议。
+-
+-## 为什么不用本地 VLM 作为主判定
+-
+-已真实调用 Qwen3-VL-2B 两轮，各 17 次，覆盖正常与失败轨迹。第一轮出现刀架位置与共同运动的矛盾；第二轮出现缺字段、物体关系矛盾和不可靠空间描述，均未获得可用于验收的严格有效输出。原始文本完整保存在 `artifacts/probe_v1.jsonl`、`artifacts/probe_v2.jsonl`。这只说明这两版提示和本地设置未奏效，不是对模型整体能力的评测。
+-
+-`vision.py` 保留真实本地模型接口、长度限制、JSON/坐标/矛盾检查和独立 worker 超时终止。模型加载或推理失败显式变成未知，不能回退为伪造结果。若需复现新一轮试验，使用 `cv-baseline` 执行 `python -m streaming_recovery.probe --output 新的.jsonl`；这不是主验收命令。
+-
+-## 交付边界
+-
+-目标 1 的真实流和有限历史、目标 2 的取刀失败/正常持刀、目标 3 的恢复抓取条件与打开夹爪建议均有实际运行记录。完整切割任务成功、跨场景识别泛化、真实滑落/重试、图像到机器人精确映射及建议执行没有完成验证。目标 4 未开展，也没有用合成测试冒充识别性能。
+--- a/streaming_recovery/recovery.py
++++ b/streaming_recovery/recovery.py
+@@ -1,110 +1,250 @@
+-"""同一事件生成两层建议；仅输出一个下一动作，不把建议写回任务状态。"""
++"""按当前证据推进单步建议。恢复上下文有界，输出建议不修改物理状态。"""
+ from __future__ import annotations
+-
++from copy import deepcopy
++from dataclasses import asdict
+ 
+ PROBLEMS = {
+-    "grasp_not_established": ("抓取尝试后机器人已进入工作区，但刀仍留在刀架", "刀具未建立可靠夹持，携刀进入切割区的预期效果未实现"),
+-    "prerequisite_unmet": ("机器人进入工作区时刀仍在刀架，缺少取刀证据", "执行后续操作所需的刀具夹持前置条件未满足"),
+-    "lost_grasp": ("此前存在夹持证据，随后刀与夹爪分离", "刀具连接状态失效；是否为意外滑落仍需排除有意放下"),
++    "grasp_not_established": ("抓取尝试后机器人已进入工作区，但刀仍留在刀架", "当前尝试未建立可靠夹持"),
++    "prerequisite_unmet": ("进入工作区时没有可靠持刀证据", "后续切割所需的夹持前置条件未满足"),
++    "lost_grasp": ("近期可靠夹持后观察到刀与夹爪分离", "夹持连接失效；意外滑落与有意放下的原因尚未区分"),
+ }
+ 
++class RecoveryContext:
++    """仅保留一个事件（证据最多4项）、一个等待类型和饱和计数。"""
++    def __init__(self):
++        self.event = None
++        self.wait_key = None
++        self.wait_count = 0
++
++    def update(self, event, state):
++        if state["recovered"] or (event and event["state"] in ("resolved", "retracted")):
++            self.event = None
++        elif event:
++            self.event = deepcopy(event)
++        if self.event and not state["observable"]:
++            self.event["observation_status"] = "unobservable"
++        elif self.event and not state["candidate"]:
++            self.event["observation_status"] = "not_currently_supported"
++        return deepcopy(self.event)
++
++    def observe_request(self, correction):
++        key = correction["low_level"]["recovery_phase"] if correction else None
++        self.wait_count = min(3, self.wait_count+1) if key == self.wait_key else int(key is not None)
++        self.wait_key = key
++        if correction:
++            low=correction["low_level"]
++            low["same_requirement_observations"]=self.wait_count
++            low["escalation"]="连续3次仍缺相同证据：交接操作者/传感器适配器补齐所列观测；不自动重复动作" if self.wait_count>=3 else None
++
++    def usage(self):
++        return {"recovery_contexts":int(self.event is not None),
++                "recovery_event_evidence":len(self.event["evidence"]) if self.event else 0,
++                "recovery_state_slots":3}
++
++def usable(facts, state, now):
++    return (facts.get("valid") is True and facts.get("effect_usable") is True and
++            facts.get("visibility") in ("clear","partial") and facts.get("timestamp")==now and
++            state.get("observable") is True and not state.get("modality_conflict") and
++            any(e.get("timestamp")==now for e in facts.get("evidence_refs",[])))
++
++def readiness(facts, now):
++    r=facts.get("grasp_readiness") or {}
++    missing=[k for k in ("depth","orientation","contact_region") if r.get(k)!="confirmed"]
++    source_ok = r.get("source") in ("measured_depth_and_contact","validated_controller_observation")
++    if facts.get("provenance")=="synthetic_test_double":
++        source_ok |= r.get("source")=="synthetic_independent_depth_contact"
++    if not source_ok or r.get("timestamp")!=now or not isinstance(r.get("ref"),str) or not r["ref"]:
++        missing.append("fresh_independent_readiness_source")
++    return missing
+ 
+ def diagnose(event, state, facts):
+-    if event is None or event["state"] in ("resolved", "retracted", "closed_for_retry", "superseded"):
++    if event is None or event["state"] in ("resolved","retracted","superseded"):
+         return None
+-    problem, mismatch = PROBLEMS[event["kind"]]
++    problem,mismatch=PROBLEMS[event["kind"]]
+     return {"event_id":event["event_id"],"type":event["kind"],"problem":problem,
+-            "expected_effect":state["expected_effect"],"observed_deviation":mismatch,
+-            "observed_facts":event["evidence"],"current_evidence_status":event["observation_status"],
+-            "established_facts":["本诊断依据已到达图像的物体位置/运动与夹爪观测；不使用控制意图或轨迹结果标签"],
+-            "cause_hypotheses":[{"hypothesis":"刀柄对齐或接触条件可能未建立" if event["kind"] != "lost_grasp" else "夹持连接可能丢失，也可能是有意放下",
+-                                  "certainty":"unconfirmed","missing_evidence":"清晰的刀柄—两指接触图像；实测接触/夹持反馈"}],
+-            "uncertainty":"证据支持当前效果偏差，不能据此确定摩擦、夹持力或三维姿态原因；经典视觉模型受固定场景假设限制",
+-            "need_more_observation":True,
+-            "requested_evidence":["当前刀架与刀具位置", "刀柄与夹爪两指关系", "下一次尝试后刀是否随夹爪离架运动"],
+-            "confidence":None,"confidence_explanation":"未输出概率；疑似/确认来自配置的连续观测条数和时间跨度"}
+-
++        "expected_effect":state["expected_effect"],"observed_deviation":mismatch,
++        "observed_facts":event["evidence"],"current_evidence_status":event["observation_status"],
++        "established_facts":["事件记录的是已观察效果偏差；当前是否仍成立另由本时刻证据判断"],
++        "cause_hypotheses":[{"hypothesis":"对齐/接触未建立" if event["kind"]!="lost_grasp" else "意外丢失连接或有意放下",
++            "certainty":"unconfirmed","missing_evidence":"独立深度、接触及实际执行反馈"}],
++        "uncertainty":"不从闭爪、历史失败或图像平面位置推断夹持力、三维姿态及确定原因",
++        "need_more_observation":True,"requested_evidence":["当前刀位置与两指关系","新尝试后随动或分离证据"],
++        "confidence":None,"confidence_explanation":"规则满足程度；不是经校准的概率"}
+ 
+ def propose(event, diagnosis, state, facts, rules):
+     if diagnosis is None:
+         return None
+-    goal_id = event["event_id"] + ":restore_reliable_grasp"
+-    high = {"event_id":event["event_id"],"recovery_goal_id":goal_id,"object":"knife",
+-            "blocked_subtask":"携刀进入工作区并执行切割", "failed_precondition":"reliable_grasp",
+-            "impact":"继续移动空夹爪不能完成切割；必须先恢复刀具夹持条件",
+-            "strategy":"return_to_grasp_preparation", "next_recovery_subgoal":"重新建立刀柄定位、两指对齐及可靠夹持条件",
+-            "reason":diagnosis["observed_deviation"],
+-            "resume_when":"连续新观测支持刀离开刀架且随夹爪运动，再恢复携刀转移"}
+-    low = {"event_id":event["event_id"],"recovery_goal_id":goal_id,"object":"knife","actuator":"right_gripper",
+-           "action_type":None,"instruction":None,"coordinate_frame":None,"target_mode":"qualitative",
+-           "translation":None,"rotation":None,"numeric_command":None,"units":None,"numeric_source":None,
+-           "preconditions":[],"stop_condition":None,"post_checks":[],
+-           "directly_executable":False,"handoff_requirements":["接入经过验证的执行器接口", "由执行器检查碰撞与动作可行性"],
+-           "missing_information":["相机到机器人坐标变换", "深度与机器人运动接口"]}
+-    reliable_empty = facts.valid and facts.knife_location=="holder" and facts.contact=="separate" and not state["modality_conflict"]
+-    if event["state"] == "suspected" or not reliable_empty:
+-        low.update(action_type="hold_and_observe",coordinate_frame="not_applicable_no_spatial_move",
+-            instruction="暂停继续进入切割步骤，保持当前末端与夹爪设定，获取刀架和右夹爪的清晰新观测；不自动打开可能持物的夹爪。",
+-            preconditions=[{"condition":"执行器能够安全保持当前状态","status":"requires_executor_check"}],
+-            stop_condition="取得可判定刀位置与两指接触关系的新观测，或交由操作人员处理",
+-            post_checks=["刀是否仍在刀架", "夹爪是否与刀分离", "是否出现可靠持刀证据"])
+-    elif facts.gripper == "closed":
+-        low.update(action_type="open_gripper",coordinate_frame="right_gripper_actuator_no_translation",
+-            instruction="确认夹爪内无刀且当前位姿可安全保持后，保持末端位姿并打开右夹爪，为重新对齐刀柄建立条件；本次不同时发出移动或再次闭合动作。",
+-            preconditions=[{"condition":"刀仍在刀架且与右夹爪分离","status":"supported_by_current_observation"},
+-                           {"condition":"夹爪内无其他物体且可安全打开","status":"requires_executor_check"}],
+-            stop_condition="夹爪反馈与图像均表明已经打开；出现接触异常则停止并交回执行器",
+-            post_checks=["右夹爪确实打开", "刀仍在刀架且未被拖动", "重新观测刀柄与两指的相对位置，再决定下一动作"])
+-    elif facts.gripper == "open" and facts.knife_handle_xy is not None and facts.gripper_xy is not None:
+-        delta = [a-b for a,b in zip(facts.knife_handle_xy,facts.gripper_xy)]
+-        directions = []
+-        deadband = rules["direction_deadband_normalized"]
+-        if abs(delta[0]) > deadband:
++    f=asdict(facts)
++    now=facts.timestamp
++    current=usable(f,state,now)
++    location=facts.knife_location if current else "unknown"
++    location_zh={"holder":"刀架","board":"砧板","elsewhere":"当前可见支撑位置","unknown":"待重新定位位置","gripper":"夹爪内"}[location]
++    lost=event["kind"]=="lost_grasp"
++    strategy="reacquire_from_observed_support" if lost else ("restore_missing_precondition" if event["kind"]=="prerequisite_unmet" else "retry_tool_acquisition")
++    goal_id=event["event_id"]+(":reacquire_detached_knife" if lost else ":restore_reliable_grasp")
++    high={"event_id":event["event_id"],"recovery_goal_id":goal_id,"object":"knife",
++        "blocked_subtask":"刀具归位" if state["preconditions"]["cut_effect_confirmed"] else "携刀转移与切割",
++        "failed_precondition":"reliable_grasp","impact":"缺少可靠夹持时不能继续携刀操作",
++        "strategy":strategy,"next_recovery_subgoal":f"在{location_zh}重新定位刀柄，建立接触准备并确认可靠夹持",
++        "reason":diagnosis["observed_deviation"],
++        "resume_when":f"新观测连续支持刀离开{location_zh}并随右夹爪运动，再继续" + ("归位" if state["preconditions"]["cut_effect_confirmed"] else "携刀转移")}
++    low={"event_id":event["event_id"],"recovery_goal_id":goal_id,"object":"knife","actuator":"right_gripper",
++        "action_type":"hold_and_observe","recovery_phase":"observe_scene",
++        "instruction":f"保持当前末端与夹爪设定，暂停后续携刀操作；取得{location_zh}的刀具及两指清晰新观测。",
++        "coordinate_frame":"not_applicable_no_spatial_move","target_mode":"qualitative",
++        "translation":None,"rotation":None,"numeric_command":None,"units":None,"numeric_source":None,
++        "preconditions":[{"condition":"safe_hold","status":"requires_executor_check"}],
++        "stop_condition":"取得当前刀具位置、两指关系及开闭状态，或交接操作者补观测",
++        "post_checks":["刀当前在哪里","刀是否与夹爪分离","当前开闭状态"],
++        "directly_executable":False,"handoff_requirements":["执行器检查保持/动作可行性与碰撞","需要物理移动时先提供标定映射"],
++        "missing_information":["当前刀位置、两指接触关系和开闭状态"] if not current else []}
++    empty=current and location in ("holder","board","elsewhere") and facts.contact=="separate"
++    retry_pending=event["state"]=="closed_for_retry" and state["attempt"]>event["attempt"]
++    points=facts.knife_handle_xy is not None and facts.gripper_xy is not None
++    if not current or event["state"]=="suspected":
++        if current:
++            low["missing_information"]=["连续新观测能否再次支持相同异常"]
++    elif retry_pending or (current and location=="gripper"):
++        low.update(recovery_phase="verify_grasp_effect",
++            instruction="已观察到新的闭合尝试或接触，等待刀与两指连接及相对支撑面的随动证据；不把闭合当成成功。",
++            post_checks=["刀是否离开原支撑位置","刀与夹爪是否连续保持连接"],
++            missing_information=["连续接触/随动证据"])
++    elif empty and facts.gripper=="closed":
++        low.update(action_type="open_gripper",recovery_phase="prepare_open",
++            coordinate_frame="right_gripper_actuator_no_translation",
++            instruction=f"当前刀在{location_zh}且与夹爪分离；由执行器确认夹爪内无其他物体并可安全打开后，保持末端位姿，单独打开右夹爪。",
++            preconditions=[{"condition":"current_knife_separate","status":"supported_by_current_observation"},
++                           {"condition":"empty_of_other_objects_and_safe_open","status":"requires_executor_check"}],
++            stop_condition="收到实际打开反馈；出现异常交回执行器",
++            post_checks=["右夹爪实际打开",f"刀仍在{location_zh}","重新定位刀柄与两指"])
++    elif empty and facts.gripper=="open" and points:
++        delta=[a-b for a,b in zip(facts.knife_handle_xy,facts.gripper_xy)]
++        deadband=rules["direction_deadband_normalized"]
++        directions=[]
++        if abs(delta[0])>deadband:
+             directions.append("图像右侧" if delta[0]>0 else "图像左侧")
+-        if abs(delta[1]) > deadband:
++        if abs(delta[1])>deadband:
+             directions.append("图像下方" if delta[1]>0 else "图像上方")
+-        low.update(action_type="align_in_image",coordinate_frame="cam_high_image_x_right_y_down",
+-            target_mode="relative_image_alignment",
+-            instruction="在完成标定与可达性检查后，使夹爪两指中点朝" + ("、".join(directions) if directions else "刀柄中心") + "对齐；保持夹爪打开，姿态需由深度/接触观测确定，本次不闭合。",
+-            translation={"kind":"qualitative_image_plane","direction":directions or ["对齐刀柄中心"],"magnitude":None},
+-            preconditions=[{"condition":"刀柄和两指位置在当前顶视图中可定位","status":"supported_by_current_observation"},
+-                           {"condition":"图像到执行器的映射、深度和路径可行性已验证","status":"not_satisfied"}],
+-            stop_condition="新图像表明刀柄进入两指间且执行器确认无碰撞；失去目标则停止",
+-            post_checks=["刀柄位于两指间", "深度与姿态满足接触条件", "保持打开，检查通过后另行生成闭合建议"])
+-    else:
+-        low.update(action_type="relocalize",coordinate_frame="cam_high_and_cam_right_wrist_images",
+-            instruction="保持已打开的夹爪和当前位姿，重新获取刀柄及两指的清晰顶视/腕部图像，交接刀柄对齐目标；未定位前不发出空间移动。",
+-            preconditions=[{"condition":"执行器能够安全保持当前位姿","status":"requires_executor_check"}],
+-            stop_condition="刀柄与两指可定位且具备映射依据；否则继续获取新观测或人工定位",
+-            post_checks=["刀柄与两指均可见", "取得图像到机器人映射后才生成物理位移"])
++        if directions:
++            low.update(action_type="align_in_image",recovery_phase="align_image",coordinate_frame=facts.localization_frame,
++                target_mode="relative_image_alignment",
++                instruction="交接图像对齐目标："+"、".join(directions)+"；保持已观测打开的夹爪，深度、姿态和路径需独立验证后才转换为物理移动。",
++                translation={"kind":"qualitative_image_plane","direction":directions,"magnitude":None},
++                preconditions=[{"condition":"current_handle_and_finger_midpoint","status":"supported_by_current_observation"},
++                               {"condition":"calibrated_mapping_depth_safe_path","status":"not_satisfied"}],
++                stop_condition="新图像显示两指中点与刀柄二维对齐；丢失目标则停止",
++                post_checks=["图像内对齐","独立深度/姿态/接触准备"],missing_information=["机器人坐标映射","深度与碰撞检查"])
++        else:
++            missing=readiness(f,now)
++            low.update(action_type="verify_contact_readiness",recovery_phase="contact_preparation",
++                instruction="二维对齐已满足；保持当前设定，取得独立的深度、刀柄姿态与可闭合接触区域证据。",
++                post_checks=["深度已确认","姿态已确认","接触区域已确认"],missing_information=missing,
++                stop_condition="三项准备条件均由新鲜独立观测确认")
++            if not missing:
++                low.update(action_type="close_gripper",recovery_phase="close_ready",
++                    coordinate_frame="right_gripper_actuator_no_translation",
++                    instruction="二维对齐与独立深度/姿态/接触准备均已确认；执行器复核安全后，保持末端位姿，单独闭合右夹爪。",
++                    preconditions=[{"condition":"current_open_aligned_and_contact_ready","status":"supported_by_current_observation"},
++                                   {"condition":"safe_close","status":"requires_executor_check"}],
++                    stop_condition="收到实际闭合反馈或接触异常；闭合反馈不代表抓取成功",
++                    post_checks=["实际闭合","刀与两指连接","随后连续随动证据"])
++    elif current:
++        low.update(action_type="relocalize",recovery_phase="localize",
++            coordinate_frame="cam_high_and_cam_right_wrist_images",
++            instruction=f"保持当前夹爪设定（开闭={facts.gripper}）与末端位姿；获取{location_zh}刀柄及两指的可定位图像，未定位前不发出移动。",
++            post_checks=["当前刀柄与两指能否同时定位","当前夹爪开闭状态"],
++            stop_condition="得到当前刀柄和两指定位及开闭状态",
++            missing_information=["刀柄/两指的可靠图像定位"]+(["开闭状态"] if facts.gripper=="unknown" else []))
+     return {"high_level":high,"low_level":low,
+-            "execution":{"mode":"advisory_replay","suggestion_generated":True,"actually_executed":False,
+-                         "execution_receipt":None,"outcome_attributed_to_suggestion":False,
+-                         "post_check_result":"pending_no_execution_receipt"}}
+-
++        "execution":{"mode":"advisory_replay","suggestion_generated":True,"actually_executed":False,
++            "execution_receipt":None,"outcome_attributed_to_suggestion":False,"post_check_result":"pending_no_execution_receipt"}}
+ 
+ def validate_consistency(result):
+-    """运行时强约束；失败即终止该结果写出，不静默输出不一致控制建议。"""
+-    suggestion = result["correction"]
++    """独立执行门控与逐动作参数约束；任一不满足时拒绝写出。"""
++    for execution in (result["execution"], (result.get("correction") or {}).get("execution",{})):
++        if execution.get("actually_executed") or execution.get("execution_receipt") is not None or execution.get("outcome_attributed_to_suggestion"):
++            raise ValueError("replay_must_not_claim_execution")
++    suggestion=result["correction"]
+     if suggestion is None:
+         return
+-    high,low = suggestion["high_level"],suggestion["low_level"]
+-    if high["event_id"] != result["failure_event"]["event_id"] or high["event_id"] != low["event_id"]:
++    high,low=suggestion["high_level"],suggestion["low_level"]
++    allowed={"event_id","recovery_goal_id","object","actuator","action_type","recovery_phase","instruction",
++             "coordinate_frame","target_mode","translation","rotation","numeric_command","units","numeric_source",
++             "preconditions","stop_condition","post_checks","directly_executable","handoff_requirements",
++             "missing_information","same_requirement_observations","escalation"}
++    if set(low)-allowed:
++        raise ValueError("undeclared_action_parameter")
++    event=result.get("recovery_event") or result["failure_event"]
++    if high["event_id"]!=event["event_id"] or high["event_id"]!=low["event_id"]:
+         raise ValueError("correction_event_mismatch")
+-    if high["recovery_goal_id"] != low["recovery_goal_id"] or high["object"] != low["object"]:
++    if high["recovery_goal_id"]!=low["recovery_goal_id"] or high["object"]!=low["object"] or low["object"]!="knife" or low["actuator"]!="right_gripper":
+         raise ValueError("correction_goal_object_mismatch")
+-    if low["action_type"] not in ("hold_and_observe","open_gripper","align_in_image","relocalize"):
++    expected_goal=event["event_id"]+(":reacquire_detached_knife" if event["kind"]=="lost_grasp" else ":restore_reliable_grasp")
++    expected_strategy={"lost_grasp":"reacquire_from_observed_support","prerequisite_unmet":"restore_missing_precondition","grasp_not_established":"retry_tool_acquisition"}[event["kind"]]
++    if high["recovery_goal_id"]!=expected_goal or high["strategy"]!=expected_strategy or high["failed_precondition"]!="reliable_grasp":
++        raise ValueError("strategy_goal_mismatch")
++    frames={"hold_and_observe":"not_applicable_no_spatial_move","verify_contact_readiness":"not_applicable_no_spatial_move",
++        "open_gripper":"right_gripper_actuator_no_translation","close_gripper":"right_gripper_actuator_no_translation",
++        "relocalize":"cam_high_and_cam_right_wrist_images"}
++    action=low["action_type"]
++    if action not in frames and action!="align_in_image":
+         raise ValueError("action_does_not_serve_restore_grasp")
+-    if not low["coordinate_frame"] or not low["preconditions"] or not low["post_checks"] or not low["stop_condition"]:
++    if action in frames and low["coordinate_frame"]!=frames[action]:
++        raise ValueError("action_frame_mismatch")
++    if not low["preconditions"] or not low["post_checks"] or not low["stop_condition"]:
+         raise ValueError("missing_action_contract")
+-    if low["numeric_command"] is not None or low["directly_executable"]:
+-        raise ValueError("uncalibrated_numeric_or_executable_command")
+-    if low["action_type"] == "align_in_image" and low["coordinate_frame"] != "cam_high_image_x_right_y_down":
+-        raise ValueError("image_robot_coordinate_confusion")
+-    if low["action_type"] == "open_gripper":
+-        facts = result["visual_facts"]
+-        if facts["knife_location"] != "holder" or facts["contact"] != "separate":
+-            raise ValueError("unsafe_open_precondition")
+-    execution = suggestion["execution"]
+-    if execution["actually_executed"] or execution["execution_receipt"] is not None or execution["outcome_attributed_to_suggestion"]:
+-        raise ValueError("replay_must_not_claim_execution")
++    if any(low[k] is not None for k in ("rotation","numeric_command","units","numeric_source")) or low["directly_executable"]:
++        raise ValueError("unsupported_spatial_or_numeric_command")
++    if action!="align_in_image" and low["translation"] is not None:
++        raise ValueError("translation_for_non_spatial_action")
++    f,state,now=result["visual_facts"],result["state"],result["timestamp"]
++    current=usable(f,state,now)
++    if action in ("open_gripper","close_gripper","align_in_image","verify_contact_readiness"):
++        if not current or event["state"]=="suspected" or event["observation_status"]=="unobservable":
++            raise ValueError("unusable_current_action_evidence")
++        if f["knife_location"] not in ("holder","board","elsewhere") or f["contact"]!="separate":
++            raise ValueError("knife_not_separate")
++    if action=="open_gripper" and f["gripper"]!="closed":
++        raise ValueError("open_requires_observed_closed")
++    if action in ("close_gripper","align_in_image","verify_contact_readiness"):
++        if f["gripper"]!="open" or f["knife_handle_xy"] is None or f["gripper_xy"] is None:
++            raise ValueError("missing_open_or_localization")
++    if action=="align_in_image":
++        tr=low["translation"]
++        if low["coordinate_frame"]!=f["localization_frame"] or low["coordinate_frame"] not in ("cam_high_image_x_right_y_down","cam_right_wrist_image_x_right_y_down"):
++            raise ValueError("image_robot_coordinate_confusion")
++        if not isinstance(tr,dict) or set(tr)!={"kind","direction","magnitude"} or tr["kind"]!="qualitative_image_plane" or tr["magnitude"] is not None:
++            raise ValueError("unfounded_translation")
++        if not tr["direction"] or not set(tr["direction"])<=set(("图像右侧","图像左侧","图像下方","图像上方")):
++            raise ValueError("invalid_direction")
++        delta=[a-b for a,b in zip(f["knife_handle_xy"],f["gripper_xy"])]
++        deadband=result.get("decision_rules",{}).get("direction_deadband_normalized",50)
++        expected=[]
++        if abs(delta[0])>deadband:
++            expected.append("图像右侧" if delta[0]>0 else "图像左侧")
++        if abs(delta[1])>deadband:
++            expected.append("图像下方" if delta[1]>0 else "图像上方")
++        if tr["direction"]!=expected:
++            raise ValueError("direction_not_supported_by_points")
++    if action=="close_gripper":
++        deadband=result.get("decision_rules",{}).get("direction_deadband_normalized",50)
++        if readiness(f,now) or any(abs(a-b)>deadband for a,b in zip(f["knife_handle_xy"],f["gripper_xy"])):
++            raise ValueError("close_requires_independent_readiness_and_alignment")
++    required={"open_gripper":{"current_knife_separate","empty_of_other_objects_and_safe_open"},
++              "close_gripper":{"current_open_aligned_and_contact_ready","safe_close"},
++              "align_in_image":{"current_handle_and_finger_midpoint","calibrated_mapping_depth_safe_path"}}
++    if action in required and {p["condition"] for p in low["preconditions"]}!=required[action]:
++        raise ValueError("missing_action_specific_precondition")
++    statuses={"current_knife_separate":"supported_by_current_observation",
++              "current_open_aligned_and_contact_ready":"supported_by_current_observation",
++              "current_handle_and_finger_midpoint":"supported_by_current_observation",
++              "empty_of_other_objects_and_safe_open":"requires_executor_check","safe_close":"requires_executor_check",
++              "calibrated_mapping_depth_safe_path":"not_satisfied","safe_hold":"requires_executor_check"}
++    if any(p.get("condition") not in statuses or p.get("status")!=statuses[p["condition"]] for p in low["preconditions"]):
++        raise ValueError("unverified_precondition_claim")
++    if action in ("open_gripper","close_gripper","align_in_image"):
++        for name in (("cam_right_wrist",) if f["localization_frame"].startswith("cam_right") and action!="open_gripper" else ("cam_high",)):
++            m=result.get("modalities",{}).get(name,{})
++            if m.get("status")!="available" or m.get("timestamp") is None or not 0<=now-m["timestamp"]<=.12:
++                raise ValueError("stale_or_missing_action_modality")
++
+--- a/streaming_recovery/report.py
++++ b/streaming_recovery/report.py
+@@ -20,8 +20,21 @@
+                 advice=f'<p><b>恢复子目标：</b>{html.escape(high["next_recovery_subgoal"])}</p><p><b>下一动作：</b>{html.escape(low["instruction"])}</p><p><b>执行后检查：</b>{html.escape("；".join(low["post_checks"]))}</p>'
+             failure=r["failure_event"]
+             badge=f'{failure["event_id"]} / {failure["state"]}' if failure else '无失败事件'
++            advice+=f'<p><b>当前条件：</b>{html.escape(json.dumps(state["preconditions"],ensure_ascii=False))} · 历史完成={state.get("historical_completion",False)}</p>'
++            if r["diagnosis"]:
++                advice+=f'<p><b>诊断：</b>{html.escape(r["diagnosis"]["observed_deviation"])}（原因仍不确定）</p>'
++            refs=[]
++            for item in r["visual_facts"]["evidence_refs"]:
++                target=f'{episode["output_subdir"]}/frames/{item["ref"]}_{item["camera"]}.jpg'
++                refs.append(f'<a href="{html.escape(target)}">{html.escape(item["camera"])} {item["timestamp"]:.2f}s</a>')
++            advice+='<p><b>证据图像：</b>'+" · ".join(refs)+'</p>'
++            if r["correction"]:
++                low=r["correction"]["low_level"]
++                advice+=f'<p><b>动作契约：</b>{html.escape(low["action_type"])} · {html.escape(low["coordinate_frame"])} · 仅建议、未执行</p>'
+             cards.append(f'<article data-episode="{episode["episode_for_audit_only"]}" data-alert="{str(r["notify"]).lower()}"><h2>轨迹 {episode["episode_for_audit_only"]} · {r["timestamp"]:.2f} s · {html.escape(state["stage_zh"])}</h2><p class="status">{r["execution_status"]} · {badge} · 提醒={r["notify"]}</p><div class="images">{images}</div><p>{html.escape(r["visual_facts"]["description"] or r["visual_facts"]["error"] or "未知")}</p><p><b>预期效果：</b>{html.escape(state["expected_effect"])}</p><p><b>待确认：</b>{html.escape("；".join(state["unknowns"]))}</p>{advice}<details><summary>完整结构化结果与容量记录</summary><pre>{html.escape(json.dumps(r,ensure_ascii=False,indent=2))}</pre></details></article>')
+     page='''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>流式任务监测 · 实际运行</title><style>body{font:16px/1.65 system-ui,"Microsoft YaHei",sans-serif;background:#eef2f5;color:#172b3a;margin:0}main{max-width:1120px;margin:30px auto;padding:0 20px}header,article{background:white;padding:24px;margin:16px 0;border-radius:10px;border:1px solid #d8e0e5}h1{font-size:26px}h2{font-size:20px}.status{color:#8b3b14}img{width:48%;height:auto}.images{display:flex;gap:12px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:12px;font-size:13px}select,label{margin-right:18px}article[data-alert=true]{border-left:5px solid #c66b30}</style><main><header><h1>机器人流式任务监测与分层纠错</h1><p>真实输入逐步回放。主方法：固定场景经典视觉模型＋有界状态跟踪。所有建议均未执行；未将原轨迹后续变化归因于建议。</p><p>支持取刀、转移及夹持前置条件。没有切割完成或归位证据时，整任务成功保持未知。</p><label>轨迹 <select id="episode"><option value="all">全部</option>'''
++    page=page.replace('支持取刀、转移及夹持前置条件。没有切割完成或归位证据时，整任务成功保持未知。',
++        '任务：右臂取刀、切下新小段并归位。分别展示操作与新增效果；没有充分证据时保留未知。图像方向不等于机器人坐标。')
+     page+=''.join(f'<option value="{e["episode_for_audit_only"]}">{e["episode_for_audit_only"]}</option>' for e in summary["episodes"])
+     page+='''</select></label><label><input id="alerts" type="checkbox">仅显示提醒时刻</label><p><a href="summary.json">运行摘要</a> · <a href="config_snapshot.json">配置快照</a></p></header>'''+''.join(cards)+'''</main><script>function filter(){let e=document.querySelector('#episode').value,a=document.querySelector('#alerts').checked;for(let c of document.querySelectorAll('article'))c.hidden=(e!=='all'&&c.dataset.episode!==e)||(a&&c.dataset.alert!=='true');}document.querySelector('#episode').onchange=filter;document.querySelector('#alerts').onchange=filter;</script></html>'''
+     (run_dir/"index.html").write_text(page,encoding="utf-8")
+--- /dev/null
++++ b/streaming_recovery/task_spec.py
+@@ -0,0 +1,17 @@
++"""显式任务规格，不做四个关键词匹配，也不声称任意语言任务泛化。"""
++import re
++
++INSTRUCTION = "Use the right arm to pick up the knife from the knife holder, cut a small piece of sausage and put it back on the knife holder."
++SPEC = {
++    "id": "right_knife_cut_sausage_return_v1", "arm": "right", "tool": "knife", "workpiece": "sausage",
++    "ordered_subtasks": ["acquire_knife", "transport_to_board", "cut_new_piece", "return_knife", "release_verify"],
++    "preconditions": {"cut_new_piece": ["reliable_grasp", "tool_at_board"], "release_verify": ["knife_at_holder"]},
++    "completion": ["new_cut_effect_after_observed_operation", "knife_currently_at_holder", "released"],
++    "binding": "explicit_instruction_allowlist_normalized_whitespace_case_punctuation",
++}
++
++def normalize(text):
++    return re.sub(r"\s+", " ", text.strip().lower()).rstrip(".。")
++
++def supports(instruction):
++    return normalize(instruction) in {normalize(INSTRUCTION), normalize("用右臂从刀架上拿起刀，切下一小段香肠，然后将刀放回刀架。")}
+--- a/streaming_recovery/tracking.py
++++ b/streaming_recovery/tracking.py
+@@ -1,17 +1,17 @@
+-"""任务专用、可解释的效果跟踪；既不把闭爪当成功，也不按视频长度推进阶段。"""
++"""任务效果状态：历史成就、当前谓词、当前尝试分别存储，全部容量有界。"""
+ from __future__ import annotations
+-
+ from .contracts import evidence
+-
++from .task_spec import supports, SPEC
+ 
+ STAGES = {
+     "locate_tool": "寻找与接近刀具", "align_grasp": "刀柄对齐与抓取准备",
+     "verify_grasp": "抓取效果确认", "transport_tool": "携刀转移",
+-    "cutting": "已携刀进入工作区，切割效果待确认", "return_tool": "刀具归位",
+-    "verify_completion": "释放与完成确认", "completed": "任务完成",
++    "cutting": "已携刀进入工作区，切割效果待确认", "cut_operation": "观察到刀具作用于香肠",
++    "verify_cut": "新切割效果确认", "return_tool": "刀具归位",
++    "verify_completion": "释放与完成确认", "completed": "当前完成条件满足",
+     "unknown": "当前阶段暂不可判断",
++    "blocked_precondition": "后续操作被夹持前置条件阻断",
+ }
+-
+ 
+ class TaskTracker:
+     def __init__(self, rules, memory):
+@@ -25,165 +25,202 @@
+         self.held = None
+         self.ever_held = False
+         self.cut_confirmed = False
+-        self.returned = False
+-        self.completed = False
++        self.returned = None
++        self.completed = False  # 历史完成；task_completed 输出另检查当前谓词。
+         self.previous_holder = False
+-
+-    @staticmethod
+-    def supports(instruction):
+-        text = instruction.lower()
+-        return all(word in text for word in ("right", "knife", "sausage", "holder"))
++        self.attempt_held = False
++        self.attempt_started = None
++        self.cut_reference = None
++        self.operation_at = None
++
++    supports = staticmethod(supports)
+ 
+     def _stable(self, predicate, now):
+         items = []
+         for f in reversed(self.memory.features):
+             if not f.valid or not f.effect_usable or f.visibility in ("occluded", "unknown") or not predicate(f):
+                 break
+-            if items and items[-1].timestamp - f.timestamp > self.rules["max_evidence_gap_s"]:
++            if self.attempt_started is not None and f.timestamp < self.attempt_started:
++                break
++            if items and items[-1].timestamp-f.timestamp > self.rules["max_evidence_gap_s"]:
+                 break
+             items.append(f)
+-        return (len(items) >= self.rules["confirm_samples"] and
+-                now - items[-1].timestamp >= self.rules["confirm_span_s"]), items
++        return (len(items) >= self.rules["confirm_samples"] and now-items[-1].timestamp+1e-6 >= self.rules["confirm_span_s"]), items
+ 
+     def update(self, observation, facts):
+         now, old_held = observation.timestamp, self.held
+-        good = facts.valid and facts.visibility not in ("occluded", "unknown")
+-        gap = self.last_time is not None and now - self.last_time > self.rules["max_evidence_gap_s"]
++        good = facts.valid and facts.effect_usable and facts.visibility not in ("occluded", "unknown")
++        gap = self.last_time is not None and now-self.last_time > self.rules["max_evidence_gap_s"]
+         raw = observation.observation_state[13] if observation.observation_state else None
++        raw_open = raw is not None and raw >= self.rules["gripper_open_raw"]
++        raw_closed = raw is not None and raw <= self.rules["gripper_closed_raw"]
++        independent = facts.gripper_source == "independent_visual"
+         visually_open = good and facts.gripper == "open"
+         visually_closed = good and facts.gripper == "closed"
+-        raw_open = raw is not None and raw >= self.rules["gripper_open_raw"]
+-        raw_closed = raw is not None and raw <= self.rules["gripper_closed_raw"]
+-        conflict = good and ((raw_open and visually_closed) or (raw_closed and visually_open))
+-        facts.effect_usable = good and not conflict
++        conflict = good and independent and ((raw_open and visually_closed) or (raw_closed and visually_open))
++        good = good and not conflict
++        facts.effect_usable = good
+         near_holder = good and facts.motion in ("at_holder", "approaching_holder")
++        near_object = near_holder or (good and facts.knife_location in ("board", "elsewhere") and facts.knife_handle_xy is not None)
+         if gap:
+-            self.armed = False
+-            self.last_gripper = None
+-            self.last_visual_gripper = "unknown"
+-            self.previous_holder = False
+-        if (visually_open or raw_open) and not conflict:
++            self.armed, self.last_gripper, self.last_visual_gripper, self.previous_holder = False, None, "unknown", False
++        if good and (visually_open or raw_open):
+             self.armed = True
+         closing_edge = ((raw is not None and self.last_gripper is not None and
+-                         self.last_gripper - raw >= self.rules["close_delta_raw"] and raw_closed) or
+-                        (visually_closed and self.last_visual_gripper == "open"))
+-        new_attempt = self.armed and closing_edge and (near_holder or self.previous_holder) and not conflict
++                         self.last_gripper-raw >= self.rules["close_delta_raw"] and raw_closed) or
++                        (independent and visually_closed and self.last_visual_gripper == "open"))
++        new_attempt = bool(good and self.armed and closing_edge and near_object)
+         if new_attempt:
+             self.attempt += 1
+-            self.armed = False
+-            self.memory.anchor("attempt", evidence(facts, "观测到刀架附近夹爪从打开转为闭合；仅证明抓取尝试"))
+-        self.last_gripper, self.last_visual_gripper = raw, facts.gripper if good else "unknown"
+-        self.last_time, self.previous_holder = now, near_holder
++            self.armed, self.attempt_held, self.attempt_started = False, False, now
++            self.held = old_held = None
++            for key in ("grasp", "lost_grasp"):
++                self.memory.anchors.pop(key, None)
++            self.memory.anchor("attempt", evidence(facts, "观测到目标附近夹爪实际从开转闭；仅证明新抓取尝试"))
++        self.last_gripper, self.last_visual_gripper = raw if good else None, facts.gripper if good else "unknown"
++        self.last_time, self.previous_holder = now, near_object
+         known, unknown, current_evidence = [], [], []
+         if raw is not None:
+             known.append(f"右夹爪观测原始值 {raw:.5f}（数据集原始单位；不代表夹持成功）")
+         else:
+             unknown.append("右夹爪状态未到达或无效")
++        if not independent:
++            known.append("夹爪开闭来自 observation.state[13]，不属于独立视觉互证")
+         if conflict:
+-            unknown.append("图像与夹爪原始阈值状态冲突；不据此确认抓取或失败")
++            unknown.append("独立视觉与夹爪原始观测冲突")
+         if not good:
+-            unknown.append("视觉证据不足：" + (facts.error or facts.visibility))
+-            self.held = None
+-            if not self.completed:
+-                self.stage = "unknown"
++            self.held, self.returned, self.stage = None, None, "unknown"
++            unknown.append("当前视觉证据不可用：" + (facts.error or facts.visibility))
+             return self._result(known, unknown, current_evidence, None, False, False, conflict, new_attempt)
+-
+-        known.append(f"视觉模型观察：{facts.description}")
++        known.append(f"视觉观察：{facts.description}")
+         current_evidence.append(evidence(facts, f"knife_location={facts.knife_location}; contact={facts.contact}; motion={facts.motion}"))
++        if self.cut_reference is None and not self.ever_held and facts.cut_piece in ("yes", "no"):
++            self.cut_reference = {"timestamp": now, "ref": facts.ref, "cut_piece": facts.cut_piece}
++            self.memory.anchor("cut_reference", evidence(facts, "切割前布局；已有小块=" + facts.cut_piece))
+         attached = lambda f: f.knife_location == "gripper" and f.contact in ("between_fingers", "co_moving") and f.released != "yes"
+-        held_stable, held_items = self._stable(attached, now)
+-        # 可见刀已离架且连续位于两指间，与闭合值本身分开判断。
+-        if held_stable and not conflict:
+-            self.held, self.ever_held = True, True
+-            self.memory.anchor("grasp", evidence(facts, "连续图像支持刀已离架，并通过两指内接触或刀/机器人共同运动确认夹持"))
+-            known.append("刀具夹持已获连续视觉证据支持（未测量夹持力）")
+-        elif (old_held is True and facts.measurements.get("tool_on_board") and
+-              facts.measurements.get("robot_at_board") and raw_closed and not conflict and
+-              "grasp" in self.memory.anchors and now-self.memory.anchors["grasp"]["timestamp"]<=self.memory.config["window_s"]):
++        held_stable, _ = self._stable(attached, now)
++        grasp = self.memory.anchors.get("grasp")
++        recent_grasp = grasp is not None and 0 <= now-grasp["timestamp"] <= self.rules.get("grasp_evidence_ttl_s", 4.)
++        if held_stable:
++            self.held, self.ever_held, self.attempt_held = True, True, True
++            self.memory.anchor("grasp", evidence(facts, "连续图像支持刀具与夹爪连接；闭爪值本身不是成功依据"))
++            self.memory.anchors.pop("lost_grasp", None)
++            known.append("连续视觉接触/随动证据支持当前持刀")
++        elif (old_held is True and recent_grasp and facts.measurements.get("tool_on_board") and
++              facts.measurements.get("robot_at_board") and raw_closed and facts.knife_location != "board"):
+             self.held = True
+-            known.append("近期共同运动证据仍在容量窗口内，当前仍见工作区刀具与闭合夹爪；维持夹持假设")
++            known.append("近期夹持证据有效且当前未出现分离反证，维持有条件的夹持假设")
+         elif facts.knife_location in ("holder", "board", "elsewhere") and facts.contact == "separate":
+             self.held = False
++            if facts.knife_location == "holder" and facts.released == "yes":
++                # 已明确回架释放，旧连接已经结束；它与短暂不可见不同。
++                self.memory.anchors.pop("grasp", None)
++                recent_grasp = False
+         else:
+             self.held = None
+-            unknown.append("当前可靠夹持尚未确认")
+-
+-        piece_stable, _ = self._stable(lambda f: f.cut_piece == "yes", now)
+-        if self.ever_held and piece_stable:
++            unknown.append("当前可靠夹持尚未确认；历史夹持不等于当前持有")
++        if self.held is True and facts.motion == "at_board" and facts.measurements.get("cut_operation") == "yes":
++            if self.operation_at is None:
++                self.operation_at = now
++                self.memory.anchor("cut_operation", evidence(facts, "观察到持刀在香肠位置作用；尚不等于切开"))
++        def new_effect(f):
++            reference = f.measurements.get("cut_reference_timestamp")
++            explicit = (f.measurements.get("new_cut_effect") == "yes" and isinstance(reference, (int, float)) and
++                        self.operation_at is not None and reference < self.operation_at <= f.timestamp)
++            transition = (self.cut_reference is not None and self.cut_reference["cut_piece"] == "no" and
++                          self.operation_at is not None and self.cut_reference["timestamp"] < self.operation_at <= f.timestamp)
++            return f.cut_piece == "yes" and (explicit or transition)
++        piece_stable, _ = self._stable(new_effect, now)
++        if self.ever_held and piece_stable and self.operation_at is not None:
+             self.cut_confirmed = True
+-            self.memory.anchor("cut", evidence(facts, "在已取刀之后，连续图像出现分离的小段香肠"))
++            self.memory.anchor("cut", evidence(facts, "切割前参考→刀作用→新增分离小段，连续新图像确认"))
+         release_stable, _ = self._stable(lambda f: f.knife_location == "holder" and f.released == "yes" and f.contact == "separate", now)
+-        if self.ever_held and release_stable:
+-            self.returned = True
+-            self.memory.anchor("return", evidence(facts, "刀具重新位于刀架且夹爪与其分离"))
+-        if self.cut_confirmed and self.returned and release_stable:
++        if facts.knife_location == "holder" and facts.released == "yes" and facts.contact == "separate":
++            self.returned = bool(self.ever_held and release_stable)
++        elif facts.knife_location in ("gripper", "board", "elsewhere"):
++            self.returned = False
++        else:
++            self.returned = None
++        if self.returned:
++            self.memory.anchor("return", evidence(facts, "当前刀具在刀架且夹爪分离"))
++        current_complete = self.cut_confirmed and self.returned is True
++        if current_complete and not self.completed:
+             self.completed = True
+-            self.memory.anchor("completion", evidence(facts, "切割效果、刀归位、释放条件同时已获证据"))
+-
++            self.memory.anchor("completion", evidence(facts, "历史首次同时满足新切割效果、归位与释放"))
+         candidate = None
+-        if not conflict and not self.completed:
+-            # 仅在机器人已经进入工作区、但刀仍留在刀架时判定效果偏差；单纯等待不失败。
+-            departed_empty = (facts.knife_location == "holder" and facts.contact == "separate" and
+-                              facts.motion in ("at_board", "to_board", "away") and
+-                              (self.attempt > 0 or visually_closed))
+-            if departed_empty and not self.ever_held:
+-                candidate = "grasp_not_established" if self.attempt > 0 else "prerequisite_unmet"
+-            if old_held is True and facts.knife_location in ("board", "elsewhere") and facts.contact == "separate" and not self.cut_confirmed:
+-                candidate = "lost_grasp"
+-            if self.memory.anchors.get("lost_grasp") and self.held is False and facts.knife_location in ("board", "elsewhere"):
+-                candidate = "lost_grasp"
+-            if candidate == "lost_grasp":
+-                self.memory.anchor("lost_grasp", evidence(facts, "此前有夹持证据，现在刀与夹爪分离"))
+-            if held_stable and "lost_grasp" in self.memory.anchors:
+-                del self.memory.anchors["lost_grasp"]
+-
+-        if self.completed:
++        departed_empty = (facts.knife_location == "holder" and facts.contact == "separate" and
++                          facts.motion in ("at_board", "to_board", "away") and (self.attempt > 0 or visually_closed))
++        if not current_complete and departed_empty and not self.attempt_held:
++            candidate = "grasp_not_established" if self.attempt > 0 else "prerequisite_unmet"
++        detached = facts.knife_location in ("board", "elsewhere") and facts.contact == "separate"
++        if detached and (recent_grasp or "lost_grasp" in self.memory.anchors):
++            candidate = "lost_grasp"
++            if "lost_grasp" not in self.memory.anchors:
++                self.memory.anchor("lost_grasp", evidence(facts, "最近可靠夹持之后观察到分离；原因未确定"))
++                current_evidence.append(grasp)
++        if current_complete:
+             self.stage = "completed"
+-        elif self.returned:
++        elif candidate == "prerequisite_unmet":
++            self.stage = "blocked_precondition"
++        elif facts.knife_location == "gripper" and facts.motion == "to_board":
++            self.stage = "transport_tool"
++        elif self.held is True:
++            if self.cut_confirmed:
++                self.stage = "return_tool"
++            elif facts.measurements.get("cut_operation") == "yes":
++                self.stage = "cut_operation"
++            else:
++                self.stage = "cutting" if facts.motion == "at_board" else "transport_tool"
++        elif self.returned or (self.cut_confirmed and facts.knife_location == "holder" and facts.released == "yes"):
+             self.stage = "verify_completion"
+-        elif self.cut_confirmed:
++        elif self.cut_confirmed and facts.motion == "returning_holder":
+             self.stage = "return_tool"
+-        elif self.held is True:
+-            self.stage = "cutting" if facts.motion == "at_board" else "transport_tool"
+         elif self.ever_held and self.held is None:
+-            # 已经持刀进入过工作区，随后移出可观测区域不等于重新开始抓取。
+             self.stage = "unknown"
+         elif self.attempt > 0:
+-            self.stage = "align_grasp" if (near_holder and visually_open) else "verify_grasp"
+-        elif near_holder:
+-            self.stage = "align_grasp"
+-        else:
+-            self.stage = "locate_tool"
++            self.stage = "align_grasp" if near_object and (visually_open or raw_open) else "verify_grasp"
++        else:
++            self.stage = "align_grasp" if near_object else "locate_tool"
+         if not self.cut_confirmed:
+-            unknown.append("切割产生独立小段的效果尚未确认")
+-        if not self.returned:
+-            unknown.append("完成任务后的刀具归位与释放尚未确认")
+-        return self._result(known, unknown, current_evidence, candidate, held_stable and not conflict, True, conflict, new_attempt)
++            unknown.append("本次新切割效果尚未确认；已有小块不能补齐")
++        if self.returned is not True:
++            unknown.append("当前刀具归位与释放尚未确认")
++        return self._result(known, unknown, current_evidence, candidate, held_stable, True, conflict, new_attempt)
+ 
+     def _result(self, known, unknown, current_evidence, candidate, recovered, observable, conflict, new_attempt):
+         goals = []
+         if self.ever_held:
+             goals.append("曾建立刀具夹持")
+         if self.cut_confirmed:
+-            goals.append("已观察到分离的小段香肠")
++            goals.append("本次操作的新切割效果曾获确认")
+         if self.returned:
+-            goals.append("刀具已归位且释放")
++            goals.append("当前刀具已归位且释放")
+         expectations = {
+-            "locate_tool": "定位刀柄并使夹爪接近；此时不要求刀离开刀架",
+-            "align_grasp": "建立刀柄在夹爪两指间的对齐条件，然后尝试闭合",
+-            "verify_grasp": "刀应离开刀架并与夹爪保持连接；闭合状态不足以证明成功",
+-            "transport_tool": "刀与夹爪保持连接，进入砧板工作区",
+-            "cutting": "刀作用后出现与主体分离的小段香肠",
+-            "return_tool": "刀回到刀架并与夹爪分离",
+-            "verify_completion": "补足切割效果、归位及释放证据",
+-            "completed": "完成证据已获得；后续观测仍可揭示变化",
+-            "unknown": "取得新的清晰图像，恢复当前刀与夹爪关系的判断",
++            "locate_tool": "定位刀柄和两指，不要求刀已离架",
++            "align_grasp": "确认二维对齐、深度、姿态与接触准备，然后尝试闭合",
++            "verify_grasp": "刀应与夹爪连接并离开支撑位置；闭爪不等于成功",
++            "transport_tool": "刀与夹爪保持连接并向砧板转移",
++            "cutting": "观察实际刀具作用与新增分离效果",
++            "cut_operation": "刀作用之后出现相对切割前参考新增的小段",
++            "verify_cut": "连续清晰观测确认新增小段",
++            "return_tool": "携刀回到刀架，再观察释放",
++            "verify_completion": "补足本次切割效果、当前归位与释放",
++            "completed": "当前完成条件满足；继续观测时重新核查当前位置",
++            "unknown": "补充当前刀具、两指关系与香肠布局的清晰观测",
++            "blocked_precondition": "停止空手进行后续操作，恢复取刀前置条件",
+         }
+-        return {"stage": self.stage, "stage_zh": STAGES[self.stage], "subtask": STAGES[self.stage],
++        return {"task_spec": SPEC, "stage": self.stage, "stage_zh": STAGES[self.stage], "subtask": STAGES[self.stage],
+                 "confirmed_subgoals": goals, "preconditions": {"reliable_grasp": self.held,
+                     "cut_effect_confirmed": self.cut_confirmed, "tool_returned": self.returned},
+                 "known_facts": known, "unknowns": unknown, "evidence": current_evidence,
+                 "expected_effect": expectations[self.stage], "candidate": candidate, "recovered": recovered,
+                 "observable": observable, "modality_conflict": conflict, "new_attempt_observed": new_attempt,
+-                "attempt": self.attempt, "task_completed": self.completed,
++                "attempt": self.attempt, "attempt_held": self.attempt_held,
++                "task_completed": self.cut_confirmed and self.returned is True,
++                "historical_completion": self.completed, "cut_reference": self.cut_reference,
+                 "anchors": dict(self.memory.anchors)}
++
++    def usage(self):
++        return {"task_state_slots": len([k for k in vars(self) if k not in ("rules", "memory")]),
++                "task_reference_entries": int(self.cut_reference is not None)}
++
+--- a/streaming_recovery/validation.py
++++ b/streaming_recovery/validation.py
+@@ -10,18 +10,23 @@
+ import time
+ import unittest
+ from PIL import Image
+-from .__main__ import BASE
++from .__main__ import BASE, make_vision, sha256
+ from .engine import Monitor
+ from .geometry import GeometryVision
+ from .source import LeRobotStream, instruction_for_episode
+ 
+ 
+ def real_decisions(config, root, episode):
+-    vision=GeometryVision(config["geometry"],config["rules"])
++    vision=make_vision(config)
+     monitor=Monitor(config,vision)
+     stream=LeRobotStream(Path(root),episode,config["source"]["cameras"],config["source"]["sample_every"],
+                         config["source"]["max_age_s"],config["model"]["image_edge"],instruction_for_episode(Path(root),episode))
+-    results=[monitor.step(obs) for obs in stream]
++    results=[]
++    for obs in stream:
++        expected=round(obs.timestamp*stream.fps)+1
++        assert stream.audit["rows_read"]==expected,"reader consumed future rows before yielding"
++        assert all(n<=expected for n in stream.audit["frames_decoded"].values()),"decoder exposed future transport steps"
++        results.append(monitor.step(obs))
+     return results,stream.audit,monitor
+ 
+ 
+@@ -95,7 +100,8 @@
+         print(name+": "+checks[-1]["status"],flush=True)
+ 
+     def logic():
+-        suite=unittest.defaultTestLoader.loadTestsFromName("streaming_recovery.tests.test_system")
++        suite=unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(name) for name in
++            ("streaming_recovery.tests.test_system","streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions"))
+         stream=io.StringIO()
+         result=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)
+         (directory/"unit_tests.txt").write_text(stream.getvalue(),encoding="utf-8")
+@@ -110,12 +116,18 @@
+             rows,audit,monitor=real_decisions(config,config["source"]["root"],episode)
+             real_cache[episode]=rows
+             (directory/f"real_{episode}_decisions.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False,allow_nan=False)+"\n" for r in rows),encoding="utf-8")
+-            assert audit["future_frames_exposed"]==0
+             assert audit["invalid_video_timestamps"]==0
+             assert all(not r["execution"]["actually_executed"] for r in rows)
+-            assert monitor.end_of_stream()["task_success"] is None
++            if episode==0:
++                assert monitor.end_of_stream()["task_success"] is None
+         assert not any(r["notify"] for r in real_cache[18]),"正常片段误提醒"
+         assert any(r["state"]["preconditions"]["reliable_grasp"] is True for r in real_cache[18]),"正常持刀未获得证据"
++        if config["backend"]=="multiview_effect_geometry":
++            stages={r["state"]["stage"] for r in real_cache[18]}
++            assert {"transport_tool","cut_operation","return_tool","verify_completion","completed"}<=stages,stages
++            assert any(r["visual_facts"]["measurements"].get("new_cut_effect")=="yes" for r in real_cache[18])
++            assert real_cache[18][-1]["state"]["task_completed"],"没有获得全部任务效果证据"
++            assert not real_cache[0][-1]["state"]["preconditions"]["cut_effect_confirmed"]
+         failures=[r for r in real_cache[0] if r["execution_status"]=="confirmed_failure"]
+         assert failures,"真实失败未确认"
+         assert len({r["failure_event"]["event_id"] for r in failures})==1
+@@ -132,6 +144,9 @@
+                 "first_suspicion_s":next(r["timestamp"] for r in real_cache[0] if r["execution_status"]=="suspicious"),
+                 "first_confirmation_s":failures[0]["timestamp"],
+                 "normal_grasp_confirmed_times":[r["timestamp"] for r in real_cache[18] if r["state"]["preconditions"]["reliable_grasp"] is True],
++                "normal_stages":sorted({r["state"]["stage"] for r in real_cache[18]}),
++                "normal_unknown_times":[r["timestamp"] for r in real_cache[18] if r["execution_status"]=="information_insufficient"],
++                "normal_current_completion":real_cache[18][-1]["state"]["task_completed"],
+                 "scope":"仅演示；阈值用这两个可见场景开发，不能报告无偏识别精度或泛化性能",
+                 "first_detectable_failure_time":"not_annotated; avoid keyframe is not assumed to be first-detectable"}
+     record("真实正常/失败完整回放与两层建议",real_runs,"real_robot_pixels_and_proprioception")
+@@ -141,44 +156,52 @@
+         b=directory/"prefix_fixture_B"
+         ep_a,cut=build_prefix_fixture(config,a,False)
+         ep_b,_=build_prefix_fixture(config,b,True)
+-        ra,aa,_=real_decisions(config,a,ep_a)
+-        rb,ab,_=real_decisions(config,b,ep_b)
+-        pa=[r for r in ra if r["timestamp"]<cut]
+-        pb=[r for r in rb if r["timestamp"]<cut]
+-        assert pa==pb,"公共前缀结果受到后缀/标签/路径改变影响"
+-        assert ra[-1]!=rb[-1],"后缀没有真正改变"
+-        (directory/"prefix_A.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False)+"\n" for r in ra),encoding="utf-8")
+-        (directory/"prefix_B.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False)+"\n" for r in rb),encoding="utf-8")
++        compared={}
++        for backend in ("calibrated_rgb_geometry","multiview_effect_geometry"):
++            cfg=deepcopy(config);cfg["backend"]=backend
++            ra,aa,_=real_decisions(cfg,a,ep_a)
++            rb,ab,_=real_decisions(cfg,b,ep_b)
++            pa=[r for r in ra if r["timestamp"]<cut]
++            pb=[r for r in rb if r["timestamp"]<cut]
++            assert pa==pb,"公共前缀结果受到后缀/标签/路径改变影响:"+backend
++            assert ra[-1]!=rb[-1],"后缀没有真正改变"
++            compared[backend]=len(pa)
++            (directory/f"prefix_A_{backend}.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False)+"\n" for r in ra),encoding="utf-8")
++            (directory/f"prefix_B_{backend}.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False)+"\n" for r in rb),encoding="utf-8")
+         return {"common_prefix_native_frames":275,"identical_decisions":len(pa),"prefix_end_exclusive_s":cut,
+                 "suffix_modified":True,"path_episode_labels_actions_modified":True,
++                "backends_compared":compared,"reader_progress_checked_at_every_yield":True,
+                 "coverage":"Parquet读取、逐帧解码、对齐、初始图像校准、视觉特征、记忆、状态、事件、两层纠错、结构化输出",
+                 "fixture_kind":"真实图像公共前缀＋人工修改后缀；不是新增真实机器人轨迹"}
+     record("完整链路公共前缀因果性与标签路径隔离",causal,"real_pixels_counterfactual_suffix_fixture")
+ 
+     def long_vision():
+         root=Path(config["source"]["root"])
+-        source=LeRobotStream(root,0,["cam_high","cam_right_wrist"],25,.12,512,instruction_for_episode(root,0))
+-        obs=next(iter(source))
+-        model=GeometryVision(config["geometry"],config["rules"])
++        source=LeRobotStream(root,0,["cam_high","cam_right_wrist"],10,.12,512,instruction_for_episode(root,0))
++        cycle=list(source)
++        model=make_vision(config)
+         monitor=Monitor(config,model)
+         maxima={}
+         for i in range(2000):
++            obs=cycle[i%len(cycle)]
+             current=replace(obs,timestamp=float(i),ref=f"obs-{i:06d}",modalities={k:dict(v,timestamp=float(i)) for k,v in obs.modalities.items()})
+             r=monitor.step(current)
+             for k,v in r["memory_usage"].items():
+                 maxima[k]=max(maxima.get(k,0),v)
+-        assert maxima["visual_reference_images"]==1 and maxima["visual_masks"]==3
++        assert maxima["visual_reference_images"]==1 and maxima["visual_masks"]<=config["geometry"]["max_masks"]
+         assert maxima["visual_tracks"]<=2 and maxima["log_reads"]==0
+-        return {"decisions":2000,"maxima":maxima,"kind":"重复真实首帧的人工长流；只检验实际图像处理器容量，不作识别实验"}
+-    record("实际视觉后端 2000 步全缓存容量",long_vision,"repeated_real_frame_engineering_stress")
++        assert monitor.tracker.attempt>50 and maxima["events"]==config["memory"]["events"]
++        return {"decisions":2000,"maxima":maxima,"observed_attempts":monitor.tracker.attempt,
++                "kind":"循环真实失败片段制造动态长流，含位置/遮挡/打开闭合变化；非真实连续2000步轨迹"}
++    record("实际双视角后端 2000 步动态全缓存容量",long_vision,"real_pixels_dynamic_engineering_stress")
+ 
+     def missing_and_reset():
+         import av
+         from unittest.mock import patch
+         root=Path(config["source"]["root"])
+-        vision=GeometryVision(config["geometry"],config["rules"])
++        vision=make_vision(config)
+         monitor=Monitor(config,vision)
+-        source=lambda episode:LeRobotStream(root,episode,["cam_high","cam_right_wrist"],25,.12,512,instruction_for_episode(root,episode))
++        source=lambda episode:LeRobotStream(root,episode,["cam_high","cam_right_wrist"],config["source"]["sample_every"],.12,512,instruction_for_episode(root,episode))
+         for obs in source(0):
+             monitor.step(obs)
+         monitor.reset()
+@@ -200,7 +223,7 @@
+         monitor.reset()
+         with patch("av.open",side_effect=ValueError("injected_open_failure")):
+             failed_open=[monitor.step(obs) for obs in source(0)]
+-        assert len(failed_open)==12 and all(r["execution_status"]=="information_insufficient" for r in failed_open)
++        assert len(failed_open)==len(real_cache[0]) and all(r["execution_status"]=="information_insufficient" for r in failed_open)
+         assert failed_open[0]["modalities"]["cam_high"]["reason"].startswith("video_open_error:")
+         original_open=av.open
+         class BrokenDecoder:
+@@ -217,14 +240,24 @@
+         assert failed_decode[0]["execution_status"]=="executing"
+         assert all(r["execution_status"]=="information_insufficient" for r in failed_decode[1:])
+         assert failed_decode[1]["modalities"]["cam_high"]["reason"].startswith("video_decode_error:")
++        monitor.reset()
++        monitor.step(replace(missing,timestamp=0.,ref="initial-missing"))
++        delayed=replace(initial,timestamp=1.,ref="delayed-clear",modalities={k:dict(v,timestamp=1.) for k,v in initial.modalities.items()})
++        result=monitor.step(delayed)
++        assert result["visual_facts"]["valid"],"缺失首帧后不能恢复校准"
++        assert vision.reference_time==1.,"校准不得倒填到未看到的t=0"
++        stale=replace(initial,timestamp=2.,ref="stale",modalities={k:dict(v,status="stale") for k,v in initial.modalities.items()})
++        assert monitor.step(stale)["execution_status"]=="information_insufficient"
+         return {"normal_after_failed_equals_fresh":True,"missing_high_continued":True,"black_frame_continued":True,
+                 "new_clear_frame_resumed":True,"video_open_failure_continued":True,"video_decode_failure_continued":True,
++                "missing_initial_then_causal_calibration":True,"stale_images_filtered":True,
+                 "occlusion_kind":"人工缺帧/黑帧/解码故障注入，不是真实遮挡标注集"}
+     record("真实后端缺失/遮挡恢复与跨轨迹重置",missing_and_reset,"real_pipeline_with_injected_faults")
+ 
+     report={"checks":checks,"passed":all(c["status"]=="passed" for c in checks),
+-            "not_validated":["独立未见轨迹的识别精度与泛化", "真实机器人重试和滑落样本", "真实坐标变换和物理动作执行",
+-                             "切割完成与归位的真实视觉效果判定", "Qwen可靠结构化诊断", "目标4完整实验"],
++            "code_sha256":{p.name:sha256(p) for p in BASE.glob("*.py")},"config":config,
++            "not_validated":["识别精度与跨场景泛化", "真实机器人重试和滑落样本", "真实坐标变换和物理动作执行",
++                             "真实刀柄/两指联合定位及闭合准备", "Qwen可靠结构化诊断", "目标4完整实验"],
+             "no_execution_claim":True,"synthetic_not_used_as_visual_accuracy":True}
+     (directory/"validation.json").write_text(json.dumps(report,ensure_ascii=False,indent=2,allow_nan=False),encoding="utf-8")
+     print("验证记录："+str(directory),flush=True)
+--- a/streaming_recovery/vision.py
++++ b/streaming_recovery/vision.py
+@@ -28,7 +28,7 @@
+ PROMPT = '''Look at the CURRENT images. Describe only visible spatial relations of the white-handled KNIFE, the robot's right GRIPPER, the narrow black RACK on the table, and the sausage on the brown BOARD. Do not invent a task narrative. Earlier HIGH is a previous view of the same camera. CURRENT WRIST is a different camera at the CURRENT time.
+ Output JSON with these exact fields:
+ visibility: clear, partial, occluded, or unknown.
+-knife_location: rack (knife resting in the narrow black rack on the right side of the table), gripper (knife visibly removed from rack and carried by robot), board (knife lying on brown board), elsewhere, or unknown. The robot gripper is NOT the rack.
++knife_location: holder (knife resting in the narrow black rack on the right side of the table), gripper (knife visibly removed from rack and carried by robot), board (knife lying on brown board), elsewhere, or unknown. The robot gripper is NOT the rack.
+ gripper: open, closed, or unknown.
+ motion: at_holder (gripper at black rack), at_board (gripper over brown board), away, or unknown. Describe CURRENT position only.
+ contact: between_fingers (knife handle visibly in robot fingers), separate, occluded, or unknown.
+@@ -37,7 +37,7 @@
+ released: yes if robot fingers are visibly separate from knife, no if gripping it, otherwise unknown.
+ knife_handle_xy and gripper_xy: [x,y] in CURRENT HIGH image normalized 0..1000 (x right, y down), or null if uncertain. Knife point must be the handle center, gripper point the finger midpoint, not arm base.
+ description: one short sentence about visible facts, maximum 250 characters.
+-Return only JSON. Do not infer pickup, cutting or return from an instruction. When knife_location=rack, co_motion must be unknown.'''
++Return only JSON. Do not infer pickup, cutting or return from an instruction. When knife_location=holder, co_motion must be unknown.'''
+ 
+ 
+ def make_request(observation, previous, max_images=3):
+--- a/streaming_recovery/__main__.py
++++ b/streaming_recovery/__main__.py
+@@ -4,6 +4,7 @@
+ from datetime import datetime, timezone, timedelta
+ import hashlib
+ import json
++import shutil
+ from pathlib import Path
+ import sys
+ import time
+@@ -43,20 +44,30 @@
+             value.update(data)
+     return value.hexdigest()
+ 
++def make_vision(config):
++    if config["backend"]=="calibrated_rgb_geometry":
++        return GeometryVision(config["geometry"],config["rules"])
++    if config["backend"]=="multiview_effect_geometry":
++        from .multiview import MultiViewGeometryVision
++        return MultiViewGeometryVision(config["geometry"],config["rules"])
++    raise ValueError("unknown production backend; Qwen remains an explicitly separate experiment")
++
+ 
+ def run(config, output=None):
+-    if config["backend"]!="calibrated_rgb_geometry":
+-        raise ValueError("production acceptance uses calibrated_rgb_geometry; Qwen experiments are separate")
+     run_id=datetime.now(timezone(timedelta(hours=8))).strftime("%Y%m%d_%H%M%S_%f")
+     run_dir=Path(output) if output else Path(config["output"])/run_id
+     run_dir.mkdir(parents=True,exist_ok=False)
+     (run_dir/"config_snapshot.json").write_text(json.dumps(config,ensure_ascii=False,indent=2),encoding="utf-8")
++    (run_dir/"source_snapshot").mkdir()
++    for path in BASE.glob("*.py"):
++        shutil.copy2(path,run_dir/"source_snapshot"/path.name)
+     root=Path(config["source"]["root"])
+-    vision=GeometryVision(config["geometry"],config["rules"])
++    vision=make_vision(config)
+     monitor=Monitor(config,vision)
+     summary={"run_id":run_id,"date_timezone":"Asia/Shanghai","python":sys.version,"backend":config["backend"],
+         "actual_data":True,"synthetic":False,"execution_mode":"advisory_replay","clock_policy":"25 FPS source; configured sampling; synchronous backpressure, not wall-clock real-time guarantee",
+-        "episodes":[],"code_sha256":{p.name:sha256(p) for p in BASE.glob("*.py")}}
++        "episodes":[],"code_sha256":{p.name:sha256(p) for p in BASE.glob("*.py")},
++        "test_sha256":{p.name:sha256(p) for p in (BASE/"tests").glob("test_*.py")}}
+     start=time.monotonic()
+     try:
+         for episode in config["source"]["episodes"]:
+--- a/README.md
++++ b/README.md
+@@ -1,8 +1,25 @@
+ # CV大作业—流式任务处理
+ 
+-第1步的真实 ViFailback 流式输入和当前观测基线已完成工程验证。**第2步尚未完成**：已有有限历史监测原型，但此前9次判断只是启动检查，不能证明任务进度理解和失败诊断有效。现改为完整轨迹的批量时序评测，覆盖率和效果应分别验收。
++目前有两条独立路线，不能混用运行次数或效果结论。2026-10-17 对现有 `streaming_recovery/` 完成增量修复：真实双视角图像支持右臂取刀、切下新小段和刀具归位；两条正常、三条失败轨迹完成了功能回放。真实刀柄/两指联合定位、接触准备与完整重试纠错仍有缺口，不能称为通用机器人操作系统。
+ 
+-## 任务进度与失败诊断
++| 路线 | 目标 1—3 当前证据 | 尚未验证 |
++|---|---|---|
++| `streaming_recovery`，CPU 双视角经典视觉＋有限状态 | 5 条真实轨迹、180 次判断；正常 18/19 有完整任务效果证据；失败 0/2/6 主动提醒；真实恢复建议可检查 | 可靠联合定位、实际深度/接触准备、自然滑落/重试和物理执行；完整建议推进仅合成验证 |
++| 根目录 Qwen 当前观测/时序路线 | 保留历史输入、启动、资源与工程测试记录 | 500 条正式基准仍为 0 条完成；未获该路线完整诊断/分层纠错效果结论 |
++
++本次主入口（项目根目录 PowerShell）：
++
++```powershell
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run
++```
++
++详见 [运行说明](streaming_recovery/README.md)、[增量修复与验收](streaming_recovery/docs/增量修复与验收_20261017.md) 和 [真实逐时刻查看页](streaming_recovery/artifacts/incremental_20261017/delivery_run/index.html)。episode 19 首次冻结检查漏检，修复后归入本轮开发；保留首轮输出，未把它作为未调参成绩。冻结划分和保留测试集均未改动。
++
++以下保留根目录 Qwen 路线的历史进展与原入口。原“第2步尚未完成、第3步暂缓”的判断适用于该路线及当时版本，不代表上面的 CPU 增量实现。
++
++历史状态：第1步的真实 ViFailback 流式输入和当前观测基线已完成工程验证。第2步尚未完成：已有有限历史监测原型，但此前9次判断只是启动检查，不能证明任务进度理解和失败诊断有效。改为完整轨迹的批量时序评测，覆盖率和效果应分别验收。
++
++## 根目录 Qwen 路线：历史进展与入口
+ 
+ 使用现有 `cv-baseline` 环境，无需重新安装依赖：
+ 
+--- a/streaming_recovery/tests/test_system.py
++++ b/streaming_recovery/tests/test_system.py
+@@ -113,7 +113,8 @@
+         b=self.feed(3,.005,gripper="closed",location="board",contact="separate",motion="at_board")
+         self.assertEqual(a["execution_status"],"suspicious")
+         self.assertEqual(b["diagnosis"]["type"],"lost_grasp")
+-        self.assertEqual(b["correction"]["low_level"]["action_type"],"hold_and_observe")
++        self.assertEqual(b["correction"]["low_level"]["action_type"],"open_gripper")
++        self.assertIn("砧板",b["correction"]["high_level"]["resume_when"])
+ 
+     def test_leaving_visible_work_area_does_not_invent_a_retry_stage(self):
+         for t in (0,1):
+@@ -240,7 +241,8 @@
+             self.feed(t,.005,location="gripper",gripper="closed",motion="at_board",contact="between_fingers",cut_piece="yes")
+         for t in (4,5):
+             r=self.feed(t,.06,location="holder",gripper="open",contact="separate",released="yes",cut_piece="yes")
+-        self.assertTrue(r["state"]["task_completed"])
++        self.assertFalse(r["state"]["task_completed"])
++        self.assertFalse(r["state"]["preconditions"]["cut_effect_confirmed"])
+         self.assertFalse(r["execution"]["actually_executed"])
+ 
+     def test_long_stream_every_history_bound(self):
+--- /dev/null
++++ b/streaming_recovery/tests/test_incremental_regressions.py
+@@ -0,0 +1,179 @@
++"""审查问题的合成语义回归。先在修改前运行；不代表视觉识别精度。"""
++from copy import deepcopy
++from dataclasses import replace
++import unittest
++
++from streaming_recovery.tests import test_system as _support
++from streaming_recovery.tests.test_system import facts, observation
++from streaming_recovery.recovery import validate_consistency
++
++
++class IncrementalRegressions(_support.SystemTests):
++    # 不重复继承原测试，仅复用其准备/输入辅助函数。
++    def test_A_occluded_failure_cannot_open(self):
++        self.failed_attempt()
++        self.vision.current = facts(4, gripper="closed", contact="separate")
++        self.vision.current.visibility = "occluded"
++        r = self.monitor.step(observation(4, .005))
++        self.assertFalse(r["visual_facts"]["effect_usable"])
++        self.assertEqual(r["correction"]["low_level"]["action_type"], "hold_and_observe")
++
++    def test_B_second_attempt_failure_after_historical_grasp(self):
++        self.feed(0)
++        self.feed(1,.005,gripper="closed")
++        for t in (2,3):
++            self.feed(t,.005,location="gripper",gripper="closed",contact="between_fingers",motion="to_board")
++        for t in (4,5):
++            lost = self.feed(t,.005,location="board",gripper="closed",contact="separate",motion="at_board")
++        self.feed(6,.06,gripper="open",contact="separate")
++        self.feed(7,.005,gripper="closed")
++        for t in (8,9):
++            r = self.feed(t,.005,gripper="closed",contact="separate",motion="at_board")
++        self.assertEqual(r["state"]["attempt"],2)
++        self.assertIsNotNone(r["failure_event"])
++        self.assertEqual(r["failure_event"]["kind"],"grasp_not_established")
++        self.assertNotEqual(r["failure_event"]["event_id"],lost["failure_event"]["event_id"])
++
++    def test_C_unknown_gap_preserves_recent_grasp_evidence(self):
++        for t in (0,1):
++            self.feed(t,.005,location="gripper",gripper="closed",contact="between_fingers",motion="to_board")
++        r=self.feed(2,.005,location="unknown",gripper="closed",contact="unknown",motion="unknown")
++        self.assertIsNone(r["failure_event"])
++        for t in (3,4):
++            r=self.feed(t,.005,location="board",gripper="closed",contact="separate",motion="at_board")
++        self.assertIsNotNone(r["failure_event"])
++        self.assertEqual(r["failure_event"]["kind"],"lost_grasp")
++        self.assertEqual(r["execution_status"],"confirmed_failure")
++
++    def test_D_preexisting_piece_is_not_this_cut(self):
++        for t in (0,1):
++            self.feed(t,cut_piece="yes",contact="separate",released="yes")
++        for t in (2,3):
++            self.feed(t,.005,location="gripper",gripper="closed",motion="at_board",contact="between_fingers",cut_piece="yes")
++        for t in (4,5):
++            r=self.feed(t,contact="separate",released="yes",cut_piece="yes")
++        self.assertFalse(r["state"]["preconditions"]["cut_effect_confirmed"])
++        self.assertFalse(r["state"]["task_completed"])
++
++    def genuine_cut(self):
++        self.feed(0,cut_piece="no",contact="separate",released="yes")
++        self.feed(1,.005,gripper="closed",cut_piece="no")
++        for t in (2,3):
++            self.feed(t,.005,location="gripper",gripper="closed",contact="between_fingers",motion="at_board",cut_piece="no",
++                      measurements={"cut_operation":"yes"})
++        for t in (4,5):
++            self.feed(t,.005,location="gripper",gripper="closed",contact="between_fingers",motion="at_board",cut_piece="yes",
++                      measurements={"cut_operation":"yes", "new_cut_effect":"yes", "cut_reference_timestamp":0.0})
++        for t in (6,7):
++            r=self.feed(t,contact="separate",released="yes",cut_piece="yes")
++        return r
++
++    def test_E_completion_does_not_freeze_current_return(self):
++        r=self.genuine_cut()
++        self.assertTrue(r["state"]["task_completed"])
++        r=self.feed(8,.005,location="board",gripper="closed",contact="separate",motion="at_board",cut_piece="yes")
++        self.assertFalse(r["state"]["preconditions"]["tool_returned"])
++        self.assertNotEqual(r["state"]["stage"],"completed")
++        self.assertIsNone(r["state"]["candidate"],"已明确释放的历史连接不能继续作为失抓前件")
++
++    def test_validator_rejects_unusable_and_unfounded_spatial_values(self):
++        _,r=self.failed_attempt()
++        for mutation in ("occluded", "stale", "conflict", "translation", "rotation", "object", "frame", "force", "precondition"):
++            with self.subTest(mutation=mutation):
++                bad=deepcopy(r)
++                if mutation=="occluded":
++                    bad["visual_facts"].update(valid=False,visibility="occluded",effect_usable=False)
++                elif mutation=="stale":
++                    bad["visual_facts"]["timestamp"]-=100
++                elif mutation=="conflict":
++                    bad["state"]["modality_conflict"]=True
++                elif mutation in ("translation","rotation"):
++                    bad["correction"]["low_level"][mutation]={"values":[.2,0,0],"units":"m"}
++                elif mutation=="object":
++                    bad["correction"]["high_level"]["object"]="sausage"
++                    bad["correction"]["low_level"]["object"]="sausage"
++                elif mutation=="force":
++                    bad["correction"]["low_level"]["force"]=99
++                elif mutation=="precondition":
++                    bad["correction"]["low_level"]["preconditions"][1]["status"]="supported_by_current_observation"
++                else:
++                    bad["correction"]["low_level"]["coordinate_frame"]="robot_base"
++                with self.assertRaises(ValueError):
++                    validate_consistency(bad)
++
++    def test_2d_alignment_waits_then_independent_readiness_allows_close(self):
++        self.failed_attempt()
++        r=self.feed(4,contact="separate",knife_handle_xy=[500,500],gripper_xy=[500,500])
++        self.assertNotEqual(r["correction"]["low_level"]["action_type"],"align_in_image")
++        self.assertNotEqual(r["correction"]["low_level"]["action_type"],"close_gripper")
++        # 向后兼容扩展：旧 VisualFacts 上也能挂载，但旧系统并不消费此证据。
++        self.vision.current=facts(5,contact="separate",knife_handle_xy=[500,500],gripper_xy=[500,500])
++        self.vision.current.grasp_readiness={"depth":"confirmed","orientation":"confirmed","contact_region":"confirmed",
++            "source":"synthetic_independent_depth_contact","timestamp":5.,"ref":"ready-5"}
++        r=self.monitor.step(observation(5))
++        self.assertEqual(r["correction"]["low_level"]["action_type"],"close_gripper")
++        self.assertEqual(r["state"]["attempt"],1)
++        self.assertFalse(r["execution"]["actually_executed"])
++
++    def test_negated_and_other_instructions_rejected(self):
++        for text in ("Do not use the right arm; leave the knife in the holder and do not cut the sausage.",
++                     "Use the right arm to move the sausage near the knife holder."):
++            with self.subTest(instruction=text):
++                self.monitor.reset()
++                self.vision.current=facts(0)
++                with self.assertRaises(ValueError):
++                    self.monitor.step(replace(observation(0),instruction=text))
++
++    def test_observed_close_advances_then_effect_resolves(self):
++        self.failed_attempt()
++        self.feed(4,contact="separate",knife_handle_xy=[500,500],gripper_xy=[500,500])
++        r=self.feed(5,.005,gripper="closed",contact="unknown")
++        self.assertEqual(r["state"]["attempt"],2)
++        self.assertEqual(r["correction"]["low_level"]["recovery_phase"],"verify_grasp_effect")
++        r=self.feed(6,.005,location="gripper",gripper="closed",contact="between_fingers",motion="to_board")
++        self.assertIsNot(r["state"]["preconditions"]["reliable_grasp"],True)
++        r=self.feed(7,.005,location="gripper",gripper="closed",contact="between_fingers",motion="to_board")
++        self.assertTrue(r["state"]["preconditions"]["reliable_grasp"])
++        self.assertIsNone(r["correction"])
++        self.assertFalse(r["execution"]["actually_executed"])
++
++    def test_old_grasp_expires_and_unknown_does_not_prove_loss(self):
++        for t in (0,1):
++            self.feed(t,.005,location="gripper",gripper="closed",contact="between_fingers",motion="to_board")
++        for t in range(2,8):
++            r=self.feed(t,.005,location="unknown",gripper="closed",contact="unknown",motion="unknown")
++            self.assertIsNone(r["failure_event"])
++        r=self.feed(8,.005,location="board",gripper="closed",contact="separate",motion="at_board")
++        self.assertIsNone(r["failure_event"])
++
++    def test_close_after_release_away_is_not_a_retry(self):
++        self.genuine_cut()
++        old=self.monitor.tracker.attempt
++        r=self.feed(8,.005,gripper="closed",contact="separate",released="yes",motion="away",cut_piece="yes")
++        self.assertEqual(r["state"]["attempt"],old)
++        self.assertIsNone(r["failure_event"])
++
++    def test_qwen_holder_and_legacy_rack_boundary_without_gpu(self):
++        from unittest.mock import Mock
++        import json
++        from streaming_recovery.vision import QwenProcess, PROMPT
++        from streaming_recovery.contracts import ENUMS
++        self.assertIn("knife_location: holder",PROMPT)
++        for location in ("holder","rack"):
++            model=QwenProcess.__new__(QwenProcess)
++            model.config=self.config["model"];model.error=None;model.calls=0
++            model.incoming=Mock();model.outgoing=Mock()
++            payload={k:"unknown" for k in ENUMS}|{"knife_location":location,"knife_handle_xy":None,"gripper_xy":None,"description":"format fixture"}
++            model.outgoing.get.return_value={"raw":json.dumps(payload)}
++            out=model.observe(observation(0),None)
++            self.assertTrue(out.valid,out.error)
++            self.assertEqual(out.knife_location,"holder")
++
++
++# unittest 不重复继承的 17 项；它们仍由原测试模块独立执行。
++for _name in tuple(vars(_support.SystemTests)):
++    if _name.startswith("test_") and _name not in IncrementalRegressions.__dict__:
++        setattr(IncrementalRegressions,_name,None)
++
++if __name__=="__main__":
++    unittest.main()
+--- /dev/null
++++ b/streaming_recovery/docs/增量修复与验收_20261017.md
+@@ -0,0 +1,125 @@
++# 2026-10-17 增量修复与目标 1—3 验收
++
++本轮在原 `streaming_recovery/` 上修改，没有另建并行系统，没有修改根目录业务代码或原变量名。根 README 只补充分路线进度，历史记录保留。交付结果不是“所有能力已完成”：固定场景的完整任务效果链已获得真实运行证据，真实联合定位及闭合准备仍未完成。
++
++## 需求、核查与主要路线
++
++| 目标 | 必须实现的功能 | 本轮改动与验证 |
++|---|---|---|
++| 1 | 指令＋持续观测、因果对齐、有界方法、可查看输出 | 保留逐帧源与有限状态方法；扩展双视角后端和所有新增缓存边界；两个后端均做完整链公共前缀对照 |
++| 2 | 当前阶段、前置条件、效果、主动诊断、事实/假设区分 | 修复 A—E；从真实图像加入刀具连接、香肠端部作用、新小块、刀具回架与释放证据 |
++| 3 | 同一事件的高层恢复子目标、低层下一动作、条件与检查 | 当前证据统一门控；区分未取到/前置条件不足/连接失效；补齐二维对齐→独立准备检查→闭合建议→效果检查 |
++
++使用 CPU 经典视觉、有界证据锚点、3 s 校准等待、动作 schema 和静态 HTML 查看页属于工程选择，不是文档硬性规定。训练新模型、真机控制、目标 4 的完整基准及消融均未开展。
++
++本轮实际核查 `cv-streaming` 的 OpenCV 5.0.0、NumPy 2.4.6、PyArrow 26.0.0、PyAV 18.1.0；已有 `cv-baseline` 用于补跑 4 项可选依赖单元测试。启动时 RTX 4060 Laptop 8 GB 空闲约 4,701 MiB，本轮未加载 Qwen、未进行 GPU 模型推理、未停止其他进程。已有本地权重不被视为模型能力证明。
++
++数据沿用官方固定 revision `619791b94f61667333fe179d471051e0bca0e06f`，来源为 [LeRobot 数据仓库](https://huggingface.co/datasets/sii-rhos-ai/vifailback-dataset-lerobot)，原始数据说明见 [ViFailback-Dataset](https://huggingface.co/datasets/sii-rhos-ai/ViFailback-Dataset)。本轮新增下载 2、19、6 的状态、顶视与右腕视频，记录官方大小及 SHA256；未下载左腕或完整测试集。连续 RGB 和实测关节/夹爪状态可用；本轮使用的模态同步到经逐帧检查的 25 FPS 时钟。没有可直接使用的实测 EEF、机器人坐标标定、对齐深度或接触就绪回执。`action` 和 `action_eef` 是目标，不进入判断。标签只供独立核对，阶段没有逐帧人工真值。
++
++## 确定问题与实际修复
++
++修改前源码、根 README 和工作区状态保存在 [before](../artifacts/incremental_20261017/before/)。先新增最小回归并在旧实现运行：**8 个测试出现 15 个失败断言**，无导入错误。记录见 [regressions.txt](../artifacts/incremental_20261017/before/regressions.txt)。修复后的完整合成测试共 29 项通过。收尾复核还先复现了两个动作校验缺口（额外 force 字段、把执行器待核验条件改成已满足），随后修复；记录为 validator_extra_before.txt 与 release_unit_tests.txt。
++
++| 审查问题 | 实际补丁 | 结果与边界 |
++|---|---|---|
++| A 遮挡仍开爪 | `recovery.py` 的当前有效性/可见性/时效/冲突门控，同时用于生成与运行时校验；`engine.py` 先过滤过期模态 | 同一历史失败在遮挡时只请求补观测，不能开爪；反向篡改结果也被拒绝 |
++| B 历史持刀屏蔽新失败 | `tracking.py` 分离 `ever_held`、`attempt_held` 和当前 `held`；真实新尝试清除旧尝试的抓取/失抓上下文 | 历史成功后再次空手离开会产生新事件；建议本身不推进尝试 |
++| C 一帧未知遗忘连接 | 保留最近可靠夹持锚点，默认有效期 4 s；当前未知另存为 `held=None` | 短缺口后分离可建立失抓；未知本身不失败，过期旧夹持也不能证明现在失抓 |
++| D 旧小块算新切割 | 保留切割前布局，要求持刀作用早于新增效果；已有小块需额外的新效果比较 | 旧的误写测试纠正为“不完成”，另有真实新增效果正例；未把 yes 改成 unknown 规避 |
++| E 完成状态锁死 | `completed` 为历史成就；当前 `returned` 随观测更新，输出 `historical_completion` 与当前 `task_completed` | 完成后刀离架/未知时不继续输出当前 completed；历史完成仍可保留 |
++| 只有对齐、没有闭合 | `RecoveryContext` 保留一个事件；加入 `grasp_readiness`、准备检查、闭合建议和效果检查 | 完整推进链仅合成验证；2D 重合缺独立准备时不会闭合 |
++| 全部恢复都假定在刀架 | 连接失效按当前砧板/其他支撑位置重新获取；未取到与缺前置条件采用对应策略 | 恢复位置、受阻步骤、继续原流程条件与当前状态关联 |
++| 校验接受无根据参数 | 按动作校验对象、坐标、当前证据、必要前置条件、方向符号、参数和执行标记 | 开/闭爪不能夹带 translation/rotation；无物理数值来源时拒绝数值命令 |
++| 指令四关键词误匹配 | 新增 `task_spec.py` 显式完整指令白名单与任务顺序/完成规格 | 否定、不同任务、歧义变体拒绝，不声称任意自然语言泛化 |
++| 首帧失败后永久未知 | 起始 3 s 内可从之后已到达的合格观测校准，保留真实参考时间 | 缺失首帧故障注入已验证；任意中途布局不能倒填初始状态 |
++| Qwen rack 枚举 | 原边界已存在 rack→holder；本轮统一提示为 holder，保留兼容映射并做不加载模型的回归 | 审查对直接 parser 的复现成立，但不能据此说既有真实适配器完全无映射；未验证新的模型语义可靠性 |
++
++收尾还用反例确认并修复：已明确归位释放后，旧夹持锚点不能继续成为后来失抓的前件；历史完成仍保留，当前位置照常更新。证据见 released_connection_before.txt 与 delivery_unit_tests.txt。
++
++本轮真实回放又发现“释放后空夹爪闭合”被当成新尝试。已把新尝试限制为**当前仍在目标附近**，不能仅靠上一帧接近目标；另加回归。浮点时间跨度使用明确微小容差，避免 6.0−5.2 因舍入未满足 0.8 s。
++
++## 真实视觉增加了什么
++
++`geometry.py` 仍保留原单视角对照。新增 `multiview.py` 使用同一在线观察契约，没有样本名、结局、总时长或未来画面输入。
++
++1. 顶视初始已接受图像建立砧板、刀架刃区及香肠几何参考。不是整段轨迹统计或人工逐样例答案。
++2. 腕部窄长亮刀刃与两指尖端带的空间关系，加上原刀架刃区变化，支持当前刀具连接。开闭值仍来自原始状态，明确不是独立视觉夹爪分类器。
++3. 刀刃与香肠端部相邻并发生相对运动，产生“刀具作用”的视觉代理；本身不等于已切开。可从两端切入。
++4. 原主香肠仍存在且未被机器人遮挡时，比较新增、分离、近圆形小区域与初始布局；连续支持后确认本次效果。初始已有小块不计新增。
++5. 刀架刃区外观恢复且可见，夹爪与刀分离，连续支持当前归位和释放。不会用最终成功标签或流结束补齐。
++
++这些判据只在明确的固定场景假设下工作。颜色、形状和接触带是可审查的经典视觉先验，不是训练后的通用识别器。局部轮廓/掩码和相对运动可能受反光、遮挡及其他相似物体干扰；没有报告校准概率。输出引用当前两相机、初始参考和上一腕部证据，最多 4 项。像素区域质心没有被冒充为刀柄中心或两指中点。
++
++## 五条轨迹的实际结果
++
++下表都是**数据时间**。提醒时间不叫检测延迟，因为没有首次可检测时刻标签。avoid/correct 关键帧未当作首次可检测真值。
++
++| episode | 数据身份与用途 | 判断数 | 首次可靠持刀 | 新切割确认 | 当前完成 | 首次疑似 / 确认 |
++|---|---|---:|---:|---:|---:|---|
++| 0 | dev_seen，开发失败样例 | 30 | 无 | 无 | 未确认 | 8.8 / 9.6 s |
++| 18 | dev_seen，开发正常样例 | 52 | 5.6 s | 14.8 s | 19.6 s | 无提醒 |
++| 2 | validation，首次冻结后补充失败检查 | 29 | 无 | 无 | 未确认 | 9.6 / 10.4 s |
++| 19 | train，首次补充检查后用于修复 | 42 | 5.2 s | 10.8 s | 15.6 s | 无提醒 |
++| 6 | validation，第二次冻结后新检查 | 27 | 无 | 无 | 未确认 | 8.8 / 9.6 s |
++
++共 1,790 个原生时刻、3,580 张双相机解码图、180 次判断。数据源读取完整轨迹，默认每 10 帧处理一次，不因提前知道长度补判末帧。先前四条运行约 19.69 s、单独 episode 6 约 3.64 s；最终合并回放实测耗时见 delivery_run/summary.json。均包含读取、推理、输出，不是硬实时承诺。
++
++失败 0 被诊断为 `grasp_not_established`；2、6 未取得可靠的“在刀柄处闭合尝试”证据，使用 `prerequisite_unmet`，不补造一次已定位的抓取。每条持续失败只发疑似和确认两次提醒，保持同一事件。
++
++正常 18 的未知/信息不足时刻为 3.6、4.0、4.4、4.8、5.2、14.0、14.4、16.8、17.2、18.0、18.4 s；正常 19 为 10.4、13.2、13.6、14.0、14.4 s。早期运输可能先输出“携刀转移、可靠夹持待确认”；阶段身份不等于所有前置条件已确认。未把未知段改成连续成功。
++
++episode 19 在[第一次冻结检查](../artifacts/incremental_20261017/additional_run/index.html)中**没有确认整任务**：单侧刀刃—香肠关系漏掉从另一端切入。已保留原始输出，随后修复空间关系的左右对称性。19 从此计入本轮开发，不能再算未调参正常验证成绩。冻结 split 文件没有变动；暴露状态写入 [additional_validation.json](../artifacts/incremental_20261017/additional_validation.json)，而不是篡改原划分。第二次冻结后新选 episode 6，未据其结果调参。未接触保留测试集，没有无偏准确率结论。
++
++查看 [主运行页面](../artifacts/incremental_20261017/delivery_run/index.html)、[episode 6 页面](../artifacts/incremental_20261017/unseen_v2_run/index.html)、[关键帧图](../artifacts/incremental_20261017/真实运行关键帧.png)。原始逐时刻 JSONL、输入图和 end.json 位于对应 trajectory 目录。可视复核只覆盖文档列出的关键时刻，不是独立人工逐帧阶段标注集。
++
++## 两层建议和推进实例
++
++真实 episode 0，9.6 s：
++
++- 事件 `event-0001`，抓取尝试后刀仍在架上，机器人已到砧板；当前没有可靠夹持。
++- 高层 `retry_tool_acquisition`：切割前置条件受阻，先在刀架重新建立定位、对齐和可靠夹持；只有连续新观测支持刀离架并随夹爪运动才恢复转移。
++- 低层 `open_gripper`：当前刀与夹爪分离且夹爪闭合；执行器先确认夹爪内无其他物体及可安全打开，再保持末端位姿、单独打开。
++- 坐标 `right_gripper_actuator_no_translation`；translation、rotation、numeric_command、units 都为 null。
++- 检查实际打开、刀未被拖动、重新定位刀柄与两指。`actually_executed=false`，无回执，无效果归因。
++
++[合成恢复推进序列](../artifacts/incremental_20261017/synthetic_recovery_trace.jsonl)显示：疑似保持 → 确认后开爪建议 → 实际观测已打开且未对齐时交接图像对齐 → 仅 2D 对齐时检查深度/姿态/接触准备 → 独立准备观测到达后建议闭合 → 观测真实开闭变化后进入抓取效果检查 → 连续连接证据后解除恢复上下文。它没有执行任何动作；其中准备传感证据明确标为合成。
++
++## 必要验证与发现的问题
++
++[最终功能记录](../artifacts/incremental_20261017/delivery_validation/validation.json)包含 5 组，全部通过：
++
++| 性质 | 实际检查 | 证据等级 |
++|---|---|---|
++| 因果性与标签/路径隔离 | 同一 275 原生帧前缀，修改后缀、路径编号、标签与 action；两个后端分别 28 个完整结果完全相同；每次 yield 另检查读行/解码进度 | 真实像素＋人工后缀改写，覆盖完整链路 |
++| 所有历史有界 | 10,000 步动态语义；2,000 步循环真实变化片段，实际观察到 67 次尝试、事件缓存达到上限 | 合成逻辑及真实像素工程压力 |
++| 正常未完成、抓取效果、信息不足 | 闭爪不证明抓取；短暂未知与有效期；初始已有小块与新效果正反例 | 合成语义＋真实正常/失败回放 |
++| 事件去重、重试、两层一致性、坐标依据 | 同一事件持续、新尝试再失败；篡改当前证据、对象、坐标和空间参数被拒绝；真实单步建议与合成闭合推进 | 合成语义＋真实建议生成 |
++| 降级、校准和重置 | 缺帧、黑图、过期、视频打开/解码故障；首帧缺失后因果校准；失败轨迹后 reset 的正常结果与新实例逐项相同 | 明确的真实图像故障注入 |
++| 建议与执行区分 | 全部真实和合成输出未执行、无回执，不归因于原视频后续变化 | 输出契约检查 |
++
++动态真实像素压力中：最多 4 条观测/8 张图、5 条近期特征、4 个事件/16 条事件证据、1 张视觉参考、4 个掩码、3 条腕部记录、1 个恢复上下文/4 条证据。固定特征上限为 6，锚点 8，初始食物几何条目 5，任务状态槽上限 18（实际 16）。当前配置运行时会检查整个特征 payload 及扩展字段长度，不只检查图像窗口。数字 `log_reads=0`、`future_frames_exposed=0` 是声明，未把它们当独立证明；结论还依靠代码边界、逐步源进度断言和完整前缀对照。
++
++原项目回归：CPU 环境 109 项通过、4 项可选依赖跳过；随后在 `cv-baseline` 补跑这 4 项全部通过，总覆盖 113 项。首次直接运行因沙箱系统临时目录权限产生 81 个环境错误，原日志保留；把测试临时目录显式放到工作区后消除，未修改原业务代码或放宽断言。记录分别为 `legacy_tests_cpu.txt`、`legacy_tests_cpu_retry.txt`、`legacy_optional_baseline.txt`。这些是软件回归，不是模型效果成绩。
++
++## 运行、配置与版本
++
++```powershell
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery run --config streaming_recovery/artifacts/incremental_20261017/release_config.json
++& 'C:\Users\lenovo\.conda\envs\cv-streaming\python.exe' -m streaming_recovery validate
++```
++
++不指定配置时只跑 0、18。输出总是新目录；指定已经存在的 `--output` 会拒绝覆盖。
++
++`delivery_run/config_snapshot.json`、`delivery_run/summary.json` 和 `delivery_run/source_snapshot/` 保存实际运行配置、逐文件代码/测试 SHA256、源数据 SHA256和源码副本。视觉阈值仍匹配第二次冻结；交付前另据合成反例强化动作未知字段/前置条件校验，并结束明确归位释放后的旧夹持连接，未根据 episode 6 调参。最终运行源码哈希逐项匹配当前代码，冻结 split 的哈希也与开始时一致。当前不是干净 git 提交，不能用 git HEAD 冒充本轮版本。补丁以修改前快照为基准，见 `artifacts/incremental_20261017/incremental.patch`。
++
++## 逐项目完成情况
++
++| 目标 | 已实现并完成真实运行验证 | 已实现，但仅合成/故障注入验证 | 尚未完成或受限制 |
++|---|---|---|---|
++| 1 | 实时刻序读取、白名单、双模态推理、有限状态、结构化结果、独立回放和完整因果对照 | 异步过期/乱序、缺失和解码异常注入 | 未验证真机墙钟实时吞吐；非本次必需 |
++| 2 | 明确任务绑定；正常取刀、作用、新切割、归位释放；未取到/缺夹持前置条件诊断与去重 | 短缺口失抓、真实新尝试后的再次失败、完成后当前谓词变化 | 自然重试/滑落的真实视觉效果未验证；跨场景泛化、完整准确率未完成 |
++| 3 | 同一真实失败的高低层建议、当前证据门控、位置相关恢复、真实空夹爪打开建议与检查 | 二维对齐→独立准备→闭合建议→抓取效果检查；非法动作拒绝 | **可靠刀柄/两指联合定位尚未实现**，真实 RGB 存在但当前检测器未解决，不能归咎于缺数据；独立深度、接触与映射未提供；因此完整真实闭合建议过程未完成 |
++
++当前 `knife_handle_xy` / `gripper_xy` 在真实运行保持 null，`grasp_readiness` 为空。这些不是假装完成的占位成功值。需要可靠局部定位器，以及经核验的深度/姿态/接触观测适配，才能补足真实对齐与闭合建议链。未完成部分已明确列出，未以测试数量或 JSON 合法率替代能力。
++
++Qwen 仅做枚举边界回归，未重新验证语义能力；先前两轮 GPU 试验含格式和语义问题，不应一概归因于模型。根目录 500 条正式基准仍为 0 完成，目标 4 不作为本轮前提。真实执行和执行回执均未接入；本次建议模式不把它列为必需交付。
+--- a/streaming_recovery/docs/数据契约.md
++++ b/streaming_recovery/docs/数据契约.md
+@@ -1,3 +1,21 @@
++# 当前契约 1.1 增量说明
++
++保留原字段及程序变量名。`Observation.grasp_readiness` 是末尾带默认值的可选字段，旧调用无需修改；默认回放源不提供，也不伪造。`VisualFacts` 增加 `gripper_source`、`grasp_readiness`、`localization_frame`。旧模型 JSON 严格解析仍沿用原字段集合，不能随意追加模型生成的接触回执。
++
++- `gripper_source=observation.state[13]` 表示夹爪开闭来自同一原始观测，不能称为独立视觉互证；`independent_visual` 才参与独立开闭冲突检查。
++- `grasp_readiness` 为空时准备未知；非空必须恰好包含 `depth`、`orientation`、`contact_region`、`source`、`timestamp`、`ref`。前三项为 confirmed/unknown/not_ready。真实允许的来源为 measured_depth_and_contact / validated_controller_observation；当前没有相应适配器。合成来源只在 synthetic_test_double 事实中有效。未来时间戳被拒绝，闭合建议要求本时刻新鲜证据。
++- `knife_handle_xy` 与 `gripper_xy` 是同一图像坐标系内 0..1000 的点；默认 `cam_high_image_x_right_y_down`，也允许右腕图像系。当前真实后端没有可靠联合定位，二者保持 null。
++- `measurements.food_components[*].bbox`、初始食物 bbox、`wrist.blade` / `wrist.food` 为处理后图像的像素 xywh，不是上述归一化点，更不是物理坐标。窗口图像为最长边 512；不由这些框生成数值机器人动作。
++- 双视角证据引用最多 4 项：当前两图、初始参考、上一腕部图。模型实验仍最多输入 3 张图。扩展 measurements 单条序列化最多 9,000 字符；特征总 payload、事件、恢复上下文和几何记录也检查容量。
++- `state.historical_completion` 是历史成就；`state.task_completed` 是当前完成条件。`attempt_held` 仅表示当前尝试，`ever_held` 不替代当前夹持。`returned` 当前可以为 true、false 或 null。
++- `recovery_event` 单独保留一次失败的恢复上下文；实际新尝试使原 failure_event 关闭后，仍可生成该次恢复的效果检查建议，不假定新动作成功。
++- 低层增加 `verify_contact_readiness`、`close_gripper`、`recovery_phase`、具体 missing_information 和重复缺证据时的交接提示。建议只观察状态推进，仍始终未执行、无回执。
++- 当前主后端 `multiview_effect_geometry` 真正使用 cam_high、cam_right_wrist 和 state[13]；旧 calibrated_rgb_geometry 保留为受限对照。默认每10帧处理一次（2.5 Hz）；原生时钟和0.12秒过期边界不变。
++
++详细规则、真实运行和未完成项见 [增量交付说明](增量修复与验收_20261017.md)。以下保留旧版契约以便对照；与上述增量冲突处以1.1为准。
++
++---
++
+ # 在线数据与输出契约
+ 
+ ## 数据源边界
+--- a/streaming_recovery/docs/现有项目审视.md
++++ b/streaming_recovery/docs/现有项目审视.md
+@@ -1,3 +1,5 @@
++> 历史版本说明：下文保留首次交付时的事实与限制，不代表本次增量修复后的状态。当前双视角方法、真实完整任务效果、补充验证及剩余缺口请见 [增量修复与验收_20261017.md](增量修复与验收_20261017.md)。旧输出目录与当时测试结果未改写。
++
+ # 现有项目审视与本次接入边界
+ 
+ 本次先独立完成需求与数据核查，再只读检查原实现。没有将原模块的存在视为需求已满足，也没有修改原文件或已有变量。新工作全部放在 `streaming_recovery/`。
+--- a/streaming_recovery/docs/需求与事实.md
++++ b/streaming_recovery/docs/需求与事实.md
+@@ -1,3 +1,5 @@
++> 历史版本说明：下文保留首次交付时的事实与限制，不代表本次增量修复后的状态。当前双视角方法、真实完整任务效果、补充验证及剩余缺口请见 [增量修复与验收_20261017.md](增量修复与验收_20261017.md)。旧输出目录与当时测试结果未改写。
++
+ # 目标 1—3：独立需求分析与事实核查
+ 
+ 核查日期：2026-10-17（Asia/Shanghai）。先阅读课题原文和数据，再确定本目录实现；不修改原项目文件、变量名或未提交成果。
+--- a/streaming_recovery/docs/验证与交付.md
++++ b/streaming_recovery/docs/验证与交付.md
+@@ -1,3 +1,5 @@
++> 历史版本说明：下文保留首次交付时的事实与限制，不代表本次增量修复后的状态。当前双视角方法、真实完整任务效果、补充验证及剩余缺口请见 [增量修复与验收_20261017.md](增量修复与验收_20261017.md)。旧输出目录与当时测试结果未改写。
++
+ # 目标 1—3 验证与交付记录
+ 
+ 2026-10-17。本轮只做功能验收，未开展目标 4 的完整对比、消融或泛化性能评测。原成果保留，新实现位于 `streaming_recovery/`。

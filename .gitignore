@@ -6,6 +6,7 @@ models/
 .env
 tmp/
 .vscode/settings.json
+.vscode/
 output/
 .DS_Store
 Thumbs.db

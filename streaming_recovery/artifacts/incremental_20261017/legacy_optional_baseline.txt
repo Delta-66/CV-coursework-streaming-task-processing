@@ -1,0 +1,9 @@
+test_constrained_schema_accepts_all_four_statuses (test_current_observation.BaselineTests.test_constrained_schema_accepts_all_four_statuses) ... ok
+test_generation_oom_retries_same_image_on_gpu_without_cpu_inference (test_current_observation.BaselineTests.test_generation_oom_retries_same_image_on_gpu_without_cpu_inference) ... ok
+test_constrained_schema_accepts_every_status (test_temporal_diagnosis.TemporalTests.test_constrained_schema_accepts_every_status) ... ok
+test_decoder_prevents_subgoal_success_being_a_met_full_task_goal (test_temporal_diagnosis.TemporalTests.test_decoder_prevents_subgoal_success_being_a_met_full_task_goal) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 8.283s
+
+OK

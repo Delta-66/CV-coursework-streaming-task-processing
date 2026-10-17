@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "code_and_test_hashes_match": true,
+  "source_snapshot_matches": true,
+  "data_hashes_match": true,
+  "split_hashes_unchanged": true,
+  "documentation_links_exist": true,
+  "final_visual_config_matches_second_freeze": true,
+  "post_freeze_logic_changes": [
+    "tracking.py",
+    "recovery.py"
+  ],
+  "logic_change_reason": "synthetic regressions: reject undeclared parameters/unverified preconditions; end explicitly released connection",
+  "total_decisions": 180,
+  "records": [
+    {
+      "episode": 0,
+      "decisions": 30,
+      "current_complete": false
+    },
+    {
+      "episode": 18,
+      "decisions": 52,
+      "current_complete": true
+    },
+    {
+      "episode": 2,
+      "decisions": 29,
+      "current_complete": false
+    },
+    {
+      "episode": 19,
+      "decisions": 42,
+      "current_complete": true
+    },
+    {
+      "episode": 6,
+      "decisions": 27,
+      "current_complete": false
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) ... 
+  test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='force') ... FAIL
+  test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='precondition') ... FAIL
+
+======================================================================
+FAIL: test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='force')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 100, in test_validator_rejects_unusable_and_unfounded_spatial_values
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='precondition')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 100, in test_validator_rejects_unusable_and_unfounded_spatial_values
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (failures=2)

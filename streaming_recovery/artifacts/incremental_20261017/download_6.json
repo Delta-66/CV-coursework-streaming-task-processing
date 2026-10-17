@@ -1,0 +1,24 @@
+{
+  "repo": "sii-rhos-ai/vifailback-dataset-lerobot",
+  "revision": "619791b94f61667333fe179d471051e0bca0e06f",
+  "files": [
+    {
+      "path": "data/chunk-000/episode_000006.parquet",
+      "size": 37800,
+      "sha256": "fb7c33dbb6c77f0bfa6586bca6ade64c5434091a2a0e6db1e0485cb0e4009a5b",
+      "remote_sha256": "fb7c33dbb6c77f0bfa6586bca6ade64c5434091a2a0e6db1e0485cb0e4009a5b"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_high/episode_000006.mp4",
+      "size": 2782290,
+      "sha256": "62dc15c1c69d01cf902dcd005ca833afe19e547b7e89e3108901900b7b3eb8bc",
+      "remote_sha256": "62dc15c1c69d01cf902dcd005ca833afe19e547b7e89e3108901900b7b3eb8bc"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.cam_right_wrist/episode_000006.mp4",
+      "size": 1463211,
+      "sha256": "6dc86ef2790f67bcde1fac8f636d8ae27d3ce3d591900f0e174127255ac2e951",
+      "remote_sha256": "6dc86ef2790f67bcde1fac8f636d8ae27d3ce3d591900f0e174127255ac2e951"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "method": "bounded_visual_state_tracker",
+  "backend": "multiview_effect_geometry",
+  "source": {
+    "root": "C:\\Users\\lenovo\\Desktop\\CV\\data\\vifailback_lerobot",
+    "episodes": [
+      2,
+      6,
+      8,
+      11,
+      14,
+      29
+    ],
+    "sample_every": 25,
+    "cameras": [
+      "cam_high",
+      "cam_right_wrist"
+    ],
+    "max_age_s": 0.12
+  },
+  "memory": {
+    "frames": 4,
+    "window_s": 4.0,
+    "features": 6,
+    "events": 4,
+    "event_evidence": 4,
+    "anchors": 8,
+    "objects": 3
+  },
+  "model": {
+    "path": "C:\\Users\\lenovo\\Desktop\\CV\\models\\Qwen3-VL-2B-Instruct",
+    "device": "cuda:0",
+    "image_edge": 512,
+    "max_input_tokens": 4096,
+    "max_new_tokens": 384,
+    "max_images": 3,
+    "max_text_chars": 6000,
+    "timeout_s": 90,
+    "load_timeout_s": 180,
+    "min_free_mib": 5000,
+    "seed": 0
+  },
+  "rules": {
+    "confirm_samples": 2,
+    "confirm_span_s": 0.8,
+    "max_evidence_gap_s": 2.1,
+    "close_delta_raw": 0.012,
+    "gripper_closed_raw": 0.025,
+    "gripper_open_raw": 0.04,
+    "require_visual_gripper_agreement": true,
+    "direction_deadband_normalized": 50,
+    "joint_velocity_moving_raw": 0.2,
+    "joint_position_change_raw": 0.02
+  },
+  "geometry": {
+    "source_unchanged_fraction": 0.15,
+    "source_occluded_fraction": 0.2,
+    "robot_board_fraction": 0.035,
+    "tool_board_fraction": 0.035,
+    "pixel_difference": 30,
+    "min_motion_normalized": 8,
+    "max_relative_motion_normalized": 80,
+    "max_reference_images": 1,
+    "max_masks": 4,
+    "max_tracks": 2,
+    "rack_blade_present_fraction": 0.6,
+    "cut_stroke_min_pixels": 2
+  },
+  "output": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\learning_freeze_20261017\\runs"
+}

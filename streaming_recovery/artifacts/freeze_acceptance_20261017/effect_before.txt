@@ -1,0 +1,72 @@
+test_effect_before_operation_cannot_be_retroactively_attributed (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_effect_before_operation_cannot_be_retroactively_attributed) ... FAIL
+test_initial_reference_novelty_does_not_override_preoperation_layout (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_initial_reference_novelty_does_not_override_preoperation_layout) ... FAIL
+test_invalid_layout_cannot_be_treated_as_empty_or_binary_fallback (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_invalid_layout_cannot_be_treated_as_empty_or_binary_fallback) ... FAIL
+test_invalid_observation_or_long_gap_invalidates_unconfirmed_link (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_invalid_observation_or_long_gap_invalidates_unconfirmed_link) ... 
+  test_invalid_observation_or_long_gap_invalidates_unconfirmed_link (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_invalid_observation_or_long_gap_invalidates_unconfirmed_link) (fault='invalid') ... FAIL
+  test_invalid_observation_or_long_gap_invalidates_unconfirmed_link (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_invalid_observation_or_long_gap_invalidates_unconfirmed_link) (fault='occluded') ... FAIL
+  test_invalid_observation_or_long_gap_invalidates_unconfirmed_link (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_invalid_observation_or_long_gap_invalidates_unconfirmed_link) (fault='gap') ... FAIL
+test_normal_binary_transition_after_operation_remains_supported (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_normal_binary_transition_after_operation_remains_supported) ... ok
+test_preexisting_piece_then_distinct_new_piece_after_operation (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_preexisting_piece_then_distinct_new_piece_after_operation) ... ok
+test_same_frame_first_effect_and_operation_is_not_ordered (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_same_frame_first_effect_and_operation_is_not_ordered) ... FAIL
+test_valid_local_food_unknown_can_wait_through_continuous_operation (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_valid_local_food_unknown_can_wait_through_continuous_operation) ... ok
+
+======================================================================
+FAIL: test_effect_before_operation_cannot_be_retroactively_attributed (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_effect_before_operation_cannot_be_retroactively_attributed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_effect_order.py", line 41, in test_effect_before_operation_cannot_be_retroactively_attributed
+    self.assertFalse(r["state"]["preconditions"]["cut_effect_confirmed"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_initial_reference_novelty_does_not_override_preoperation_layout (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_initial_reference_novelty_does_not_override_preoperation_layout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_effect_order.py", line 78, in test_initial_reference_novelty_does_not_override_preoperation_layout
+    self.assertFalse(r["state"]["preconditions"]["cut_effect_confirmed"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_layout_cannot_be_treated_as_empty_or_binary_fallback (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_invalid_layout_cannot_be_treated_as_empty_or_binary_fallback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_effect_order.py", line 104, in test_invalid_layout_cannot_be_treated_as_empty_or_binary_fallback
+    self.assertFalse(r["state"]["preconditions"]["cut_effect_confirmed"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_observation_or_long_gap_invalidates_unconfirmed_link (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_invalid_observation_or_long_gap_invalidates_unconfirmed_link) (fault='invalid')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_effect_order.py", line 89, in test_invalid_observation_or_long_gap_invalidates_unconfirmed_link
+    self.assertFalse(r["state"]["preconditions"]["cut_effect_confirmed"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_observation_or_long_gap_invalidates_unconfirmed_link (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_invalid_observation_or_long_gap_invalidates_unconfirmed_link) (fault='occluded')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_effect_order.py", line 89, in test_invalid_observation_or_long_gap_invalidates_unconfirmed_link
+    self.assertFalse(r["state"]["preconditions"]["cut_effect_confirmed"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_observation_or_long_gap_invalidates_unconfirmed_link (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_invalid_observation_or_long_gap_invalidates_unconfirmed_link) (fault='gap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_effect_order.py", line 89, in test_invalid_observation_or_long_gap_invalidates_unconfirmed_link
+    self.assertFalse(r["state"]["preconditions"]["cut_effect_confirmed"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_same_frame_first_effect_and_operation_is_not_ordered (streaming_recovery.tests.test_effect_order.EffectOrderTests.test_same_frame_first_effect_and_operation_is_not_ordered)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_effect_order.py", line 58, in test_same_frame_first_effect_and_operation_is_not_ordered
+    self.assertFalse(r["state"]["preconditions"]["cut_effect_confirmed"])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.044s
+
+FAILED (failures=7)

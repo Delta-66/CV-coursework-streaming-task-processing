@@ -1,0 +1,1146 @@
+{
+  "selected_core_state_fields": [
+    "stage",
+    "preconditions",
+    "candidate",
+    "attempt",
+    "attempt_held",
+    "attempt_context",
+    "new_attempt_observed",
+    "task_completed",
+    "historical_completion",
+    "observable",
+    "modality_conflict",
+    "recovered",
+    "unknowns",
+    "arm_activity"
+  ],
+  "total_wall_s": 34.890999999995984,
+  "per_episode": [
+    {
+      "episode": 18,
+      "same_decision_count": true,
+      "core_semantic_differences": [],
+      "state_changed_fields": [
+        {
+          "timestamp": 0.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 1.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 2.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 3.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 4.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 5.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 6.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 7.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 8.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 9.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 10.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 11.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 12.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 13.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 14.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 15.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 16.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 17.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 18.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 19.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 20.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        }
+      ],
+      "wall_s": 8.68800000000192,
+      "decisions": 21,
+      "unknown_timestamps": [
+        18.0
+      ],
+      "completion_timestamps": [
+        20.0
+      ],
+      "notifications": [],
+      "attempt_timestamps": [
+        4.0
+      ],
+      "final_effect_association": {
+        "supports_current_operation": false,
+        "reason": "historical_effect_already_confirmed",
+        "operation_ref": {
+          "timestamp": 9.0,
+          "ref": "obs-000225"
+        },
+        "baseline_ref": {
+          "timestamp": 5.0,
+          "ref": "obs-000125",
+          "cut_piece": "no",
+          "first_seen_at": 0.0,
+          "first_seen_ref": "obs-000000"
+        },
+        "first_change": {
+          "timestamp": 14.0,
+          "ref": "obs-000350",
+          "operation_timestamp": 9.0,
+          "basis": "observed_no_to_yes_transition",
+          "box": null
+        },
+        "interrupted": false
+      },
+      "cut_confirmation_timestamps": [
+        15.0,
+        16.0,
+        17.0,
+        18.0,
+        19.0,
+        20.0
+      ],
+      "closed_decisions": 17,
+      "closed_joint_localizations": 0,
+      "modality_patterns": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 4,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 17
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 7,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1572,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 406,
+        "feature_payload_chars": 23318,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 0,
+        "event_evidence": 0,
+        "event_sensor_refs": 0,
+        "active_events": 0,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 2,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 18,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 2,
+        "effect_layout_boxes": 1,
+        "effect_operation_records": 1,
+        "effect_change_records": 1,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 6,
+        "effect_state_chars": 532,
+        "recovery_contexts": 0,
+        "recovery_sensor_refs": 0,
+        "recovery_event_evidence": 0,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 25,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      }
+    },
+    {
+      "episode": 19,
+      "same_decision_count": true,
+      "core_semantic_differences": [],
+      "state_changed_fields": [
+        {
+          "timestamp": 0.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 1.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 2.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 3.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 4.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 5.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 6.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 7.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 8.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 9.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 10.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 11.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 12.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 13.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 14.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 15.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 16.0,
+          "fields": [
+            "anchors",
+            "cut_effect_order"
+          ]
+        }
+      ],
+      "wall_s": 7.4539999999979045,
+      "decisions": 17,
+      "unknown_timestamps": [
+        14.0
+      ],
+      "completion_timestamps": [
+        16.0
+      ],
+      "notifications": [],
+      "attempt_timestamps": [
+        3.0
+      ],
+      "final_effect_association": {
+        "supports_current_operation": false,
+        "reason": "historical_effect_already_confirmed",
+        "operation_ref": {
+          "timestamp": 8.0,
+          "ref": "obs-000200"
+        },
+        "baseline_ref": {
+          "timestamp": 4.0,
+          "ref": "obs-000100",
+          "cut_piece": "no",
+          "first_seen_at": 0.0,
+          "first_seen_ref": "obs-000000"
+        },
+        "first_change": {
+          "timestamp": 10.0,
+          "ref": "obs-000250",
+          "operation_timestamp": 8.0,
+          "basis": "observed_no_to_yes_transition",
+          "box": null
+        },
+        "interrupted": false
+      },
+      "cut_confirmation_timestamps": [
+        11.0,
+        12.0,
+        13.0,
+        14.0,
+        15.0,
+        16.0
+      ],
+      "closed_decisions": 15,
+      "closed_joint_localizations": 0,
+      "modality_patterns": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 4,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 13
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 7,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1574,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 406,
+        "feature_payload_chars": 23309,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 0,
+        "event_evidence": 0,
+        "event_sensor_refs": 0,
+        "active_events": 0,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 2,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 18,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 2,
+        "effect_layout_boxes": 1,
+        "effect_operation_records": 1,
+        "effect_change_records": 1,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 6,
+        "effect_state_chars": 532,
+        "recovery_contexts": 0,
+        "recovery_sensor_refs": 0,
+        "recovery_event_evidence": 0,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 25,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      }
+    },
+    {
+      "episode": 0,
+      "same_decision_count": true,
+      "core_semantic_differences": [],
+      "state_changed_fields": [
+        {
+          "timestamp": 0.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 1.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 2.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 3.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 4.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 5.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 6.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 7.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 8.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 9.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 10.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 11.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        }
+      ],
+      "wall_s": 5.2810000000026776,
+      "decisions": 12,
+      "unknown_timestamps": [],
+      "completion_timestamps": [],
+      "notifications": [
+        {
+          "t": 9.0,
+          "event": "event-0001",
+          "state": "suspected"
+        },
+        {
+          "t": 10.0,
+          "event": "event-0001",
+          "state": "confirmed"
+        }
+      ],
+      "attempt_timestamps": [
+        7.0
+      ],
+      "final_effect_association": {
+        "supports_current_operation": false,
+        "reason": "local_layout_unknown",
+        "operation_ref": null,
+        "baseline_ref": null,
+        "first_change": null,
+        "interrupted": false
+      },
+      "cut_confirmation_timestamps": [],
+      "closed_decisions": 7,
+      "closed_joint_localizations": 0,
+      "modality_patterns": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 6,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 6
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 2,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1566,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 410,
+        "feature_payload_chars": 22892,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 3,
+        "event_sensor_refs": 9,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 18,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 218,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 9,
+        "recovery_event_evidence": 3,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 7,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      }
+    },
+    {
+      "episode": 2,
+      "same_decision_count": true,
+      "core_semantic_differences": [],
+      "state_changed_fields": [
+        {
+          "timestamp": 0.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 1.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 2.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 3.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 4.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 5.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 6.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 7.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 8.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 9.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 10.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 11.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        }
+      ],
+      "wall_s": 5.046999999998661,
+      "decisions": 12,
+      "unknown_timestamps": [
+        0.0,
+        1.0,
+        9.0
+      ],
+      "completion_timestamps": [],
+      "notifications": [
+        {
+          "t": 10.0,
+          "event": "event-0001",
+          "state": "suspected"
+        },
+        {
+          "t": 11.0,
+          "event": "event-0001",
+          "state": "confirmed"
+        }
+      ],
+      "attempt_timestamps": [
+        7.0
+      ],
+      "final_effect_association": {
+        "supports_current_operation": false,
+        "reason": "local_layout_unknown",
+        "operation_ref": null,
+        "baseline_ref": null,
+        "first_change": null,
+        "interrupted": true
+      },
+      "cut_confirmation_timestamps": [],
+      "closed_decisions": 4,
+      "closed_joint_localizations": 0,
+      "modality_patterns": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 8,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 4
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 2,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1564,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 408,
+        "feature_payload_chars": 22972,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 2,
+        "event_sensor_refs": 6,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 18,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 216,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 6,
+        "recovery_event_evidence": 2,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 6,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      }
+    },
+    {
+      "episode": 8,
+      "same_decision_count": true,
+      "core_semantic_differences": [],
+      "state_changed_fields": [
+        {
+          "timestamp": 0.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 1.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 2.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 3.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 4.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 5.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 6.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 7.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 8.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 9.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        }
+      ],
+      "wall_s": 4.125,
+      "decisions": 10,
+      "unknown_timestamps": [],
+      "completion_timestamps": [],
+      "notifications": [
+        {
+          "t": 7.0,
+          "event": "event-0001",
+          "state": "suspected"
+        },
+        {
+          "t": 8.0,
+          "event": "event-0001",
+          "state": "confirmed"
+        }
+      ],
+      "attempt_timestamps": [
+        5.0
+      ],
+      "final_effect_association": {
+        "supports_current_operation": false,
+        "reason": "local_layout_unknown",
+        "operation_ref": null,
+        "baseline_ref": null,
+        "first_change": null,
+        "interrupted": false
+      },
+      "cut_confirmation_timestamps": [],
+      "closed_decisions": 6,
+      "closed_joint_localizations": 0,
+      "modality_patterns": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 6,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 4
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 2,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1565,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 408,
+        "feature_payload_chars": 21894,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 3,
+        "event_sensor_refs": 9,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 18,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 217,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 9,
+        "recovery_event_evidence": 3,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 6,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      }
+    },
+    {
+      "episode": 29,
+      "same_decision_count": true,
+      "core_semantic_differences": [],
+      "state_changed_fields": [
+        {
+          "timestamp": 0.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 1.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 2.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 3.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 4.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 5.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 6.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 7.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 8.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        },
+        {
+          "timestamp": 9.0,
+          "fields": [
+            "cut_effect_order"
+          ]
+        }
+      ],
+      "wall_s": 4.203000000001339,
+      "decisions": 10,
+      "unknown_timestamps": [
+        0.0
+      ],
+      "completion_timestamps": [],
+      "notifications": [
+        {
+          "t": 8.0,
+          "event": "event-0001",
+          "state": "suspected"
+        },
+        {
+          "t": 9.0,
+          "event": "event-0001",
+          "state": "confirmed"
+        }
+      ],
+      "attempt_timestamps": [
+        6.0
+      ],
+      "final_effect_association": {
+        "supports_current_operation": false,
+        "reason": "local_layout_unknown",
+        "operation_ref": null,
+        "baseline_ref": null,
+        "first_change": null,
+        "interrupted": true
+      },
+      "cut_confirmation_timestamps": [],
+      "closed_decisions": 4,
+      "closed_joint_localizations": 0,
+      "modality_patterns": {
+        "cam_high,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 4,
+        "cam_high,cam_right_wrist,observation.state[7:13],observation.state[13],observation.velocity[7:13],native_joint_interval[7:13]": 6
+      },
+      "memory_maxima": {
+        "observations": 4,
+        "images": 8,
+        "image_bytes": 4718592,
+        "features": 5,
+        "anchors": 2,
+        "joint_vector_values": 112,
+        "native_aggregate_records": 4,
+        "native_aggregate_fields": 56,
+        "native_aggregate_chars": 1566,
+        "joint_feature_refs": 15,
+        "feature_text_chars": 410,
+        "feature_payload_chars": 22520,
+        "conversation_turns": 0,
+        "persistent_model_kv_tokens": 0,
+        "log_reads": 0,
+        "events": 1,
+        "event_evidence": 2,
+        "event_sensor_refs": 6,
+        "active_events": 1,
+        "visual_reference_images": 1,
+        "visual_reference_bytes": 589824,
+        "visual_masks": 4,
+        "visual_mask_bytes": 786432,
+        "visual_tracks": 0,
+        "visual_calibration_entries": 2,
+        "wrist_track_entries": 3,
+        "food_reference_entries": 1,
+        "visual_scalar_states": 1,
+        "task_state_slots": 18,
+        "task_reference_entries": 1,
+        "attempt_context_entries": 1,
+        "attempt_context_fields": 6,
+        "effect_state_slots": 5,
+        "effect_layout_records": 1,
+        "effect_layout_boxes": 0,
+        "effect_operation_records": 0,
+        "effect_change_records": 0,
+        "effect_change_boxes": 0,
+        "effect_evidence_refs": 2,
+        "effect_state_chars": 216,
+        "recovery_contexts": 1,
+        "recovery_sensor_refs": 6,
+        "recovery_event_evidence": 2,
+        "recovery_state_slots": 3,
+        "object_states": 3,
+        "aligner_latest_samples": 4,
+        "task_instruction_chars": 127,
+        "model_last_response_chars": 0,
+        "anchor_image_refs": 7,
+        "model_request_queue_capacity": 1,
+        "model_response_queue_capacity": 1,
+        "model_input_images": 3,
+        "model_input_tokens": 0
+      }
+    }
+  ]
+}

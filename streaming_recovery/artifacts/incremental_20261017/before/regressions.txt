@@ -1,0 +1,145 @@
+test_2d_alignment_waits_then_independent_readiness_allows_close (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_2d_alignment_waits_then_independent_readiness_allows_close) ... FAIL
+test_A_occluded_failure_cannot_open (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_A_occluded_failure_cannot_open) ... FAIL
+test_B_second_attempt_failure_after_historical_grasp (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_B_second_attempt_failure_after_historical_grasp) ... FAIL
+test_C_unknown_gap_preserves_recent_grasp_evidence (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_C_unknown_gap_preserves_recent_grasp_evidence) ... FAIL
+test_D_preexisting_piece_is_not_this_cut (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_D_preexisting_piece_is_not_this_cut) ... FAIL
+test_E_completion_does_not_freeze_current_return (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_E_completion_does_not_freeze_current_return) ... FAIL
+test_negated_and_other_instructions_rejected (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_negated_and_other_instructions_rejected) ... 
+  test_negated_and_other_instructions_rejected (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_negated_and_other_instructions_rejected) (instruction='Do not use the right arm; leave the knife in the holder and do not cut the sausage.') ... FAIL
+  test_negated_and_other_instructions_rejected (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_negated_and_other_instructions_rejected) (instruction='Use the right arm to move the sausage near the knife holder.') ... FAIL
+test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) ... 
+  test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='occluded') ... FAIL
+  test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='stale') ... FAIL
+  test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='conflict') ... FAIL
+  test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='translation') ... FAIL
+  test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='rotation') ... FAIL
+  test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='object') ... FAIL
+  test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='frame') ... FAIL
+
+======================================================================
+FAIL: test_2d_alignment_waits_then_independent_readiness_allows_close (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_2d_alignment_waits_then_independent_readiness_allows_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 101, in test_2d_alignment_waits_then_independent_readiness_allows_close
+    self.assertNotEqual(r["correction"]["low_level"]["action_type"],"align_in_image")
+AssertionError: 'align_in_image' == 'align_in_image'
+
+======================================================================
+FAIL: test_A_occluded_failure_cannot_open (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_A_occluded_failure_cannot_open)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 18, in test_A_occluded_failure_cannot_open
+    self.assertEqual(r["correction"]["low_level"]["action_type"], "hold_and_observe")
+AssertionError: 'open_gripper' != 'hold_and_observe'
+- open_gripper
++ hold_and_observe
+
+
+======================================================================
+FAIL: test_B_second_attempt_failure_after_historical_grasp (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_B_second_attempt_failure_after_historical_grasp)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 32, in test_B_second_attempt_failure_after_historical_grasp
+    self.assertIsNotNone(r["failure_event"])
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_C_unknown_gap_preserves_recent_grasp_evidence (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_C_unknown_gap_preserves_recent_grasp_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 43, in test_C_unknown_gap_preserves_recent_grasp_evidence
+    self.assertIsNotNone(r["failure_event"])
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_D_preexisting_piece_is_not_this_cut (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_D_preexisting_piece_is_not_this_cut)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 54, in test_D_preexisting_piece_is_not_this_cut
+    self.assertFalse(r["state"]["preconditions"]["cut_effect_confirmed"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_E_completion_does_not_freeze_current_return (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_E_completion_does_not_freeze_current_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 74, in test_E_completion_does_not_freeze_current_return
+    self.assertFalse(r["state"]["preconditions"]["tool_returned"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_negated_and_other_instructions_rejected (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_negated_and_other_instructions_rejected) (instruction='Do not use the right arm; leave the knife in the holder and do not cut the sausage.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 118, in test_negated_and_other_instructions_rejected
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_negated_and_other_instructions_rejected (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_negated_and_other_instructions_rejected) (instruction='Use the right arm to move the sausage near the knife holder.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 118, in test_negated_and_other_instructions_rejected
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='occluded')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 95, in test_validator_rejects_unusable_and_unfounded_spatial_values
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='stale')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 95, in test_validator_rejects_unusable_and_unfounded_spatial_values
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='conflict')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 95, in test_validator_rejects_unusable_and_unfounded_spatial_values
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='translation')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 95, in test_validator_rejects_unusable_and_unfounded_spatial_values
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='rotation')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 95, in test_validator_rejects_unusable_and_unfounded_spatial_values
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='object')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 95, in test_validator_rejects_unusable_and_unfounded_spatial_values
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_validator_rejects_unusable_and_unfounded_spatial_values (streaming_recovery.tests.test_incremental_regressions.IncrementalRegressions.test_validator_rejects_unusable_and_unfounded_spatial_values) (mutation='frame')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_incremental_regressions.py", line 95, in test_validator_rejects_unusable_and_unfounded_spatial_values
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.021s
+
+FAILED (failures=15)

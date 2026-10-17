@@ -1,0 +1,1360 @@
+{
+  "source_run": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1",
+  "classification": "offline_real_pixel_review_not_independent_unseen_test",
+  "conditional_directions": [
+    {
+      "episode": 2,
+      "timestamp": 2.0,
+      "observation_ref": "obs-000050",
+      "source_image": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000002\\frames\\obs-000050_cam_right_wrist.jpg",
+      "source_image_sha256": "c449b81cc33d51ceb1009e2d1a1411d425cda647ac3711a931dbc5bee6515cb3",
+      "overlay": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_localization_2_2s.png",
+      "localization_frame": "cam_right_wrist_image_x_right_y_down",
+      "knife_handle_xy": [
+        417.773,
+        700.521
+      ],
+      "gripper_xy": [
+        513.672,
+        694.01
+      ],
+      "units": "normalized_image_0_1000",
+      "localization": {
+        "status": "localized",
+        "reason": null,
+        "frame": "cam_right_wrist_image_x_right_y_down",
+        "unit": "normalized_image_0_1000",
+        "image_size_pixels": [
+          512,
+          384
+        ],
+        "knife_handle_xy": [
+          417.773,
+          700.521
+        ],
+        "gripper_xy": [
+          513.672,
+          694.01
+        ],
+        "finger_inner_points_pixels": [
+          [
+            147.0,
+            262.0
+          ],
+          [
+            379.0,
+            271.0
+          ]
+        ],
+        "handle_neck_pixels": {
+          "center": [
+            213.9,
+            269.0
+          ],
+          "edge_segments": [
+            [
+              207,
+              267,
+              221,
+              267
+            ],
+            [
+              206,
+              268,
+              222,
+              268
+            ],
+            [
+              206,
+              269,
+              222,
+              269
+            ],
+            [
+              206,
+              270,
+              222,
+              270
+            ],
+            [
+              205,
+              271,
+              222,
+              271
+            ]
+          ],
+          "thin_blade_width_pixels": 3.0,
+          "shaft_fit_error_pixels": 0.2859581562591984
+        },
+        "rack_contour_pixels": [
+          [
+            280,
+            78
+          ],
+          [
+            281,
+            90
+          ],
+          [
+            278,
+            117
+          ],
+          [
+            231,
+            315
+          ],
+          [
+            188,
+            307
+          ],
+          [
+            186,
+            303
+          ],
+          [
+            243,
+            74
+          ]
+        ],
+        "method": "white_blade_to_wider_handle_neck_and_two_finger_inner_edges"
+      },
+      "directions": [
+        "图像左侧"
+      ],
+      "deadband_normalized": 50,
+      "inspection": "实际刀柄从细刃变宽的可见颈部横截面，黄色为独立刀架轮廓；青色两个端点为手指内缘，青线中点为抓取参考点。点不表示深度或接触。",
+      "conditional_handoff": {
+        "object": "knife",
+        "actuator": "right_gripper",
+        "action_type": "align_in_image",
+        "coordinate_frame": "cam_right_wrist_image_x_right_y_down",
+        "direction": [
+          "图像左侧"
+        ],
+        "numeric_command": null,
+        "physical_units": null,
+        "preconditions": [
+          "当前实测右夹爪打开",
+          "当前刀柄颈部与两指内缘在同一腕图可见",
+          "深度、姿态、路径和机器人坐标映射未满足，须由执行器独立验证"
+        ],
+        "stop_condition": "当前两指中点与柄颈参考点在新图像中进入二维死区，或任一目标丢失",
+        "post_checks": [
+          "重新核对图像二维对齐",
+          "独立验证深度、姿态、接触和安全路径"
+        ],
+        "mode": "current_real_pixel_conditional_handoff_without_failure_event",
+        "actually_executed": false,
+        "execution_receipt": null,
+        "outcome_attributed_to_suggestion": false
+      },
+      "natural_failure_event": null,
+      "natural_correction": null
+    },
+    {
+      "episode": 2,
+      "timestamp": 3.0,
+      "observation_ref": "obs-000075",
+      "source_image": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000002\\frames\\obs-000075_cam_right_wrist.jpg",
+      "source_image_sha256": "9e9cb067028d7496b2daf4e729d813517d26b0d9372a4af9751a8c189efeb2a8",
+      "overlay": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_localization_2_3s.png",
+      "localization_frame": "cam_right_wrist_image_x_right_y_down",
+      "knife_handle_xy": [
+        467.188,
+        880.208
+      ],
+      "gripper_xy": [
+        513.672,
+        683.594
+      ],
+      "units": "normalized_image_0_1000",
+      "localization": {
+        "status": "localized",
+        "reason": null,
+        "frame": "cam_right_wrist_image_x_right_y_down",
+        "unit": "normalized_image_0_1000",
+        "image_size_pixels": [
+          512,
+          384
+        ],
+        "knife_handle_xy": [
+          467.188,
+          880.208
+        ],
+        "gripper_xy": [
+          513.672,
+          683.594
+        ],
+        "finger_inner_points_pixels": [
+          [
+            147.0,
+            263.0
+          ],
+          [
+            379.0,
+            262.0
+          ]
+        ],
+        "handle_neck_pixels": {
+          "center": [
+            239.2,
+            338.0
+          ],
+          "edge_segments": [
+            [
+              231,
+              336,
+              247,
+              336
+            ],
+            [
+              230,
+              337,
+              248,
+              337
+            ],
+            [
+              230,
+              338,
+              248,
+              338
+            ],
+            [
+              230,
+              339,
+              249,
+              339
+            ],
+            [
+              230,
+              340,
+              249,
+              340
+            ]
+          ],
+          "thin_blade_width_pixels": 4.0,
+          "shaft_fit_error_pixels": 0.22050154227616758
+        },
+        "rack_contour_pixels": [
+          [
+            281,
+            94
+          ],
+          [
+            298,
+            103
+          ],
+          [
+            298,
+            112
+          ],
+          [
+            255,
+            359
+          ],
+          [
+            252,
+            360
+          ],
+          [
+            213,
+            350
+          ],
+          [
+            257,
+            97
+          ]
+        ],
+        "method": "white_blade_to_wider_handle_neck_and_two_finger_inner_edges"
+      },
+      "directions": [
+        "图像下方"
+      ],
+      "deadband_normalized": 50,
+      "inspection": "实际刀柄从细刃变宽的可见颈部横截面，黄色为独立刀架轮廓；青色两个端点为手指内缘，青线中点为抓取参考点。点不表示深度或接触。",
+      "conditional_handoff": {
+        "object": "knife",
+        "actuator": "right_gripper",
+        "action_type": "align_in_image",
+        "coordinate_frame": "cam_right_wrist_image_x_right_y_down",
+        "direction": [
+          "图像下方"
+        ],
+        "numeric_command": null,
+        "physical_units": null,
+        "preconditions": [
+          "当前实测右夹爪打开",
+          "当前刀柄颈部与两指内缘在同一腕图可见",
+          "深度、姿态、路径和机器人坐标映射未满足，须由执行器独立验证"
+        ],
+        "stop_condition": "当前两指中点与柄颈参考点在新图像中进入二维死区，或任一目标丢失",
+        "post_checks": [
+          "重新核对图像二维对齐",
+          "独立验证深度、姿态、接触和安全路径"
+        ],
+        "mode": "current_real_pixel_conditional_handoff_without_failure_event",
+        "actually_executed": false,
+        "execution_receipt": null,
+        "outcome_attributed_to_suggestion": false
+      },
+      "natural_failure_event": null,
+      "natural_correction": null
+    }
+  ],
+  "blade_evidence": [
+    {
+      "episode": 19,
+      "timestamp": 5,
+      "image": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000019\\frames\\obs-000125_cam_right_wrist.jpg",
+      "sha256": "ee24c4b6420ef0c92cf5c847c7b6844c8efe8f1b329e854b9d9adab7e45cd70c",
+      "wrist": {
+        "available": true,
+        "blade": [
+          248,
+          0,
+          34,
+          268
+        ],
+        "joined": true,
+        "food": [
+          12,
+          30,
+          238,
+          58
+        ],
+        "cut_operation": false,
+        "previous_ref": "obs-000100",
+        "previous_timestamp": 4.0,
+        "blade_region": "visible_segment_above_finger_tip_band",
+        "consulted": true,
+        "selection_reason": "top_view_grasp_relation_ambiguous"
+      },
+      "cut_operation": "unknown",
+      "stage": "verify_grasp",
+      "new_cut_effect": "unknown"
+    },
+    {
+      "episode": 19,
+      "timestamp": 6,
+      "image": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000019\\frames\\obs-000150_cam_right_wrist.jpg",
+      "sha256": "3938662f24e37c008d6ae99139b432878db40910af38607664339047165a6423",
+      "wrist": {
+        "available": true,
+        "blade": [
+          247,
+          0,
+          39,
+          263
+        ],
+        "joined": true,
+        "food": null,
+        "cut_operation": false,
+        "previous_ref": "obs-000125",
+        "previous_timestamp": 5.0,
+        "blade_region": "visible_segment_above_finger_tip_band",
+        "consulted": true,
+        "selection_reason": "top_view_grasp_relation_ambiguous"
+      },
+      "cut_operation": "unknown",
+      "stage": "cutting",
+      "new_cut_effect": "unknown"
+    },
+    {
+      "episode": 19,
+      "timestamp": 7,
+      "image": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000019\\frames\\obs-000175_cam_right_wrist.jpg",
+      "sha256": "76f187ceb4416f6d1deaab4f624389b4ed4e582e1f43d6a765301e0ac8a02ea6",
+      "wrist": {
+        "available": true,
+        "blade": [
+          247,
+          0,
+          36,
+          266
+        ],
+        "joined": true,
+        "food": [
+          130,
+          129,
+          118,
+          19
+        ],
+        "cut_operation": false,
+        "previous_ref": "obs-000150",
+        "previous_timestamp": 6.0,
+        "blade_region": "visible_segment_above_finger_tip_band",
+        "consulted": true,
+        "selection_reason": "top_view_grasp_relation_ambiguous"
+      },
+      "cut_operation": "unknown",
+      "stage": "cutting",
+      "new_cut_effect": "unknown"
+    },
+    {
+      "episode": 19,
+      "timestamp": 8,
+      "image": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000019\\frames\\obs-000200_cam_right_wrist.jpg",
+      "sha256": "529e1f5c503a8ddfeeff7b60a092848a2f10a46ffc7ceb916e65f3e640d2d0bc",
+      "wrist": {
+        "available": true,
+        "blade": [
+          237,
+          0,
+          45,
+          268
+        ],
+        "joined": true,
+        "food": [
+          128,
+          154,
+          120,
+          25
+        ],
+        "cut_operation": true,
+        "previous_ref": "obs-000175",
+        "previous_timestamp": 7.0,
+        "blade_region": "visible_segment_above_finger_tip_band",
+        "consulted": true,
+        "selection_reason": "top_view_grasp_relation_ambiguous"
+      },
+      "cut_operation": "yes",
+      "stage": "cut_operation",
+      "new_cut_effect": "unknown"
+    }
+  ],
+  "key_stage_reviews": [
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 2.0,
+      "observation_ref": "obs-000050",
+      "expected_stage": "align_grasp",
+      "observed_features": "右夹爪打开，腕图刀柄颈部位于两指中点左方；只支持二维对齐准备，不证明深度接触。",
+      "program_stage": "align_grasp",
+      "assessment": "旧locate_tool漏掉准备阶段，当前align_grasp与像素及开爪证据一致。",
+      "reviewer": "assistant_visual_inspection_using_view_image",
+      "evidence": [
+        {
+          "timestamp": 2.0,
+          "ref": "obs-000050",
+          "claim": "right_arm_motion=moving",
+          "source": "measured_qpos_qvel",
+          "images": [],
+          "sensor_refs": [
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "field": "observation.state[7:13]"
+            },
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "field": "observation.velocity[7:13]"
+            },
+            {
+              "ref": "obs-000025",
+              "timestamp": 1.0,
+              "field": "observation.state[7:13]"
+            }
+          ]
+        },
+        {
+          "timestamp": 2.0,
+          "ref": "obs-000050",
+          "claim": "knife_location=holder; contact=separate; motion=at_holder",
+          "source": "real_multiview_effect_geometry",
+          "images": [
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "camera": "cam_high"
+            },
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "camera": "cam_right_wrist"
+            },
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "camera": "cam_high"
+            }
+          ]
+        }
+      ],
+      "failure_event": null,
+      "frame_images": [
+        {
+          "camera": "cam_high",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000002\\frames\\obs-000050_cam_high.jpg",
+          "sha256": "be357fcb4cce68975f74971410e089edf71e69189ec34edcdefd7b5a9ff3c003"
+        },
+        {
+          "camera": "cam_right_wrist",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000002\\frames\\obs-000050_cam_right_wrist.jpg",
+          "sha256": "c449b81cc33d51ceb1009e2d1a1411d425cda647ac3711a931dbc5bee6515cb3"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 3.0,
+      "observation_ref": "obs-000075",
+      "expected_stage": "align_grasp",
+      "observed_features": "刀柄颈部位于两指中点下方，夹爪未夹住刀；顶视机械手在架上方。",
+      "program_stage": "align_grasp",
+      "assessment": "当前识别二维准备，仍不能声称已实际对齐。",
+      "reviewer": "assistant_visual_inspection_using_view_image",
+      "evidence": [
+        {
+          "timestamp": 3.0,
+          "ref": "obs-000075",
+          "claim": "right_arm_motion=moving",
+          "source": "measured_qpos_qvel",
+          "images": [],
+          "sensor_refs": [
+            {
+              "ref": "obs-000075",
+              "timestamp": 3.0,
+              "field": "observation.state[7:13]"
+            },
+            {
+              "ref": "obs-000075",
+              "timestamp": 3.0,
+              "field": "observation.velocity[7:13]"
+            },
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "field": "observation.state[7:13]"
+            }
+          ]
+        },
+        {
+          "timestamp": 3.0,
+          "ref": "obs-000075",
+          "claim": "knife_location=holder; contact=separate; motion=at_holder",
+          "source": "real_multiview_effect_geometry",
+          "images": [
+            {
+              "ref": "obs-000075",
+              "timestamp": 3.0,
+              "camera": "cam_high"
+            },
+            {
+              "ref": "obs-000075",
+              "timestamp": 3.0,
+              "camera": "cam_right_wrist"
+            },
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "camera": "cam_high"
+            },
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "camera": "cam_right_wrist"
+            }
+          ]
+        }
+      ],
+      "failure_event": null,
+      "frame_images": [
+        {
+          "camera": "cam_high",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000002\\frames\\obs-000075_cam_high.jpg",
+          "sha256": "8cf5eb0a9aa8ea5cc16091275a6111beb5ad7bf45471d26d143554952b7f6e36"
+        },
+        {
+          "camera": "cam_right_wrist",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000002\\frames\\obs-000075_cam_right_wrist.jpg",
+          "sha256": "9e9cb067028d7496b2daf4e729d813517d26b0d9372a4af9751a8c189efeb2a8"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 7.0,
+      "observation_ref": "obs-000175",
+      "expected_stage": "verify_grasp",
+      "observed_features": "实测闭合；顶视刀仍留架，闭合夹爪位于架上方，尚未观察成功搬运。",
+      "program_stage": "verify_grasp",
+      "assessment": "新尝试来自观测开闭变化与近架投影，进入效果确认；闭爪不被当作成功。",
+      "reviewer": "assistant_visual_inspection_using_view_image",
+      "evidence": [
+        {
+          "timestamp": 7.0,
+          "ref": "obs-000175",
+          "claim": "right_arm_motion=moving",
+          "source": "measured_qpos_qvel",
+          "images": [],
+          "sensor_refs": [
+            {
+              "ref": "obs-000175",
+              "timestamp": 7.0,
+              "field": "observation.state[7:13]"
+            },
+            {
+              "ref": "obs-000175",
+              "timestamp": 7.0,
+              "field": "observation.velocity[7:13]"
+            },
+            {
+              "ref": "obs-000150",
+              "timestamp": 6.0,
+              "field": "observation.state[7:13]"
+            }
+          ]
+        },
+        {
+          "timestamp": 7.0,
+          "ref": "obs-000175",
+          "claim": "knife_location=holder; contact=separate; motion=at_holder",
+          "source": "real_multiview_effect_geometry",
+          "images": [
+            {
+              "ref": "obs-000175",
+              "camera": "cam_high",
+              "timestamp": 7.0
+            },
+            {
+              "ref": "obs-000050",
+              "camera": "cam_high",
+              "timestamp": 2.0
+            },
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "camera": "cam_high"
+            }
+          ]
+        }
+      ],
+      "failure_event": null,
+      "frame_images": [
+        {
+          "camera": "cam_high",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000002\\frames\\obs-000175_cam_high.jpg",
+          "sha256": "81ec7aa99cacef0326040abb943837e1ccf3e68d22d2bfba4c47a5d1f02b37ac"
+        },
+        {
+          "camera": "cam_right_wrist",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000002\\frames\\obs-000175_cam_right_wrist.jpg",
+          "sha256": "ba65e25472fe523f82f17f3e231a40d97d35a854ea780d552c2c796bcf0d466c"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 2,
+      "timestamp": 11.0,
+      "observation_ref": "obs-000275",
+      "expected_stage": "verify_grasp",
+      "observed_features": "空夹爪进入香肠工作区，白柄刀仍在右侧架上。",
+      "program_stage": "verify_grasp",
+      "assessment": "已有重复明确分离证据，grasp_not_established确认；具体物理失误原因仍未知。",
+      "reviewer": "assistant_visual_inspection_using_view_image",
+      "evidence": [
+        {
+          "timestamp": 11.0,
+          "ref": "obs-000275",
+          "claim": "right_arm_motion=recent_motion",
+          "source": "measured_qpos_qvel",
+          "images": [],
+          "sensor_refs": [
+            {
+              "ref": "obs-000275",
+              "timestamp": 11.0,
+              "field": "observation.state[7:13]"
+            },
+            {
+              "ref": "obs-000275",
+              "timestamp": 11.0,
+              "field": "observation.velocity[7:13]"
+            },
+            {
+              "ref": "obs-000250",
+              "timestamp": 10.0,
+              "field": "observation.state[7:13]"
+            }
+          ]
+        },
+        {
+          "timestamp": 11.0,
+          "ref": "obs-000275",
+          "claim": "knife_location=holder; contact=separate; motion=at_board",
+          "source": "real_multiview_effect_geometry",
+          "images": [
+            {
+              "ref": "obs-000275",
+              "camera": "cam_high",
+              "timestamp": 11.0
+            },
+            {
+              "ref": "obs-000050",
+              "camera": "cam_high",
+              "timestamp": 2.0
+            },
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "camera": "cam_high"
+            }
+          ]
+        }
+      ],
+      "failure_event": {
+        "event_id": "event-0001",
+        "kind": "grasp_not_established",
+        "attempt": 1,
+        "opened_at": 10.0,
+        "updated_at": 11.0,
+        "state": "confirmed",
+        "support_count": 2,
+        "evidence": [
+          {
+            "timestamp": 10.0,
+            "ref": "obs-000250",
+            "claim": "当前支持 grasp_not_established",
+            "source": "real_multiview_effect_geometry",
+            "images": [
+              {
+                "ref": "obs-000250",
+                "camera": "cam_high",
+                "timestamp": 10.0
+              },
+              {
+                "ref": "obs-000050",
+                "camera": "cam_high",
+                "timestamp": 2.0
+              },
+              {
+                "ref": "obs-000050",
+                "timestamp": 2.0,
+                "camera": "cam_high"
+              }
+            ],
+            "joint_motion": "recent_motion",
+            "sensor_refs": [
+              {
+                "ref": "obs-000250",
+                "timestamp": 10.0,
+                "field": "observation.state[7:13]"
+              },
+              {
+                "ref": "obs-000250",
+                "timestamp": 10.0,
+                "field": "observation.velocity[7:13]"
+              },
+              {
+                "ref": "obs-000225",
+                "timestamp": 9.0,
+                "field": "observation.state[7:13]"
+              }
+            ]
+          },
+          {
+            "timestamp": 11.0,
+            "ref": "obs-000275",
+            "claim": "当前支持 grasp_not_established",
+            "source": "real_multiview_effect_geometry",
+            "images": [
+              {
+                "ref": "obs-000275",
+                "camera": "cam_high",
+                "timestamp": 11.0
+              },
+              {
+                "ref": "obs-000050",
+                "camera": "cam_high",
+                "timestamp": 2.0
+              },
+              {
+                "ref": "obs-000050",
+                "timestamp": 2.0,
+                "camera": "cam_high"
+              }
+            ],
+            "joint_motion": "recent_motion",
+            "sensor_refs": [
+              {
+                "ref": "obs-000275",
+                "timestamp": 11.0,
+                "field": "observation.state[7:13]"
+              },
+              {
+                "ref": "obs-000275",
+                "timestamp": 11.0,
+                "field": "observation.velocity[7:13]"
+              },
+              {
+                "ref": "obs-000250",
+                "timestamp": 10.0,
+                "field": "observation.state[7:13]"
+              }
+            ]
+          }
+        ],
+        "last_support_at": 11.0,
+        "support_started_at": 10.0,
+        "observation_status": "supported",
+        "closure_reason": null
+      },
+      "frame_images": [
+        {
+          "camera": "cam_high",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000002\\frames\\obs-000275_cam_high.jpg",
+          "sha256": "97334506a2333d414d4ae327bab249034687a3bfe03f066b88d82d61225c535e"
+        },
+        {
+          "camera": "cam_right_wrist",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000002\\frames\\obs-000275_cam_right_wrist.jpg",
+          "sha256": "582192b1058aa9b26ae3aabb64359f0d0b9ee615a0355634856b4c7e7f41bb79"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "timestamp": 2.0,
+      "observation_ref": "obs-000050",
+      "expected_stage": "approach_tool",
+      "observed_features": "开爪机械手靠近架侧；腕图可见刀，但柄颈/手指不满足完整联合定位条件。",
+      "program_stage": "approach_tool",
+      "assessment": "当前approach_tool合理；不能把阶段名或粗轮廓代理当已对齐，点仍未知。",
+      "reviewer": "assistant_visual_inspection_using_view_image",
+      "evidence": [
+        {
+          "timestamp": 2.0,
+          "ref": "obs-000050",
+          "claim": "right_arm_motion=moving",
+          "source": "measured_qpos_qvel",
+          "images": [],
+          "sensor_refs": [
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "field": "observation.state[7:13]"
+            },
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "field": "observation.velocity[7:13]"
+            },
+            {
+              "ref": "obs-000025",
+              "timestamp": 1.0,
+              "field": "observation.state[7:13]"
+            }
+          ]
+        },
+        {
+          "timestamp": 2.0,
+          "ref": "obs-000050",
+          "claim": "knife_location=holder; contact=separate; motion=at_holder",
+          "source": "real_multiview_effect_geometry",
+          "images": [
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "camera": "cam_high"
+            },
+            {
+              "ref": "obs-000050",
+              "timestamp": 2.0,
+              "camera": "cam_right_wrist"
+            },
+            {
+              "ref": "obs-000000",
+              "timestamp": 0.0,
+              "camera": "cam_high"
+            }
+          ]
+        }
+      ],
+      "failure_event": null,
+      "frame_images": [
+        {
+          "camera": "cam_high",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000008\\frames\\obs-000050_cam_high.jpg",
+          "sha256": "449928f768882cd42204daeaec5f060d145dd5670943715a210e3e937548d2a1"
+        },
+        {
+          "camera": "cam_right_wrist",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000008\\frames\\obs-000050_cam_right_wrist.jpg",
+          "sha256": "a3f27e6e170a46acb1c90e05033ec3bd1d8c801e9ba2f99ef294fb903fd3d7e2"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "timestamp": 5.0,
+      "observation_ref": "obs-000125",
+      "expected_stage": "verify_grasp",
+      "observed_features": "右夹爪实际闭合，刀仍留架；机械手与刀柄在图像中分离。",
+      "program_stage": "verify_grasp",
+      "assessment": "观测到开闭尝试后的效果确认；尚不只凭闭合立即失败。",
+      "reviewer": "assistant_visual_inspection_using_view_image",
+      "evidence": [
+        {
+          "timestamp": 5.0,
+          "ref": "obs-000125",
+          "claim": "right_arm_motion=moving",
+          "source": "measured_qpos_qvel",
+          "images": [],
+          "sensor_refs": [
+            {
+              "ref": "obs-000125",
+              "timestamp": 5.0,
+              "field": "observation.state[7:13]"
+            },
+            {
+              "ref": "obs-000125",
+              "timestamp": 5.0,
+              "field": "observation.velocity[7:13]"
+            },
+            {
+              "ref": "obs-000100",
+              "timestamp": 4.0,
+              "field": "observation.state[7:13]"
+            }
+          ]
+        },
+        {
+          "timestamp": 5.0,
+          "ref": "obs-000125",
+          "claim": "knife_location=holder; contact=separate; motion=at_holder",
+          "source": "real_multiview_effect_geometry",
+          "images": [
+            {
+              "ref": "obs-000125",
+              "camera": "cam_high",
+              "timestamp": 5.0
+            },
+            {
+              "ref": "obs-000000",
+              "camera": "cam_high",
+              "timestamp": 0.0
+            },
+            {
+              "ref": "obs-000000",
+              "timestamp": 0.0,
+              "camera": "cam_high"
+            }
+          ]
+        }
+      ],
+      "failure_event": null,
+      "frame_images": [
+        {
+          "camera": "cam_high",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000008\\frames\\obs-000125_cam_high.jpg",
+          "sha256": "b7d1e0bc5ac6f3f3671488b3c44a5d20d13be57d4ec5c97c16fd2c76db536537"
+        },
+        {
+          "camera": "cam_right_wrist",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000008\\frames\\obs-000125_cam_right_wrist.jpg",
+          "sha256": "e9b222cb5fc90920320fae416bab49b5dd825552b04df3d705f25a5d4975faab"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "timestamp": 8.0,
+      "observation_ref": "obs-000200",
+      "expected_stage": "verify_grasp",
+      "observed_features": "机械手空手进入砧板，刀仍清晰留在刀架。",
+      "program_stage": "verify_grasp",
+      "assessment": "重复分离证据确认grasp_not_established；无可靠夹持。",
+      "reviewer": "assistant_visual_inspection_using_view_image",
+      "evidence": [
+        {
+          "timestamp": 8.0,
+          "ref": "obs-000200",
+          "claim": "right_arm_motion=recent_motion",
+          "source": "measured_qpos_qvel",
+          "images": [],
+          "sensor_refs": [
+            {
+              "ref": "obs-000200",
+              "timestamp": 8.0,
+              "field": "observation.state[7:13]"
+            },
+            {
+              "ref": "obs-000200",
+              "timestamp": 8.0,
+              "field": "observation.velocity[7:13]"
+            },
+            {
+              "ref": "obs-000175",
+              "timestamp": 7.0,
+              "field": "observation.state[7:13]"
+            }
+          ]
+        },
+        {
+          "timestamp": 8.0,
+          "ref": "obs-000200",
+          "claim": "knife_location=holder; contact=separate; motion=at_board",
+          "source": "real_multiview_effect_geometry",
+          "images": [
+            {
+              "ref": "obs-000200",
+              "camera": "cam_high",
+              "timestamp": 8.0
+            },
+            {
+              "ref": "obs-000000",
+              "camera": "cam_high",
+              "timestamp": 0.0
+            },
+            {
+              "ref": "obs-000000",
+              "timestamp": 0.0,
+              "camera": "cam_high"
+            }
+          ]
+        }
+      ],
+      "failure_event": {
+        "event_id": "event-0001",
+        "kind": "grasp_not_established",
+        "attempt": 1,
+        "opened_at": 7.0,
+        "updated_at": 8.0,
+        "state": "confirmed",
+        "support_count": 2,
+        "evidence": [
+          {
+            "timestamp": 7.0,
+            "ref": "obs-000175",
+            "claim": "当前支持 grasp_not_established",
+            "source": "real_multiview_effect_geometry",
+            "images": [
+              {
+                "ref": "obs-000175",
+                "camera": "cam_high",
+                "timestamp": 7.0
+              },
+              {
+                "ref": "obs-000000",
+                "camera": "cam_high",
+                "timestamp": 0.0
+              },
+              {
+                "ref": "obs-000000",
+                "timestamp": 0.0,
+                "camera": "cam_high"
+              }
+            ],
+            "joint_motion": "moving",
+            "sensor_refs": [
+              {
+                "ref": "obs-000175",
+                "timestamp": 7.0,
+                "field": "observation.state[7:13]"
+              },
+              {
+                "ref": "obs-000175",
+                "timestamp": 7.0,
+                "field": "observation.velocity[7:13]"
+              },
+              {
+                "ref": "obs-000150",
+                "timestamp": 6.0,
+                "field": "observation.state[7:13]"
+              }
+            ]
+          },
+          {
+            "timestamp": 8.0,
+            "ref": "obs-000200",
+            "claim": "当前支持 grasp_not_established",
+            "source": "real_multiview_effect_geometry",
+            "images": [
+              {
+                "ref": "obs-000200",
+                "camera": "cam_high",
+                "timestamp": 8.0
+              },
+              {
+                "ref": "obs-000000",
+                "camera": "cam_high",
+                "timestamp": 0.0
+              },
+              {
+                "ref": "obs-000000",
+                "timestamp": 0.0,
+                "camera": "cam_high"
+              }
+            ],
+            "joint_motion": "recent_motion",
+            "sensor_refs": [
+              {
+                "ref": "obs-000200",
+                "timestamp": 8.0,
+                "field": "observation.state[7:13]"
+              },
+              {
+                "ref": "obs-000200",
+                "timestamp": 8.0,
+                "field": "observation.velocity[7:13]"
+              },
+              {
+                "ref": "obs-000175",
+                "timestamp": 7.0,
+                "field": "observation.state[7:13]"
+              }
+            ]
+          }
+        ],
+        "last_support_at": 8.0,
+        "support_started_at": 7.0,
+        "observation_status": "supported",
+        "closure_reason": null
+      },
+      "frame_images": [
+        {
+          "camera": "cam_high",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000008\\frames\\obs-000200_cam_high.jpg",
+          "sha256": "d17e95260f3a71a000aa2b736c1a56957c9783ff5adcd700cce4552083148004"
+        },
+        {
+          "camera": "cam_right_wrist",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000008\\frames\\obs-000200_cam_right_wrist.jpg",
+          "sha256": "8f8055bff05047dcc88356aaf5160102c166af8d96a1bebac850f83460458dd0"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 8.0,
+      "observation_ref": "obs-000200",
+      "expected_stage": "cut_operation",
+      "observed_features": "腕图中央刀刃在两指之间，邻接香肠端部颜色区域较上一可用腕图移动；顶视已进入砧板。",
+      "program_stage": "cut_operation",
+      "assessment": "旧候选因亮边连成宽轮廓拒识；当前窄纵向可见刀刃及操作证据保留，不直接等于切开。",
+      "reviewer": "assistant_visual_inspection_using_view_image",
+      "evidence": [
+        {
+          "timestamp": 8.0,
+          "ref": "obs-000200",
+          "claim": "right_arm_motion=recent_motion",
+          "source": "measured_qpos_qvel",
+          "images": [],
+          "sensor_refs": [
+            {
+              "ref": "obs-000200",
+              "timestamp": 8.0,
+              "field": "observation.state[7:13]"
+            },
+            {
+              "ref": "obs-000200",
+              "timestamp": 8.0,
+              "field": "observation.velocity[7:13]"
+            },
+            {
+              "ref": "obs-000175",
+              "timestamp": 7.0,
+              "field": "observation.state[7:13]"
+            }
+          ]
+        },
+        {
+          "timestamp": 8.0,
+          "ref": "obs-000200",
+          "claim": "knife_location=gripper; contact=between_fingers; motion=at_board",
+          "source": "real_multiview_effect_geometry",
+          "images": [
+            {
+              "ref": "obs-000200",
+              "timestamp": 8.0,
+              "camera": "cam_high"
+            },
+            {
+              "ref": "obs-000200",
+              "timestamp": 8.0,
+              "camera": "cam_right_wrist"
+            },
+            {
+              "ref": "obs-000000",
+              "timestamp": 0.0,
+              "camera": "cam_high"
+            },
+            {
+              "ref": "obs-000175",
+              "timestamp": 7.0,
+              "camera": "cam_right_wrist"
+            }
+          ]
+        }
+      ],
+      "failure_event": null,
+      "frame_images": [
+        {
+          "camera": "cam_high",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000019\\frames\\obs-000200_cam_high.jpg",
+          "sha256": "7674c320156a6cfd288853f60740d9a7c7351f030b8197cfafd06b2e7a1ddae3"
+        },
+        {
+          "camera": "cam_right_wrist",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000019\\frames\\obs-000200_cam_right_wrist.jpg",
+          "sha256": "529e1f5c503a8ddfeeff7b60a092848a2f10a46ffc7ceb916e65f3e640d2d0bc"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 11.0,
+      "observation_ref": "obs-000275",
+      "expected_stage": "return_tool",
+      "observed_features": "顶视可见原香肠之外的圆形分离小段；携刀返回架边。",
+      "program_stage": "return_tool",
+      "assessment": "已存在早先参考、有效操作，当前新增分离效果支持切割确认，尚未最终释放完成。",
+      "reviewer": "assistant_visual_inspection_using_view_image",
+      "evidence": [
+        {
+          "timestamp": 11.0,
+          "ref": "obs-000275",
+          "claim": "right_arm_motion=recent_motion",
+          "source": "measured_qpos_qvel",
+          "images": [],
+          "sensor_refs": [
+            {
+              "ref": "obs-000275",
+              "timestamp": 11.0,
+              "field": "observation.state[7:13]"
+            },
+            {
+              "ref": "obs-000275",
+              "timestamp": 11.0,
+              "field": "observation.velocity[7:13]"
+            },
+            {
+              "ref": "obs-000250",
+              "timestamp": 10.0,
+              "field": "observation.state[7:13]"
+            }
+          ]
+        },
+        {
+          "timestamp": 11.0,
+          "ref": "obs-000275",
+          "claim": "knife_location=gripper; contact=between_fingers; motion=to_board",
+          "source": "real_multiview_effect_geometry",
+          "images": [
+            {
+              "ref": "obs-000275",
+              "timestamp": 11.0,
+              "camera": "cam_high"
+            },
+            {
+              "ref": "obs-000275",
+              "timestamp": 11.0,
+              "camera": "cam_right_wrist"
+            },
+            {
+              "ref": "obs-000000",
+              "timestamp": 0.0,
+              "camera": "cam_high"
+            },
+            {
+              "ref": "obs-000250",
+              "timestamp": 10.0,
+              "camera": "cam_right_wrist"
+            }
+          ]
+        }
+      ],
+      "failure_event": null,
+      "frame_images": [
+        {
+          "camera": "cam_high",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000019\\frames\\obs-000275_cam_high.jpg",
+          "sha256": "800a6e347de7523a76fdc40ee7b652cf1aaa72e47fa44de14a4bb5f140f641bc"
+        },
+        {
+          "camera": "cam_right_wrist",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000019\\frames\\obs-000275_cam_right_wrist.jpg",
+          "sha256": "4313a325558c583a119ba1c45ceca1a6a25f452bc4c78835028842b3a1412671"
+        }
+      ]
+    },
+    {
+      "episode_for_audit_only": 19,
+      "timestamp": 16.0,
+      "observation_ref": "obs-000400",
+      "expected_stage": "completed",
+      "observed_features": "机械手退出刀架，刀位于架上；砧板新分离圆形小段仍可见。",
+      "program_stage": "completed",
+      "assessment": "连续归位释放和既有操作—新效果链完整；建议未执行，不能归因于建议。",
+      "reviewer": "assistant_visual_inspection_using_view_image",
+      "evidence": [
+        {
+          "timestamp": 16.0,
+          "ref": "obs-000400",
+          "claim": "right_arm_motion=moving",
+          "source": "measured_qpos_qvel",
+          "images": [],
+          "sensor_refs": [
+            {
+              "ref": "obs-000400",
+              "timestamp": 16.0,
+              "field": "observation.state[7:13]"
+            },
+            {
+              "ref": "obs-000400",
+              "timestamp": 16.0,
+              "field": "observation.velocity[7:13]"
+            },
+            {
+              "ref": "obs-000375",
+              "timestamp": 15.0,
+              "field": "observation.state[7:13]"
+            }
+          ]
+        },
+        {
+          "timestamp": 16.0,
+          "ref": "obs-000400",
+          "claim": "knife_location=holder; contact=separate; motion=away",
+          "source": "real_multiview_effect_geometry",
+          "images": [
+            {
+              "ref": "obs-000400",
+              "camera": "cam_high",
+              "timestamp": 16.0
+            },
+            {
+              "ref": "obs-000000",
+              "camera": "cam_high",
+              "timestamp": 0.0
+            },
+            {
+              "ref": "obs-000000",
+              "timestamp": 0.0,
+              "camera": "cam_high"
+            }
+          ]
+        }
+      ],
+      "failure_event": null,
+      "frame_images": [
+        {
+          "camera": "cam_high",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000019\\frames\\obs-000400_cam_high.jpg",
+          "sha256": "335f4f3c3a450e0cf1082b893a85991bd2854d5ac3212835dade9ecf8f47e593"
+        },
+        {
+          "camera": "cam_right_wrist",
+          "path": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\repair_acceptance_20261017\\visual_probe_run_v1\\trajectory_000019\\frames\\obs-000400_cam_right_wrist.jpg",
+          "sha256": "c33ee781df892f7476c68f0c892b9580008b332a190ba45123bcbbaffa511423"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "定位只在2的两个实际帧可靠；8的混连/遮挡主动拒识",
+    "真实失败确认后没有再次打开夹爪，所以无自然事件后align_in_image，不用合成事件补齐",
+    "未观测独立深度、姿态、接触准备；无真实闭合建议验证，无自然重试过程验证",
+    "6条均为已暴露开发/回归样例，不是新未见成绩"
+  ]
+}

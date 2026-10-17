@@ -1,0 +1,17 @@
+test_C_actual_reopen_returns_to_preparation_without_inventing_attempt (streaming_recovery.tests.test_repair_state.RepairStateTests.test_C_actual_reopen_returns_to_preparation_without_inventing_attempt) ... FAIL
+
+======================================================================
+FAIL: test_C_actual_reopen_returns_to_preparation_without_inventing_attempt (streaming_recovery.tests.test_repair_state.RepairStateTests.test_C_actual_reopen_returns_to_preparation_without_inventing_attempt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\CV\streaming_recovery\tests\test_repair_state.py", line 137, in test_C_actual_reopen_returns_to_preparation_without_inventing_attempt
+    self.assertEqual(result["correction"]["low_level"]["action_type"],"align_in_image")
+AssertionError: 'hold_and_observe' != 'align_in_image'
+- hold_and_observe
++ align_in_image
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+FAILED (failures=1)

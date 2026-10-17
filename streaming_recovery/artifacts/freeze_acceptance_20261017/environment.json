@@ -1,0 +1,19 @@
+{
+  "executable": "C:\\Users\\lenovo\\.conda\\envs\\cv-streaming\\python.exe",
+  "python": "3.11.17 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:16:54) [MSC v.1942 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "backend": "CPU OpenCV classical vision; no new learned model/weights/API/GPU",
+  "packages": {
+    "numpy": "2.4.6",
+    "opencv-python": "5.0.0.93",
+    "Pillow": "12.3.0",
+    "pyarrow": "26.0.0",
+    "av": "18.1.0"
+  },
+  "input_facts_reference": "../repair_acceptance_20261017/environment_and_data.json",
+  "real_sensor_relation": "qpos and gripper share observation.state; qvel measured; action/target EEF unused",
+  "units": "source raw values; no physical gripper/coordinate calibration",
+  "input_hashes_reference": "final_run/summary.json: episodes[].source_files",
+  "config_sha256": "8f9d8dfc964a9f5da798380029c905c90f3fc01dccd96b6c2414d4b1d40ae1f8",
+  "config_snapshot_sha256": "058c688171a3ac9fbed7c26d46e3bf81e405c5aaa0e192c24264ff7bfd23f158"
+}

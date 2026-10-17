@@ -1,0 +1,26 @@
+{
+  "actual_cli_executed": true,
+  "inference_repeated": false,
+  "source_run": "C:\\Users\\lenovo\\Desktop\\CV\\streaming_recovery\\artifacts\\freeze_acceptance_20261017\\final_run",
+  "valid_review_bindings": {
+    "status": "passed",
+    "ordinary": 19,
+    "directions": 2,
+    "total": 21
+  },
+  "fault_injection": {
+    "changed": [
+      "source_run",
+      "19 ordinary image_refs",
+      "19 ordinary image_sha256"
+    ],
+    "conditional_directions_unchanged": true,
+    "exit_code": 1,
+    "engineering_status": "failed",
+    "evidence_status": "invalid",
+    "semantic_status": "not_assessable",
+    "overall_status": "invalid",
+    "ordinary_invalid": 19,
+    "directions_invalid": 2
+  }
+}

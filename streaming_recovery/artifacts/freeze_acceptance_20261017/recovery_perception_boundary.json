@@ -1,0 +1,50 @@
+{
+  "claim": "本后端仅在当前opened时调用局部柄/两指定位，且定位依赖独立刀架轮廓；闭爪/无刀架支撑面重抓感知尚不支持。状态规则有合成支持不能替代此接线缺口。",
+  "per_episode": [
+    {
+      "episode_for_audit_only": 18,
+      "closed_decisions": 17,
+      "closed_joint_localizations": 0,
+      "localization_times": []
+    },
+    {
+      "episode_for_audit_only": 19,
+      "closed_decisions": 15,
+      "closed_joint_localizations": 0,
+      "localization_times": []
+    },
+    {
+      "episode_for_audit_only": 0,
+      "closed_decisions": 7,
+      "closed_joint_localizations": 0,
+      "localization_times": []
+    },
+    {
+      "episode_for_audit_only": 2,
+      "closed_decisions": 4,
+      "closed_joint_localizations": 0,
+      "localization_times": [
+        2.0,
+        3.0
+      ]
+    },
+    {
+      "episode_for_audit_only": 8,
+      "closed_decisions": 6,
+      "closed_joint_localizations": 0,
+      "localization_times": []
+    },
+    {
+      "episode_for_audit_only": 29,
+      "closed_decisions": 4,
+      "closed_joint_localizations": 0,
+      "localization_times": []
+    }
+  ],
+  "source_code_files": {
+    "streaming_recovery/multiview.py": "ca20c4ff5c983c333eea0735448802f9dd05d9843358ed6199e3e86560bd8736",
+    "streaming_recovery/localization.py": "1204f22e2ee76ae57851287d4668fbf847c86f2c1198df5b8b77aaecca96583d",
+    "streaming_recovery/tracking.py": "68afb936078d61188a6195e4e65262ed614db4991b2b240669e4d1a04287a10e"
+  },
+  "natural_recovery_perception_verified": false
+}

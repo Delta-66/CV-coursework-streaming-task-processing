@@ -1,0 +1,25 @@
+test_bad_sha_missing_image_and_wrong_current_image_rejected (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_bad_sha_missing_image_and_wrong_current_image_rejected) ... ok
+test_duplicate_or_changed_row_rejected_including_processing (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_duplicate_or_changed_row_rejected_including_processing) ... ok
+test_explicit_causal_history_reference_only (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_explicit_causal_history_reference_only) ... ok
+test_explicit_rebind_same_pixels_preserves_expectations_and_records_new_row (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_explicit_rebind_same_pixels_preserves_expectations_and_records_new_row) ... ok
+test_migration_refuses_bad_existing_bindings_instead_of_overwriting (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_migration_refuses_bad_existing_bindings_instead_of_overwriting) ... ok
+test_missing_fields_do_not_auto_pass_and_window_is_not_unique_point (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_missing_fields_do_not_auto_pass_and_window_is_not_unique_point) ... ok
+test_path_escape_rejected_even_with_existing_file_and_correct_hash (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_path_escape_rejected_even_with_existing_file_and_correct_hash) ... ok
+test_valid_legacy_migration_adds_versioned_entire_row_binding (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_valid_legacy_migration_adds_versioned_entire_row_binding) ... ok
+test_wrong_source_invalidates_ordinary_and_direction (streaming_recovery.tests.test_review_binding.ReviewBindingTests.test_wrong_source_invalidates_ordinary_and_direction) ... ok
+test_conditional_direction_binding_and_visual_review_are_required (streaming_recovery.tests.test_evaluation.EvaluationTests.test_conditional_direction_binding_and_visual_review_are_required)
+纯契约故障注入；测试文件与坐标是合成输入，不是视觉识别验证。 ... ok
+test_explicit_label_enums (streaming_recovery.tests.test_evaluation.EvaluationTests.test_explicit_label_enums) ... ok
+test_full_native_read_does_not_imply_decision_coverage (streaming_recovery.tests.test_evaluation.EvaluationTests.test_full_native_read_does_not_imply_decision_coverage) ... ok
+test_invalid_label_is_rejected_before_counting (streaming_recovery.tests.test_evaluation.EvaluationTests.test_invalid_label_is_rejected_before_counting) ... ok
+test_metadata_short_read_and_camera_truncation_fail (streaming_recovery.tests.test_evaluation.EvaluationTests.test_metadata_short_read_and_camera_truncation_fail) ... ok
+test_phase_checks_use_timestamp_and_predicates (streaming_recovery.tests.test_evaluation.EvaluationTests.test_phase_checks_use_timestamp_and_predicates) ... ok
+test_phase_window_does_not_hide_failed_all_or_invalid_expectations (streaming_recovery.tests.test_evaluation.EvaluationTests.test_phase_window_does_not_hide_failed_all_or_invalid_expectations) ... ok
+test_recovery_retry_and_silent_persistence (streaming_recovery.tests.test_evaluation.EvaluationTests.test_recovery_retry_and_silent_persistence) ... ok
+test_result_combinations_are_not_string_truthiness (streaming_recovery.tests.test_evaluation.EvaluationTests.test_result_combinations_are_not_string_truthiness) ... ok
+test_suspicion_does_not_count_as_confirmation (streaming_recovery.tests.test_evaluation.EvaluationTests.test_suspicion_does_not_count_as_confirmation) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.527s
+
+OK
